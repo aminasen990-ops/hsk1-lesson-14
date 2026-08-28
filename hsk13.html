@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>HSK 1 · Урок 13 · Северсталь · 乐溪 李欣怡 均雷</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #fcf9f4;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans', system-ui, sans-serif;
+            padding: 1rem;
+            color: #2d2a22;
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+        .app { max-width: 1300px; margin: 0 auto; }
+        h1 {
+            font-size: 1.6rem; font-weight: 700; color: #b5443c;
+            display: flex; align-items: center; gap: 10px; margin-bottom: 0.5rem; flex-wrap: wrap;
+        }
+        h2 {
+            font-size: 1.3rem; margin: 1.5rem 0 0.8rem; color: #4a3f2f;
+            border-bottom: 2px solid #e8e2d8; padding-bottom: 0.3rem;
+        }
+        .subtitle { color: #6b5e4a; font-size: 0.9rem; margin-bottom: 1rem; }
+        .panel {
+            background: #ffffff; border-radius: 20px; padding: 1.2rem;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.05); margin-bottom: 1.5rem; border: 1px solid #f0e8dc;
+        }
+        .tab-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 1rem; }
+        .tab-btn {
+            background: #f6efe4; border: 1px solid #ddd2c0; padding: 8px 16px;
+            border-radius: 30px; font-weight: 600; font-size: 0.8rem; cursor: pointer;
+            transition: all 0.2s; color: #4d3e2b; font-family: inherit;
+        }
+        .tab-btn.active { background: #b5443c; color: white; border-color: #b5443c; }
+        .section { display: none; }
+        .section.active-section { display: block; animation: fade 0.25s ease; }
+        @keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 15px; }
+        .word-card {
+            background: #fefcf9; border-radius: 16px; padding: 15px; box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+            border-left: 4px solid #b8914a; cursor: pointer; transition: transform 0.1s;
+        }
+        .word-card:hover { transform: translateY(-2px); }
+        .word-card .emoji { font-size: 2rem; }
+        .word-card .chinese { font-size: 1.8rem; font-weight: 700; color: #3a2e1f; }
+        .word-card .pinyin { font-size: 0.8rem; color: #7a6a52; }
+        .word-card .translation { font-size: 0.85rem; font-style: italic; color: #5e4e38; }
+        .collocation-box { background: #faf3e8; border-radius: 12px; padding: 10px; margin-top: 10px; font-size: 0.8rem; border: 1px solid #eadfcb; }
+        .collocation-box .level { font-weight: 700; display: block; color: #a0662c; }
+        .custom-save-area { margin-top: 15px; border-top: 1px dashed #ddd2c0; padding-top: 10px; }
+        .custom-input-row { display: flex; gap: 8px; margin-bottom: 6px; flex-wrap: wrap; }
+        .custom-input-row input { flex: 1; min-width: 140px; padding: 8px 12px; border-radius: 30px; border: 1px solid #ccc2b2; font-family: inherit; font-size: 0.8rem; }
+        .small-btn {
+            background: #e0d5c2; border: none; padding: 8px 16px; border-radius: 30px;
+            cursor: pointer; font-weight: 600; font-size: 0.75rem; font-family: inherit; color: #2d2a22;
+        }
+        .small-btn:hover { background: #cdbea5; }
+        .saved-example {
+            background: #eef4e4; border-radius: 8px; padding: 6px 10px; margin-top: 5px;
+            font-size: 0.75rem; display: flex; justify-content: space-between; align-items: center;
+        }
+        .delete-btn { background: none; border: none; color: #b5443c; cursor: pointer; font-weight: bold; font-size: 1rem; }
+        .grammar-card { background: #f5efe6; border-radius: 16px; padding: 15px; margin-bottom: 12px; border-left: 6px solid #5e7d5a; }
+        .dialog-card { background: #fcf9f2; border-radius: 16px; padding: 15px; margin-bottom: 15px; border: 1px solid #e0d8c8; }
+        .dialog-controls { display: flex; gap: 10px; margin-bottom: 10px; }
+        .dialog-btn { background: #e2ecd9; border: none; padding: 4px 12px; border-radius: 20px; font-size: 0.7rem; cursor: pointer; font-family: inherit; }
+        .dialog-line { display: flex; gap: 12px; margin: 10px 0; flex-wrap: wrap; align-items: center; }
+        .speaker { font-weight: 800; width: 80px; color: #b5443c; flex-shrink: 0; }
+        .chinese-text { font-weight: 500; }
+        .dialog-pinyin { font-size: 0.7rem; color: #8d7b62; margin-left: 90px; }
+        .dialog-trans { font-size: 0.75rem; color: #6f6250; margin-left: 90px; border-left: 2px solid #e2c8a0; padding-left: 10px; }
+        .word-note {
+            font-size: 0.7rem; color: #7a6a52; background: #fdf6ec; border-left: 3px solid #b8914a;
+            padding: 4px 10px; margin: 2px 0 10px 90px; border-radius: 4px; font-style: italic; max-width: 600px;
+            display: none; cursor: pointer; line-height: 1.6;
+        }
+        .word-note.show { display: block; }
+        .note-toggle { background: none; border: none; color: #a0662c; cursor: pointer; font-size: 0.7rem; text-decoration: underline; margin-left: 8px; }
+        .dialog-note-area { margin-left: 90px; margin-top: 4px; }
+        .save-note-btn { background: #b8914a; color: white; border: none; padding: 4px 12px; border-radius: 20px; cursor: pointer; font-size: 0.7rem; margin-top: 4px; }
+        @media (max-width: 600px) {
+            .dialog-pinyin, .dialog-trans, .word-note, .dialog-note-area { margin-left: 0; }
+            .speaker { width: 70px; }
+        }
+        .role-select { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 15px; }
+        .role-btn {
+            background: #f0e5d6; border: 2px solid #d4b48c; padding: 8px 18px; border-radius: 40px;
+            font-weight: 700; cursor: pointer; font-family: inherit; color: #4a3a26;
+        }
+        .role-btn.selected { background: #b8914a; color: white; border-color: #7a5c2e; }
+        .wheel-container {
+            background: #fffaf2; border-radius: 16px; padding: 12px; margin-bottom: 15px;
+            border: 1px solid #eadbc4; display: flex; flex-wrap: wrap; align-items: center; gap: 12px;
+        }
+        .wheel-btn {
+            background: #b8914a; color: white; border: none; padding: 8px 18px; border-radius: 30px;
+            font-weight: 700; cursor: pointer; font-family: inherit; font-size: 0.8rem;
+        }
+        .wheel-result { font-weight: 600; color: #b5443c; }
+        .tone-guide {
+            background: #fdf3e7; border-left: 6px solid #b5443c; border-radius: 16px;
+            padding: 15px; margin-bottom: 20px; font-size: 0.85rem; line-height: 1.6;
+        }
+        .practice-topic {
+            background: #fffaf2; border-radius: 16px; padding: 15px; margin-bottom: 20px;
+            border: 1px solid #eadbc4; display: flex; flex-wrap: wrap; gap: 15px;
+        }
+        .questions-area { flex: 2; min-width: 280px; }
+        .comment-area { flex: 1.2; min-width: 240px; background: #fdfaf3; border-radius: 12px; padding: 10px; border: 1px dashed #d4b48c; }
+        .comment-area textarea {
+            width: 100%; min-height: 150px; border-radius: 12px; border: 1px solid #ccc2b2;
+            padding: 10px; font-family: inherit; font-size: 0.8rem; background: #fff; resize: vertical;
+        }
+        .question-box { background: #f8f1e4; border-radius: 12px; padding: 10px; margin: 8px 0; font-size: 0.9rem; }
+        .grammar-highlight {
+            background: #fdf6ec; border-left: 4px solid #b8914a; border-radius: 12px;
+            padding: 10px; margin-top: 12px; font-size: 0.8rem;
+        }
+        .reading-text { background: #fdfaf3; border-radius: 16px; padding: 15px; margin-bottom: 15px; border: 1px solid #eadbc4; font-size: 1rem; line-height: 1.7; }
+        .reading-text .hl { background: #fef08a; padding: 2px 4px; border-radius: 4px; font-weight: 700; color: #b5443c; }
+        .reading-question { background: #f8f1e4; border-radius: 12px; padding: 10px; margin: 8px 0; font-size: 0.85rem; font-weight: 600; }
+        .reading-answer { background: #eef4e4; border-radius: 8px; padding: 10px; margin: 4px 0 10px; font-size: 0.8rem; border-left: 3px solid #b8914a; display: none; }
+        .reading-answer.show { display: block; }
+        .checklist { background: #fdf2f0; border-radius: 16px; padding: 15px; border: 1px solid #f0c8c0; margin-top: 10px; }
+        footer { text-align: center; color: #8a7a64; font-size: 0.7rem; margin-top: 2rem; }
+    </style>
+</head>
+<body>
+<div class="app">
+    <h1>🐼 HSK 1 · Урок 13 <span style="font-size:0.8rem; background:#e2ecd9; padding:4px 10px; border-radius:20px;">Северсталь</span></h1>
+    <div class="subtitle">Группа: 乐溪 · 李欣怡 · 均雷 | Только разрешённая лексика</div>
+
+    <div class="tab-bar">
+        <button class="tab-btn active" data-tab="homework">📚 Домашнее задание</button>
+        <button class="tab-btn" data-tab="vocab">📝 Лексика</button>
+        <button class="tab-btn" data-tab="grammar">🧩 Грамматика</button>
+        <button class="tab-btn" data-tab="dialogs">💬 Диалоги</button>
+        <button class="tab-btn" data-tab="reading">📖 Чтение</button>
+        <button class="tab-btn" data-tab="practice">🗣️ Разговорная практика</button>
+    </div>
+
+    <div id="homework" class="section active-section">
+        <div class="panel">
+            <h2>📅 ДОМАШНЕЕ ЗАДАНИЕ НА ПЯТНИЦУ</h2>
+            <div style="background:#f9f5ec; padding:15px; border-radius:16px;">
+                <p><strong>✍️ БЛОК 1. ПИСЬМЕННО (от руки):</strong> 5 предложений. В каждом: минимум 3 слова из основных + 1 второстепенное + 1 грамматическая конструкция.</p>
+                <p><strong>🎧 БЛОК 2. АУДИО:</strong> Тренировка (3 подхода) → чистовая запись всех 5 предложений без диктора.</p>
+                <div class="checklist">✅ Чек-лист: 5 предложений от руки · 3 основных слова · 1 второстепенное · 1 грамматика · запись на звукограмме.</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="vocab" class="section">
+        <h2>📝 Лексика урока + новые слова</h2>
+        <div class="grid" id="vocabGrid"></div>
+    </div>
+
+    <div id="grammar" class="section">
+        <h2>🧩 Грамматические конструкции</h2>
+        <div id="grammarList"></div>
+    </div>
+
+    <div id="dialogs" class="section">
+        <h2>💬 Диалоги (с иронией и живыми темами)</h2>
+        <div id="dialogsContainer"></div>
+    </div>
+
+    <div id="reading" class="section">
+        <h2>📖 Чтение с вопросами</h2>
+        <div class="wheel-container">
+            <span>🎲 Порядок чтения:</span>
+            <button class="wheel-btn" onclick="spinWheel('reading')">Крутить</button>
+            <span class="wheel-result" id="readingWheelResult">—</span>
+        </div>
+        <div id="readingContainer"></div>
+    </div>
+
+    <div id="practice" class="section">
+        <h2>🗣️ Разговорная практика</h2>
+        <div class="tone-guide">
+            <strong>🎯 ПРАВИЛА ТОНОВ:</strong> Держим тоны в тонусе — это как вести себя на важном мероприятии. Соблюдая тоны, вы говорите очень понятно, и слушателю не приходится морщиться, как от лимона. Вы проявляете уважение и не звучите как сломанная кроссовка или крик «у шлагбаума». При этом не нужно уходить в театральность — не шепчите и не тяните все слоги на третьем тоне, иначе собеседник перестанет понимать, есть ли у вас вообще желание общаться. Говорите ровно, спокойно, с уважением к каждому слогу.
+            <br><br>
+            <strong>⚠️ ВАЖНО:</strong> Вы слишком надеетесь на меня. Выруливайте сами. Выучите и выписывайте свои ошибки. Мы не можем по тридцать раз проговаривать одно и то же: порядок слов, вопросительные слова, ваше имя, ваша страна. Нужно расти. Ищите методы для запоминания, пробуйте. Не нужно ждать, пока всё само получится чудом. На двадцатый раз, понятно, получится, но зачем так долго ждать?
+        </div>
+        <div class="role-select" id="roleSelector">
+            <button class="role-btn selected" data-role="乐溪">乐溪</button>
+            <button class="role-btn" data-role="李欣怡">李欣怡</button>
+            <button class="role-btn" data-role="均雷">均雷</button>
+        </div>
+        <div class="wheel-container">
+            <span>🎲 Собеседник 1:</span>
+            <button class="wheel-btn" onclick="spinPartner(1)">Крутить</button>
+            <span class="wheel-result" id="partner1Result">—</span>
+        </div>
+        <div class="wheel-container">
+            <span>🎲 Собеседник 2:</span>
+            <button class="wheel-btn" onclick="spinPartner(2)">Крутить</button>
+            <span class="wheel-result" id="partner2Result">—</span>
+        </div>
+        <div id="practiceContent"></div>
+    </div>
+
+    <footer>Сделано для группы 乐溪 · 李欣怡 · 均雷 · Сохраняйте примеры и комментарии ✨</footer>
+</div>
+
+<script>
+    (function() {
+        const vocab = [
+            { word: "现在", emoji: "🕒", pinyin: "xiànzài", trans: "сейчас", collocations: [{level:"Основное", items:"现在几点？ / 现在去", example:"现在我很忙。"}] },
+            { word: "回", emoji: "↩️", pinyin: "huí", trans: "возвращаться", collocations: [{level:"Основное", items:"回家 / 回学校", example:"我回家吃饭。"}] },
+            { word: "电影", emoji: "🎬", pinyin: "diànyǐng", trans: "фильм", collocations: [{level:"Основное", items:"看电影 / 好电影", example:"周末看电影。"}] },
+            { word: "电视", emoji: "📺", pinyin: "diànshì", trans: "телевизор", collocations: [{level:"Основное", items:"看电视 / 电视剧", example:"晚上看电视。"}] },
+            { word: "下雨", emoji: "🌧️", pinyin: "xià yǔ", trans: "идёт дождь", collocations: [{level:"Основное", items:"下雨了 / 不喜欢下雨", example:"今天下雨了。"}] },
+            { word: "热", emoji: "🔥", pinyin: "rè", trans: "жарко", collocations: [{level:"Основное", items:"天气很热 / 热水", example:"夏天很热。"}] },
+            { word: "冷", emoji: "❄️", pinyin: "lěng", trans: "холодно", collocations: [{level:"Основное", items:"天气冷 / 冷水", example:"冬天很冷。"}] },
+            { word: "身体", emoji: "💪", pinyin: "shēntǐ", trans: "тело, здоровье", collocations: [{level:"Основное", items:"你身体好吗？ / 身体健康", example:"我的身体很好。"}] },
+            { word: "爱", emoji: "❤️", pinyin: "ài", trans: "любить", collocations: [{level:"Основное", items:"爱妈妈 / 爱看电影", example:"我爱吃米饭。"}] },
+            { word: "睡觉", emoji: "😴", pinyin: "shuì jiào", trans: "спать", collocations: [{level:"Основное", items:"想睡觉 / 睡觉了", example:"我晚上十点睡觉。"}] },
+            { word: "喜欢", emoji: "😊", pinyin: "xǐhuan", trans: "нравиться", collocations: [{level:"Основное", items:"喜欢喝茶 / 很喜欢", example:"我喜欢看电影。"}] },
+            { word: "给", emoji: "🤲", pinyin: "gěi", trans: "давать; для", collocations: [{level:"Основное", items:"给我 / 给妈妈打电话", example:"我给朋友打电话。"}] },
+            { word: "打电话", emoji: "📞", pinyin: "dǎ diànhuà", trans: "звонить", collocations: [{level:"Основное", items:"打电话给妈妈", example:"我常常给妈妈打电话。"}] },
+            { word: "昨天", emoji: "📅", pinyin: "zuótiān", trans: "вчера", collocations: [{level:"Основное", items:"昨天上午 / 昨天去", example:"昨天我去了公园。"}] },
+            { word: "北京", emoji: "🏯", pinyin: "Běijīng", trans: "Пекин", collocations: [{level:"Второстепенное", items:"去北京 / 北京烤鸭", example:"我想去北京。"}] },
+            { word: "请问", emoji: "🙋", pinyin: "qǐngwèn", trans: "скажите, пожалуйста", collocations: [{level:"Второстепенное", items:"请问，商店在哪儿？", example:"请问，现在几点？"}] },
+            { word: "周末", emoji: "📆", pinyin: "zhōumò", trans: "выходные", collocations: [{level:"Второстепенное", items:"周末愉快 / 去公园", example:"周末我去公园。"}] },
+            { word: "公园", emoji: "🌳", pinyin: "gōngyuán", trans: "парк", collocations: [{level:"Второстепенное", items:"去公园 / 在公园", example:"我常常去公园散步。"}] },
+            { word: "学校", emoji: "🏫", pinyin: "xuéxiào", trans: "школа", collocations: [{level:"Второстепенное", items:"在学校 / 回学校", example:"我在学校学中文。"}] },
+            { word: "商店", emoji: "🏪", pinyin: "shāngdiàn", trans: "магазин", collocations: [{level:"Второстепенное", items:"去商店 / 商店里", example:"这个商店的东西很贵。"}] },
+            { word: "手机", emoji: "📱", pinyin: "shǒujī", trans: "мобильный", collocations: [{level:"Второстепенное", items:"用手机 / 手机号", example:"我的手机在哪儿？"}] },
+            { word: "常常", emoji: "🔄", pinyin: "chángcháng", trans: "часто", collocations: [{level:"Второстепенное", items:"常常去 / 常常看电影", example:"我常常喝茶。"}] },
+            { word: "火车", emoji: "🚂", pinyin: "huǒchē", trans: "поезд", collocations: [{level:"Новая", items:"坐火车 / 火车开", example:"火车马上开。"}] },
+            { word: "马上", emoji: "⚡", pinyin: "mǎshàng", trans: "сейчас, немедленно", collocations: [{level:"Новая", items:"我马上来 / 马上走", example:"火车马上开。"}] },
+            { word: "问", emoji: "❓", pinyin: "wèn", trans: "спрашивать", collocations: [{level:"Новая", items:"问问题 / 问老师", example:"我想问老师一个问题。"}] },
+            { word: "问题", emoji: "❔", pinyin: "wèntí", trans: "вопрос", collocations: [{level:"Новая", items:"问问题 / 两个问题", example:"我有两个问题。"}] },
+            { word: "还", emoji: "🔄", pinyin: "hái", trans: "ещё; всё ещё", collocations: [{level:"Новая", items:"还可以 / 还不错", example:"这个手机还不错。"}] },
+            { word: "钱", emoji: "💰", pinyin: "qián", trans: "деньги", collocations: [{level:"Новая", items:"多少钱 / 没有钱", example:"这个多少钱？"}] },
+            { word: "贵", emoji: "💎", pinyin: "guì", trans: "дорого", collocations: [{level:"Новая", items:"很贵 / 不贵", example:"这个商店太贵了。"}] },
+            { word: "能", emoji: "💪", pinyin: "néng", trans: "мочь, можно", collocations: [{level:"Грамматика", items:"能做饭吗？ / 能看看吗？", example:"我能用你的手机吗？"}] },
+            { word: "饭", emoji: "🍚", pinyin: "fàn", trans: "еда, рис", collocations: [{level:"Расширенная", items:"吃饭 / 做饭 / 早饭", example:"我常常做饭。"}] },
+            { word: "说", emoji: "🗣️", pinyin: "shuō", trans: "говорить", collocations: [{level:"Расширенная", items:"说中文 / 请再说", example:"我会说中文。"}] },
+            { word: "部", emoji: "🎬", pinyin: "bù", trans: "счётное слово для фильмов", collocations: [{level:"Грамматика", items:"一部电影 / 一部手机", example:"我昨天看了一部电影。"}] },
+            { word: "台", emoji: "📺", pinyin: "tái", trans: "счётное слово для техники", collocations: [{level:"Грамматика", items:"一台电视 / 一台电脑", example:"我想买一台电视。"}] },
+            { word: "困", emoji: "🥱", pinyin: "kùn", trans: "сонный", collocations: [{level:"Разговорное", items:"很困 / 困了", example:"我最近总是很困。"}] },
+            { word: "店", emoji: "🏪", pinyin: "diàn", trans: "магазин", collocations: [{level:"Разговорное", items:"这个店 / 店里有", example:"这个店有电视吗？"}] },
+            { word: "牌子", emoji: "🏷️", pinyin: "páizi", trans: "бренд, марка", collocations: [{level:"Разговорное", items:"哪个牌子 / 好牌子", example:"你会推荐哪个牌子？"}] },
+            { word: "玩手机", emoji: "📱", pinyin: "wán shǒujī", trans: "сидеть в телефоне", collocations: [{level:"Разговорное", items:"常常玩手机 / 别玩手机", example:"睡觉前别玩手机。"}] },
+            { word: "飞机票", emoji: "✈️", pinyin: "fēijī piào", trans: "авиабилет", collocations: [{level:"Разговорное", items:"买飞机票 / 飞机票贵", example:"飞机票太贵了。"}] },
+            { word: "算了", emoji: "🤷", pinyin: "suàn le", trans: "ладно, проехали", collocations: [{level:"Разговорное", items:"算了 / 算了算了", example:"算了，不买了。"}] },
+            { word: "之前", emoji: "⏪", pinyin: "zhīqián", trans: "раньше, до", collocations: [{level:"Разговорное", items:"之前不会 / 之前常常", example:"之前我常常很晚睡觉。"}] }
+        ];
+
+        const grammar = [
+            { title: "时候 (shíhou) — когда", desc: "Момент времени.", examples: ["你什么时候去北京？", "我小的时候喜欢玩。", "下课的时候我去找你。"] },
+            { title: "前 (qián) — до, раньше", desc: "Перед событием.", examples: ["吃饭前洗手。", "前天 (позавчера)", "之前 (раньше)"] },
+            { title: "吧 (ba) — давай", desc: "Побудительное наклонение.", examples: ["我们走吧！", "喝茶吧。", "开始吧。"] },
+            { title: "给 (gěi) — давать / предлог", desc: "给 + получатель + действие.", examples: ["给我打电话。", "给妈妈做饭。", "给你一本书。"] },
+            { title: "钱 (qián) — цена", desc: "多少钱? = сколько стоит.", examples: ["这个杯子多少钱？", "一杯茶三块钱。"] },
+            { title: "都 (dōu) — все, всё", desc: "Обобщение.", examples: ["我们都喜欢喝茶。", "什么书都喜欢。"] },
+            { title: "能 (néng) — мочь / можно", desc: "Разрешение, способность.", examples: ["我能看看吗？", "你能来吗？", "我不能去。"] },
+            { title: "时间 (shíjiān) — время", desc: "У меня есть/нет времени.", examples: ["我没有时间。", "你有时间吗？", "你每天工作几个小时？"] },
+            { title: "如果...的话 — если", desc: "Гипотетическая конструкция.", examples: ["如果你有时间的话，我们去公园。", "你想睡觉的话，就去睡吧。"] },
+            { title: "或者 / 还是 — или", desc: "还是 в вопросах, 或者 в утверждениях.", examples: ["你想喝茶还是咖啡？", "我周末去公园或者商店。"] },
+            { title: "之前 / 以后 — раньше / потом", desc: "Временные маркеры.", examples: ["之前我不喜欢茶。", "以后我想去北京。"] },
+            { title: "的时候 — во время", desc: "Во время действия.", examples: ["我小的时候，常常去公园。", "上课的时候，不要说话。"] }
+        ];
+
+        const dialogs = [
+            { title: "🎬 Дождь и Человек-паук", lines: [
+                {speaker:"李欣怡", chn:"你昨晚看电影了吗？", pinyin:"Nǐ zuó wǎn kàn diànyǐng le ma?", trans:"Ты вчера вечером смотрела фильм?", note:"💡 昨晚 (zuówǎn — «вчера вечером») образовано по аналогии с 今早 (jīnzǎo — «сегодня утром»). В разговорной речи слова, обозначающие время суток, часто сокращаются."},
+                {speaker:"乐溪", chn:"没有，那天在莫斯科下大雨了，所以我晚上六点在办公室就睡着了。", pinyin:"Méiyǒu, nà tiān zài Mòsīkē xià dàyǔ le, suǒyǐ wǒ wǎnshàng liù diǎn zài bàngōngshì jiù shuìzháo le.", trans:"Нет, в тот день в Москве был сильный дождь, поэтому я уже в шесть вечера уснула в офисе.", note:"💡 睡了六个小时 — спал(а) 6 часов. 就 (jiù) в данном контексте выражает «уже» / «уже в (шесть часов)» или указывает на то, что действие произошло раньше ожидаемого. Обязательно применяется в предложениях с конкретным указанием времени."},
+                {speaker:"李欣怡", chn:"哇，那么好！我觉得今天北京天气也好冷啊。", pinyin:"Wa, nàme hǎo! Wǒ juéde jīntiān Běijīng tiānqì yě hǎo lěng a.", trans:"Ого, как здорово! А мне кажется, в Пекине сегодня тоже очень холодно.", note:"💡 那么好 (nàme hǎo — «так хорошо!») и 这么 (zhème — «так / настолько»). В предложении также используется усилительная частица 哇 (wa) и 好 (hǎo) в значении «очень» (好冷 — «очень холодно»)."},
+                {speaker:"乐溪", chn:"听说两个周后🕷️ Zhīzhūxiá 新电影要出了！", pinyin:"Tīngshuō liǎng gè zhōu hòu Zhīzhūxiá xīn diànyǐng yào chū le!", trans:"Говорят, через две недели выходит новый фильм про Человека-паука!", note:"💡 Spider-Man / 蜘蛛侠 (Zhīzhūxiá) — Человек-паук. 要...了 (yào...le) — грамматическая конструкция «скоро произойдет / собирается выйти». 出 (chū) — выходить (о релизе фильма/альбома), 出门 (chūmén) — выходить из дома. 想 (xiǎng) — хотеть/думать, 两个周前 (liǎng gè zhōu qián) — две недели назад."},
+                {speaker:"李欣怡", chn:"是这样，但是先要上映 Kēluòbóekè 🍞，蜘蛛侠还要等一个月。", pinyin:"Shì zhèyàng, dànshì xiān yào shàngyìng Kēluòbóekè, zhīzhūxiá hái yào děng yí gè yuè.", trans:"Да, но сначала выйдет «Колобок», а Человека-паука придётся ждать ещё месяц.", note:"💡 是这样 (shì zhèyàng) — «именно так / всё так». 真棒 (zhēnbàng) — «супер / отлично» (bang4). 先... (xiān) — сперва / сначала (перед совершением другого действия). 上映 (shàngyìng) — выходить в прокат (о кино)."},
+                {speaker:"乐溪", chn:"唉，真可惜！我特别想看蜘蛛侠电影。", pinyin:"Āi, zhēn kěxī! Wǒ tèbié xiǎng kàn zhīzhūxiá diànyǐng.", trans:"Эх, как жалко! Я так хочу посмотреть фильм про Человека-паука.", note:"💡 真可惜 (zhēn kěxī) — «какая жалость! / очень жаль!». 特别 (tèbié) — «особенно / очень»."},
+                {speaker:"李欣怡", chn:"没事儿，我们可以先看 Kēluòbóekè 🍞，然后下个月再看蜘蛛侠🕷️。", pinyin:"Méi shìr, wǒmen kěyǐ xiān kàn Kēluòbóekè, ránhòu xià gè yuè zài kàn zhīzhūxiá.", trans:"Ничего страшного, мы можем сначала посмотреть «Колобка», а в следующем месяце — Человека-паука.", note:"💡 先... 然后... (xiān... ránhòu...) — «сначала... а потом...» (последовательность действий). 再 (zài) — «снова / затем» (указывает на то, что действие произойдет в будущем после первого этапа)."}
+            ]},
+            { title: "✈️ Возвращение и погода", lines: [
+                {speaker:"均雷", chn:"你什么时候回上海？", pinyin:"Nǐ shénme shíhou huí Shànghǎi?", trans:"Когда ты возвращаешься в Шанхай?", note:""},
+                {speaker:"李欣怡", chn:"我还没想好。现在飞机票太贵了！", pinyin:"Wǒ hái méi xiǎnghǎo. Xiànzài fēijī piào tài guì le!", trans:"Я ещё не решила. Сейчас авиабилеты слишком дорогие!", note:"💡 飞机票 (fēijī piào) — авиабилет."},
+                {speaker:"均雷", chn:"北京天气冷不冷？", pinyin:"Běijīng tiānqì lěng bù lěng?", trans:"В Пекине холодно?", note:""},
+                {speaker:"李欣怡", chn:"挺冷的！昨天还热，今天又冷。你身体怎么样？", pinyin:"Tǐng lěng de! Zuótiān hái rè, jīntiān yòu lěng. Nǐ shēntǐ zěnme yàng?", trans:"Довольно холодно! Вчера ещё было жарко, а сегодня опять холодно. Как твоё здоровье?", note:""},
+                {speaker:"均雷", chn:"身体还好，就是最近有点困。每天从半夜到早上五点睡觉。", pinyin:"Shēntǐ hái hǎo, jiùshì zuìjìn yǒudiǎn kùn. Měitiān cóng bànyè dào zǎoshang wǔ diǎn shuìjiào.", trans:"Со здоровьем нормально, только в последнее время сонная. Каждый день сплю с полуночи до пяти утра.", note:"💡 从...到... (cóng...dào...) — с... до... (по времени)."},
+                {speaker:"李欣怡", chn:"你要多睡觉，多喝水，多去公园散步。", pinyin:"Nǐ yào duō shuìjiào, duō hē shuǐ, duō qù gōngyuán sànbù.", trans:"Тебе нужно больше спать, больше пить воды, больше гулять в парке.", note:""},
+                {speaker:"均雷", chn:"谢谢！我早上就去商店买茶。", pinyin:"Xièxie! Wǒ zǎoshang jiù qù shāngdiàn mǎi chá.", trans:"Спасибо! Я утром сразу пойду в магазин за чаем.", note:"💡 就 (jiù) — сразу, как раз."}
+            ]},
+            { title: "📺 Телевизор и американские фильмы", lines: [
+                {speaker:"乐溪", chn:"我下个周想买一台电视。", pinyin:"Wǒ xià gè zhōu xiǎng mǎi yī tái diànshì.", trans:"Я на следующей неделе хочу купить телевизор.", note:"💡 台 (tái) — счётное слово для техники."},
+                {speaker:"李欣怡", chn:"你常常用电视还是电脑还是手机看电影。", pinyin:"Nǐ chángcháng yòng diànshì háishì diànnǎo háishì shǒujī kàn diànyǐng.", trans:"Ты обычно смотришь фильмы по телевизору, на компьютере или на телефоне?", note:"💡 还是 (háishì) — или (в вопросах)."},
+                {speaker:"乐溪", chn:"我家人都喜欢有时候一起看美国电影。", pinyin:"Wǒ jiā rén dōu xǐhuan yǒushíhou yīqǐ kàn Měiguó diànyǐng.", trans:"Моя семья любит иногда вместе смотреть американские фильмы.", note:""},
+                {speaker:"李欣怡", chn:"我周末也喜欢看电视，而不玩手机。", pinyin:"Wǒ zhōumò yě xǐhuan kàn diànshì, ér bù wán shǒujī.", trans:"Я по выходным тоже люблю смотреть телевизор, а не сидеть в телефоне.", note:"💡 而 (ér) — а, но (противопоставление)."},
+                {speaker:"乐溪", chn:"那我们去商店看看最大的电视多少钱？", pinyin:"Nà wǒmen qù shāngdiàn kànkan zuì dà de diànshì duōshǎo qián?", trans:"Тогда пойдём в магазин посмотрим, сколько стоит самый большой телевизор?", note:""},
+                {speaker:"李欣怡", chn:"不用，我先网上看一下。", pinyin:"Bùyòng, wǒ xiān wǎngshàng kàn yīxià.", trans:"Не надо, я сначала посмотрю в интернете.", note:"💡 网上 (wǎngshàng) — в интернете. 一下 (yīxià) — немного."},
+                {speaker:"乐溪", chn:"哎呀，太贵了！", pinyin:"Āiya, tài guì le!", trans:"Ой, слишком дорого!", note:""},
+                {speaker:"李欣怡", chn:"算了，太贵了！我最好买电脑学中文吧。", pinyin:"Suàn le, tài guì le! Wǒ zuìhǎo mǎi diànnǎo xué Zhōngwén ba.", trans:"Ладно, слишком дорого! Лучше куплю компьютер и буду учить китайский.", note:"💡 算了 (suàn le) — ладно, проехали."},
+                {speaker:"乐溪", chn:"哈哈。也行，用电脑也能看电影。", pinyin:"Hāhā. Yě xíng, yòng diànnǎo yě néng kàn diànyǐng.", trans:"Ха-ха. Тоже можно, на компьютере тоже можно смотреть фильмы.", note:""}
+            ]}
+        ];
+
+        const readingTexts = [
+            {
+                title: "📖 Текст 1: Утро и магазин",
+                text: "今天是星期六。乐溪早上七点起床。她想吃巧克力蛋糕🍰，但是她说： «算了，我喝茶吧。» 九点她给李欣怡打电话。李欣怡说： «我们一起去商店吧。» 她们在商店看到一台电视。乐溪问： «这台电视多少钱？» 李欣怡说： «太贵了！我们别买了。» 乐溪说： «好，我们回家吧。»",
+                questions: [
+                    { q: "今天星期几？", a: "星期六。" },
+                    { q: "乐溪想吃什么？", a: "巧克力蛋糕。" },
+                    { q: "她们在商店看到什么？", a: "一台电视。" },
+                    { q: "她们买电视了吗？", a: "没有，太贵了。" }
+                ]
+            },
+            {
+                title: "📖 Текст 2: Дождь и парк",
+                text: "均雷想去公园散步。但是今天下雨了，天气很冷。李欣怡说： «别去公园了，我们在家看电影吧。» 均雷说： «好，我昨天买了两部电影。» 李欣怡问： «什么电影？» 均雷说： «美国电影和韩国电影。» 她们在家看了美国电影。均雷觉得很有意思。",
+                questions: [
+                    { q: "均雷想去哪里？", a: "公园。" },
+                    { q: "今天天气怎么样？", a: "下雨，很冷。" },
+                    { q: "她们在家做什么？", a: "看电影。" },
+                    { q: "均雷觉得电影怎么样？", a: "很有意思。" }
+                ]
+            },
+            {
+                title: "📖 Текст 3: Телефон и сон",
+                text: "李欣怡最近身体有点累。她晚上常常玩手机，很晚才睡觉。乐溪说： «你要早点睡觉，不要玩手机。» 李欣怡说： «我知道，但是睡不着。» 乐溪说： «你试试喝热水，然后去公园散步。» 李欣怡说： «好，我明天试试。»",
+                questions: [
+                    { q: "李欣怡为什么身体累？", a: "她晚上常常玩手机，很晚才睡觉。" },
+                    { q: "乐溪给了什么建议？", a: "早点睡觉，不要玩手机。" },
+                    { q: "李欣怡能睡着吗？", a: "睡不着。" },
+                    { q: "李欣怡明天要做什么？", a: "喝热水，去公园散步。" }
+                ]
+            }
+        ];
+
+        const practiceTopics = [
+            {
+                title: "😴 Сон и здоровье",
+                questions: [
+                    "你平时几点睡觉？周末呢？",
+                    "你一般睡几个小时？",
+                    "你睡觉前常常做什么？玩手机吗？",
+                    "你睡不着的话，做什么？",
+                    "你昨晚睡得好吗？为什么？",
+                    "你最近身体怎么样？",
+                    "你觉得身体和睡觉有关系吗？"
+                ],
+                highlights: ["🌙 睡不着 — не мочь заснуть", "💭 如果...的话 — если..., то...", "📊 睡得好 — оценка качества через 得", "🔗 A 和 B 有关系 — A связано с B"]
+            },
+            {
+                title: "🏫 Школа (гипотетически)",
+                questions: [
+                    "如果你现在能回学校，想再学什么？",
+                    "你小的时候，最喜欢的课是什么？",
+                    "你最不喜欢上什么课？",
+                    "你之前有很多作业吗？周末也要写吗？",
+                    "你现在还跟之前的同学联系吗？",
+                    "如果让你选一个城市学习，想去哪儿？",
+                    "你小时候想做什么工作？"
+                ],
+                highlights: ["🔄 再 + V — снова сделать", "🤝 跟...联系 — поддерживать связь", "🚀 让 + N + V — дать возможность", "🎒 上课 / 写作业 — посещать занятия / делать ДЗ"]
+            },
+            {
+                title: "🛒 Магазин и покупки",
+                questions: [
+                    "你常常去商店吗？去哪个商店？",
+                    "你家有电视吗？你常常看电视还是刷手机？",
+                    "这台电视多少钱？你觉得贵吗？",
+                    "你买过最贵的东西是什么？",
+                    "你在淘宝买过东西吗？",
+                    "如果朋友要买手机，你会推荐哪个牌子？",
+                    "你觉得这里的的东西贵吗？"
+                ],
+                highlights: ["📱 刷手机 — скроллить телефон", "🏷️ 哪个牌子 — какой бренд", "📺 量词 台 — счётное слово для техники", "🕒 V + 过 — жизненный опыт"]
+            },
+            {
+                title: "🎬 Фильмы и кино",
+                questions: [
+                    "你昨天看电影了吗？",
+                    "你喜欢去电影院还是在家看？",
+                    "你看电影的时候吃什么？",
+                    "你常常用手机看电影吗？",
+                    "你最喜欢的电影是什么？",
+                    "听说蜘蛛侠新电影要出了，你想看吗？"
+                ],
+                highlights: ["⏰ ...的时候 — во время...", "🚨 要...了 — скоро произойдёт", "🍿 在家看 — смотреть дома", "🎬 上映 / 出 — выходить в прокат"]
+            },
+            {
+                title: "✈️ Погода и поездки",
+                questions: [
+                    "你坐火车去过哪儿？",
+                    "如果你有很多钱和时间，你想去哪个国家或者中国城市？",
+                    "火车马上开了，但是你没上车，你怎么办？",
+                    "你更喜欢坐火车还是坐飞机？为什么？",
+                    "周末你想去公园还是商店？",
+                    "你之前去过北京吗？想再去吗？",
+                    "你从几点到几点工作？",
+                    "你常常去公园吗？",
+                    "你住的城市常常下雨吗？",
+                    "如果明天很冷，你做什么？",
+                    "你什么时候回国？",
+                    "飞机票贵不贵？",
+                    "你从莫斯科到北京坐几个小时飞机？"
+                ],
+                highlights: ["⌛ 从...到... — от... до...", "🚂 坐 + Транспорт — ехать на...", "⚡ 马上...了 — вот-вот", "🌧️ 下大雨 — сильный дождь"]
+            }
+        ];
+
+        let selectedRole = "乐溪";
+        let customExamples = JSON.parse(localStorage.getItem('hsk1_custom_examples_v4') || '{}');
+        let practiceComments = JSON.parse(localStorage.getItem('hsk1_practice_comments_v4') || '{}');
+        let dialogNotes = JSON.parse(localStorage.getItem('hsk1_dialog_notes_v4') || '{}');
+        let readingNotes = JSON.parse(localStorage.getItem('hsk1_reading_notes_v4') || '{}');
+
+        window.spinWheel = function(section) {
+            const names = ["乐溪", "李欣怡", "均雷"];
+            const shuffled = [...names].sort(() => Math.random() - 0.5);
+            const resultEl = document.getElementById(`${section}WheelResult`);
+            if (resultEl) resultEl.textContent = shuffled.join(' → ');
+        };
+
+        window.spinPartner = function(num) {
+            const names = ["乐溪", "李欣怡", "均雷"];
+            const shuffled = [...names].sort(() => Math.random() - 0.5);
+            const resultEl = document.getElementById(`partner${num}Result`);
+            if (resultEl) resultEl.textContent = shuffled.join(' → ');
+        };
+
+        function renderVocab() {
+            const container = document.getElementById('vocabGrid');
+            container.innerHTML = '';
+            vocab.forEach((item, idx) => {
+                const card = document.createElement('div');
+                card.className = 'word-card';
+                card.innerHTML = `
+                    <div class="emoji">${item.emoji}</div>
+                    <div class="chinese">${item.word}</div>
+                    <div class="pinyin">${item.pinyin}</div>
+                    <div class="translation">${item.trans}</div>
+                    <div class="collocation-box">
+                        ${item.collocations.map(c => `<span class="level">${c.level}</span> ${c.items}<br><small>${c.example}</small>`).join('<br>')}
+                    </div>
+                    <div class="custom-save-area">
+                        <strong style="font-size:0.75rem;">📌 Мои примеры:</strong>
+                        <div id="savedExamples_${idx}" class="saved-examples"></div>
+                        <div class="custom-input-row">
+                            <input type="text" id="customInput_${idx}" placeholder="добавь пример..." autocomplete="off">
+                            <button class="small-btn" onclick="saveCustomExample('${item.word}', '${idx}')">💾</button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+            vocab.forEach((item, idx) => {
+                const wordKey = item.word;
+                const containerSaved = document.getElementById(`savedExamples_${idx}`);
+                if (customExamples[wordKey]) {
+                    customExamples[wordKey].forEach((ex, exIdx) => {
+                        const div = document.createElement('div');
+                        div.className = 'saved-example';
+                        div.innerHTML = `<span>${ex}</span><button class="delete-btn" onclick="deleteCustomExample('${wordKey}', ${exIdx})">✕</button>`;
+                        containerSaved.appendChild(div);
+                    });
+                }
+            });
+        }
+
+        window.saveCustomExample = function(word, idx) {
+            const input = document.getElementById(`customInput_${idx}`);
+            const val = input.value.trim();
+            if (!val) return;
+            if (!customExamples[word]) customExamples[word] = [];
+            customExamples[word].push(val);
+            localStorage.setItem('hsk1_custom_examples_v4', JSON.stringify(customExamples));
+            input.value = '';
+            renderVocab();
+        };
+
+        window.deleteCustomExample = function(word, exIdx) {
+            if (customExamples[word]) {
+                customExamples[word].splice(exIdx, 1);
+                if (customExamples[word].length === 0) delete customExamples[word];
+                localStorage.setItem('hsk1_custom_examples_v4', JSON.stringify(customExamples));
+                renderVocab();
+            }
+        };
+
+        function renderGrammar() {
+            const container = document.getElementById('grammarList');
+            container.innerHTML = grammar.map(g => `
+                <div class="grammar-card">
+                    <h3 style="margin-bottom:6px;">${g.title}</h3>
+                    <p style="font-size:0.85rem;">${g.desc}</p>
+                    <ul style="margin-top:8px; font-size:0.8rem;">${g.examples.map(e => `<li>${e}</li>`).join('')}</ul>
+                </div>
+            `).join('');
+        }
+
+        function renderDialogs() {
+            const container = document.getElementById('dialogsContainer');
+            container.innerHTML = dialogs.map((d, dIdx) => `
+                <div class="dialog-card">
+                    <strong>${d.title}</strong>
+                    <div class="dialog-controls">
+                        <button class="dialog-btn" onclick="togglePinyin(${dIdx})">📢 Пиньинь</button>
+                        <button class="dialog-btn" onclick="toggleTrans(${dIdx})">🌐 Перевод</button>
+                    </div>
+                    ${d.lines.map((l, lIdx) => {
+                        const noteKey = `${dIdx}_${lIdx}`;
+                        const savedNote = dialogNotes[noteKey] || '';
+                        return `
+                        <div class="dialog-line">
+                            <span class="speaker">${l.speaker}:</span>
+                            <span class="chinese-text">${l.chn}</span>
+                            ${l.note ? `<span class="note-toggle" onclick="toggleWordNote('${dIdx}_${lIdx}')">💡</span>` : ''}
+                            <button class="note-toggle" onclick="toggleNote('${noteKey}')">📝 Заметка</button>
+                        </div>
+                        <div class="dialog-pinyin" id="pinyin_${dIdx}_${lIdx}" style="display:block;">${l.pinyin}</div>
+                        <div class="dialog-trans" id="trans_${dIdx}_${lIdx}" style="display:none;">${l.trans}</div>
+                        ${l.note ? `<div class="word-note" id="wordnote_${dIdx}_${lIdx}">${l.note}</div>` : ''}
+                        <div class="dialog-note-area" id="note_${noteKey}" style="display:none;">
+                            <textarea style="width:100%; min-height:60px; border-radius:8px; border:1px solid #ccc2b2; padding:8px; font-family:inherit; font-size:0.8rem;" id="textarea_${noteKey}">${savedNote}</textarea>
+                            <button class="save-note-btn" onclick="saveDialogNote('${noteKey}')">💾 Сохранить навсегда</button>
+                        </div>
+                    `;
+                    }).join('')}
+                </div>
+            `).join('');
+        }
+
+        window.toggleWordNote = function(key) {
+            const el = document.getElementById(`wordnote_${key}`);
+            if (el) el.classList.toggle('show');
+        };
+
+        window.toggleNote = function(noteKey) {
+            const el = document.getElementById(`note_${noteKey}`);
+            if (el) el.style.display = (el.style.display === 'none') ? 'block' : 'none';
+        };
+
+        window.saveDialogNote = function(noteKey) {
+            const textarea = document.getElementById(`textarea_${noteKey}`);
+            if (textarea) {
+                dialogNotes[noteKey] = textarea.value;
+                localStorage.setItem('hsk1_dialog_notes_v4', JSON.stringify(dialogNotes));
+                alert('Заметка сохранена!');
+            }
+        };
+
+        window.togglePinyin = function(dIdx) {
+            const els = document.querySelectorAll(`[id^="pinyin_${dIdx}_"]`);
+            const firstEl = els[0];
+            if (!firstEl) return;
+            const isHidden = firstEl.style.display === 'none';
+            els.forEach(el => { el.style.display = isHidden ? 'block' : 'none'; });
+        };
+
+        window.toggleTrans = function(dIdx) {
+            const els = document.querySelectorAll(`[id^="trans_${dIdx}_"]`);
+            const firstEl = els[0];
+            if (!firstEl) return;
+            const isHidden = firstEl.style.display === 'none';
+            els.forEach(el => { el.style.display = isHidden ? 'block' : 'none'; });
+        };
+
+        function renderReading() {
+            const container = document.getElementById('readingContainer');
+            container.innerHTML = readingTexts.map((t, tIdx) => `
+                <div class="reading-text">
+                    <strong>${t.title}</strong>
+                    <p style="margin-top:8px;">${t.text}</p>
+                    <div style="margin-top:12px;">
+                        ${t.questions.map((q, qIdx) => {
+                            const noteKey = `reading_${tIdx}_${qIdx}`;
+                            const savedNote = readingNotes[noteKey] || '';
+                            return `
+                            <div class="reading-question">❓ ${q.q}</div>
+                            <button class="small-btn" onclick="toggleReadingAnswer(${tIdx}, ${qIdx})">👀 Показать ответ</button>
+                            <div class="reading-answer" id="readingAnswer_${tIdx}_${qIdx}">✅ ${q.a}</div>
+                            <div class="reading-note-area">
+                                <textarea style="width:100%; min-height:50px; border-radius:8px; border:1px solid #ccc2b2; padding:8px; font-family:inherit; font-size:0.8rem;" id="readingTextarea_${noteKey}">${savedNote}</textarea>
+                                <button class="save-note-btn" onclick="saveReadingNote('${noteKey}')">💾 Сохранить навсегда</button>
+                            </div>
+                        `;
+                        }).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        window.toggleReadingAnswer = function(tIdx, qIdx) {
+            const el = document.getElementById(`readingAnswer_${tIdx}_${qIdx}`);
+            if (el) el.classList.toggle('show');
+        };
+
+        window.saveReadingNote = function(noteKey) {
+            const textarea = document.getElementById(`readingTextarea_${noteKey}`);
+            if (textarea) {
+                readingNotes[noteKey] = textarea.value;
+                localStorage.setItem('hsk1_reading_notes_v4', JSON.stringify(readingNotes));
+                alert('Заметка сохранена!');
+            }
+        };
+
+        function renderPractice() {
+            const container = document.getElementById('practiceContent');
+            const otherRoles = ["乐溪", "李欣怡", "均雷"].filter(r => r !== selectedRole);
+            const partner = otherRoles[0];
+            container.innerHTML = practiceTopics.map((topic, tIdx) => `
+                <div class="practice-topic">
+                    <div class="questions-area">
+                        <h3>${topic.title}</h3>
+                        <div><strong>${selectedRole} ↔ ${partner}</strong></div>
+                        ${topic.questions.map(q => `<div class="question-box">💬 ${q}</div>`).join('')}
+                        <div class="grammar-highlight">
+                            <strong>📌 Полезно для этой темы:</strong><br>
+                            ${topic.highlights.join('<br>')}
+                        </div>
+                    </div>
+                    <div class="comment-area">
+                        <label style="font-weight:600; font-size:0.8rem;">📝 Комментарии:</label>
+                        <textarea id="comment_${tIdx}">${practiceComments[tIdx] || ''}</textarea>
+                        <button class="save-note-btn" onclick="saveComment(${tIdx})" style="margin-top:8px;">💾 Сохранить навсегда</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        window.saveComment = function(idx) {
+            const textarea = document.getElementById(`comment_${idx}`);
+            if (textarea) {
+                practiceComments[idx] = textarea.value;
+                localStorage.setItem('hsk1_practice_comments_v4', JSON.stringify(practiceComments));
+                alert('Комментарий сохранён!');
+            }
+        };
+
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                document.querySelectorAll('.section').forEach(s => s.classList.remove('active-section'));
+                document.getElementById(this.dataset.tab).classList.add('active-section');
+                if (this.dataset.tab === 'vocab') renderVocab();
+                if (this.dataset.tab === 'grammar') renderGrammar();
+                if (this.dataset.tab === 'dialogs') renderDialogs();
+                if (this.dataset.tab === 'reading') renderReading();
+                if (this.dataset.tab === 'practice') renderPractice();
+            });
+        });
+
+        document.querySelectorAll('.role-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('selected'));
+                this.classList.add('selected');
+                selectedRole = this.dataset.role;
+                renderPractice();
+            });
+        });
+
+        renderVocab();
+        renderGrammar();
+        renderDialogs();
+        renderReading();
+        renderPractice();
+    })();
+</script>
+</body>
+</html>
