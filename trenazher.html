@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тренажёр иероглифов — экспертный уровень</title>
+    <style>
+        :root {
+            --bg: #F5F0E8;
+            --card-bg: #FFFDF9;
+            --shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+            --border: #E5D9CC;
+            --accent: #B78D6B;
+            --accent-hover: #A07650;
+            --text: #3D3229;
+            --text-light: #7A6A5C;
+            --success: #6A8E7A;
+            --error: #C87E7E;
+            --warning: #D4A373;
+            --info: #8B9DAF;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--bg);
+            font-family: 'Segoe UI', 'Noto Sans', system-ui, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: var(--text);
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            background: var(--card-bg);
+            border-radius: 28px;
+            padding: 28px 24px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        /* ШАПКА И ЦЕЛЕВОЙ СИМВОЛ */
+        .target-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 4px;
+        }
+        .target-card {
+            background: #fff;
+            border-radius: 22px;
+            padding: 16px 36px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.04), inset 0 0 0 1px var(--border);
+            text-align: center;
+            min-width: 180px;
+            transition: all 0.3s;
+            border: 2px solid var(--accent);
+            position: relative;
+        }
+        .target-label {
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-light);
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+        .target-symbol {
+            font-size: 5rem;
+            font-weight: 500;
+            line-height: 1.1;
+            color: var(--accent);
+            text-shadow: 0 2px 8px rgba(183,141,107,0.15);
+        }
+        .target-progress {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            margin-top: 4px;
+            letter-spacing: 0.03em;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 4px;
+        }
+        .btn {
+            padding: 12px 22px;
+            border-radius: 40px;
+            border: none;
+            background: #fff;
+            box-shadow: inset 0 0 0 1px var(--border);
+            color: var(--text);
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+        }
+        .btn:hover { background: #F7F2EC; box-shadow: inset 0 0 0 2px var(--accent); }
+        .btn-primary { background: var(--accent); color: #fff; box-shadow: none; font-weight: 600; }
+        .btn-primary:hover { background: var(--accent-hover); }
+        .btn-large {
+            padding: 14px 28px;
+            font-size: 1.05rem;
+            border-radius: 50px;
+            background: #fff;
+            box-shadow: inset 0 0 0 2px var(--accent);
+            color: var(--accent);
+            font-weight: 600;
+        }
+        .btn-large:hover {
+            background: var(--accent);
+            color: #fff;
+            box-shadow: none;
+        }
+        .btn-report {
+            background: #fff;
+            box-shadow: inset 0 0 0 2px var(--info);
+            color: var(--info);
+            font-weight: 600;
+            display: none;
+        }
+        .btn-report:hover {
+            background: var(--info);
+            color: #fff;
+            box-shadow: none;
+        }
+
+        /* ПОЛЕ ШАРИКОВ — ГРИД, НЕСКОЛЬКО РЯДОВ ДАЖЕ ПРИ МАЛОМ КОЛИЧЕСТВЕ */
+        .balls-area {
+            background: #FBF8F3;
+            border: 1px dashed var(--border);
+            border-radius: 24px;
+            padding: 16px 12px;
+            min-height: 280px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(58px, 1fr));
+            grid-auto-rows: 58px;
+            gap: 6px;
+            justify-items: center;
+            align-items: center;
+            transition: all 0.3s;
+            position: relative;
+        }
+        .ball {
+            width: 100%;
+            height: 100%;
+            max-width: 58px;
+            max-height: 58px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08), inset 0 -2px 4px rgba(0,0,0,0.05);
+            transition: transform 0.18s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s, filter 0.2s;
+            user-select: none;
+            border: 2px solid rgba(255,255,255,0.9);
+            text-shadow: 0 1px 2px rgba(255,255,255,0.4);
+            color: #2D2A26;
+            font-size: 1.4rem;
+            flex-shrink: 0;
+        }
+        .ball:hover { transform: scale(1.15); box-shadow: 0 8px 20px rgba(0,0,0,0.15); filter: brightness(1.05); z-index: 2; }
+        .ball:active { transform: scale(0.92); }
+        .ball.correct-flash { animation: correctPulse 0.5s ease; border-color: var(--success); }
+        .ball.incorrect-flash { animation: incorrectShake 0.4s ease; border-color: var(--error); }
+        @keyframes correctPulse {
+            0% { box-shadow: 0 0 0 0 rgba(106,142,122,0.6); }
+            70% { box-shadow: 0 0 0 20px rgba(106,142,122,0); }
+            100% { box-shadow: 0 0 0 0 rgba(106,142,122,0); }
+        }
+        @keyframes incorrectShake {
+            0%,100% { transform: translateX(0); }
+            20% { transform: translateX(-8px); }
+            40% { transform: translateX(8px); }
+            60% { transform: translateX(-4px); }
+            80% { transform: translateX(4px); }
+        }
+
+        /* СТАТУС */
+        .status {
+            text-align: center;
+            font-size: 1rem;
+            min-height: 26px;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+        }
+        .status.success { color: var(--success); }
+        .status.error { color: var(--error); }
+        .status.info { color: var(--info); }
+
+        /* НИЖНЯЯ ЧАСТЬ */
+        .bottom-section {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 4px;
+        }
+        textarea {
+            width: 100%;
+            min-height: 80px;
+            padding: 14px 16px;
+            border-radius: 18px;
+            border: 1px solid var(--border);
+            background: #fff;
+            font-size: 1.15rem;
+            font-family: inherit;
+            color: var(--text);
+            resize: vertical;
+            outline: none;
+            transition: border-color 0.2s;
+            line-height: 1.6;
+            letter-spacing: 0.04em;
+        }
+        textarea:focus { border-color: var(--accent); }
+        .hint {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            text-align: right;
+            margin-top: 4px;
+        }
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            color: var(--text-light);
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .counter {
+            background: #fff;
+            padding: 6px 14px;
+            border-radius: 20px;
+            box-shadow: inset 0 0 0 1px var(--border);
+            font-weight: 500;
+        }
+
+        /* ОТЧЕТ */
+        .report-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.35);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            backdrop-filter: blur(5px);
+        }
+        .report-card {
+            background: #FFFDF9;
+            border-radius: 28px;
+            padding: 32px 28px;
+            max-width: 620px;
+            width: 94%;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 24px 48px rgba(0,0,0,0.2);
+            border: 1px solid var(--border);
+            text-align: left;
+            position: relative;
+        }
+        .report-card h3 {
+            font-size: 1.7rem;
+            margin-bottom: 8px;
+            color: var(--accent);
+            text-align: center;
+            font-weight: 600;
+        }
+        .report-subtitle {
+            text-align: center;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+        .report-section {
+            margin: 16px 0;
+            padding: 18px 20px;
+            border-radius: 18px;
+            background: #FBF8F3;
+            border-left: 6px solid var(--warning);
+            transition: all 0.2s;
+        }
+        .report-section h4 {
+            font-size: 1.1rem;
+            margin-bottom: 6px;
+            color: var(--text);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .report-section p {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+        .report-section ul {
+            list-style: none;
+            padding-left: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .report-section li {
+            font-size: 1.5rem;
+            letter-spacing: 0.05em;
+            background: #fff;
+            padding: 8px 16px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            font-weight: 500;
+        }
+        .report-close {
+            margin-top: 24px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .report-close .btn {
+            min-width: 140px;
+        }
+
+        @media (max-width: 600px) {
+            .container { padding: 16px 12px; }
+            .balls-area { grid-template-columns: repeat(auto-fill, minmax(44px, 1fr)); grid-auto-rows: 44px; gap: 4px; }
+            .ball { max-width: 44px; max-height: 44px; font-size: 1.1rem; }
+            .target-symbol { font-size: 3.2rem; }
+            .target-card { padding: 12px 24px; }
+            .btn-large { padding: 12px 20px; font-size: 0.9rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- Целевой символ -->
+    <div class="target-wrapper">
+        <div class="target-card">
+            <div class="target-label">Найди этот символ</div>
+            <div class="target-symbol" id="targetSymbol">?</div>
+            <div class="target-progress" id="targetProgress">Осталось: —</div>
+        </div>
+        <div class="controls">
+            <button class="btn" id="btnShuffle">🔄 Перемешать</button>
+            <button class="btn btn-large" id="btnNewTarget">🎯 Новый иероглиф</button>
+            <button class="btn btn-primary" id="btnLoad">📥 Загрузить список</button>
+            <button class="btn btn-report" id="btnShowReport">📊 Отчёт</button>
+        </div>
+    </div>
+
+    <!-- Статус -->
+    <div class="status" id="statusMessage">Введите список иероглифов ниже и нажмите «Загрузить»</div>
+
+    <!-- Поле с шариками (грид) -->
+    <div class="balls-area" id="ballsField"></div>
+
+    <!-- Ввод снизу -->
+    <div class="bottom-section">
+        <textarea id="inputArea" placeholder="Вставьте иероглифы сюда — через запятую, пробел или с новой строки...">山, 川, 火, 水, 木, 金, 土, 日, 月, 星, 花, 鳥, 空, 海, 風, 雲, 雪, 雨, 森, 石, 田</textarea>
+        <div class="hint">Разделители: запятая, пробел, новая строка | Ctrl+Enter — загрузить</div>
+    </div>
+
+    <!-- Подвал -->
+    <div class="footer">
+        <div class="counter" id="counter">Символов: 0</div>
+        <div class="counter" id="attemptsCounter">Попыток: 0 | Успешно: 0</div>
+    </div>
+</div>
+
+<script>
+(function() {
+    // ---------- ДАННЫЕ ----------
+    let symbols = [];
+    let shuffledSymbols = [];
+    let targetSymbol = '';
+    let attempts = 0;
+    let successfulAttempts = 0;
+    let statsMap = new Map();
+    let sessionFinished = false;
+    let reportData = null;
+
+    // ---------- DOM ----------
+    const inputArea = document.getElementById('inputArea');
+    const ballsField = document.getElementById('ballsField');
+    const targetSymbolEl = document.getElementById('targetSymbol');
+    const targetProgressEl = document.getElementById('targetProgress');
+    const statusMessage = document.getElementById('statusMessage');
+    const counterEl = document.getElementById('counter');
+    const attemptsCounterEl = document.getElementById('attemptsCounter');
+    const btnShuffle = document.getElementById('btnShuffle');
+    const btnLoad = document.getElementById('btnLoad');
+    const btnNewTarget = document.getElementById('btnNewTarget');
+    const btnShowReport = document.getElementById('btnShowReport');
+
+    // ---------- ПАЛИТРА (яркая, 48 цветов) ----------
+    const palette = [
+        '#FFB3BA', '#FFDFBA', '#FFFFBA', '#BAFFC9', '#BAE1FF', '#E8BAFF',
+        '#FFD1DC', '#FFC4A3', '#FFEE93', '#B5EAD7', '#A0D2DB', '#C7CEEA',
+        '#F9C6C9', '#FFE5B4', '#C5E1A5', '#B3E5FC', '#F8BBD0', '#D1C4E9',
+        '#FFAB91', '#A5D6A7', '#90CAF9', '#F48FB1', '#FFF59D', '#80CBC4',
+        '#FFCCBC', '#B0BEC5', '#F0F4C3', '#FFE0B2', '#B3E0FF', '#E1BEE7',
+        '#FFB347', '#77DD77', '#AEC6CF', '#FDFD96', '#C3B1E1', '#FF6961',
+        '#CB99C9', '#F0E68C', '#89CFF0', '#FADADD', '#B2BEB5', '#E6E6FA',
+        '#F5CBA7', '#A9DFBF', '#F9E79F', '#AED6F1', '#D7BDE2', '#F5B7B1'
+    ];
+
+    function getRandomColor() {
+        return palette[Math.floor(Math.random() * palette.length)];
+    }
+
+    // ---------- ПАРСИНГ ----------
+    function parseSymbols(text) {
+        return text
+            .replace(/[\s,，、;；]+/g, ',')
+            .split(',')
+            .map(s => s.trim())
+            .filter(s => s.length > 0);
+    }
+
+    // ---------- ПЕРЕМЕШИВАНИЕ ----------
+    function shuffleArray(arr) {
+        const a = [...arr];
+        for (let i = a.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [a[i], a[j]] = [a[j], a[i]];
+        }
+        return a;
+    }
+
+    // ---------- ЦЕЛЕВОЙ СИМВОЛ ----------
+    function pickRandomTarget() {
+        if (symbols.length === 0) return;
+        const candidates = symbols.filter(s => {
+            const st = statsMap.get(s);
+            return !st || st.mastery < 3;
+        });
+        if (candidates.length === 0) {
+            finishSession();
+            return;
+        }
+        targetSymbol = candidates[Math.floor(Math.random() * candidates.length)];
+        targetSymbolEl.textContent = targetSymbol;
+        sessionFinished = false;
+        updateTargetProgress();
+    }
+
+    function updateTargetProgress() {
+        if (symbols.length === 0) {
+            targetProgressEl.textContent = 'Осталось: —';
+            return;
+        }
+        const mastered = symbols.filter(s => {
+            const st = statsMap.get(s);
+            return st && st.mastery >= 3;
+        }).length;
+        targetProgressEl.textContent = `Осталось: ${symbols.length - mastered} / ${symbols.length}`;
+    }
+
+    // ---------- ОТРИСОВКА ШАРИКОВ (ГРИД) ----------
+    function renderBalls() {
+        ballsField.innerHTML = '';
+        if (shuffledSymbols.length === 0) {
+            ballsField.innerHTML = '<div style="color: var(--text-light);">Список пуст</div>';
+            return;
+        }
+        // Перемешиваем цвета
+        const shuffledColors = shuffleArray(palette);
+        let colorIndex = 0;
+
+        shuffledSymbols.forEach((symbol) => {
+            const ball = document.createElement('div');
+            ball.className = 'ball';
+            ball.textContent = symbol;
+            const color = shuffledColors[colorIndex % shuffledColors.length];
+            colorIndex++;
+            ball.style.backgroundColor = color;
+            ball.addEventListener('click', () => handleBallClick(ball, symbol));
+            ballsField.appendChild(ball);
+        });
+    }
+
+    // ---------- ОБРАБОТКА КЛИКА ----------
+    function handleBallClick(ball, symbol) {
+        if (symbols.length === 0 || sessionFinished) return;
+        if (!targetSymbol) {
+            setStatus('Сначала выберите целевой иероглиф', 'error');
+            return;
+        }
+        attempts++;
+        if (!statsMap.has(symbol)) {
+            statsMap.set(symbol, { total: 0, correct: 0, wrong: 0, streak: 0, mastery: 0 });
+        }
+        const st = statsMap.get(symbol);
+        st.total++;
+
+        if (symbol === targetSymbol) {
+            successfulAttempts++;
+            st.correct++;
+            st.streak++;
+            if (st.streak >= 3) st.mastery = 3;
+            else if (st.streak === 2) st.mastery = 2;
+            else st.mastery = 1;
+            setStatus('✅ Верно!', 'success');
+            ball.classList.add('correct-flash');
+            setTimeout(() => ball.classList.remove('correct-flash'), 600);
+            setTimeout(() => {
+                pickRandomTarget();
+                setStatus('Новый целевой выбран', 'info');
+                updateCounters();
+            }, 600);
+        } else {
+            st.wrong++;
+            st.streak = 0;
+            st.mastery = Math.max(0, st.mastery - 1);
+            setStatus('❌ Неверно, попробуйте ещё', 'error');
+            ball.classList.add('incorrect-flash');
+            setTimeout(() => ball.classList.remove('incorrect-flash'), 500);
+        }
+        updateCounters();
+    }
+
+    // ---------- ЗАВЕРШЕНИЕ СЕССИИ ----------
+    function finishSession() {
+        sessionFinished = true;
+        targetSymbolEl.textContent = '🎉';
+        setStatus('Все символы освоены! Отчёт готов.', 'success');
+        generateReport();
+        btnShowReport.style.display = 'inline-block';
+    }
+
+    // ---------- ГЕНЕРАЦИЯ ОТЧЕТА ----------
+    function generateReport() {
+        const weak = [];
+        const strong = [];
+        const medium = [];
+
+        symbols.forEach(sym => {
+            const st = statsMap.get(sym);
+            if (!st) {
+                weak.push(sym);
+            } else if (st.mastery >= 3 && st.wrong === 0) {
+                strong.push(sym);
+            } else if (st.mastery === 2 && st.wrong <= 1) {
+                medium.push(sym);
+            } else {
+                weak.push(sym);
+            }
+        });
+
+        reportData = { weak, strong, medium, attempts, successfulAttempts, total: symbols.length };
+    }
+
+    function showReportOverlay() {
+        if (!reportData) {
+            setStatus('Отчёт пока недоступен. Завершите сессию.', 'error');
+            return;
+        }
+        const { weak, strong, medium, attempts: repAttempts, successfulAttempts: repSuccess, total } = reportData;
+
+        const overlay = document.createElement('div');
+        overlay.className = 'report-overlay';
+        overlay.id = 'reportOverlay';
+        overlay.innerHTML = `
+            <div class="report-card">
+                <h3>📊 Ваш персональный отчёт</h3>
+                <div class="report-subtitle">На основе ${repAttempts} попыток и ${repSuccess} успешных выборов | Символов: ${total}</div>
+
+                <div class="report-section" style="border-left-color: #E57373;">
+                    <h4>🔴 Нуждаются в усиленной практике</h4>
+                    <p>Эти иероглифы стоит <strong>обязательно прописать несколько раз</strong>, проговорить вслух (звукограмма) и составить с ними простые фразы.</p>
+                    <ul>${weak.map(s => `<li>${s}</li>`).join('') || '<li>—</li>'}</ul>
+                </div>
+
+                <div class="report-section" style="border-left-color: #FFB74D;">
+                    <h4>🟡 Средний уровень — проработать в контексте</h4>
+                    <p>Представьте <strong>ситуации, где вы сможете применить эти символы завтра</strong>. Мысленно составьте 2–3 предложения с каждым.</p>
+                    <ul>${medium.map(s => `<li>${s}</li>`).join('') || '<li>—</li>'}</ul>
+                </div>
+
+                <div class="report-section" style="border-left-color: #81C784;">
+                    <h4>🟢 Сильные — достаточно повторить коллокации</h4>
+                    <p>Эти символы вы знаете хорошо. <strong>Повторите только устойчивые сочетания</strong> (коллокации) с ними, чтобы закрепить.</p>
+                    <ul>${strong.map(s => `<li>${s}</li>`).join('') || '<li>—</li>'}</ul>
+                </div>
+
+                <div class="report-close">
+                    <button class="btn" id="closeReport">Закрыть</button>
+                    <button class="btn btn-primary" id="resetFromReport">Начать заново</button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(overlay);
+
+        document.getElementById('closeReport').addEventListener('click', () => {
+            document.body.removeChild(overlay);
+        });
+        document.getElementById('resetFromReport').addEventListener('click', () => {
+            document.body.removeChild(overlay);
+            resetSession();
+        });
+    }
+
+    function resetSession() {
+        statsMap.clear();
+        attempts = 0;
+        successfulAttempts = 0;
+        sessionFinished = false;
+        reportData = null;
+        btnShowReport.style.display = 'none';
+        updateCounters();
+        if (symbols.length > 0) {
+            shuffledSymbols = shuffleArray(symbols);
+            renderBalls();
+            pickRandomTarget();
+            setStatus('Новая сессия. Найдите целевой символ.', '');
+        } else {
+            ballsField.innerHTML = '<div style="color: var(--text-light);">Список пуст</div>';
+            targetSymbolEl.textContent = '?';
+            targetProgressEl.textContent = 'Осталось: —';
+            setStatus('Введите список и загрузите', '');
+        }
+    }
+
+    // ---------- ЗАГРУЗКА СПИСКА ----------
+    function loadSymbols() {
+        const text = inputArea.value.trim();
+        const parsed = parseSymbols(text);
+        if (parsed.length === 0) {
+            setStatus('Введите хотя бы один иероглиф', 'error');
+            return;
+        }
+        symbols = parsed;
+        statsMap.clear();
+        shuffledSymbols = shuffleArray(symbols);
+        renderBalls();
+        attempts = 0;
+        successfulAttempts = 0;
+        sessionFinished = false;
+        reportData = null;
+        btnShowReport.style.display = 'none';
+        pickRandomTarget();
+        setStatus('Список загружен! Найдите целевой символ.', 'success');
+        updateCounters();
+    }
+
+    function shuffleBalls() {
+        if (symbols.length === 0) return;
+        shuffledSymbols = shuffleArray(symbols);
+        renderBalls();
+        setStatus('Шарики перемешаны', 'info');
+    }
+
+    function newTarget() {
+        if (symbols.length === 0) return;
+        pickRandomTarget();
+        setStatus('Выбран новый целевой символ', 'info');
+    }
+
+    function updateCounters() {
+        counterEl.textContent = `Символов: ${symbols.length}`;
+        attemptsCounterEl.textContent = `Попыток: ${attempts} | Успешно: ${successfulAttempts}`;
+        updateTargetProgress();
+    }
+
+    function setStatus(text, type = '') {
+        statusMessage.textContent = text;
+        statusMessage.className = 'status' + (type ? ` ${type}` : '');
+    }
+
+    // ---------- СЛУШАТЕЛИ ----------
+    btnLoad.addEventListener('click', loadSymbols);
+    btnShuffle.addEventListener('click', shuffleBalls);
+    btnNewTarget.addEventListener('click', newTarget);
+    btnShowReport.addEventListener('click', showReportOverlay);
+    inputArea.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+            e.preventDefault();
+            loadSymbols();
+        }
+    });
+
+    // Автозагрузка
+    window.addEventListener('DOMContentLoaded', () => {
+        if (inputArea.value.trim() !== '') {
+            loadSymbols();
+        } else {
+            ballsField.innerHTML = '<div style="color: var(--text-light);">Вставьте список ниже</div>';
+            setStatus('Введите иероглифы ниже и нажмите «Загрузить»', '');
+        }
+    });
+})();
+</script>
+</body>
+</html>
