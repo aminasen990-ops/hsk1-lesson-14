@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>HSK 1 · Урок 14 · Северсталь — v8.0</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #fcf9f4; font-family: 'Segoe UI', 'Roboto', 'Noto Sans', system-ui, sans-serif; padding: 1rem; color: #2d2a22; line-height: 1.6; min-height: 100vh; }
+        .app { max-width: 1200px; margin: 0 auto; }
+        h1 { font-size: 1.8rem; color: #b5443c; margin-bottom: 0.5rem; }
+        h2 { font-size: 1.4rem; margin: 1.5rem 0 1rem; color: #4a3f2f; border-bottom: 2px solid #e8e2d8; padding-bottom: 0.3rem; }
+        .subtitle { color: #6b5e4a; margin-bottom: 1.5rem; }
+        .panel { background: #fff; border-radius: 20px; padding: 1.5rem; box-shadow: 0 6px 18px rgba(0,0,0,0.05); margin-bottom: 1.5rem; border: 1px solid #f0e8dc; }
+        .tab-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 1.5rem; position: sticky; top: 0; background: #fcf9f4; z-index: 10; padding: 10px 0; }
+        .tab-btn { background: #f6efe4; border: 1px solid #ddd2c0; padding: 10px 18px; border-radius: 30px; font-weight: 600; font-size: 0.85rem; cursor: pointer; transition: all 0.2s; color: #4d3e2b; font-family: inherit; }
+        .tab-btn.active { background: #b5443c; color: #fff; border-color: #b5443c; }
+        .section { display: none; }
+        .section.active-section { display: block; animation: fade 0.3s ease; }
+        @keyframes fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        .timer-badge { display: inline-block; background: #e8e0d4; border-radius: 20px; padding: 2px 12px; font-size: 0.75rem; font-weight: 600; color: #4a3f2f; margin-left: 8px; }
+        .hsk14 { background: #ffe8a3; border-radius: 4px; padding: 0 4px; font-weight: 600; }
+        .grammar-13 { background: #d4edda; border-radius: 4px; padding: 0 4px; border-bottom: 2px dashed #28a745; }
+        .motivation-block { background: #fef7ed; border-left: 6px solid #b5443c; border-radius: 16px; padding: 18px 22px; margin-bottom: 20px; font-size: 0.92rem; line-height: 1.7; color: #3d3326; }
+        .motivation-block strong { color: #b5443c; }
+        .search-container { display: flex; gap: 10px; margin-bottom: 20px; align-items: center; }
+        .search-container input { flex: 1; padding: 10px 18px; border-radius: 30px; border: 2px solid #e0d8c8; font-family: inherit; font-size: 1rem; outline: none; }
+        .search-container input:focus { border-color: #b8914a; }
+        .search-container button { background: #b8914a; color: #fff; border: none; padding: 10px 22px; border-radius: 30px; font-weight: 700; cursor: pointer; font-family: inherit; }
+        .grid { display: flex; flex-direction: column; gap: 24px; }
+        .word-card { background: #fefcf9; border-radius: 20px; padding: 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border-left: 6px solid #b8914a; }
+        .word-card.highlight { box-shadow: 0 0 0 4px #b8914a; }
+        .word-card .chinese { font-size: 2.5rem; font-weight: 700; color: #3a2e1f; display: inline-block; margin-right: 15px; }
+        .word-card .pinyin { font-size: 1.1rem; color: #7a6a52; display: inline-block; font-weight: 600; }
+        .word-card .pinyin .tone { color: #b5443c; font-weight: 700; }
+        .word-card .translation { font-size: 1.2rem; font-weight: 600; color: #b5443c; margin: 8px 0 16px; }
+        .collocation-arc { background: #faf3e8; border-radius: 16px; padding: 20px 15px; margin: 15px 0; border: 1px solid #eadfcb; text-align: center; }
+        .collocation-arc .arc-center { display: inline-block; font-size: 1.6rem; font-weight: 700; color: #b5443c; background: #fff; padding: 8px 24px; border-radius: 40px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 15px; }
+        .collocation-arc .arc-branches { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+        .arc-branch { background: #fff; padding: 8px 16px; border-radius: 20px; font-size: 0.9rem; font-weight: 600; color: #5c503e; box-shadow: 0 2px 6px rgba(0,0,0,0.05); border: 1px solid #e0d8c8; text-align: left; }
+        .arc-branch .branch-word { font-weight: 700; }
+        .arc-branch .branch-meaning { font-size: 0.8rem; color: #6b5e4a; font-style: italic; }
+        .arc-branch .branch-example { font-size: 0.75rem; color: #8a7a64; display: block; }
+        .branch-blue { border-left: 4px solid #3498db; }
+        .branch-green { border-left: 4px solid #2ecc71; }
+        .branch-orange { border-left: 4px solid #e67e22; }
+        .branch-purple { border-left: 4px solid #9b59b6; }
+        .branch-red { border-left: 4px solid #e74c3c; }
+        .trace-canvas-container { background: #fdfbf7; border: 2px dashed #d5cdbc; border-radius: 16px; margin: 15px 0; padding: 5px; text-align: center; }
+        .trace-canvas { width: 100%; height: 150px; cursor: crosshair; border-radius: 12px; background-color: #fffef9; background-image: repeating-linear-gradient(45deg,#f5f0e8 0px,#f5f0e8 1px,transparent 1px,transparent 12px); }
+        .trace-actions { display: flex; gap: 10px; margin-top: 8px; flex-wrap: wrap; justify-content: center; }
+        .trace-actions button { background: #e8e0d4; border: none; padding: 8px 16px; border-radius: 30px; font-weight: 600; font-size: 0.8rem; cursor: pointer; font-family: inherit; }
+        .mnemo-block { background: #f8f3ea; border-radius: 16px; padding: 16px; margin: 15px 0; border: 1px solid #e5d9c5; font-size: 0.9rem; line-height: 1.7; }
+        .mnemo-block .part { margin: 10px 0; padding-left: 12px; border-left: 4px solid #b8914a; }
+        .mnemo-block .together { font-weight: 600; color: #a0662c; background: #fff; padding: 8px 12px; border-radius: 8px; margin-top: 12px; }
+        .mnemo-block .anchor { font-weight: 700; color: #b5443c; margin-top: 8px; }
+        .note-sticker { background: #fdfbf7; border: 1px solid #e8e0d0; border-radius: 16px; padding: 16px; margin: 15px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+        .note-sticker .note-header { display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: 0.9rem; color: #4a3f2f; margin-bottom: 8px; flex-wrap: wrap; gap: 6px; }
+        .note-sticker .note-status { font-size: 0.75rem; background: #eee8dd; padding: 2px 10px; border-radius: 20px; color: #5a4e3a; }
+        .note-sticker .note-status.saved { background: #d4edda; color: #155724; }
+        .note-sticker textarea { width: 100%; min-height: 70px; border-radius: 8px; border: 1px solid #d5cdbc; padding: 10px; font-family: inherit; font-size: 0.85rem; resize: vertical; background: #fff; }
+        .note-sticker .note-actions { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+        .note-sticker .note-actions button { padding: 6px 18px; border-radius: 30px; border: none; font-weight: 600; font-size: 0.8rem; cursor: pointer; font-family: inherit; }
+        .btn-save { background: #b5443c; color: #fff; }
+        .btn-clear { background: #e8e0d4; color: #4a3f2f; }
+        .btn-toggle-note { background: #e8e0d4; color: #4a3f2f; font-size: 0.75rem; padding: 2px 12px; border-radius: 12px; border: none; cursor: pointer; }
+        .toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 999; display: flex; flex-direction: column; gap: 8px; max-width: 320px; }
+        .toast { background: #2d2a22; color: #f5f0e8; padding: 12px 18px; border-radius: 12px; font-size: 0.85rem; box-shadow: 0 6px 18px rgba(0,0,0,0.25); animation: slideUp 0.3s ease; }
+        .toast.success { border-left: 4px solid #6fcf97; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .dialog-card { background: #fcf9f2; border-radius: 20px; padding: 20px; margin-bottom: 20px; border: 1px solid #e0d8c8; }
+        .dialog-controls { display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+        .dialog-controls button { background: #e8e0d4; border: none; padding: 6px 14px; border-radius: 20px; font-weight: 600; font-size: 0.75rem; cursor: pointer; font-family: inherit; }
+        .dialog-controls button.active { background: #b5443c; color: #fff; }
+        .dialog-line { display: flex; gap: 12px; margin: 10px 0; flex-wrap: wrap; align-items: baseline; }
+        .speaker { font-weight: 800; min-width: 100px; color: #b5443c; background: #faede8; padding: 2px 10px; border-radius: 6px; font-size: 0.9rem; }
+        .dialog-pinyin { font-size: 0.85rem; color: #7a6a52; margin-left: 112px; }
+        .dialog-pinyin .tone { color: #b5443c; font-weight: 700; }
+        .dialog-trans { font-size: 0.9rem; color: #5c503e; margin-left: 112px; border-left: 3px solid #e2c8a0; padding-left: 12px; background: #faf6ee; border-radius: 0 8px 8px 0; }
+        .dialog-note-body { margin-left: 112px; margin-top: 6px; margin-bottom: 8px; display: none; background: #fdf6ec; padding: 8px 16px; border-radius: 8px; font-size: 0.85rem; border-left: 3px solid #b8914a; }
+        .dialog-note-body.open { display: block; }
+        .dialog-pinyin.hidden, .dialog-trans.hidden { display: none; }
+        .grammar-card { background: #f5efe6; border-radius: 20px; padding: 20px; margin-bottom: 20px; border-left: 6px solid #5e7d5a; }
+        .grammar-card h3 { color: #2e4d2a; font-size: 1.2rem; margin-bottom: 10px; }
+        .grammar-card ul { margin-left: 20px; font-size: 0.95rem; line-height: 1.8; color: #2e4d2a; }
+        .grammar-highlight { background: #fdf6ec; border-left: 4px solid #b8914a; border-radius: 12px; padding: 12px; margin-top: 12px; font-size: 0.9rem; line-height: 1.7; }
+        .reading-card { background: #fdfaf3; border-radius: 20px; padding: 20px; margin-bottom: 20px; border: 1px solid #eadbc4; }
+        .reading-controls { display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+        .reading-controls button { background: #e8e0d4; border: none; padding: 6px 14px; border-radius: 20px; font-weight: 600; font-size: 0.75rem; cursor: pointer; font-family: inherit; }
+        .reading-controls button.active { background: #b5443c; color: #fff; }
+        .reading-text-chinese { font-size: 1.1rem; line-height: 2; }
+        .reading-text-pinyin { font-size: 0.9rem; color: #7a6a52; line-height: 1.8; }
+        .reading-text-pinyin .tone { color: #b5443c; font-weight: 700; }
+        .reading-text-trans { font-size: 0.9rem; color: #5c503e; border-left: 3px solid #b8914a; padding-left: 12px; background: #faf6ee; border-radius: 0 8px 8px 0; margin: 10px 0; }
+        .reading-text-pinyin.hidden, .reading-text-trans.hidden { display: none; }
+        .reading-question { background: #f8f1e4; border-radius: 12px; padding: 10px; margin: 10px 0; font-weight: 600; font-size: 0.95rem; }
+        .reading-answer { background: #eef4e4; border-radius: 8px; padding: 10px; margin: 6px 0 12px; border-left: 3px solid #b8914a; display: none; font-size: 0.9rem; }
+        .reading-answer.show { display: block; }
+        .small-btn { background: #e0d5c2; border: none; padding: 6px 16px; border-radius: 30px; cursor: pointer; font-weight: 600; font-size: 0.8rem; font-family: inherit; margin: 4px 0; }
+        .practice-topic { background: #fffaf2; border-radius: 20px; padding: 20px; margin-bottom: 20px; border: 1px solid #eadbc4; }
+        .question-box { background: #f8f1e4; border-radius: 12px; padding: 12px; margin: 8px 0; font-size: 0.95rem; }
+        .wheel-container { background: #fffaf2; border-radius: 20px; padding: 20px; margin-bottom: 20px; border: 1px solid #eadbc4; display: flex; flex-wrap: wrap; align-items: center; gap: 15px; }
+        .wheel-btn { background: #b5443c; color: #fff; border: none; padding: 12px 24px; border-radius: 30px; font-weight: 700; cursor: pointer; font-family: inherit; font-size: 0.9rem; }
+        .wheel-result { font-weight: 700; color: #b5443c; font-size: 1.4rem; background: #fff; padding: 12px 20px; border-radius: 20px; border: 2px solid #b8914a; flex: 1; min-width: 200px; text-align: center; }
+        .char-orb-container { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; padding: 20px; background: #fdfaf3; border-radius: 20px; border: 1px solid #eadbc4; min-height: 200px; align-items: center; }
+        .char-orb { width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; font-weight: 700; color: #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: all 0.3s; cursor: pointer; user-select: none; }
+        .char-orb:hover { transform: scale(1.1); }
+        .char-orb.small { width: 45px; height: 45px; font-size: 1.3rem; }
+        .char-orb.medium { width: 55px; height: 55px; font-size: 1.6rem; }
+        .char-orb.large { width: 70px; height: 70px; font-size: 2rem; }
+        .char-orb.found { animation: foundPulse 1s ease; background: #6fcf97 !important; }
+        @keyframes foundPulse { 0% { transform: scale(1); } 50% { transform: scale(1.3); } 100% { transform: scale(1); } }
+        .orb-1 { background: #e74c3c; } .orb-2 { background: #e67e22; } .orb-3 { background: #f1c40f; }
+        .orb-4 { background: #2ecc71; } .orb-5 { background: #1abc9c; } .orb-6 { background: #3498db; }
+        .orb-7 { background: #9b59b6; } .orb-8 { background: #e84393; } .orb-9 { background: #fd79a8; }
+        .orb-10 { background: #6c5ce7; } .orb-11 { background: #00b894; } .orb-12 { background: #fdcb6e; }
+        .export-box { background: #eaf2e3; border: 1px solid #b2d3a4; border-radius: 12px; padding: 12px; margin-bottom: 15px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+        .export-btn { background: #4a7c36; color: #fff; border: none; padding: 8px 16px; border-radius: 20px; font-weight: 600; cursor: pointer; font-size: 0.8rem; }
+        .checklist { background: #fdf2f0; border-radius: 16px; padding: 15px; border: 1px solid #f0c8c0; margin-top: 10px; }
+        footer { text-align: center; color: #8a7a64; font-size: 0.8rem; margin-top: 2rem; padding: 1rem 0; }
+        @media (max-width:600px) {
+            .dialog-pinyin,.dialog-trans,.dialog-note-body { margin-left:0; }
+            .speaker { min-width:auto; }
+            .word-card .chinese { font-size:2rem; }
+            .char-orb { width:50px; height:50px; font-size:1.5rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app">
+    <h1>🐼 HSK 1 · Урок 14 <span style="font-size:0.8rem;background:#e2ecd9;padding:4px 10px;border-radius:20px;color:#2e4d2a;">Северсталь v8.0</span></h1>
+    <div class="subtitle">Группа: 黎分析师 · 业务分析师 · 策略专家 | Корпоративный китайский & Реальная жизнь</div>
+
+    <div class="motivation-block" style="background:#fdf2f0;border-left-color:#e74c3c;">
+        <strong>📢 ВАЖНОЕ ОБРАЩЕНИЕ ПЕРЕД УРОКОМ:</strong><br>
+        Уважаемые участники группы «Северсталь»!<br><br>
+        🛑 <strong>О повторении базовых вопросов:</strong> Если на занятиях снова возникнут вопросы, которые мы детально разбирали по 7–10 раз (например, разница между <span class="hsk14">想</span> и <span class="hsk14">要</span>, нюансы <span class="hsk14">了</span> и <span class="hsk14">过</span>), мы будем вместе открывать записи прошлых уроков, листать историю нашего Telegram-чата (через 🔎 поиск) и тратить драгоценное время занятия на подсчет того, сколько раз этот материал уже давался. Подумайте: это время мы могли бы потратить на живую разговорную практику со мной и вашими коллегами, кураторство, постановку беглой речи и нюансы живого китайского языка, которые вы не найдете ни в одном учебнике.<br><br>
+        📝 <strong>О конспектах:</strong> Не нужно писать конспект «тяп-ляп». Минимальное требование: верно записанный иероглиф, пиньинь с тонами и его коллокации. Русские заметки пишем сокращенно, не выводим каждую буквочку. Если вы не успеваете — останавливайте, возвращайте, а то потом мы будем тратить в три раза больше времени, чтобы заставить вас вспомнить, что это за иероглиф, а потом окажется, что вы его и не записали.<br><br>
+        🤖 <strong>Об использовании нейросетей:</strong> Зная пиньинь или только перевод или только иероглиф — можно соединить всё с помощью DeepSeek или Google Translate. Если возникают вопросы — сейчас самое главное. НЕ НАДО сидеть с молчаливым лицом. Вы думаете, я не вижу? А я вижу. Но проблема в том, что вы, даже когда задаёте вопрос, почему-то думаете, что получив устную обратную связь, вам этого достаточно. Иначе я не понимаю, как можно подряд три-четыре вопроса задавать и ни одной мысли, ни одной черточки иероглифа не написать. Это как? Мне напоминать нужно записывать конспекты? Я не хочу.
+    </div>
+
+    <div class="tab-bar">
+        <button class="tab-btn active" data-tab="homework">📚 Задание</button>
+        <button class="tab-btn" data-tab="vocab">📝 Лексика</button>
+        <button class="tab-btn" data-tab="chars">🔤 Иероглифы</button>
+        <button class="tab-btn" data-tab="grammar">🧩 Грамматика</button>
+        <button class="tab-btn" data-tab="dialogs">💬 Диалоги</button>
+        <button class="tab-btn" data-tab="reading">📖 Чтение</button>
+        <button class="tab-btn" data-tab="practice">🗣️ Практика</button>
+    </div>
+
+    <!-- ЗАДАНИЕ -->
+    <div id="homework" class="section active-section">
+        <div class="panel">
+            <h2>📅 Домашнее задание</h2>
+            <div style="background:#f0f8f0;padding:18px;border-radius:16px;border:2px solid #28a745;margin-bottom:20px;">
+                <p style="font-weight:700;color:#1e7a34;font-size:1.1rem;">📌 ДЗ на ПЯТНИЦУ:</p>
+                <ul style="margin-left:20px;font-size:0.9rem;line-height:1.8;">
+                    <li><strong>Напечатать 5 предложений</strong> с лексикой урока 14.</li>
+                    <li><strong>Слова для использования:</strong> <span class="hsk14">东西</span>, <span class="hsk14">苹果</span>, <span class="hsk14">衣服</span>, <span class="hsk14">一点儿</span>, <span class="hsk14">不少</span>, <span class="hsk14">这些</span>, <span class="hsk14">都</span>, <span class="hsk14">先生</span>, <span class="hsk14">小姐</span>, <span class="hsk14">看见</span>, <span class="hsk14">开</span>, <span class="hsk14">回来</span>, <span class="hsk14">车</span>, <span class="hsk14">分钟</span>, <span class="hsk14">后</span>, <span class="hsk14">漂亮</span>, <span class="hsk14">啊</span>, <span class="hsk14">少</span>, <span class="hsk14">点</span>.</li>
+                    <li><strong>Грамматика для использования:</strong> <span class="grammar-13">了</span>, <span class="grammar-13">后</span>, <span class="grammar-13">啊</span>, <span class="grammar-13">都</span>, <span class="grammar-13">时候</span>, <span class="grammar-13">时间</span>, <span class="grammar-13">前</span>, <span class="grammar-13">能</span>, <span class="grammar-13">给</span>.</li>
+                    <li><strong>ВАЖНО:</strong> Используйте именно <strong>коллокации</strong> (например, не просто «衣服», а «穿衣服», «买衣服», «试一试衣服»; не просто «点», а «点外卖», «点菜», «有点贵»). Не стройте предложения на голых словах — это уровень детского сада. Мы не зря учили коллокации. Грамматику тоже обязательно применять — она в отдельном разделе.</li>
+                    <li><strong>Прислать запись экрана</strong> (не голосовое, а именно запись экрана), где <strong>чётко видно всё предложение целиком</strong>.</li>
+                    <li>Читайте предложения по очереди. Смотрите на <strong>светло-серые тексты</strong> (иероглифы), а не на аудиодорожку.</li>
+                    <li><strong>Предложение не должно быть обрезано</strong> троеточием. Если нужно — <strong>поверните экран горизонтально</strong>.</li>
+                    <li><strong>Читайте каждое предложение два раза вместе с диктором</strong>, затем один раз без диктора.</li>
+                    <li>Взгляд должен <strong>бегать по иероглифам</strong> — это обязательное требование.</li>
+                    <li><strong>Мне не хочется каждый раз комментировать, что вы не так выполнили домашнее задание. Я учу китайскому, а не чтению на русском языке домашних заданий.</strong></li>
+                </ul>
+            </div>
+            <div style="background:#fef7ed;padding:18px;border-radius:16px;border:2px solid #b8914a;">
+                <p style="font-weight:700;color:#b5443c;font-size:1.1rem;">📌 ДЗ на ВОСКРЕСЕНЬЕ (Douyin):</p>
+                <ul style="margin-left:20px;font-size:0.9rem;line-height:1.8;">
+                    <li>Найдите ролики в <strong>Douyin</strong>, вбивая в поиск <strong>именно коллокации</strong> (они в лексических карточках).</li>
+                    <li>Список слов: <span class="hsk14">衣服</span>, <span class="hsk14">点</span>, <span class="hsk14">回来</span>, <span class="hsk14">漂亮</span>, <span class="hsk14">看见</span>, <span class="hsk14">先生</span>, <span class="hsk14">些</span>, <span class="hsk14">分钟</span>, <span class="hsk14">都</span>.</li>
+                    <li>Всего прислать <strong>10 скринов роликов</strong>.</li>
+                    <li>Ограничение: максимум <strong>2</strong> из них могут быть про написание иероглифа (мнемонику).</li>
+                </ul>
+            </div>
+            <div class="checklist">✅ Чек-лист: 5 предложений с коллокациями и грамматикой · Запись экрана · 10 скринов Douyin</div>
+        </div>
+    </div>
+
+    <!-- ЛЕКСИКА -->
+    <div id="vocab" class="section">
+        <div class="export-box">
+            <span>💾 Сохраните прогресс</span>
+            <button class="export-btn" onclick="exportData()">📤 Экспорт (TXT)</button>
+        </div>
+        <div class="search-container">
+            <input type="text" id="vocabSearch" placeholder="🔍 Поиск по иероглифам..." oninput="searchVocab(this.value)">
+            <button onclick="clearSearch()">✕</button>
+        </div>
+        <h2>📝 Лексика урока 14 <span class="timer-badge">⏱️ 15 мин</span></h2>
+        <div class="grid" id="vocabGrid"></div>
+    </div>
+
+    <!-- ИЕРОГЛИФЫ -->
+    <div id="chars" class="section">
+        <h2>🔤 Иероглифы урока <span class="timer-badge">⏱️ 5 мин</span></h2>
+        <div class="motivation-block">
+            <strong>🎯 ТРЕНАЖЁР:</strong> Нажмите «Крутить» — появится иероглиф в плашке результата. Перемешайте шарики и найдите его!
+        </div>
+        <div class="wheel-container">
+            <span>🎲 Какой иероглиф найти?</span>
+            <button class="wheel-btn" onclick="spinCharWheel()">🎰 Крутить</button>
+            <span class="wheel-result" id="charWheelResult">—</span>
+            <button class="wheel-btn" style="background:#4a7c36;" onclick="toggleCharVisibility()">👁️ Скрыть</button>
+            <button class="wheel-btn" style="background:#6c5ce7;" onclick="shuffleChars()">🔀 Перемешать</button>
+        </div>
+        <div class="char-orb-container" id="charOrbContainer"></div>
+    </div>
+
+    <!-- ГРАММАТИКА -->
+    <div id="grammar" class="section">
+        <h2>🧩 Грамматика <span class="timer-badge">⏱️ 10 мин</span></h2>
+        <div class="motivation-block" style="border-left-color:#28a745;background:#f0f8f0;">
+            <strong>📌 ПОВТОРЕНИЕ УРОКА 13:</strong><br>
+            <span class="grammar-13">时候</span> vs <span class="grammar-13">时间</span> | 
+            <span class="grammar-13">前</span> | 
+            <span class="grammar-13">能</span> | 
+            <span class="grammar-13">给</span>
+        </div>
+        <div id="grammarContainer"></div>
+    </div>
+
+    <!-- ДИАЛОГИ -->
+    <div id="dialogs" class="section">
+        <h2>💬 Диалоги <span class="timer-badge">⏱️ 15 мин</span></h2>
+        <div class="motivation-block">
+            <strong>📌 ВАЖНО:</strong> Даже если вы не знаете какой-то иероглиф — <strong>НЕ СКИПАЙТЕ</strong>! Всматривайтесь в него, пытайтесь зрительно воспринять и впитать его форму. Если вы всегда смотрели только на пиньинь — вот ваша карма, и она срабатывает. На уроке надо пахать! 💪
+        </div>
+        <div id="dialogsContainer"></div>
+    </div>
+
+    <!-- ЧТЕНИЕ -->
+    <div id="reading" class="section">
+        <h2>📖 Чтение (6 текстов) <span class="timer-badge">⏱️ 20 мин</span></h2>
+        <div class="motivation-block">
+            <strong>📌 ВАЖНО:</strong> Не бойтесь незнакомых иероглифов! Ваша задача — <strong>всматриваться</strong> в них, запоминать форму, а не сразу бежать к пиньиню. Чем больше вы смотрите на иероглифы, тем быстрее они становятся родными. Пашем! 💪
+        </div>
+        <div id="readingContainer"></div>
+    </div>
+
+    <!-- ПРАКТИКА -->
+    <div id="practice" class="section">
+        <h2>🗣️ Разговорная практика <span class="timer-badge">⏱️ 15 мин</span></h2>
+        <div class="motivation-block" style="background:#fdf2f0;border-left-color:#e74c3c;">
+            <strong>📢 ПЕРЕД РАЗГОВОРНОЙ ПРАКТИКОЙ:</strong><br>
+            Некоторые хорошо ориентируются в лексике, но по некоторым прям чувствуется сильная вальяжность. Собеседнику неприятно долго ждать, пока вы в своём словарике, в который очень редко заглядываете после того как добавили слова, ищете нужное выражение. Листайте свою тетрадь перед уроком! Вы обязаны уметь ориентироваться в том, что пишете. Делайте закладки, вспоминайте университетские годы. Это не училка по ненужному предмету — вы сами выбрали китайский язык. Я не принуждаю вас к тому, чтобы учить ненужное — я подстраиваю учебный план под те цели, которые вы озвучили в начале нашего пути.
+        </div>
+        <div class="wheel-container">
+            <span>🎲 Рандомайзер</span>
+            <button class="wheel-btn" onclick="spinPracticeWheel()">Крутить</button>
+            <span class="wheel-result" id="practiceWheelResult">Нажмите «Крутить»</span>
+        </div>
+        <div id="practiceContainer"></div>
+    </div>
+
+    <footer>Северсталь v8.0 ✨</footer>
+</div>
+<div class="toast-container" id="toastContainer"></div>
+
+<script>
+(function(){
+    // ===== ЛЕКСИКА (полная мнемоника) =====
+    const vocabData = [
+        { word:"东西", pinyin:"dōng1xi", trans:"вещи, предметы",
+          mnemo:{ char1:{form:"东",visual:"Солнце восходит за деревом. Дерево (木) внизу, а верхняя линия — горизонт.",difficulty:"Не путайте с 车 (машина) — там колёса.",meaning:"Восток, направление."},
+                  char2:{form:"西",visual:"Птичье гнездо на закате. Солнце садится, птица садится в гнездо.",difficulty:"Не путайте с 四 (четыре) — внутри пусто.",meaning:"Запад, направление."},
+                  together:"Товары везли с востока на запад караванами. Всё, что собрано со всех сторон — это вещи.",
+                  anchor:"⚓ Караван верблюдов с тюками товаров, идущий по пустыне." },
+          collocations:[ {word:"买东西",meaning:"покупать вещи",example:"我去商店买东西。",color:"blue"},
+                         {word:"整理东西",meaning:"разбирать вещи",example:"在整理东西呢。",color:"green"},
+                         {word:"公司的东西",meaning:"вещи компании",example:"这是公司的东西。",color:"orange"},
+                         {word:"好东西",meaning:"годнота",example:"这绝对是好东西！",color:"purple"} ] },
+        { word:"苹果", pinyin:"píng2guǒ", trans:"яблоко",
+          mnemo:{ char1:{form:"苹",visual:"Сверху трава (艹), снизу элемент «ряска/мир». Растение/плод.",difficulty:"Не забывайте верхний ключ «трава» 艹.",meaning:"Ряска, плоское растение."},
+                  char2:{form:"果",visual:"Дерево (木), на котором созрел круглый плод (田 вверху).",difficulty:"Нижнюю вертикаль не обрывать.",meaning:"Плод, фрукт."},
+                  together:"Плоское растение + плод на дереве = конкретный круглый фрукт.",
+                  anchor:"⚓ Красное яблоко, висящее на ветке дерева на фоне травы." },
+          collocations:[ {word:"吃苹果",meaning:"есть яблоко",example:"我想吃苹果。",color:"red"},
+                         {word:"买一点儿苹果",meaning:"купить немного",example:"去买一点儿苹果吧。",color:"blue"},
+                         {word:"苹果手机",meaning:"iPhone",example:"这是苹果手机。",color:"green"},
+                         {word:"芒果",meaning:"манго",example:"你喜欢吃芒果吗？",color:"orange"},
+                         {word:"草莓",meaning:"клубника",example:"草莓很好吃。",color:"purple"} ] },
+        { word:"衣服", pinyin:"yī1fu", trans:"одежда",
+          mnemo:{ char1:{form:"衣",visual:"Человек с раскинутыми руками, на которого надевают одежду. Верхняя точка — голова, нижние линии — рукава.",difficulty:"Не забывать точку сверху!",meaning:"Одежда, платье."},
+                  char2:{form:"服",visual:"Слева луна/мясо (月) — тело. Справа рука, подгоняющая одежду под тело.",difficulty:"Правая часть сложная, запоминаем как целое.",meaning:"Подгонять, носить."},
+                  together:"Одежда, которую подгоняют по телу.",
+                  anchor:"⚓ Человек, на которого надевают пиджак, и руки поправляют его по фигуре." },
+          collocations:[ {word:"穿衣服",meaning:"надевать одежду",example:"早上穿衣服。",color:"blue"},
+                         {word:"买衣服",meaning:"покупать одежду",example:"我去商店买衣服。",color:"green"},
+                         {word:"这件衣服太贵了",meaning:"эта одежда слишком дорогая",example:"这件衣服太贵了！",color:"red"},
+                         {word:"试一试衣服",meaning:"примерить одежду",example:"我可以试一试衣服吗？",color:"purple"} ] },
+        { word:"点", pinyin:"diǎn3", trans:"точка; заказывать; немного",
+          mnemo:{ char1:{form:"点",visual:"Сверху «рот» (口), снизу четыре точки (灬) — как капли, падающие изо рта.",difficulty:"Нижние точки не забывать.",meaning:"Точка, капля."},
+                  together:"Точка + капля = маленькая часть.",
+                  anchor:"⚓ Капля, падающая на стол." },
+          collocations:[ {word:"点外卖",meaning:"заказать доставку",example:"我们点外卖吧！",color:"blue"},
+                         {word:"点菜",meaning:"заказать блюдо",example:"请点菜。",color:"blue"},
+                         {word:"甜点",meaning:"десерт",example:"我喜欢甜点。",color:"green"},
+                         {word:"有点贵",meaning:"дороговато",example:"这件有点贵。",color:"orange"},
+                         {word:"一点东西",meaning:"немного вещей",example:"买一点东西。",color:"purple"},
+                         {word:"早(一)点",meaning:"пораньше",example:"早一点来。",color:"red"},
+                         {word:"快点",meaning:"быстрее",example:"快点走！",color:"red"},
+                         {word:"小声一点",meaning:"потише",example:"小声一点说话。",color:"red"} ] },
+        { word:"不少", pinyin:"bù4shǎo", trans:"немало, много",
+          mnemo:{ char1:{form:"不",visual:"Цельная картинка: птица, которая не может взлететь (поперечная линия — препятствие).",difficulty:"Запоминается как целое.",meaning:"Не, нет."},
+                  char2:{form:"少",visual:"Маленький (小), от которого отрезали ещё кусочек. Осталась одна точка.",difficulty:"Не путать с 小 — там две точки.",meaning:"Мало."},
+                  together:"НЕ мало = много.",
+                  anchor:"⚓ Гора коробок на складе, которой не видно конца." },
+          collocations:[ {word:"不少人",meaning:"немало людей",example:"公司里有不少人。",color:"blue"},
+                         {word:"不少东西",meaning:"немало вещей",example:"车上有不少东西。",color:"green"},
+                         {word:"不少钱",meaning:"немало денег",example:"这件衣服不少钱。",color:"orange"} ] },
+        { word:"这些", pinyin:"zhè4xiē", trans:"эти",
+          mnemo:{ char1:{form:"这",visual:"Рука (扌) указывает на что-то рядом. Внутри — «тут».",difficulty:"Правая часть сложная, запоминаем как целое.",meaning:"Этот."},
+                  char2:{form:"些",visual:"Сверху «это» (此), снизу «два» (二) — несколько предметов под ногами.",difficulty:"Нижнюю горизонталь не забывать.",meaning:"Несколько, немного."},
+                  together:"Этот + несколько = эти (предметы рядом).",
+                  anchor:"⚓ Палец, указывающий на кучу вещей прямо перед тобой." },
+          collocations:[ {word:"这些东西",meaning:"эти вещи",example:"这些东西很贵。",color:"blue"},
+                         {word:"这些人",meaning:"эти люди",example:"这些人都是同事。",color:"green"},
+                         {word:"这些问题",meaning:"эти вопросы",example:"这些问题很难。",color:"orange"},
+                         {word:"有些",meaning:"некоторые",example:"有些人喜欢喝茶。",color:"purple"},
+                         {word:"一些",meaning:"несколько",example:"我买了一些水果。",color:"red"} ] },
+        { word:"都", pinyin:"dōu1", trans:"все, всё, оба",
+          mnemo:{ char1:{form:"都",visual:"Слева «город» (阝), справа «человек с ртом» (者). Все жители города собрались на площади.",difficulty:"Не путать левую часть с 阝 в других словах.",meaning:"Столица, всё."},
+                  together:"Город, где собрались все.",
+                  anchor:"⚓ Площадь, полная людей, все смотрят в одну сторону." },
+          collocations:[ {word:"我们都去",meaning:"мы все идём",example:"我们都去公司。",color:"blue"},
+                         {word:"都很好",meaning:"всё хорошо",example:"大家都很好。",color:"green"},
+                         {word:"两个人都去",meaning:"оба идут",example:"两个人都去开会。",color:"orange"},
+                         {word:"什么都不知道",meaning:"ничего не знать",example:"我什么都不知道。",color:"red"} ] },
+        { word:"先生", pinyin:"xiān1sheng", trans:"господин, мистер",
+          mnemo:{ char1:{form:"先",visual:"Ноги (儿) идущего первым человека. Тот, кто впереди.",difficulty:"Не путать с 元 (деньги) — там нет сломанной ноги.",meaning:"Сначала, раньше."},
+                  char2:{form:"生",visual:"Росток, пробивающийся из земли (горизонтальные линии — земля, вертикальная — стебель).",difficulty:"Не путать с 牛 (корова) — там есть хвост.",meaning:"Рождаться, жизнь."},
+                  together:"Тот, кто родился раньше — уважаемый человек.",
+                  anchor:"⚓ Седой господин в костюме, идущий первым и показывающий дорогу." },
+          collocations:[ {word:"张先生",meaning:"господин Чжан",example:"张先生在公司。",color:"blue"},
+                         {word:"王先生",meaning:"господин Ван",example:"王先生开车。",color:"green"},
+                         {word:"先生，您好！",meaning:"Здравствуйте, господин!",example:"先生，您好！",color:"orange"} ] },
+        { word:"小姐", pinyin:"xiǎo3jiě", trans:"барышня, мисс",
+          mnemo:{ char1:{form:"小",visual:"Человек с расставленными руками, но маленький.",difficulty:"Не путать с 少 (мало).",meaning:"Маленький."},
+                  char2:{form:"姐",visual:"Женщина (女) рядом со старшей сестрой (且).",difficulty:"Правая часть — столбик (且).",meaning:"Старшая сестра, девушка."},
+                  together:"Маленькая + девушка = молодая девушка.",
+                  anchor:"⚓ Девушка-администратор на ресепшене с бейджем.",
+                  warning:"⚠️ В деловой среде лучше: 女士 (госпожа) или 姑娘 (девушка)." },
+          collocations:[ {word:"张小姐",meaning:"мисс Чжан",example:"张小姐在吗？",color:"blue"},
+                         {word:"小姐姐",meaning:"девушка (неформально)",example:"小姐姐很漂亮。",color:"green"},
+                         {word:"女士",meaning:"госпожа",example:"女士，您好！",color:"orange"} ] },
+        { word:"看见", pinyin:"kàn4jiàn", trans:"увидеть",
+          mnemo:{ char1:{form:"看",visual:"Рука (手) над глазом (目) — человек приложил руку ко лбу, чтобы лучше видеть.",difficulty:"Верхняя часть — не забудьте, что это рука.",meaning:"Смотреть."},
+                  char2:{form:"见",visual:"Глаз на ножках — человек смотрит, стоя на земле.",difficulty:"Не путать с 贝 (ракушка).",meaning:"Видеть, встречать."},
+                  together:"Смотреть + видеть = увидеть (результат).",
+                  anchor:"⚓ Капитан, приложивший руку ко лбу, увидел корабль на горизонте." },
+          collocations:[ {word:"看见了吗？",meaning:"видел?",example:"你看见了吗？",color:"blue"},
+                         {word:"没看见",meaning:"не видел",example:"我没看见他。",color:"green"},
+                         {word:"在公司看见",meaning:"увидеть в компании",example:"在公司看见王小姐。",color:"orange"} ] },
+        { word:"开", pinyin:"kāi1", trans:"водить, открывать",
+          mnemo:{ char1:{form:"开",visual:"Две руки (廾) поднимают засов (一) вверх, открывая ворота.",difficulty:"Не путать с 并 — там руки соединены.",meaning:"Открывать, начинать."},
+                  together:"Открыть = поднять засов.",
+                  anchor:"⚓ Две руки, поднимающие шлагбаум на парковке." },
+          collocations:[ {word:"开车",meaning:"водить машину",example:"张先生开车。",color:"blue"},
+                         {word:"开会",meaning:"проводить собрание",example:"九点开会。",color:"green"},
+                         {word:"开门",meaning:"открыть дверь",example:"请开门。",color:"orange"} ] },
+        { word:"回来", pinyin:"huí2lái", trans:"возвращаться (сюда)",
+          mnemo:{ char1:{form:"回",visual:"Круглая ограда (囗), внутри — рот (口). Голос в ограде — вернулся домой.",difficulty:"Не путать с 四 (четыре).",meaning:"Возвращаться, круг."},
+                  char2:{form:"来",visual:"Человек (人) с ростками (米) — идёт ко мне, приносит урожай.",difficulty:"Средняя вертикаль длинная.",meaning:"Приходить, будущее."},
+                  together:"Вернуться + прийти = вернуться сюда, ко мне.",
+                  anchor:"⚓ Бумеранг, который описал круг и вернулся прямо в руку." },
+          collocations:[ {word:"什么时候回来？",meaning:"когда вернёшься?",example:"你什么时候回来？",color:"blue"},
+                         {word:"十分钟后回来",meaning:"вернуться через 10 минут",example:"她十分钟后回来。",color:"green"},
+                         {word:"回到办公室",meaning:"вернуться в офис",example:"他回到办公室。",color:"orange"} ] },
+        { word:"车", pinyin:"chē1", trans:"машина, транспорт",
+          mnemo:{ char1:{form:"车",visual:"Вид сверху на повозку: длинная ось, два колеса по бокам.",difficulty:"Не путать с 东 — там дерево.",meaning:"Телега, машина."},
+                  together:"Любой транспорт на колёсах.",
+                  anchor:"⚓ Машина на дороге, вид сверху." },
+          collocations:[ {word:"开车",meaning:"водить машину",example:"他开车去公司。",color:"blue"},
+                         {word:"坐车",meaning:"ехать на машине",example:"我坐车去。",color:"green"},
+                         {word:"张先生的车",meaning:"машина господина Чжана",example:"这是张先生的车。",color:"orange"} ] },
+        { word:"分钟", pinyin:"fēn1zhōng", trans:"минута (длительность)",
+          mnemo:{ char1:{form:"分",visual:"Нож (刀), разрезающий что-то на две части.",difficulty:"Не путать с 公 — там нет ножа.",meaning:"Делить, часть."},
+                  char2:{form:"钟",visual:"Слева металл (钅), справа — колокол на подставке. Металлический колокол отмеряет время.",difficulty:"Правая часть сложная, запоминаем как целое.",meaning:"Часы."},
+                  together:"Часы, делённые на части = минута.",
+                  anchor:"⚓ Стрелка часов, отмеряющая минуту на циферблате." },
+          collocations:[ {word:"十分钟",meaning:"10 минут",example:"十分钟后回来。",color:"blue"},
+                         {word:"多少分钟？",meaning:"сколько минут?",example:"要多少分钟？",color:"green"},
+                         {word:"三十分钟后",meaning:"через 30 минут",example:"三十分钟后开会。",color:"orange"} ] },
+        { word:"后", pinyin:"hòu4", trans:"после, спустя, назад",
+          mnemo:{ char1:{form:"后",visual:"Правитель, стоящий позади своего народа (слева), и рот (口), отдающий приказы. Тот, кто сзади.",difficulty:"Не путать с 石 (камень) — там нет рта.",meaning:"После, сзади, правитель."},
+                  together:"То, что находится позади.",
+                  anchor:"⚓ Следы на песке, оставленные человеком, который уже ушёл вперёд." },
+          collocations:[ {word:"开会后",meaning:"после собрания",example:"开会后去吃饭。",color:"blue"},
+                         {word:"十分钟后",meaning:"через 10 минут",example:"十分钟后回来。",color:"green"},
+                         {word:"两天后",meaning:"через 2 дня",example:"两天后见。",color:"orange"},
+                         {word:"后天",meaning:"послезавтра",example:"后天开会。",color:"purple"} ] },
+        { word:"漂亮", pinyin:"piào4liang", trans:"красивый, симпатичный",
+          mnemo:{ char1:{form:"漂",visual:"Слева вода (氵), справа — билет/лететь (票). Вода, летящая брызгами — блестит.",difficulty:"Правая часть сложная, запоминаем как целое.",meaning:"Плыть, блестеть."},
+                  char2:{form:"亮",visual:"Сверху высокая платформа (高 без низа), снизу человек (儿). Человек на высокой платформе виден всем — светится.",difficulty:"Не путать с 高.",meaning:"Светлый, яркий."},
+                  together:"Блестящий + светлый = красивый.",
+                  anchor:"⚓ Блеск чистой воды под яркими лучами солнца." },
+          collocations:[ {word:"很漂亮",meaning:"очень красивый",example:"这件衣服很漂亮。",color:"blue"},
+                         {word:"漂亮的衣服",meaning:"красивая одежда",example:"她买了漂亮的衣服。",color:"green"},
+                         {word:"做得漂亮",meaning:"сделано красиво",example:"你做得漂亮！",color:"orange"} ] },
+        { word:"啊", pinyin:"a1", trans:"восклицательная частица",
+          mnemo:{ char1:{form:"啊",visual:"Рот (口), открытый от эмоции.",difficulty:"Не путать с 阿 (обращение).",meaning:"Звук удивления или согласия."},
+                  together:"Открытый рот + звук = восклицание.",
+                  anchor:"⚓ Человек с открытым ртом, произносящий: «Ах!»" },
+          collocations:[ {word:"好啊！",meaning:"ладно!",example:"好啊，我们去吧！",color:"blue"},
+                         {word:"对啊！",meaning:"точно!",example:"对啊，你说得对！",color:"green"},
+                         {word:"是啊！",meaning:"да!",example:"是啊，我也是。",color:"orange"} ] },
+        { word:"少", pinyin:"shǎo3", trans:"мало, недостаточно",
+          mnemo:{ char1:{form:"少",visual:"Маленький (小), от которого отрезали ещё кусочек. Осталась одна точка.",difficulty:"Не путать с 小 — там две точки.",meaning:"Мало."},
+                  together:"Мало — это когда осталась одна крошка.",
+                  anchor:"⚓ Последняя крошка хлеба на пустой тарелке." },
+          collocations:[ {word:"少一点",meaning:"поменьше",example:"请少一点糖。",color:"blue"},
+                         {word:"不少",meaning:"немало",example:"买了不少东西。",color:"green"},
+                         {word:"人少",meaning:"мало людей",example:"今天人少。",color:"orange"} ] }
+    ];
+
+    // ===== ГРАММАТИКА (полная) =====
+    const grammarData = [
+        { title:"1. Глагольная частица “了” (Завершение / Факт)",
+          desc:"Указывает, что действие УЖЕ произошло. Часто с определением перед объектом.",
+          examples:["张先生买了不少衣服。 (Господин Чжан купил немало одежды.)",
+                    "业务分析师看见了新数据。 (Бизнес-аналитик увидел новые данные.)"] },
+        { title:"2. Существительное “后” (После / Спустя)",
+          desc:"Ставится ПОСЛЕ времени или события: [Время] + 后",
+          examples:["五分钟后开会。 (Собрание через 5 минут.)",
+                    "放学后我去商店。 (После уроков я пойду в магазин.)",
+                    "三天后黎分析师回来。 (Аналитик Ли вернется через 3 дня.)"] },
+        { title:"3. Эмоциональная частица “啊” (Мягкость, восторг)",
+          desc:"Ставится в конце предложения. Смягчает тон, добавляет эмоцию.",
+          examples:["这台车的颜色真漂亮啊！ (Цвет реально красивый!)",
+                    "好的啊，我们一起去吧！ (Отлично, пойдем вместе!)"] },
+        { title:"4. Наречие “都” (Все / Оба) — Строгий порядок",
+          desc:"Порядок: [Группа] + 都 + [Глагол]. Никогда не ставится в начале!",
+          examples:["我们都是业务分析师。 (Мы все — бизнес-аналитики.)",
+                    "这些衣服都很贵。 (Вся одежда очень дорогая.)",
+                    "策略专家和黎分析师都喜欢看电影。 (Оба любят смотреть кино.)"] },
+        { title:"🔁 ПОВТОРЕНИЕ УРОКА 13: “时候” vs “时间”",
+          desc:"时候 — момент; 时间 — ресурс.",
+          examples:["...的时候 (de shíhou) — Когда...: 吃饭的时候不要看手机。",
+                    "什么时候 (shénme shíhou) — Когда?: 你什么时候回来？",
+                    "时间 (shíjiān) — Время (ресурс): 我没有时间。"] },
+        { title:"🔁 ПОВТОРЕНИЕ УРОКА 13: “前” (qián)",
+          desc:"1) Бывший; 2) Поза-; 3) Перед.",
+          examples:["前男友 (qián nányǒu) — бывший парень.",
+                    "前天 (qiántiān) — позавчера.",
+                    "睡觉前 (shuìjiào qián) — перед сном."] },
+        { title:"🔁 ПОВТОРЕНИЕ УРОКА 13: “能” (néng)",
+          desc:"1) Физическая возможность; 2) Разрешение; 3) Обстоятельства.",
+          examples:["我今天能去。 (Я сегодня могу пойти.)",
+                    "我能进来吗？ (Можно войти?)",
+                    "我喝了酒，不能开车。 (Я выпил, не могу вести машину.)"] },
+        { title:"🔁 ПОВТОРЕНИЕ УРОКА 13: “给” (gěi)",
+          desc:"1) Давать; 2) Предлог Д.п. (кому?).",
+          examples:["给我一杯水。 (Дай мне стакан воды.)",
+                    "给妈妈打电话。 (Позвонить маме.)",
+                    "给我看看。 (Покажи мне.)"] }
+    ];
+
+    // ===== ДИАЛОГИ =====
+    const dialogsData = [
+        { title:"🛒 Диалог 1: Закупки и стиль",
+          lines:[
+            { speaker:"王小姐", chn:'<span class="hsk14">张先生</span>，你来看看，<span class="hsk14">这些</span><span class="hsk14">衣服</span>漂亮不漂亮？',
+              pinyin:"Zhāng xiānsheng, nǐ lái kànkan, zhèxiē yīfu piàoliang bù piàoliang?",
+              trans:"Господин Чжан, подойдите посмотреть, эта одежда красивая или нет?",
+              note:"💡 <b>看看</b> — удвоение глагола (по- + глагол) = посмотреть. <b>这些 + 衣服</b> — указание на группу предметов." },
+            { speaker:"张先生", chn:'呀，<span class="hsk14">不少</span><span class="hsk14">衣服</span><span class="hsk14">啊</span>！让你选的话，你想买哪一件？',
+              pinyin:"Ya, bùshǎo yīfu a! Ràng nǐ xuǎn dehuà, nǐ xiǎng mǎi nǎ yī jiàn?",
+              trans:"Ого, немало одежды! Если выбирать тебе, какую хочешь купить?",
+              note:"💡 <b>不少</b> — немало | <b>啊</b> — эмоциональная частица." },
+            { speaker:"王小姐", chn:'我想在网上买<span class="hsk14">这些</span>。但是这件太贵了！',
+              pinyin:"Wǒ xiǎng zài wǎngshàng mǎi zhèxiē. Dànshì zhè jiàn tài guì le!",
+              trans:"Я хочу купить эти вещи в интернете. Но вот эта — слишком дорогая!",
+              note:"💡 <b>太贵了</b> — конструкция 太 + прил + 了." },
+            { speaker:"张先生", chn:'哈哈，太贵了的话，我们就<span class="hsk14">少</span>买<span class="hsk14">一点儿</span>。算了吧，再看看别的！',
+              pinyin:"Hāhā, tài guì le dehuà, wǒmen jiù shǎo mǎi yīdiǎnr. Suànle ba, zài kànkan bié de!",
+              trans:"Ха-ха, если слишком дорого — купим поменьше. Ладно, проехали, посмотрим другие!",
+              note:"💡 <b>少 + 一点儿</b> — уменьшение количества | <b>算了吧</b> — ладно." }
+          ]},
+        { title:"🚗 Диалог 2: Логистика и время",
+          lines:[
+            { speaker:"黎分析师", chn:'你<span class="hsk14">看见</span><span class="hsk14">王小姐</span>了吗？她<span class="hsk14">开车</span>去公司了？',
+              pinyin:"Nǐ kànjiàn Wáng xiǎojiě le ma? Tā kāichē qù gōngsī le?",
+              trans:"Ты видел мисс Ван? Она поехала в компанию на машине?",
+              note:"💡 <b>看见</b> — увидеть | <b>了</b> — завершение." },
+            { speaker:"策略专家", chn:'<span class="hsk14">看见了</span>。她从<span class="hsk14">工厂</span>到这里，车上有<span class="hsk14">不少</span><span class="hsk14">东西</span>。',
+              pinyin:"Kànjiàn le. Tā cóng gōngchǎng dào zhèlǐ, chē shàng yǒu bùshǎo dōngxi.",
+              trans:"Видел. Она едет от завода до нас, в машине немало вещей.",
+              note:"💡 <b>工厂</b> — завод | <b>不少东西</b> — немало вещей." },
+            { speaker:"黎分析师", chn:'从<span class="hsk14">工厂</span><span class="hsk14">开车</span>到这里要多少<span class="hsk14">分钟</span>？',
+              pinyin:"Cóng gōngchǎng kāichē dào zhèlǐ yào duōshǎo fēnzhōng?",
+              trans:"Сколько минут занимает поездка на машине от завода досюда?",
+              note:"💡 <b>多少分钟</b> — сколько минут." },
+            { speaker:"策略专家", chn:'要三十分钟。路上慢和<span class="hsk14">堵车</span>有关系。她十分钟<span class="hsk14">后</span><span class="hsk14">回来</span>。',
+              pinyin:"Yào sānshí fēnzhōng. Lùshang màn hé dǔchē yǒu guānxi. Tā shí fēnzhōng hòu huílái.",
+              trans:"Нужно 30 минут. Задержка связана с пробками. Она вернется через 10 минут.",
+              note:"💡 <b>堵车</b> — пробка | <b>A 和 B 有关系</b> — связано | <b>十分钟后</b> — через 10 минут." }
+          ]},
+        { title:"🍏 Диалог 3: Перекус",
+          lines:[
+            { speaker:"Коллега А", chn:'休息吧！大家<span class="hsk14">都</span>玩儿手机呢。你想吃<span class="hsk14">一点儿</span><span class="hsk14">东西</span>吗？',
+              pinyin:"Xiūxi ba! Dàjiā dōu wánr shǒujī ne. Nǐ xiǎng chī yīdiǎnr dōngxi ma?",
+              trans:"Давайте отдохнём! Все сидят в телефонах. Хочешь съесть что-нибудь?",
+              note:"💡 <b>休息吧</b> — давайте отдохнём | <b>都</b> — все | <b>一点儿东西</b> — немного еды." },
+            { speaker:"Коллега Б", chn:'之前我们<span class="hsk14">都</span>吃<span class="hsk14">苹果</span>。今天桌子上的<span class="hsk14">苹果</span>太<span class="hsk14">少</span>了。',
+              pinyin:"Zhīqián wǒmen dōu chī píngguǒ. Jīntiān zhuōzi shàng de píngguǒ tài shǎo le.",
+              trans:"Раньше мы все ели яблоки. Сегодня яблок на столе слишком мало.",
+              note:"💡 <b>都吃</b> — все ели | <b>太少</b> — слишком мало." },
+            { speaker:"Коллега А", chn:'那我们<span class="hsk14">点外卖</span>吧！买<span class="hsk14">一点儿</span>水果，好吗？',
+              pinyin:"Nà wǒmen diǎn wàimài ba! Mǎi yīdiǎnr shuǐguǒ, hǎo ma?",
+              trans:"Тогда давай закажем доставку еды! Купим немного фруктов, идет?",
+              note:"💡 <b>点外卖</b> — заказать доставку | <b>一点儿水果</b> — немного фруктов." },
+            { speaker:"Коллега Б", chn:'也行<span class="hsk14">啊</span>！<span class="hsk14">点外卖</span>很方便。',
+              pinyin:"Yě xíng a! Diǎn wàimài hěn fāngbiàn.",
+              trans:"Тоже пойдет! Заказать доставку — это очень удобно.",
+              note:"💡 <b>也行啊</b> — тоже пойдет | <b>啊</b> — частица." }
+          ]}
+    ];
+
+    // ===== ЧТЕНИЕ (6 текстов) =====
+    const readingData = [
+        { title:"📖 Текст 1: Утро господина Чжана",
+          chn:`<span class="hsk14">张先生</span>今天早上八点<span class="hsk14">开车</span>去公司。他的<span class="hsk14">车</span>上有<span class="hsk14">不少</span><span class="hsk14">东西</span>。从家到公司要三十分钟。九点<span class="hsk14">后</span>，他<span class="hsk14">回来</span>办公室。他<span class="hsk14">看见</span>了<span class="hsk14">王小姐</span>。王小姐问他：“你吃<span class="hsk14">苹果</span>吗？”他说：“吃<span class="hsk14">一点儿</span>吧。”`,
+          pinyin:"Zhāng xiānsheng jīntiān zǎoshang bā diǎn kāichē qù gōngsī. Tā de chē shàng yǒu bùshǎo dōngxi. Cóng jiā dào gōngsī yào sānshí fēnzhōng. Jiǔ diǎn hòu, tā huílái bàngōngshì. Tā kànjiàn le Wáng xiǎojiě. Wáng xiǎojiě wèn tā: \"Nǐ chī píngguǒ ma?\" Tā shuō: \"Chī yīdiǎnr ba.\"",
+          trans:"Господин Чжан сегодня утром в 8 часов поехал на машине в компанию. В его машине немало вещей. От дома до компании — 30 минут. После 9 часов он вернулся в офис. Он увидел мисс Ван. Мисс Ван спросила его: «Будешь яблоко?» Он сказал: «Немного съем».",
+          questions:[{q:"张先生几点开车去公司？",a:"早上八点。"},
+                     {q:"从家到公司要多少分钟？",a:"三十分钟。"},
+                     {q:"张先生看见了谁？",a:"王小姐。"}] },
+        { title:"📖 Текст 2: Офисный перерыв",
+          chn:`<span class="hsk14">王小姐</span>今天在公司工作。她<span class="hsk14">看见</span>了<span class="hsk14">不少</span><span class="hsk14">漂亮</span>的<span class="hsk14">衣服</span>。休息的时候，大家<span class="hsk14">都</span>吃<span class="hsk14">苹果</span>。可是今天苹果太<span class="hsk14">少</span>了。有人说：“我们<span class="hsk14">点外卖</span>吧！”大家<span class="hsk14">都</span>说：“也行<span class="hsk14">啊</span>！”十分钟<span class="hsk14">后</span>，外卖来了。`,
+          pinyin:"Wáng xiǎojiě jīntiān zài gōngsī gōngzuò. Tā kànjiàn le bùshǎo piàoliang de yīfu. Xiūxi de shíhou, dàjiā dōu chī píngguǒ. Kěshì jīntiān píngguǒ tài shǎo le. Yǒu rén shuō: \"Wǒmen diǎn wàimài ba!\" Dàjiā dōu shuō: \"Yě xíng a!\" Shí fēnzhōng hòu, wàimài lái le.",
+          trans:"Мисс Ван сегодня работает в компании. Она увидела немало красивой одежды. Во время перерыва все ели яблоки. Но сегодня яблок слишком мало. Кто-то сказал: «Давайте закажем доставку!» Все сказали: «Тоже отлично!» Через 10 минут доставка приехала.",
+          questions:[{q:"王小姐在公司看见了什么？",a:"不少漂亮的衣服。"},
+                     {q:"休息的时候大家吃什么？",a:"吃苹果。"}] },
+        { title:"📖 Текст 3: Аналитический отдел",
+          chn:`<span class="hsk14">黎分析师</span>和<span class="hsk14">策略专家</span>今天在公司开会。会议<span class="hsk14">后</span>，他们一起喝<span class="hsk14">一点儿</span>茶。黎分析师说：“我在网上买了<span class="hsk14">不少</span><span class="hsk14">东西</span>。”策略专家说：“你买了什么？”黎分析师说：“买了<span class="hsk14">这些</span><span class="hsk14">衣服</span>，漂亮不漂亮？”策略专家说：“很漂亮<span class="hsk14">啊</span>！但是太贵了！”`,
+          pinyin:"Lí fēnxīshī hé cèlüè zhuānjiā jīntiān zài gōngsī kāihuì. Huìyì hòu, tāmen yīqǐ hē yīdiǎnr chá. Lí fēnxīshī shuō: \"Wǒ zài wǎngshàng mǎi le bùshǎo dōngxi.\" Cèlüè zhuānjiā shuō: \"Nǐ mǎi le shénme?\" Lí fēnxīshī shuō: \"Mǎi le zhèxiē yīfu, piàoliang bù piàoliang?\" Cèlüè zhuānjiā shuō: \"Hěn piàoliang a! Dànshì tài guì le!\"",
+          trans:"Аналитик Ли и эксперт по стратегии сегодня в компании проводили совещание. После собрания они вместе выпили немного чая. Аналитик Ли сказал: «Я купил в интернете немало вещей». Эксперт по стратегии спросил: «Что ты купил?» Аналитик Ли сказал: «Купил эту одежду, красивая?» Эксперт по стратегии сказал: «Очень красивая! Но слишком дорогая!»",
+          questions:[{q:"黎分析师和策略专家今天在哪里开会？",a:"在公司。"},
+                     {q:"会议后他们喝了什么？",a:"喝了一点儿茶。"}] },
+        { title:"📖 Текст 4: Поездка на завод",
+          chn:`<span class="hsk14">策略专家</span>今天<span class="hsk14">开车</span>去<span class="hsk14">工厂</span>。路上<span class="hsk14">堵车</span>，所以很慢。<span class="hsk14">工厂</span>离公司要四十分钟。他<span class="hsk14">看见</span>了<span class="hsk14">不少</span><span class="hsk14">车</span>在排队。他<span class="hsk14">打电话</span>给<span class="hsk14">黎分析师</span>：“我<span class="hsk14">回来</span>会晚<span class="hsk14">一点儿</span>。”`,
+          pinyin:"Cèlüè zhuānjiā jīntiān kāichē qù gōngchǎng. Lùshang dǔchē, suǒyǐ hěn màn. Gōngchǎng lí gōngsī yào sìshí fēnzhōng. Tā kànjiàn le bùshǎo chē zài páiduì. Tā dǎ diànhuà gěi Lí fēnxīshī: \"Wǒ huílái huì wǎn yīdiǎnr.\"",
+          trans:"Эксперт по стратегии сегодня поехал на машине на завод. На дороге пробка, поэтому очень медленно. От завода до компании — 40 минут. Он увидел немало машин в очереди. Он позвонил аналитику Ли: «Я вернусь немного позже».",
+          questions:[{q:"策略专家开车去哪里？",a:"去工厂。"},
+                     {q:"路上怎么了？",a:"堵车。"},
+                     {q:"他给谁打电话？",a:"给黎分析师。"}] },
+        { title:"📖 Текст 5: Покупка одежды",
+          chn:`<span class="hsk14">王小姐</span>想买<span class="hsk14">衣服</span>。她<span class="hsk14">看见</span>了<span class="hsk14">不少</span><span class="hsk14">漂亮</span>的<span class="hsk14">衣服</span>，但是<span class="hsk14">这些</span><span class="hsk14">衣服</span><span class="hsk14">有点贵</span>。她问<span class="hsk14">先生</span>：“可以<span class="hsk14">试一试</span>吗？”<span class="hsk14">先生</span>说：“当然可以！”她<span class="hsk14">试一试</span>了，很<span class="hsk14">漂亮</span><span class="hsk14">啊</span>！`,
+          pinyin:"Wáng xiǎojiě xiǎng mǎi yīfu. Tā kànjiàn le bùshǎo piàoliang de yīfu, dànshì zhèxiē yīfu yǒudiǎn guì. Tā wèn xiānsheng: \"Kěyǐ shì yī shì ma?\" Xiānsheng shuō: \"Dāngrán kěyǐ!\" Tā shì yī shì le, hěn piàoliang a!",
+          trans:"Мисс Ван хочет купить одежду. Она увидела немало красивой одежды, но эта одежда дороговата. Она спросила продавца: «Можно примерить?» Продавец сказал: «Конечно можно!» Она примерила — очень красиво!",
+          questions:[{q:"王小姐想买什么？",a:"买衣服。"},
+                     {q:"这些衣服怎么样？",a:"有点贵。"},
+                     {q:"她试一试了吗？",a:"试了，很漂亮。"}] },
+        { title:"📖 Текст 6: Время и минуты",
+          chn:`<span class="hsk14">黎分析师</span>问：“现在<span class="hsk14">几点</span>？”<span class="hsk14">策略专家</span>说：“现在三点二十<span class="hsk14">分</span>。”黎分析师说：“我们<span class="hsk14">十分钟</span><span class="hsk14">后</span><span class="hsk14">开会</span>，好吗？”策略专家说：“<span class="hsk14">好啊</span>！”他们<span class="hsk14">都</span>去会议室了。`,
+          pinyin:"Lí fēnxīshī wèn: \"Xiànzài jǐ diǎn?\" Cèlüè zhuānjiā shuō: \"Xiànzài sān diǎn èrshí fēn.\" Lí fēnxīshī shuō: \"Wǒmen shí fēnzhōng hòu kāihuì, hǎo ma?\" Cèlüè zhuānjiā shuō: \"Hǎo a!\" Tāmen dōu qù huìyìshì le.",
+          trans:"Аналитик Ли спросил: «Который час?» Эксперт по стратегии сказал: «Сейчас 3:20». Аналитик Ли сказал: «Через 10 минут собрание, хорошо?» Эксперт по стратегии сказал: «Хорошо!» Они оба пошли в переговорную.",
+          questions:[{q:"现在几点？",a:"三点二十分。"},
+                     {q:"什么时候开会？",a:"十分钟后。"},
+                     {q:"他们都去哪儿了？",a:"去会议室。"}] }
+    ];
+
+    // ===== ПРАКТИКА =====
+    const practiceData = [
+        { title:"🛍️ Покупки в интернете",
+          questions:["你常常在网上买东西吗？买过什么漂亮的衣服？",
+                     "让你选的话，这些衣服太贵了，你会少买一点儿还是都不买？"],
+          highlights:["📦 买东西 — покупать вещи",
+                      "💰 太贵了 / 很便宜 — дорого / дешево",
+                      "🧩 都 + 不 — ничего из этого не покупаем"] },
+        { title:"🚗 Транспорт и время",
+          questions:["从你家到公司，开车要多少分钟？",
+                     "路上开车慢，和什么有关系？下雨的话会慢一点儿吗？"],
+          highlights:["🚗 开车 / 坐车 — водить / ехать пассажиром",
+                      "⏱️ ...分钟后 — через N минут (грамматика 后)",
+                      "🌧️ 下雨 — дождь"] },
+        { title:"🏢 Офисная жизнь",
+          questions:["休息的时候，你喜欢吃一点儿苹果，还是点外卖？",
+                     "同事说点外卖，你会说“也行”还是“算了吧”？"],
+          highlights:["🍏 吃苹果 / 点外卖 — есть яблоки / заказать доставку",
+                      "👍 也行啊 — тоже пойдет (грамматика 啊)",
+                      "👋 算了吧 — ладно, не надо"] }
+    ];
+
+    // ===== ИЕРОГЛИФЫ (ровно те, что указаны) =====
+    const allChars = ["东","西","苹","果","衣","服","一","点","儿","不","少","这","些","都","先","生","小","姐","看","见","开","回","来","车","分","钟","后","漂","亮","啊"];
+
+    // ===== СОСТОЯНИЯ =====
+    const NOTES_KEY = 'hsk14_notes_v8';
+    let charVisible = true;
+    let currentChars = [...allChars];
+    let targetChar = '';
+    const canvasStates = {};
+    const undoStates = {};
+
+    // ===== ФУНКЦИИ =====
+    function loadNotes(){ try { return JSON.parse(localStorage.getItem(NOTES_KEY)) || {}; } catch { return {}; } }
+    function saveNotes(n){ localStorage.setItem(NOTES_KEY, JSON.stringify(n)); }
+    function getNoteKey(p,i){ return `${p}_${i}`; }
+    function showToast(m,t='success'){ const c=document.getElementById('toastContainer'); const el=document.createElement('div'); el.className=`toast ${t}`; el.textContent=m; c.appendChild(el); setTimeout(()=>{el.style.opacity='0'; setTimeout(()=>el.remove(),300)},2500); }
+
+    // ===== РЕНДЕР ЛЕКСИКИ =====
+    function renderVocab(){
+        const container=document.getElementById('vocabGrid'); container.innerHTML='';
+        vocabData.forEach((item,idx)=>{
+            const card=document.createElement('div'); card.className='word-card'; card.id=`vocabCard_${idx}`;
+            const noteKey=getNoteKey('vocab',idx); const notes=loadNotes(); const savedText=notes[noteKey]||'';
+            const pinyinHtml=item.pinyin.split(/(\d+)/).map(p=>/^\d$/.test(p)?`<span class="tone">${p}</span>`:p).join('');
+            let collocHTML=`<div class="collocation-arc"><div class="arc-center">${item.word}</div><div class="arc-branches">`;
+            item.collocations.forEach(c=>{
+                collocHTML+=`<div class="arc-branch branch-${c.color||'blue'}"><span class="branch-word">${c.word}</span> — <span class="branch-meaning">${c.meaning}</span> <span class="branch-example">(${c.example})</span></div>`;
+            });
+            collocHTML+=`</div></div>`;
+            let mnemoHTML=`<div class="mnemo-block"><strong>🧠 Мнемотехника (NO_PHONETIC):</strong>`;
+            if(item.mnemo.char2){
+                mnemoHTML+=`<div class="part"><b>Иероглиф 1 (${item.mnemo.char1.form}):</b> ${item.mnemo.char1.visual}<br><i>Сложность:</i> ${item.mnemo.char1.difficulty}<br><i>Значение:</i> ${item.mnemo.char1.meaning}</div>`;
+                mnemoHTML+=`<div class="part"><b>Иероглиф 2 (${item.mnemo.char2.form}):</b> ${item.mnemo.char2.visual}<br><i>Сложность:</i> ${item.mnemo.char2.difficulty}<br><i>Значение:</i> ${item.mnemo.char2.meaning}</div>`;
+            } else {
+                mnemoHTML+=`<div class="part"><b>Иероглиф (${item.mnemo.char1.form}):</b> ${item.mnemo.char1.visual}<br><i>Сложность:</i> ${item.mnemo.char1.difficulty}<br><i>Значение:</i> ${item.mnemo.char1.meaning}</div>`;
+            }
+            mnemoHTML+=`<div class="together">🔗 Как работают вместе: ${item.mnemo.together}</div><div class="anchor">${item.mnemo.anchor}</div>`;
+            if(item.mnemo.warning) mnemoHTML+=`<div style="background:#fdf2f0;padding:8px;border-radius:8px;margin-top:8px;">${item.mnemo.warning}</div>`;
+            mnemoHTML+=`</div>`;
+            card.innerHTML=`
+                <div><span class="chinese">${item.word}</span><span class="pinyin">${pinyinHtml}</span></div>
+                <div class="translation">${item.trans}</div>
+                <div class="trace-canvas-container"><canvas class="trace-canvas" id="canvas_${idx}"></canvas>
+                <div class="trace-actions"><button onclick="clearCanvas(${idx})">🧹 Очистить</button><button onclick="undoCanvas(${idx})">↩️ Отменить</button></div></div>
+                ${mnemoHTML}${collocHTML}
+                <div class="note-sticker"><div class="note-header"><span>📝 Мой конспект</span><span class="note-status" id="status_${noteKey}">${savedText?'🟢 Сохранено':'⚪ Не сохранено'}</span></div>
+                <textarea id="textarea_${noteKey}" placeholder="Ваша заметка...">${savedText}</textarea>
+                <div class="note-actions"><button class="btn-save" onclick="saveNote('${noteKey}')">💾 Сохранить</button><button class="btn-clear" onclick="clearNote('${noteKey}')">🗑️ Очистить</button></div></div>`;
+            container.appendChild(card);
+            initCanvas(idx);
+        });
+    }
+
+    // ===== CANVAS =====
+    function initCanvas(idx){
+        const canvas=document.getElementById(`canvas_${idx}`); if(!canvas)return;
+        const container=canvas.parentElement; canvas.width=container.clientWidth-10; canvas.height=150;
+        const dpr=window.devicePixelRatio||1;
+        if(dpr>1){ const w=canvas.width,h=canvas.height; canvas.width=w*dpr; canvas.height=h*dpr; canvas.style.width=w+'px'; canvas.style.height=h+'px'; const ctx=canvas.getContext('2d'); ctx.scale(dpr,dpr); }
+        drawCanvasGrid(canvas);
+        canvasStates[idx]={isDrawing:false,strokes:[],currentStroke:[]}; undoStates[idx]=[];
+        const ctx=canvas.getContext('2d'); ctx.lineWidth=3; ctx.lineCap='round'; ctx.lineJoin='round'; ctx.strokeStyle='#2d2a22';
+        function getPos(e){ const r=canvas.getBoundingClientRect(); const cx=e.touches?e.touches[0].clientX:e.clientX; const cy=e.touches?e.touches[0].clientY:e.clientY; const sx=canvas.width/(r.width*(window.devicePixelRatio||1)); const sy=canvas.height/(r.height*(window.devicePixelRatio||1)); return {x:(cx-r.left)*sx,y:(cy-r.top)*sy}; }
+        function start(e){ e.preventDefault(); const p=getPos(e); canvasStates[idx].isDrawing=true; canvasStates[idx].currentStroke=[p]; ctx.beginPath(); ctx.moveTo(p.x,p.y); }
+        function draw(e){ e.preventDefault(); if(!canvasStates[idx].isDrawing)return; const p=getPos(e); canvasStates[idx].currentStroke.push(p); ctx.lineTo(p.x,p.y); ctx.stroke(); }
+        function stop(){ if(canvasStates[idx].isDrawing){ canvasStates[idx].isDrawing=false; if(canvasStates[idx].currentStroke.length>0){ canvasStates[idx].strokes.push([...canvasStates[idx].currentStroke]); canvasStates[idx].currentStroke=[]; } } }
+        canvas.onmousedown=start; canvas.onmousemove=draw; canvas.onmouseup=stop; canvas.onmouseleave=stop; canvas.ontouchstart=start; canvas.ontouchmove=draw; canvas.ontouchend=stop;
+    }
+    function drawCanvasGrid(canvas){ const ctx=canvas.getContext('2d'); const dpr=window.devicePixelRatio||1; const w=canvas.width/dpr,h=canvas.height/dpr; ctx.clearRect(0,0,w,h); ctx.strokeStyle='#f0e8dc'; ctx.lineWidth=0.5; for(let y=0;y<=h;y+=25){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();} for(let x=0;x<=w;x+=25){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke();} }
+    window.clearCanvas=function(idx){ const c=document.getElementById(`canvas_${idx}`); if(!c)return; if(!undoStates[idx])undoStates[idx]=[]; undoStates[idx].push(JSON.stringify(canvasStates[idx]?.strokes||[])); canvasStates[idx].strokes=[]; canvasStates[idx].currentStroke=[]; drawCanvasGrid(c); showToast('🧹 Очищено'); };
+    window.undoCanvas=function(idx){ const c=document.getElementById(`canvas_${idx}`); if(!c||!undoStates[idx]||undoStates[idx].length===0){showToast('Нечего отменять','');return;} const prev=undoStates[idx].pop(); canvasStates[idx].strokes=JSON.parse(prev); drawCanvasGrid(c); const ctx=c.getContext('2d'); const dpr=window.devicePixelRatio||1; ctx.scale(dpr,dpr); ctx.lineWidth=3; ctx.lineCap='round'; ctx.lineJoin='round'; ctx.strokeStyle='#2d2a22'; canvasStates[idx].strokes.forEach(s=>{ if(s.length>0){ctx.beginPath();ctx.moveTo(s[0].x,s[0].y);s.forEach(p=>ctx.lineTo(p.x,p.y));ctx.stroke();}}); showToast('↩️ Отменено'); };
+
+    // ===== ПОИСК =====
+    window.searchVocab=function(q){ q=q.trim().toLowerCase(); document.querySelectorAll('.word-card').forEach(c=>{ const t=c.textContent.toLowerCase(); if(!q||t.includes(q)){c.style.display=''; if(q)c.classList.add('highlight'); else c.classList.remove('highlight');} else {c.style.display='none'; c.classList.remove('highlight');} }); };
+    window.clearSearch=function(){ document.getElementById('vocabSearch').value=''; searchVocab(''); };
+
+    // ===== ГРАММАТИКА =====
+    function renderGrammar(){ document.getElementById('grammarContainer').innerHTML=grammarData.map(g=>`<div class="grammar-card"><h3>${g.title}</h3><p>${g.desc}</p><ul>${g.examples.map(e=>`<li>${e}</li>`).join('')}</ul></div>`).join(''); }
+
+    // ===== ДИАЛОГИ =====
+    function renderDialogs(){
+        const container=document.getElementById('dialogsContainer'); container.innerHTML='';
+        dialogsData.forEach((dialog,dIdx)=>{
+            const card=document.createElement('div'); card.className='dialog-card';
+            let html=`<strong>${dialog.title}</strong><div class="dialog-controls">
+                <button class="active" id="pinyinBtn_${dIdx}" onclick="toggleDialogPinyin(${dIdx})">🔤 Пиньинь</button>
+                <button class="active" id="transBtn_${dIdx}" onclick="toggleDialogTrans(${dIdx})">🌐 Перевод</button></div>`;
+            dialog.lines.forEach((line,lIdx)=>{
+                const noteKey=getNoteKey('dialog',`${dIdx}_${lIdx}`); const notes=loadNotes(); const savedText=notes[noteKey]||'';
+                const noteId=`dialogNote_${dIdx}_${lIdx}`;
+                const pinyinHtml=line.pinyin.split(/(\d+)/).map(p=>/^\d$/.test(p)?`<span class="tone">${p}</span>`:p).join(' ');
+                html+=`
+                <div class="dialog-line"><span class="speaker">${line.speaker}</span><span>${line.chn}</span>
+                ${line.note?`<button class="btn-toggle-note" onclick="toggleDialogNote('${noteId}')">💡 Разбор</button>`:''}</div>
+                <div class="dialog-pinyin" id="dialogPinyin_${dIdx}_${lIdx}">${pinyinHtml}</div>
+                <div class="dialog-trans" id="dialogTrans_${dIdx}_${lIdx}">${line.trans}</div>
+                ${line.note?`<div class="dialog-note-body" id="${noteId}">${line.note}</div>`:''}
+                <button class="btn-toggle-note" onclick="toggleNoteSticker('${noteKey}')" style="margin:6px 0;font-size:0.75rem;">📝 Заметка</button>
+                <div class="note-sticker" id="noteSticker_${noteKey}" style="display:none;">
+                    <div class="note-header"><span>📝 Заметка к реплике</span><span class="note-status" id="status_${noteKey}">${savedText?'🟢 Сохранено':'⚪ Не сохранено'}</span></div>
+                    <textarea id="textarea_${noteKey}" placeholder="Ваш перевод...">${savedText}</textarea>
+                    <div class="note-actions"><button class="btn-save" onclick="saveNote('${noteKey}')">💾 Сохранить</button><button class="btn-clear" onclick="clearNote('${noteKey}')">🗑️ Очистить</button></div>
+                </div>`;
+            });
+            card.innerHTML=html; container.appendChild(card);
+        });
+    }
+    window.toggleDialogNote=function(id){ document.getElementById(id).classList.toggle('open'); };
+    window.toggleNoteSticker=function(key){ const el=document.getElementById(`noteSticker_${key}`); if(el) el.style.display = el.style.display==='none' ? 'block' : 'none'; };
+    window.toggleDialogPinyin=function(dIdx){
+        const els=document.querySelectorAll(`[id^="dialogPinyin_${dIdx}_"]`);
+        els.forEach(el=>el.classList.toggle('hidden'));
+        const btn=document.getElementById(`pinyinBtn_${dIdx}`);
+        btn.classList.toggle('active');
+        showToast(els[0]?.classList.contains('hidden')?'Пиньинь скрыт':'Пиньинь показан');
+    };
+    window.toggleDialogTrans=function(dIdx){
+        const els=document.querySelectorAll(`[id^="dialogTrans_${dIdx}_"]`);
+        els.forEach(el=>el.classList.toggle('hidden'));
+        const btn=document.getElementById(`transBtn_${dIdx}`);
+        btn.classList.toggle('active');
+        showToast(els[0]?.classList.contains('hidden')?'Перевод скрыт':'Перевод показан');
+    };
+
+    // ===== ЧТЕНИЕ =====
+    function renderReading(){
+        const container=document.getElementById('readingContainer'); container.innerHTML='';
+        readingData.forEach((item,rIdx)=>{
+            const card=document.createElement('div'); card.className='reading-card';
+            const pinyinHtml=item.pinyin.split(/(\d+)/).map(p=>/^\d$/.test(p)?`<span class="tone">${p}</span>`:p).join(' ');
+            let html=`<strong>${item.title}</strong>
+            <div class="reading-controls">
+                <button class="active" id="readPinyinBtn_${rIdx}" onclick="toggleReadingPinyin(${rIdx})">🔤 Пиньинь</button>
+                <button class="active" id="readTransBtn_${rIdx}" onclick="toggleReadingTrans(${rIdx})">🌐 Перевод</button>
+            </div>
+            <div class="reading-text-chinese">${item.chn}</div>
+            <div class="reading-text-pinyin" id="readingPinyin_${rIdx}">${pinyinHtml}</div>
+            <div class="reading-text-trans" id="readingTrans_${rIdx}">${item.trans}</div>`;
+            item.questions.forEach((q,qIdx)=>{ const aid=`readingAns_${rIdx}_${qIdx}`; html+=`<div class="reading-question">❓ ${q.q}</div><button class="small-btn" onclick="toggleAnswer('${aid}')">👀 Ответ</button><div class="reading-answer" id="${aid}">✅ ${q.a}</div>`; });
+            const noteKey=getNoteKey('reading',rIdx); const notes=loadNotes(); const savedText=notes[noteKey]||'';
+            html+=`<div class="note-sticker"><div class="note-header"><span>📝 Заметки</span><span class="note-status" id="status_${noteKey}">${savedText?'🟢 Сохранено':'⚪ Не сохранено'}</span></div><textarea id="textarea_${noteKey}">${savedText}</textarea><div class="note-actions"><button class="btn-save" onclick="saveNote('${noteKey}')">💾</button><button class="btn-clear" onclick="clearNote('${noteKey}')">🗑️</button></div></div>`;
+            card.innerHTML=html; container.appendChild(card);
+        });
+    }
+    window.toggleAnswer=function(id){ document.getElementById(id).classList.toggle('show'); };
+    window.toggleReadingPinyin=function(idx){
+        const el=document.getElementById(`readingPinyin_${idx}`);
+        el.classList.toggle('hidden');
+        const btn=document.getElementById(`readPinyinBtn_${idx}`);
+        btn.classList.toggle('active');
+        showToast(el.classList.contains('hidden')?'Пиньинь скрыт':'Пиньинь показан');
+    };
+    window.toggleReadingTrans=function(idx){
+        const el=document.getElementById(`readingTrans_${idx}`);
+        el.classList.toggle('hidden');
+        const btn=document.getElementById(`readTransBtn_${idx}`);
+        btn.classList.toggle('active');
+        showToast(el.classList.contains('hidden')?'Перевод скрыт':'Перевод показан');
+    };
+
+    // ===== ПРАКТИКА =====
+    function renderPractice(){
+        const container=document.getElementById('practiceContainer'); container.innerHTML='';
+        practiceData.forEach((topic,tIdx)=>{
+            const card=document.createElement('div'); card.className='practice-topic';
+            let html=`<h3>${topic.title}</h3>`;
+            topic.questions.forEach(q=>{ html+=`<div class="question-box">💬 ${q}</div>`; });
+            if(topic.highlights) html+=`<div class="grammar-highlight"><strong>📌 Лексика и грамматика:</strong><br>${topic.highlights.join('<br>')}</div>`;
+            const noteKey=getNoteKey('practice',tIdx); const notes=loadNotes(); const savedText=notes[noteKey]||'';
+            html+=`<div class="note-sticker"><div class="note-header"><span>📝 Ответы</span><span class="note-status" id="status_${noteKey}">${savedText?'🟢 Сохранено':'⚪ Не сохранено'}</span></div><textarea id="textarea_${noteKey}">${savedText}</textarea><div class="note-actions"><button class="btn-save" onclick="saveNote('${noteKey}')">💾</button><button class="btn-clear" onclick="clearNote('${noteKey}')">🗑️</button></div></div>`;
+            card.innerHTML=html; container.appendChild(card);
+        });
+    }
+
+    // ===== ИЕРОГЛИФЫ =====
+    function renderCharOrbs(){
+        const c=document.getElementById('charOrbContainer'); c.innerHTML='';
+        currentChars.forEach((char,idx)=>{
+            const orb=document.createElement('div');
+            orb.className=`char-orb orb-${(idx%12)+1}`;
+            const sizes=['small','medium','large'];
+            orb.classList.add(sizes[Math.floor(Math.random()*3)]);
+            orb.textContent=charVisible?char:'?';
+            orb.title=char;
+            orb.onclick=function(){
+                if(!charVisible){ showToast('Сначала покажите иероглифы!'); return; }
+                if(char===targetChar){ orb.classList.add('found'); showToast(`✅ Правильно: ${char}`); }
+                else { showToast(`❌ Это: ${char}`); }
+            };
+            c.appendChild(orb);
+        });
+    }
+    function spinCharWheel(){
+        targetChar=allChars[Math.floor(Math.random()*allChars.length)];
+        const resultEl=document.getElementById('charWheelResult');
+        resultEl.textContent=`Найдите: ${targetChar}`;
+        resultEl.style.fontSize='2rem';
+        showToast(`🎯 Найдите: ${targetChar}`);
+    }
+    function toggleCharVisibility(){
+        charVisible=!charVisible;
+        document.querySelectorAll('.char-orb').forEach(orb=>{ orb.textContent=charVisible?orb.title:'?'; });
+        const btn=event.target; btn.textContent=charVisible?'👁️ Скрыть':'👁️ Показать';
+        showToast(charVisible?'Показаны':'Скрыты');
+    }
+    function shuffleChars(){
+        currentChars=[...allChars].sort(()=>Math.random()-0.5);
+        renderCharOrbs();
+        showToast('🔀 Перемешано!');
+    }
+
+    // ===== РАНДОМАЙЗЕР ПРАКТИКИ =====
+    window.spinPracticeWheel=function(){
+        const names=['黎分析师','业务分析师','策略专家'];
+        const topics=practiceData.map(t=>t.title);
+        const allQ=practiceData.flatMap(t=>t.questions);
+        const sn=[...names].sort(()=>Math.random()-0.5);
+        const rt=topics[Math.floor(Math.random()*topics.length)];
+        const rq=allQ[Math.floor(Math.random()*allQ.length)];
+        document.getElementById('practiceWheelResult').textContent=`${sn[0]} → ${sn[1]} | ${rt} | ${rq}`;
+    };
+
+    // ===== ГЛОБАЛЬНЫЕ =====
+    window.saveNote=function(key){ const ta=document.getElementById(`textarea_${key}`); if(!ta)return; const n=loadNotes(); n[key]=ta.value; saveNotes(n); const st=document.getElementById(`status_${key}`); if(st){st.textContent=ta.value?'🟢 Сохранено':'⚪ Не сохранено'; st.className='note-status'+(ta.value?' saved':'');} showToast('✅ Сохранено!'); };
+    window.clearNote=function(key){ const ta=document.getElementById(`textarea_${key}`); if(!ta)return; ta.value=''; const n=loadNotes(); delete n[key]; saveNotes(n); const st=document.getElementById(`status_${key}`); if(st){st.textContent='⚪ Не сохранено'; st.className='note-status';} showToast('🗑️ Очищено'); };
+    window.exportData=function(){
+        const n=loadNotes(); let txt='HSK 1 · Урок 14 · Заметки (v8)\n========================================\n\n';
+        for(const[k,v]of Object.entries(n)){ txt+=`📌 ${k}:\n${v}\n\n`; }
+        txt+='========================================\nЭкспортировано: '+new Date().toLocaleString()+'\n';
+        const blob=new Blob([txt],{type:'text/plain;charset=utf-8'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='HSK14_Notes_v8.txt'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url); showToast('📤 Экспортировано!');
+    };
+
+    // ===== ВКЛАДКИ =====
+    document.querySelectorAll('.tab-btn').forEach(btn=>{
+        btn.addEventListener('click',function(){
+            document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+            this.classList.add('active');
+            document.querySelectorAll('.section').forEach(s=>s.classList.remove('active-section'));
+            const target=document.getElementById(this.dataset.tab);
+            if(target)target.classList.add('active-section');
+            if(this.dataset.tab==='chars')renderCharOrbs();
+        });
+    });
+
+    // ===== ИНИЦИАЛИЗАЦИЯ =====
+    renderVocab(); renderGrammar(); renderDialogs(); renderReading(); renderPractice();
+    currentChars=[...allChars]; renderCharOrbs();
+})();
+</script>
+</body>
+</html> - максимаоьно впитай мнемотехнику сдов 14 урока , чтобвты  потом оформила это оформила в идеаоьные со всех сторон проработанные поимптв по которым можно понять и сгенерировать картиеку , котрая отрадает суть этого слова не прямой перевол а именоо соединене смыслов ключей т ярууб метафору  досконально и не от бвлдф и сами картмнуи стмоь пикаари и чтобф сами иероглифы нигдемее были написано номссмыслвьхорого переланы и соедмеены
