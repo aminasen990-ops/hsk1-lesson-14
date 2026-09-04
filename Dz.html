@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Разбор домашнего задания · Китайский язык · Полный конспект</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;600;700;900&display=swap');
+
+        :root {
+            --bg: #0c0e12;
+            --bg-card: #171b23;
+            --bg-card-hover: #1c212b;
+            --text-primary: #f2f4f8;
+            --text-secondary: #b0b8c4;
+            --text-muted: #6f7885;
+            --line: #242a34;
+            --line-strong: #3a424e;
+            --gold: #c9a96a;
+            --gold-pale: #e2c995;
+            --accent-blue: #7a9bb5;
+            --accent-red: #b5786b;
+            --accent-green: #8aa98a;
+            --glow-gold: rgba(201, 169, 106, 0.12);
+            --glow-red: rgba(181, 120, 107, 0.12);
+            --glow-green: rgba(138, 169, 138, 0.12);
+            --glow-blue: rgba(122, 155, 181, 0.12);
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --font-mono: 'JetBrains Mono', 'SF Mono', 'Consolas', monospace;
+            --font-cn: 'Noto Serif SC', 'SimSun', serif;
+            --slide-width: min(92vw, 1200px);
+            --radius-md: 12px;
+            --radius-sm: 8px;
+            --transition: 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body {
+            background: var(--bg);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            height: 100%;
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+            user-select: none;
+        }
+
+        .slider { position: relative; width: 100%; height: 100vh; overflow: hidden; touch-action: pan-y pinch-zoom; }
+        .slides-track { display: flex; height: 100%; transition: transform var(--transition); will-change: transform; }
+        .slide {
+            flex: 0 0 100vw;
+            height: 100vh;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 28px 36px 80px;
+            display: flex;
+            flex-direction: column;
+            scrollbar-width: none;
+            opacity: 0.35;
+            transition: opacity 0.65s ease;
+        }
+        .slide::-webkit-scrollbar { display: none; }
+        .slide.active { opacity: 1; }
+        .slide-inner { max-width: var(--slide-width); margin: 0 auto; width: 100%; flex: 1; display: flex; flex-direction: column; }
+
+        .eyebrow {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            white-space: nowrap;
+        }
+        .eyebrow::after { content: ""; height: 1px; width: 100%; background: linear-gradient(90deg, var(--gold), transparent); }
+
+        .slide-title {
+            font-size: clamp(24px, 3.5vw, 40px);
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            margin-bottom: 8px;
+        }
+        .slide-title .highlight { color: var(--gold); }
+
+        .slide-subtitle {
+            font-size: clamp(13px, 1.4vw, 15px);
+            color: var(--text-secondary);
+            line-height: 1.6;
+            max-width: 760px;
+            margin-bottom: 16px;
+        }
+
+        .cn { font-family: var(--font-cn); font-weight: 500; }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--line);
+            border-radius: var(--radius-md);
+            padding: 20px 24px;
+            transition: border-color 0.35s, box-shadow 0.35s, background 0.35s;
+            margin-bottom: 8px;
+        }
+        .card:hover { border-color: var(--line-strong); background: var(--bg-card-hover); box-shadow: 0 8px 32px rgba(0,0,0,0.35); }
+        .card-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 8px; }
+        .card-body { font-size: 12.5px; line-height: 1.65; color: var(--text-secondary); }
+        .card-body strong { color: var(--text-primary); font-weight: 600; }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+        @media (max-width: 720px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+
+        .table-wrap {
+            overflow-x: auto;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--line);
+            background: var(--bg-card);
+            scrollbar-width: thin;
+            scrollbar-color: var(--line-strong) transparent;
+            margin-top: 12px;
+        }
+        .table-wrap::-webkit-scrollbar { height: 4px; }
+        .table-wrap::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 4px; }
+        table { width: 100%; border-collapse: collapse; font-size: 11px; min-width: 560px; }
+        table th {
+            font-family: var(--font-mono);
+            font-size: 9px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--text-muted);
+            padding: 12px 14px;
+            text-align: left;
+            border-bottom: 1px solid var(--line-strong);
+            white-space: nowrap;
+            background: rgba(255,255,255,0.02);
+        }
+        table td { padding: 10px 14px; border-bottom: 1px solid var(--line); color: var(--text-secondary); vertical-align: top; line-height: 1.55; }
+        table tr:last-child td { border-bottom: none; }
+        table tr:hover td { background: rgba(255,255,255,0.015); }
+
+        .err {
+            background: rgba(181, 120, 107, 0.25);
+            border-radius: 3px;
+            padding: 0 2px;
+            text-decoration: line-through;
+            text-decoration-color: var(--accent-red);
+            color: var(--accent-red);
+            font-weight: 600;
+        }
+        .fix {
+            background: rgba(138, 169, 138, 0.25);
+            border-radius: 3px;
+            padding: 0 2px;
+            color: var(--accent-green);
+            font-weight: 700;
+            box-shadow: 0 0 6px var(--glow-green);
+        }
+        .orig-block {
+            border-left: 3px solid var(--accent-blue);
+            background: rgba(122,155,181,0.06);
+            padding: 14px 18px;
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            font-size: 13px;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin: 8px 0;
+        }
+        .fix-block {
+            border-left: 3px solid var(--accent-green);
+            background: rgba(138,169,138,0.06);
+            padding: 14px 18px;
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            font-size: 13px;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin: 8px 0;
+        }
+        .exp-block {
+            border-left: 3px solid var(--gold);
+            background: var(--glow-gold);
+            padding: 14px 18px;
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            font-size: 12.5px;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin: 8px 0;
+        }
+        .exp-block strong { color: var(--gold-pale); }
+        .exp-block .cn { color: var(--gold-pale); font-weight: 600; }
+        .warn-block {
+            border-left: 3px solid var(--accent-red);
+            background: var(--glow-red);
+            padding: 14px 18px;
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            font-size: 12.5px;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin: 8px 0;
+        }
+        .warn-block strong { color: var(--accent-red); }
+        .warn-block .cn { color: var(--accent-red); font-weight: 600; }
+
+        .pill {
+            display: inline-block;
+            font-family: var(--font-mono);
+            font-size: 9px;
+            font-weight: 500;
+            letter-spacing: 0.06em;
+            padding: 3px 8px;
+            border-radius: 20px;
+            border: 1px solid var(--line-strong);
+            color: var(--text-secondary);
+            margin: 2px 2px 2px 0;
+        }
+        .pill.gold { border-color: var(--gold); color: var(--gold); background: var(--glow-gold); }
+        .pill.blue { border-color: var(--accent-blue); color: var(--accent-blue); }
+        .pill.green { border-color: var(--accent-green); color: var(--accent-green); }
+        .pill.red { border-color: var(--accent-red); color: var(--accent-red); }
+
+        .nav-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 32px;
+            background: linear-gradient(180deg, transparent, rgba(12,14,18,0.94));
+            z-index: 100;
+            pointer-events: none;
+        }
+        .nav-bar button {
+            pointer-events: auto;
+            background: var(--bg-card);
+            border: 1px solid var(--line-strong);
+            color: var(--text-primary);
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        .nav-bar button:hover { border-color: var(--gold); color: var(--gold); box-shadow: 0 0 24px var(--glow-gold); }
+        .nav-bar button:disabled { opacity: 0.25; cursor: not-allowed; }
+        .dots { display: flex; gap: 6px; pointer-events: auto; }
+        .dot { width: 7px; height: 7px; border-radius: 50%; background: #4a525d; border: none; cursor: pointer; transition: all 0.3s ease; }
+        .dot.active { background: var(--gold); box-shadow: 0 0 10px var(--glow-gold); width: 22px; border-radius: 4px; }
+        .counter { font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); letter-spacing: 0.12em; }
+        .counter .current { color: var(--gold); font-weight: 600; }
+        @media (max-width: 720px) { .slide { padding: 18px 16px 70px; } .nav-bar { padding: 12px 16px; } }
+    </style>
+</head>
+<body>
+
+<div class="slider" id="slider">
+<div class="slides-track" id="slidesTrack">
+
+<!-- 1. ТИТУЛ -->
+<section class="slide active" data-index="0">
+<div class="slide-inner" style="justify-content:center;">
+<div class="eyebrow">Разбор домашнего задания · Китайский язык</div>
+<h1 class="slide-title" style="font-size:clamp(30px,4.5vw,52px);max-width:820px;">ПОЛНЫЙ РАЗБОР<br><span class="highlight">ДОМАШНЕГО ЗАДАНИЯ</span></h1>
+<p class="slide-subtitle" style="margin-top:14px;max-width:580px;">Формат: 🟦 Оригинал → ✅ Исправленный вариант → 💡 Объяснение</p>
+<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:24px;">
+<span class="pill gold">Alena Северсталь · 5 предложений</span>
+<span class="pill blue">Елена Онтрэк · 5 предложений</span>
+<span class="pill green">Elena Северсталь · 5 предложений</span>
+</div>
+<div style="margin-top:36px;border-top:1px solid var(--line);padding-top:14px;display:flex;justify-content:space-between;">
+<span class="mono" style="font-family:var(--font-mono);font-size:10px;color:var(--text-muted);">Цель: исправить ошибки, объяснить правила, дать шпаргалки</span>
+<span class="mono" style="font-family:var(--font-mono);font-size:10px;color:var(--gold);">→ листайте вправо</span>
+</div>
+</div>
+</section>
+
+<!-- 2. ALENA ИСХОДНЫЙ ТЕКСТ -->
+<section class="slide" data-index="1">
+<div class="slide-inner">
+<div class="eyebrow">Alena Северсталь · Исходный текст</div>
+<h2 class="slide-title">Все предложения <span class="highlight">ученицы</span></h2>
+<p class="slide-subtitle">📝 Исходный текст полностью</p>
+<div class="card">
+<div class="card-body">
+<span class="cn">大家好！</span> Моё ДЗ к пятнице.<br>5 предложений:<br><br>
+1. <span class="cn">今天我们买了不少家里的东西：电视、桌子、椅子、电脑和杯子。</span><br>
+2. <span class="cn">先生开了十分钟车，看见小姐在路边。</span><br>
+3. <span class="cn">我回家后给你打电话!</span><br>
+4. <span class="cn">这些苹果很漂亮，但是有点儿贵.</span><br>
+5. <span class="cn">我看见先生和小姐在商店买衣服.</span><br><br>
+Записи экрана с озвучкой высылаю следом пятью видео :)<br><br>
+<span class="cn">@aminashen1</span> сможешь мне объяснить подробнее ещё раз, как читать <span class="cn">有点儿</span>？ очень коротко, а то я там булькаю 🙏🏻<br><br>
+Новых слов пока нет, выучить бы пока все эти из урока :)
+</div>
+</div>
+</div>
+</section>
+
+<!-- 3. ALENA ПРЕДЛОЖЕНИЕ 1 -->
+<section class="slide" data-index="2">
+<div class="slide-inner">
+<div class="eyebrow">Alena Северсталь · Предложение 1</div>
+<h2 class="slide-title">Покупка <span class="highlight">вещей для дома</span></h2>
+<div class="orig-block">🟦 Оригинал: <span class="cn">今天我们买了不少<span class="err">家里的东西</span>：电视、桌子、椅子、电脑<span class="err">和</span>杯子。</span></div>
+<div class="fix-block">✅ Исправлено: <span class="cn">今天我们买了不少<span class="fix">家用物品</span>：电视、桌子、椅子、电脑<span class="fix">还有</span>杯子。</span></div>
+<div class="exp-block">💡 <strong>Объяснение:</strong><br><br>
+<span class="cn">家里的东西</span> — вещи, которые уже стоят дома. Речь про только что купленные товары для дома, поэтому <span class="cn">家用物品</span>.<br><br>
+При перечислении в конце списка носители предпочитают <span class="cn">还有</span>, а не <span class="cn">和</span>.</div>
+</div>
+</section>
+
+<!-- 4. ALENA ПРЕДЛОЖЕНИЕ 2 -->
+<section class="slide" data-index="3">
+<div class="slide-inner">
+<div class="eyebrow">Alena Северсталь · Предложение 2</div>
+<h2 class="slide-title">Длительность <span class="highlight">и объект</span></h2>
+<div class="orig-block">🟦 Оригинал: <span class="cn">先生<span class="err">开了十分钟车</span>，<span class="err">看见</span>小姐<span class="err">在</span>路边。</span></div>
+<div class="fix-block">✅ Исправлено: <span class="cn">先生<span class="fix">开车开了十分钟</span>，<span class="fix">看到</span>小姐<span class="fix">站在</span>路边。</span></div>
+<div class="exp-block">💡 <strong>Объяснение:</strong><br><br>
+В китайском, если у глагола есть объект (здесь <span class="cn">车</span>), длительность действия ставим в конец предложения. Для этого повторяем глагол.<br><br>
+<strong>Правило:</strong> S + V + O + V-повтор + 了 + длительность<br><br>
+<strong>Разговорный вариант:</strong> <span class="cn">开了十分钟车</span> — носители так говорят, но для упражнений лучше не использовать.<br><br>
+<strong>Почему <span class="cn">站</span>:</strong> Добавили <span class="cn">站</span> (стоять), потому что не было понятно, что делала девушка.<br><br>
+<strong>Синонимы:</strong> <span class="cn">看见</span> и <span class="cn">看到</span> — синонимы. <span class="cn">看到</span> чаще про случайное обнаружение.</div>
+<div class="warn-block">⚠️ <strong>Нельзя:</strong> <span class="cn">先生开车十分钟。</span> — ОШИБКА! Если объект перед длительностью, глагол обязательно повторяем.</div>
+</div>
+</section>
+
+<!-- 5. ALENA ПРЕДЛОЖЕНИЕ 3 -->
+<section class="slide" data-index="4">
+<div class="slide-inner">
+<div class="eyebrow">Alena Северсталь · Предложение 3</div>
+<h2 class="slide-title">Сразу <span class="highlight">после</span></h2>
+<div class="orig-block">🟦 Оригинал: <span class="cn">我回家后给你打电话<span class="err">!</span></span></div>
+<div class="fix-block">✅ Исправлено: <span class="cn">我回家后<span class="fix">就</span>给你打电话<span class="fix">！</span></span></div>
+<div class="exp-block">💡 <strong>Объяснение:</strong><br><br>
+Частица <span class="cn">就</span> передаёт оттенок «сразу после того, как приду домой».<br><br>
+В китайском восклицательный знак — полная ширина: <span class="cn">！</span></div>
+</div>
+</section>
+
+<!-- 6. ALENA ПРЕДЛОЖЕНИЕ 4 -->
+<section class="slide" data-index="5">
+<div class="slide-inner">
+<div class="eyebrow">Alena Северсталь · Предложение 4</div>
+<h2 class="slide-title">Яблоки <span class="highlight">красивые</span></h2>
+<div class="orig-block">🟦 Оригинал: <span class="cn">这些苹果很<span class="err">漂亮</span>，<span class="err">但是</span>有点儿贵<span class="err">.</span></span></div>
+<div class="fix-block">✅ Исправлено: <span class="cn">这些苹果很<span class="fix">好看</span>，<span class="fix">就是</span>有点儿贵<span class="fix">。</span></span></div>
+<div class="exp-block">💡 <strong>Объяснение:</strong><br><br>
+<span class="cn">漂亮</span> в основном описывает людей. Для фруктов/предметов лучше <span class="cn">很好看</span>.<br><br>
+<span class="cn">但是</span> — книжное слово-контраст. Для чата используем мягкий разговорный <span class="cn">就是</span> (но ведь) или <span class="cn">不过</span> (впрочем), или <span class="cn">但</span>.</div>
+</div>
+</section>
+
+<!-- 7. ALENA ДОПОЛНЕНИЕ ПО ЧАТУ -->
+<section class="slide" data-index="6">
+<div class="slide-inner">
+<div class="eyebrow">Alena Северсталь · Дополнение по чату</div>
+<h2 class="slide-title">Чат-сообщение <span class="highlight">и 有点儿</span></h2>
+<div class="orig-block">🟦 Русские фразы заменены на китайский: <span class="cn">这是我周五的作业</span> (это моё домашнее задание на пятницу).</div>
+<div class="exp-block">💡 <strong>Чтение 有点儿:</strong><br><br>
+<span class="cn">有点儿</span> = yǒu diǎnr. Обязательное <strong>儿化音</strong> — звук "r" на конце. Читаем слитно: <span class="cn">yǒu-diǎnr</span>. Без паузы между слогами.</div>
+</div>
+</section>
+
+<!-- 8. ЕЛЕНА ИСХОДНЫЙ ТЕКСТ -->
+<section class="slide" data-index="7">
+<div class="slide-inner">
+<div class="eyebrow">Елена Онтрэк · Исходный текст</div>
+<h2 class="slide-title">Все предложения <span class="highlight">ученицы</span></h2>
+<p class="slide-subtitle">📝 Исходный текст полностью</p>
+<div class="card">
+<div class="card-body">
+5 предложений<br><br>
+1. <span class="cn">我 喜欢苹果</span><br>
+2. <span class="cn">我开车去工作</span><br>
+3. <span class="cn">你今天去商店买</span><br>
+4. <span class="cn">啊你漂亮这些人</span><br>
+5. <span class="cn">这衣服多少钱</span><br>
+6. <span class="cn">这电脑公司的东西</span>
+</div>
+</div>
+</div>
+</section>
+
+<!-- 9. ЕЛЕНА ПРЕДЛОЖЕНИЯ 1-2 -->
+<section class="slide" data-index="8">
+<div class="slide-inner">
+<div class="eyebrow">Елена Онтрэк · Предложения 1–2</div>
+<h2 class="slide-title">Пробелы <span class="highlight">и работа</span></h2>
+<div class="orig-block">🟦 Оригинал: <span class="cn">我<span class="err"> </span>喜欢苹果</span></div>
+<div class="fix-block">✅ Исправлено: <span class="cn">我喜欢苹果<span class="fix">。</span></span></div>
+<div class="exp-block">💡 Убрали лишний пробел между иероглифами, добавили точку.</div>
+<div class="orig-block" style="margin-top:16px;">🟦 Оригинал: <span class="cn">我开车去<span class="err">工作</span></span></div>
+<div class="fix-block">✅ Исправлено: <span class="cn">我开车去<span class="fix">上班</span><span class="fix">。</span></span></div>
+<div class="exp-block">💡 <strong>Объяснение:</strong><br><br>
+<span class="cn">工作</span> — процесс, не место. Конструкция <span class="cn">去 + сущ.</span> = пойти в место.<br><br>
+<span class="cn">去工作</span> — «поехать в другой город работать». Обычная поездка на работу — <span class="cn">去上班</span>.</div>
+</div>
+</section>
+
+<!-- 10. ЕЛЕНА ПРЕДЛОЖЕНИЕ 3 + ТРАНЗИТИВНЫЕ ГЛАГОЛЫ -->
+<section class="slide" data-index="9">
+<div class="slide-inner">
+<div class="eyebrow">Елена Онтрэк · Предложение 3</div>
+<h2 class="slide-title">Транзитивный <span class="highlight">глагол 买</span></h2>
+<div class="orig-block">🟦 Оригинал: <span class="cn">你今天去商店<span class="err">买</span></span></div>
+<div class="fix-block">✅ Исправлено: <span class="cn">你今天去商店买<span class="fix">东西</span><span class="fix">。</span></span></div>
+<div class="exp-block">💡 Глагол <span class="cn">买</span> транзитивный, требует объект «что покупать?». <span class="cn">买东西</span> — универсальный объект.</div>
+<div class="table-wrap" style="margin-top:16px;">
+<table>
+<thead><tr><th>Глагол</th><th>Пиньинь</th><th>Значение</th><th>Пример</th></tr></thead>
+<tbody>
+<tr><td><span class="cn">买</span></td><td>mǎi</td><td>покупать</td><td><span class="cn">买书</span></td></tr>
+<tr><td><span class="cn">卖</span></td><td>mài</td><td>продавать</td><td><span class="cn">卖水果</span></td></tr>
+<tr><td><span class="cn">吃</span></td><td>chī</td><td>есть</td><td><span class="cn">吃米饭</span></td></tr>
+<tr><td><span class="cn">喝</span></td><td>hē</td><td>пить</td><td><span class="cn">喝茶</span></td></tr>
+<tr><td><span class="cn">看</span></td><td>kàn</td><td>смотреть</td><td><span class="cn">看电影</span></td></tr>
+<tr><td><span class="cn">听</span></td><td>tīng</td><td>слушать</td><td><span class="cn">听音乐</span></td></tr>
+<tr><td><span class="cn">写</span></td><td>xiě</td><td>писать</td><td><span class="cn">写作业</span></td></tr>
+<tr><td><span class="cn">说</span></td><td>shuō</td><td>говорить</td><td><span class="cn">说中文</span></td></tr>
+<tr><td><span class="cn">学</span></td><td>xué</td><td>учить</td><td><span class="cn">学汉语</span></td></tr>
+<tr><td><span class="cn">做</span></td><td>zuò</td><td>делать</td><td><span class="cn">做工作</span></td></tr>
+<tr><td><span class="cn">打</span></td><td>dǎ</td><td>звонить</td><td><span class="cn">打电话</span></td></tr>
+<tr><td><span class="cn">找</span></td><td>zhǎo</td><td>искать</td><td><span class="cn">找朋友</span></td></tr>
+<tr><td><span class="cn">喜欢</span></td><td>xǐ huān</td><td>любить</td><td><span class="cn">喜欢苹果</span></td></tr>
+<tr><td><span class="cn">爱</span></td><td>ài</td><td>любить</td><td><span class="cn">爱家人</span></td></tr>
+<tr><td><span class="cn">帮助</span></td><td>bāng zhù</td><td>помогать</td><td><span class="cn">帮助同学</span></td></tr>
+<tr><td><span class="cn">认识</span></td><td>rèn shi</td><td>знать</td><td><span class="cn">认识老师</span></td></tr>
+<tr><td><span class="cn">看见</span></td><td>kàn jiàn</td><td>увидеть</td><td><span class="cn">看见小姐</span></td></tr>
+<tr><td><span class="cn">打开</span></td><td>dǎ kāi</td><td>открывать</td><td><span class="cn">打开窗户</span></td></tr>
+<tr><td><span class="cn">关闭</span></td><td>guān bì</td><td>закрывать</td><td><span class="cn">关闭门</span></td></tr>
+<tr><td><span class="cn">准备</span></td><td>zhǔn bèi</td><td>готовить</td><td><span class="cn">准备晚餐</span></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+
+<!-- 11. ЕЛЕНА ПРЕДЛОЖЕНИЕ 4 -->
+<section class="slide" data-index="10">
+<div class="slide-inner">
+<div class="eyebrow">Елена Онтрэк · Предложение 4</div>
+<h2 class="slide-title">Порядок слов <span class="highlight">и междометие</span></h2>
+<div class="orig-block">🟦 Оригинал: <span class="cn"><span class="err">啊你漂亮</span>这些人</span></div>
+<div class="fix-block">✅ Исправлено: <span class="cn"><span class="fix">啊，这些人很漂亮。</span></span></div>
+<div class="exp-block">💡 Сломан порядок слов (повтор русского). Правильно: междометие → подлежащее → прилагательное. После <span class="cn">啊</span> ставим запятую.</div>
+</div>
+</section>
+
+<!-- 12. МЕЖДОМЕТИЯ -->
+<section class="slide" data-index="11">
+<div class="slide-inner">
+<div class="eyebrow">Елена Онтрэк · Шпаргалка</div>
+<h2 class="slide-title">Важнейшие китайские <span class="highlight">междометия</span></h2>
+<p class="slide-subtitle">Железный набор, который обязательно понимать ученикам.</p>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Междометие</th><th>Пиньинь</th><th>Эмоция</th><th>Ситуация</th><th>Пример</th></tr></thead>
+<tbody>
+<tr><td><span class="cn">啊</span></td><td>a</td><td>удивление, смягчение</td><td>любые ситуации</td><td><span class="cn">啊，原来是你！</span></td></tr>
+<tr><td><span class="cn">噢 / 哦</span></td><td>ō / ò</td><td>понимание, догадка</td><td>переписка, разговор</td><td><span class="cn">噢，我知道了。</span></td></tr>
+<tr><td><span class="cn">嗯</span></td><td>ēn</td><td>согласие</td><td>ответ-подтверждение</td><td><span class="cn">嗯，好的。</span></td></tr>
+<tr><td><span class="cn">哎呀</span></td><td>āiyā</td><td>удивление, досада</td><td>мелкие неприятности</td><td><span class="cn">哎呀，我忘记了！</span></td></tr>
+<tr><td><span class="cn">唉</span></td><td>ài</td><td>вздох, печаль</td><td>грусть, безысходность</td><td><span class="cn">唉，没办法。</span></td></tr>
+<tr><td><span class="cn">嘿</span></td><td>hēi</td><td>лёгкое удивление</td><td>друзья, не для старших</td><td><span class="cn">嘿，你来了！</span></td></tr>
+</tbody>
+</table>
+</div>
+<div class="grid-3" style="margin-top:12px;">
+<div class="card"><div class="card-body"><strong>Важно:</strong> <span class="cn">噢 / 哦</span> — основное для деловой переписки.</div></div>
+<div class="card"><div class="card-body"><strong>Важно:</strong> <span class="cn">嗯</span> — много раз подряд звучит холодно.</div></div>
+<div class="card"><div class="card-body"><strong>Важно:</strong> <span class="cn">嘿</span> — не писать преподавателю или начальнику.</div></div>
+</div>
+<div class="exp-block" style="margin-top:12px;">💡 <strong>Что НЕ обязательно учить новичкам:</strong> грубые междометия (<span class="cn">呸</span>, <span class="cn">哼</span>) — много негативной окраски.</div>
+</div>
+</section>
+
+<!-- 13. ОБНОВЛЁННАЯ ШПАРГАЛКА + 哦 -->
+<section class="slide" data-index="12">
+<div class="slide-inner">
+<div class="eyebrow">Елена Онтрэк · Обновлённая шпаргалка</div>
+<h2 class="slide-title">Междометия + <span class="highlight">частица 哦</span></h2>
+<p class="slide-subtitle">Важно разграничить:<br>1. <span class="cn">噢 / 哦</span> ō — междометие в начале фразы = «ага, понял».<br>2. <span class="cn">哦</span> o (без тона) — частица в КОНЦЕ предложения: мягкая грустинка, нежность, лёгкое разочарование.</p>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Междометие / частица</th><th>Пиньинь</th><th>Эмоция</th><th>Ситуация</th><th>Пример</th></tr></thead>
+<tbody>
+<tr><td><span class="cn">啊</span></td><td>a</td><td>удивление, смягчение</td><td>любые ситуации</td><td><span class="cn">啊，原来是你！</span></td></tr>
+<tr><td><span class="cn">噢 / 哦</span></td><td>ō / ò</td><td>ага, понял</td><td>начало фразы</td><td><span class="cn">噢，我知道了。</span></td></tr>
+<tr><td><span class="cn">哦</span> (в конце)</td><td>o</td><td>мягкая грустинка, нежность</td><td>конец фразы, неформально</td><td><span class="cn">那我先走哦。</span></td></tr>
+<tr><td><span class="cn">嗯</span></td><td>ēn</td><td>согласие</td><td>ответ-подтверждение</td><td><span class="cn">嗯，好的。</span></td></tr>
+<tr><td><span class="cn">哎呀</span></td><td>āiyā</td><td>ой, досада</td><td>мелкие неприятности</td><td><span class="cn">哎呀，我忘记了！</span></td></tr>
+<tr><td><span class="cn">唉</span></td><td>ài</td><td>эх, вздох</td><td>грусть</td><td><span class="cn">唉，没办法。</span></td></tr>
+<tr><td><span class="cn">嘿</span></td><td>hēi</td><td>эй!</td><td>друзья</td><td><span class="cn">嘿，你来了！</span></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+
+<!-- 14. ДЕТАЛЬНО ПРО 哦 -->
+<section class="slide" data-index="13">
+<div class="slide-inner">
+<div class="eyebrow">Елена Онтрэк · Частица 哦</div>
+<h2 class="slide-title">Детально про <span class="highlight">конечную частицу 哦</span></h2>
+<div class="exp-block">💡 <strong>Значения:</strong><br><br>
+<strong>1. Мягкая грусть, прощание.</strong><br><span class="cn">明天见哦。</span> — До завтра (не хочу расставаться).<br><br>
+<strong>2. Мягкое напоминание.</strong><br><span class="cn">记得吃饭哦。</span> — Не забудь поесть.<br><br>
+<strong>3. Лёгкое смирение.</strong><br><span class="cn">好吧，那就算了哦。</span> — Ну ладно (лёгкая грусть).</div>
+<div class="warn-block">⚠️ <strong>Важно:</strong><br>
+1. Не путать: <span class="cn">噢</span> ō — в начале; <span class="cn">哦</span> o — в конце.<br>
+2. Не для официальной переписки.<br>
+3. Много <span class="cn">哦哦哦</span> — наивно-детско.</div>
+<div class="card" style="margin-top:8px;"><div class="card-body"><strong>Сравни:</strong><br><span class="cn">那我先走。</span> — нейтрально.<br><span class="cn">那我先走哦。</span> — с грустинкой.</div></div>
+</div>
+</section>
+
+<!-- 15. ЕЛЕНА ПРЕДЛОЖЕНИЯ 5-6 -->
+<section class="slide" data-index="14">
+<div class="slide-inner">
+<div class="eyebrow">Елена Онтрэк · Предложения 5–6</div>
+<h2 class="slide-title">Классификатор <span class="highlight">件</span></h2>
+<div class="orig-block">🟦 Оригинал: <span class="cn">这衣服多少钱</span></div>
+<div class="fix-block">✅ Исправлено: <span class="cn">这<span class="fix">件</span>衣服多少钱<span class="fix">？</span></span></div>
+<div class="exp-block">💡 Для одежды нужен классификатор <span class="cn">件</span>. В вопросе ставим знак вопроса.</div>
+<div class="orig-block" style="margin-top:16px;">🟦 Оригинал: <span class="cn">这电脑公司的东西</span></div>
+<div class="fix-block">✅ (исключаем)</div>
+<div class="exp-block">💡 Фраза не является предложением, смысл неясный.</div>
+</div>
+</section>
+
+<!-- 16. ELENA ИСХОДНЫЙ ТЕКСТ -->
+<section class="slide" data-index="15">
+<div class="slide-inner">
+<div class="eyebrow">Elena Северсталь · Исходный текст</div>
+<h2 class="slide-title">Все предложения <span class="highlight">ученицы</span></h2>
+<div class="card"><div class="card-body">
+1. <span class="cn">是啊，这些人都爱吃苹果。</span><br>
+2. <span class="cn">她能看见这些漂亮的东西。</span><br>
+3. <span class="cn">下午的会后他开车去商店买衣服。</span><br>
+4. <span class="cn">十分钟后我们回来了。</span><br>
+5. <span class="cn">有些人喜欢看电视啊。</span>
+</div></div>
+</div>
+</section>
+
+<!-- 17. ELENA ПРЕДЛОЖЕНИЯ 1-2 -->
+<section class="slide" data-index="16">
+<div class="slide-inner">
+<div class="eyebrow">Elena Северсталь · Предложения 1–2</div>
+<h2 class="slide-title">Ошибок нет <span class="highlight">и 漂亮/好看</span></h2>
+<div class="orig-block">🟦 Оригинал: <span class="cn">是啊，这些人都爱吃苹果。</span></div>
+<div class="exp-block">💡 Ошибок нет.</div>
+<div class="orig-block" style="margin-top:16px;">🟦 Оригинал: <span class="cn">她能看见这些<span class="err">漂亮</span>的东西。</span></div>
+<div class="fix-block">✅ Исправлено: <span class="cn">她能看见这些<span class="fix">好看</span>的东西。</span></div>
+<div class="exp-block">💡 <span class="cn">漂亮</span> чаще для людей. Для вещей — <span class="cn">好看</span>.</div>
+</div>
+</section>
+
+<!-- 18. ELENA ПРЕДЛОЖЕНИЕ 3 -->
+<section class="slide" data-index="17">
+<div class="slide-inner">
+<div class="eyebrow">Elena Северсталь · Предложение 3</div>
+<h2 class="slide-title">Время <span class="highlight">и подлежащее</span></h2>
+<div class="orig-block">🟦 Оригинал: <span class="cn"><span class="err">下午的会后</span>他开车去商店买衣服。</span></div>
+<div class="fix-block">✅ Исправлено: <span class="cn"><span class="fix">下午开会后，</span>他开车去商店买衣服。</span></div>
+<div class="exp-block">💡 <span class="cn">下午的会后</span> излишне. Правильный порядок: время + подлежащее.</div>
+</div>
+</section>
+
+<!-- 19. ELENA ПРЕДЛОЖЕНИЯ 4-5 -->
+<section class="slide" data-index="18">
+<div class="slide-inner">
+<div class="eyebrow">Elena Северсталь · Предложения 4–5</div>
+<h2 class="slide-title">之后, <span class="highlight">就, 啊</span></h2>
+<div class="orig-block">🟦 Оригинал: <span class="cn">十分钟<span class="err">后</span>我们回来了。</span></div>
+<div class="fix-block">✅ Исправлено: <span class="cn">十分钟<span class="fix">之后</span>我们<span class="fix">就</span>回来了。</span></div>
+<div class="exp-block">💡 <span class="cn">后</span> и <span class="cn">之后</span> синонимы. <span class="cn">就</span> делает фразу естественнее.</div>
+<div class="orig-block" style="margin-top:16px;">🟦 Оригинал: <span class="cn">有些人喜欢看电视啊。</span></div>
+<div class="exp-block">💡 Ошибок нет.</div>
+</div>
+</section>
+
+<!-- 20. ФИНАЛИ -->
+<section class="slide" data-index="19">
+<div class="slide-inner">
+<div class="eyebrow">Ответы на вопросы Лэси</div>
+<h2 class="slide-title">Финали <span class="highlight">и 儿化音</span></h2>
+<div class="grid-3" style="margin-top:12px;">
+<div class="card"><div class="card-title">Финали на -n</div><div class="card-body">Носовой n отбрасываем, ставим r.<br><br><span class="cn">门</span> mén → mér<br><span class="cn">盘</span> pán → pár<br><span class="cn">班</span> bān → bār</div></div>
+<div class="card"><div class="card-title">Финали на -i</div><div class="card-body">Гласный i убираем, добавляем r.<br><br><span class="cn">杯</span> bēi → bēr<br><span class="cn">块</span> kuài → kuàr</div></div>
+<div class="card"><div class="card-title">Финали на -ng</div><div class="card-body">Вырезаем -ng, гласный остаётся носовым + r.<br><br><span class="cn">灯</span> dēng → dēr<br><span class="cn">风</span> fēng → fēr</div></div>
+</div>
+</div>
+</section>
+
+<!-- 21. ЧАСТИЦА 别 -->
+<section class="slide" data-index="20">
+<div class="slide-inner">
+<div class="eyebrow">Грамматика · Частица 别</div>
+<h2 class="slide-title">Запрет: <span class="highlight">别</span></h2>
+<div class="orig-block">🟦 Пример: <span class="cn">我们别买了！</span> — Давайте не будем покупать!</div>
+<div class="exp-block">💡 <strong>Значение:</strong> запрет, «не делай(те)!»<br><strong>Структура:</strong> <span class="cn">别</span> + глагол<br><br>
+<strong>Отличие от 不:</strong><br><span class="cn">不</span> — факт: <span class="cn">我们不买。</span><br><span class="cn">别</span> — призыв: <span class="cn">我们别买了！</span><br><br>
+<strong>Примеры:</strong> <span class="cn">别吃！</span> <span class="cn">别看！</span><br><br>
+<strong>Важно:</strong> после <span class="cn">别</span> не ставим <span class="cn">是</span>.</div>
+</div>
+</section>
+
+<!-- 22. 到 И 见 -->
+<section class="slide" data-index="21">
+<div class="slide-inner">
+<div class="eyebrow">Грамматика · Комплемент результата</div>
+<h2 class="slide-title">到 и 见: <span class="highlight">достижение результата</span></h2>
+<p class="slide-subtitle">Пример из текста: <span class="cn">看到</span> kàn dào — увидеть (взгляд дошёл до объекта).</p>
+<div class="grid-2" style="margin-top:12px;">
+<div class="card"><div class="card-title"><span class="cn">到</span> — достиг цели</div><div class="card-body"><span class="cn">找到</span> — найти<br><span class="cn">买到</span> — суметь купить<br><span class="cn">拿到</span> — получить<br><span class="cn">学到</span> — выучить<br><span class="cn">听到</span> — услышать</div></div>
+<div class="card"><div class="card-title"><span class="cn">见</span> — органы чувств</div><div class="card-body"><span class="cn">看见</span> — увидеть<br><span class="cn">听见</span> — услышать<br><br><strong>Важно:</strong> <span class="cn">见</span> только с <span class="cn">看</span> и <span class="cn">听</span>.</div></div>
+</div>
+<div class="exp-block" style="margin-top:12px;">💡 <strong>Ключевое отличие:</strong><br><span class="cn">我看到一个小姐。</span> — заметил (взгляд дошёл).<br><span class="cn">我看见一个小姐。</span> — вижу (глаза воспринимают).</div>
+<div class="warn-block" style="margin-top:8px;">⚠️ <span class="cn">见</span> работает только с <span class="cn">看</span> и <span class="cn">听</span>. Для остальных — только <span class="cn">到</span>.</div>
+</div>
+</section>
+
+</div>
+</div>
+
+<nav class="nav-bar">
+<button id="prevBtn">←</button>
+<div class="dots" id="dotsContainer"></div>
+<button id="nextBtn">→</button>
+<span class="counter"><span class="current" id="currentSlide">01</span> / <span id="totalSlides">22</span></span>
+</nav>
+
+<script>
+(function() {
+const track = document.getElementById('slidesTrack');
+const slides = Array.from(document.querySelectorAll('.slide'));
+const dotsContainer = document.getElementById('dotsContainer');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const currentSlideEl = document.getElementById('currentSlide');
+const totalSlidesEl = document.getElementById('totalSlides');
+let currentIndex = 0;
+const total = slides.length;
+slides.forEach((_, i) => {
+const dot = document.createElement('button');
+dot.classList.add('dot');
+dot.setAttribute('aria-label', `Слайд ${i + 1}`);
+dot.addEventListener('click', () => goTo(i));
+dotsContainer.appendChild(dot);
+});
+const dots = Array.from(document.querySelectorAll('.dot'));
+totalSlidesEl.textContent = String(total).padStart(2, '0');
+function updateUI() {
+track.style.transform = `translateX(-${currentIndex * 100}vw)`;
+slides.forEach((s, i) => s.classList.toggle('active', i === currentIndex));
+dots.forEach((d, i) => d.classList.toggle('active', i === currentIndex));
+currentSlideEl.textContent = String(currentIndex + 1).padStart(2, '0');
+prevBtn.disabled = currentIndex === 0;
+nextBtn.disabled = currentIndex === total - 1;
+slides[currentIndex].scrollTop = 0;
+}
+function goTo(index) { if (index < 0 || index >= total) return; currentIndex = index; updateUI(); }
+function next() { if (currentIndex < total - 1) goTo(currentIndex + 1); }
+function prev() { if (currentIndex > 0) goTo(currentIndex - 1); }
+prevBtn.addEventListener('click', prev);
+nextBtn.addEventListener('click', next);
+document.addEventListener('keydown', (e) => {
+if (e.key === 'ArrowRight') { e.preventDefault(); next(); }
+if (e.key === 'ArrowLeft') { e.preventDefault(); prev(); }
+if (e.key === 'PageDown') { e.preventDefault(); next(); }
+if (e.key === 'PageUp') { e.preventDefault(); prev(); }
+});
+let touchStartX = 0, touchStartY = 0;
+document.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].screenX; touchStartY = e.changedTouches[0].screenY; }, { passive: true });
+document.addEventListener('touchend', (e) => {
+const dx = e.changedTouches[0].screenX - touchStartX;
+const dy = e.changedTouches[0].screenY - touchStartY;
+if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 50) { if (dx < 0) next(); else prev(); }
+}, { passive: true });
+let wheelTimeout = null;
+document.addEventListener('wheel', (e) => {
+if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+e.preventDefault();
+if (wheelTimeout) return;
+if (e.deltaX > 30) next(); else if (e.deltaX < -30) prev();
+wheelTimeout = setTimeout(() => { wheelTimeout = null; }, 500);
+}
+}, { passive: false });
+updateUI();
+})();
+</script>
+</body>
+</html>
