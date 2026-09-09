@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>HSK 6 · 19 живых слов</title>
+    <style>
+        :root {
+            --bg: #fcf9f4;
+            --surface: #ffffff;
+            --border: #e8e2d8;
+            --text: #2d2a22;
+            --text-secondary: #5c503e;
+            --text-muted: #8a7a64;
+            --cinnabar: #b5443c;
+            --cinnabar-soft: #fdf2f0;
+            --gold: #b8914a;
+            --gold-soft: #fdf9f0;
+            --green: #2e7d32;
+            --green-soft: #e8f5e9;
+            --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 8px 20px rgba(0, 0, 0, 0.08);
+            --radius-lg: 20px;
+            --radius-md: 16px;
+            --radius-sm: 12px;
+            --font-cjk: 'Noto Sans SC', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            --font-ru: 'Segoe UI', 'Roboto', system-ui, sans-serif;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: var(--font-ru);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+            padding: 16px;
+        }
+        .app {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-size: 1.8rem;
+            color: var(--green);
+            margin-bottom: 0.3rem;
+        }
+        .subtitle {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        /* ---------- БЕГУЩАЯ СТРОКА ---------- */
+        .ticker-wrapper {
+            overflow: hidden;
+            background: var(--surface);
+            border-radius: 30px;
+            padding: 8px 0;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+        }
+        .ticker {
+            display: flex;
+            gap: 40px;
+            white-space: nowrap;
+            animation: tickerScroll 30s linear infinite;
+            font-family: var(--font-cjk);
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+        }
+        @keyframes tickerScroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .ticker span {
+            display: inline-block;
+        }
+
+        /* ---------- ТУЛБАР ---------- */
+        .toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+        .btn {
+            border: 1px solid var(--border);
+            background: var(--surface);
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: inherit;
+            color: var(--text-secondary);
+            box-shadow: var(--shadow-sm);
+            white-space: nowrap;
+        }
+        .btn:hover {
+            background: var(--gold-soft);
+            border-color: var(--gold);
+        }
+        .btn.active {
+            background: var(--green);
+            color: #fff;
+            border-color: var(--green);
+        }
+        .btn.danger {
+            color: var(--cinnabar);
+            border-color: #e0b4ad;
+        }
+        .btn.danger:hover {
+            background: var(--cinnabar-soft);
+            border-color: var(--cinnabar);
+        }
+
+        /* ---------- ПОИСК ---------- */
+        .search-wrap {
+            margin-bottom: 16px;
+        }
+        .search-wrap input {
+            width: 100%;
+            padding: 12px 18px;
+            border-radius: 30px;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            font-size: 0.9rem;
+            outline: none;
+            font-family: inherit;
+            color: var(--text);
+            box-shadow: var(--shadow-sm);
+        }
+        .search-wrap input:focus {
+            border-color: var(--gold);
+        }
+
+        /* ---------- СЕТКА КАРТОЧЕК ---------- */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .card-item {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: 18px 16px;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .card-item:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+            border-color: #d0c8b8;
+        }
+        .card-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 4px;
+            border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+            background: var(--gold);
+        }
+        .card-item .card-category {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--text-muted);
+            margin-bottom: 2px;
+        }
+        .card-item .card-emoji {
+            font-size: 1.8rem;
+            line-height: 1;
+        }
+        .card-item .card-word {
+            font-family: var(--font-cjk);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+            line-height: 1.2;
+            margin-top: 4px;
+        }
+        .card-item .card-pinyin {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+        .card-item .card-translation {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+        .card-item .card-delete {
+            position: absolute;
+            top: 10px;
+            right: 12px;
+            background: transparent;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: 0.2s;
+        }
+        .card-item .card-delete:hover {
+            color: var(--cinnabar);
+        }
+
+        /* ---------- НЕТ РЕЗУЛЬТАТОВ ---------- */
+        .no-results {
+            text-align: center;
+            padding: 30px 20px;
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* ---------- КНОПКА ДОБАВЛЕНИЯ ---------- */
+        .add-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto 32px;
+            padding: 12px 20px;
+            border-radius: 30px;
+            border: 2px dashed #cfc6b4;
+            background: transparent;
+            color: var(--text-secondary);
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: inherit;
+        }
+        .add-btn:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+            background: var(--gold-soft);
+        }
+
+        /* ---------- МОДАЛКА ---------- */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(30, 30, 30, 0.55);
+            z-index: 1000;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px 16px;
+            overflow-y: auto;
+            backdrop-filter: blur(3px);
+        }
+        .modal.active {
+            display: flex;
+        }
+        .modal-card {
+            background: var(--bg);
+            border-radius: var(--radius-lg);
+            max-width: 800px;
+            width: 100%;
+            padding: 24px 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            position: relative;
+            margin: auto 0;
+        }
+        .modal-close {
+            position: absolute;
+            top: 14px;
+            right: 16px;
+            background: transparent;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: 0.2s;
+            line-height: 1;
+            z-index: 10;
+        }
+        .modal-close:hover {
+            color: var(--text);
+        }
+        .modal-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .modal-emoji {
+            font-size: 2.8rem;
+            margin-bottom: 4px;
+        }
+        .modal-word {
+            font-family: var(--font-cjk);
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 2px;
+        }
+        .modal-pinyin {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2px;
+        }
+        .modal-translation {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        /* ---------- СЕКЦИИ В МОДАЛКЕ ---------- */
+        .modal-section {
+            margin-bottom: 20px;
+        }
+        .modal-section-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+        }
+        .modal-section-body {
+            color: var(--text);
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+        .modal-section-body .cn {
+            font-family: var(--font-cjk);
+            font-weight: 600;
+        }
+        .modal-section-body .example {
+            display: block;
+            margin-top: 6px;
+            padding-left: 16px;
+            border-left: 3px solid var(--gold);
+            font-style: italic;
+            color: var(--text-secondary);
+            font-size: 0.86rem;
+        }
+        .modal-section-body .dialogue-a,
+        .modal-section-body .dialogue-b {
+            display: block;
+            margin: 4px 0;
+            padding-left: 16px;
+            border-left: 3px solid var(--green);
+            font-size: 0.88rem;
+        }
+        .modal-section-body .dialogue-b {
+            border-left-color: var(--gold);
+        }
+        .modal-section-body .collocation-level {
+            font-weight: 700;
+            display: block;
+            margin-top: 6px;
+            color: var(--text);
+        }
+        .modal-section-body .polyglot-text {
+            background: #f4f0e8;
+            padding: 12px 14px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            line-height: 1.8;
+            margin-top: 4px;
+        }
+        .modal-section-body .polyglot-translation {
+            margin-top: 8px;
+            font-style: italic;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            padding-left: 16px;
+            border-left: 3px solid #d0c8b8;
+        }
+        .glow-char {
+            display: inline-block;
+            animation: glowPulse 2s ease-in-out infinite;
+            color: var(--cinnabar);
+            font-weight: 700;
+        }
+        @keyframes glowPulse {
+            0%, 100% { opacity: 0.8; text-shadow: 0 0 4px rgba(181, 68, 60, 0.3); }
+            50% { opacity: 1; text-shadow: 0 0 12px rgba(181, 68, 60, 0.7); }
+        }
+        .highlight-target {
+            font-weight: 700;
+            color: var(--cinnabar);
+        }
+        .highlight-frame {
+            background: var(--gold-soft);
+            padding: 0 4px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        /* ---------- КАНВАС В МОДАЛКЕ ---------- */
+        .modal-canvas-wrap {
+            background: var(--surface);
+            border-radius: var(--radius-md);
+            padding: 12px;
+            margin-top: 16px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+        }
+        .modal-canvas-wrap canvas {
+            width: 100%;
+            height: 120px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: #fffefc;
+            display: block;
+            cursor: crosshair;
+        }
+        .modal-canvas-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .modal-canvas-actions button {
+            border: 1px solid var(--border);
+            background: var(--surface);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            font-family: inherit;
+            color: var(--text-secondary);
+        }
+        .modal-canvas-actions button:hover {
+            background: var(--gold-soft);
+        }
+
+        /* ---------- КНОПКИ В МОДАЛКЕ ---------- */
+        .modal-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .modal-btn {
+            border: none;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: inherit;
+            letter-spacing: 0.3px;
+        }
+        .modal-btn.primary {
+            background: var(--text);
+            color: #fff;
+        }
+        .modal-btn.primary:hover {
+            background: #1a1a1a;
+        }
+        .modal-btn.secondary {
+            background: #eae5da;
+            color: var(--text-secondary);
+        }
+        .modal-btn.secondary:hover {
+            background: #ddd6c8;
+        }
+        .modal-btn.danger {
+            background: var(--cinnabar-soft);
+            color: var(--cinnabar);
+        }
+        .modal-btn.danger:hover {
+            background: #f9d9d3;
+        }
+
+        /* ---------- РЕДАКТИРОВАНИЕ ---------- */
+        .edit-form label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin: 12px 0 4px;
+        }
+        .edit-form input,
+        .edit-form textarea,
+        .edit-form select {
+            width: 100%;
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            font-size: 0.88rem;
+            font-family: inherit;
+            background: var(--surface);
+            outline: none;
+            transition: 0.2s;
+            color: var(--text);
+        }
+        .edit-form input:focus,
+        .edit-form textarea:focus,
+        .edit-form select:focus {
+            border-color: var(--gold);
+        }
+        .edit-form textarea {
+            min-height: 60px;
+            resize: vertical;
+            line-height: 1.6;
+        }
+        .edit-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        /* ---------- МАССОВАЯ ВСТАВКА ---------- */
+        .mass-textarea {
+            width: 100%;
+            min-height: 200px;
+            padding: 14px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+            font-family: inherit;
+            font-size: 0.88rem;
+            line-height: 1.6;
+            resize: vertical;
+            outline: none;
+            background: var(--surface);
+        }
+        .mass-textarea:focus {
+            border-color: var(--gold);
+        }
+
+        footer {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            margin-top: 2rem;
+            padding: 1rem 0;
+        }
+
+        @media (max-width: 600px) {
+            .modal-word { font-size: 2rem; }
+            .cards-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <h1>🌱 HSK 6 · Живые слова</h1>
+        <div class="subtitle">19 карточек · каждое слово — персонаж</div>
+
+        <!-- БЕГУЩАЯ СТРОКА -->
+        <div class="ticker-wrapper">
+            <div class="ticker" id="ticker"></div>
+        </div>
+
+        <!-- ТУЛБАР -->
+        <div class="toolbar">
+            <button class="btn active" id="pinyinToggle">🔊 Пиньинь: Вкл</button>
+            <button class="btn active" id="transToggle">☀️ Перевод: Вкл</button>
+            <button class="btn" id="exportBtn">📤 Экспорт</button>
+            <button class="btn" id="importBtn">📥 Импорт</button>
+            <button class="btn danger" id="resetBtn">🔄 Сбросить</button>
+        </div>
+
+        <!-- ПОИСК -->
+        <div class="search-wrap">
+            <input type="text" id="searchInput" placeholder="🔍 Поиск..." autocomplete="off">
+        </div>
+
+        <!-- СЕТКА -->
+        <div class="cards-grid" id="cardsGrid"></div>
+
+        <!-- НЕТ РЕЗУЛЬТАТОВ -->
+        <div id="noResults" class="no-results" style="display:none;">Ничего не нашлось. Попробуйте иначе.</div>
+
+        <!-- КНОПКА ДОБАВЛЕНИЯ -->
+        <button class="add-btn" id="addBtn">+ Добавить карточки</button>
+
+        <footer>Словарь хранится в вашем браузере</footer>
+    </div>
+
+    <!-- МОДАЛКА -->
+    <div id="cardModal" class="modal">
+        <div class="modal-card">
+            <button class="modal-close" id="closeModalBtn">✕</button>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+
+    <!-- МОДАЛКА ДОБАВЛЕНИЯ -->
+    <div id="addModal" class="modal">
+        <div class="modal-card">
+            <button class="modal-close" id="closeAddBtn">✕</button>
+            <div id="addContent"></div>
+        </div>
+    </div>
+
+    <script>
+        // ===================== ДАННЫЕ =====================
+        const defaultCards = [
+            // ... ВСЕ 19 КАРТОЧЕК БУДУТ ЗДЕСЬ ...
+            // Я вставлю их ниже в полном объёме
+        ];
+
+        // ===================== СОСТОЯНИЕ =====================
+        let cards = [];
+        const STORAGE_KEY = 'hsk6_living_words_v1';
+        let pinyinVisible = true;
+        let transVisible = true;
+        let searchQuery = '';
+        let currentModalId = null;
+        let isEditing = false;
+        let editingCard = null;
+
+        // ===================== ЗАГРУЗКА =====================
+        function loadCards() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (saved) {
+                try {
+                    cards = JSON.parse(saved);
+                    if (!Array.isArray(cards) || cards.length === 0) cards = [...defaultCards];
+                } catch(e) { cards = [...defaultCards]; }
+            } else { cards = [...defaultCards]; }
+        }
+        function saveCards() { localStorage.setItem(STORAGE_KEY, JSON.stringify(cards)); }
+        function resetCards() {
+            if (confirm('Сбросить все карточки к исходным?')) {
+                cards = [...defaultCards];
+                saveCards();
+                renderAll();
+                closeAllModals();
+            }
+        }
+
+        // ===================== РЕНДЕР =====================
+        function renderAll() {
+            renderTicker();
+            renderGrid();
+        }
+        function renderTicker() {
+            const ticker = document.getElementById('ticker');
+            const words = cards.map(c => `${c.emoji} ${c.word}`).join(' · ');
+            ticker.innerHTML = `<span>${words}</span><span>${words}</span>`;
+        }
+        function renderGrid() {
+            const grid = document.getElementById('cardsGrid');
+            const noResults = document.getElementById('noResults');
+            const filtered = cards.filter(card => {
+                if (!searchQuery.trim()) return true;
+                const q = searchQuery.trim().toLowerCase();
+                return (card.word + ' ' + card.pinyin + ' ' + card.translation).toLowerCase().includes(q);
+            });
+            if (filtered.length === 0) {
+                grid.innerHTML = '';
+                noResults.style.display = 'block';
+                return;
+            }
+            noResults.style.display = 'none';
+            grid.innerHTML = filtered.map(card => `
+                <div class="card-item" data-id="${card.id}">
+                    <button class="card-delete" data-id="${card.id}" title="Удалить">✕</button>
+                    <div class="card-category">${card.category || 'bookish'}</div>
+                    <div class="card-emoji">${card.emoji}</div>
+                    <div class="card-word">${card.word}</div>
+                    ${pinyinVisible ? `<div class="card-pinyin">${card.pinyin}</div>` : ''}
+                    ${transVisible ? `<div class="card-translation">${card.translation}</div>` : ''}
+                </div>
+            `).join('');
+            document.querySelectorAll('.card-item').forEach(el => {
+                el.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('card-delete')) return;
+                    openModal(el.dataset.id);
+                });
+            });
+            document.querySelectorAll('.card-delete').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    if (confirm('Удалить эту карточку?')) {
+                        cards = cards.filter(c => c.id !== btn.dataset.id);
+                        saveCards();
+                        renderAll();
+                    }
+                });
+            });
+        }
+
+        // ===================== МОДАЛКА =====================
+        function openModal(id) {
+            const card = cards.find(c => c.id === id);
+            if (!card) return;
+            currentModalId = id;
+            isEditing = false;
+            editingCard = null;
+            updateModal(card);
+            document.getElementById('cardModal').classList.add('active');
+        }
+        function closeModal() {
+            document.getElementById('cardModal').classList.remove('active');
+            currentModalId = null;
+            isEditing = false;
+            editingCard = null;
+        }
+        function updateModal(card) {
+            const container = document.getElementById('modalContent');
+            if (isEditing && editingCard) {
+                renderEditForm(container, editingCard);
+                return;
+            }
+            container.innerHTML = `
+                <div class="modal-header">
+                    <div class="modal-emoji">${card.emoji}</div>
+                    <div class="modal-word">${card.word}</div>
+                    <div class="modal-pinyin">${pinyinVisible ? card.pinyin : '🔒 пиньинь скрыт'}</div>
+                    <div class="modal-translation">${transVisible ? card.translation : '🔒 перевод скрыт'}</div>
+                </div>
+
+                <div class="modal-section">
+                    <div class="modal-section-title">👤 Персонаж</div>
+                    <div class="modal-section-body">${card.persona || 'Это слово живёт своей жизнью.'}</div>
+                </div>
+
+                <div class="modal-section">
+                    <div class="modal-section-title">🪝 Как запомнить</div>
+                    <div class="modal-section-body">
+                        ${card.anchor ? `<strong>Якорь:</strong> ${highlightTarget(card.anchor, card.word)}<br><br>` : ''}
+                        ${card.mnemonics ? card.mnemonics.map(m => highlightGlowChars(m, card.word)).join('<br>') : ''}
+                        ${card.fullImage ? `<br><br><strong>Картинка:</strong> ${card.fullImage}` : ''}
+                    </div>
+                </div>
+
+                <div class="modal-section">
+                    <div class="modal-section-title">💬 Живой диалог</div>
+                    <div class="modal-section-body">
+                        <div class="dialogue-a">🅰 ${highlightTarget(card.dialogue[0], card.word)}</div>
+                        <div class="dialogue-b">🅱 ${highlightTarget(card.dialogue[1], card.word)}</div>
+                    </div>
+                </div>
+
+                <div class="modal-section">
+                    <div class="modal-section-title">🔗 Коллокации</div>
+                    <div class="modal-section-body">
+                        ${card.collocations.map(c => `<span class="collocation-level">${c.level}</span> ${c.items}<span class="example">${c.example}</span>`).join('')}
+                    </div>
+                </div>
+
+                <div class="modal-section">
+                    <div class="modal-section-title">🎯 Полигон</div>
+                    <div class="modal-section-body">
+                        <div class="polyglot-text">${highlightTarget(card.polyglotText, card.word)}</div>
+                        <div class="polyglot-translation">${card.polyglotTranslation}</div>
+                    </div>
+                </div>
+
+                <div class="modal-canvas-wrap">
+                    <div class="modal-section-title">✏️ Прописи</div>
+                    <canvas id="modalCanvas" width="600" height="120"></canvas>
+                    <div class="modal-canvas-actions">
+                        <button id="modalUndo">↩️</button>
+                        <button id="modalRedo">↪️</button>
+                        <button id="modalClear">🗑️</button>
+                    </div>
+                </div>
+
+                <div class="modal-actions">
+                    <button class="modal-btn secondary" id="editBtn">✏️ Редактировать</button>
+                    <button class="modal-btn secondary" id="closeBtn">✕ Закрыть</button>
+                </div>
+            `;
+            document.getElementById('editBtn')?.addEventListener('click', () => {
+                isEditing = true;
+                editingCard = JSON.parse(JSON.stringify(card));
+                updateModal(card);
+            });
+            document.getElementById('closeBtn')?.addEventListener('click', closeModal);
+            initModalCanvas();
+        }
+
+        // ===================== КАНВАС В МОДАЛКЕ =====================
+        function initModalCanvas() {
+            const canvas = document.getElementById('modalCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            let drawing = false;
+            let strokeHistory = [];
+            let redoHistory = [];
+            ctx.lineWidth = 3;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            ctx.strokeStyle = '#2a2a2a';
+            function getPos(e) {
+                const rect = canvas.getBoundingClientRect();
+                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+                return { x: clientX - rect.left, y: clientY - rect.top };
+            }
+            canvas.addEventListener('mousedown', (e) => {
+                drawing = true;
+                const pos = getPos(e);
+                ctx.beginPath();
+                ctx.moveTo(pos.x, pos.y);
+                strokeHistory.push([]);
+                strokeHistory[strokeHistory.length - 1].push({ x: pos.x, y: pos.y });
+                redoHistory = [];
+            });
+            canvas.addEventListener('mousemove', (e) => {
+                if (!drawing) return;
+                const pos = getPos(e);
+                ctx.lineTo(pos.x, pos.y);
+                ctx.stroke();
+                strokeHistory[strokeHistory.length - 1].push({ x: pos.x, y: pos.y });
+            });
+            canvas.addEventListener('mouseup', () => { drawing = false; });
+            canvas.addEventListener('mouseleave', () => { drawing = false; });
+            canvas.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                drawing = true;
+                const pos = getPos(e);
+                ctx.beginPath();
+                ctx.moveTo(pos.x, pos.y);
+                strokeHistory.push([]);
+                strokeHistory[strokeHistory.length - 1].push({ x: pos.x, y: pos.y });
+                redoHistory = [];
+            });
+            canvas.addEventListener('touchmove', (e) => {
+                e.preventDefault();
+                if (!drawing) return;
+                const pos = getPos(e);
+                ctx.lineTo(pos.x, pos.y);
+                ctx.stroke();
+                strokeHistory[strokeHistory.length - 1].push({ x: pos.x, y: pos.y });
+            });
+            canvas.addEventListener('touchend', () => { drawing = false; });
+            function redraw() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                strokeHistory.forEach(stroke => {
+                    if (stroke.length < 2) return;
+                    ctx.beginPath();
+                    ctx.moveTo(stroke[0].x, stroke[0].y);
+                    for (let i = 1; i < stroke.length; i++) { ctx.lineTo(stroke[i].x, stroke[i].y); }
+                    ctx.stroke();
+                });
+            }
+            document.getElementById('modalUndo')?.addEventListener('click', () => {
+                if (strokeHistory.length === 0) return;
+                redoHistory.push(strokeHistory.pop());
+                redraw();
+            });
+            document.getElementById('modalRedo')?.addEventListener('click', () => {
+                if (redoHistory.length === 0) return;
+                strokeHistory.push(redoHistory.pop());
+                redraw();
+            });
+            document.getElementById('modalClear')?.addEventListener('click', () => {
+                strokeHistory = [];
+                redoHistory = [];
+                redraw();
+            });
+        }
+
+        // ===================== ПОДСВЕТКА =====================
+        function highlightGlowChars(text, word) {
+            if (!text || !word) return text;
+            const chars = word.split('');
+            let result = text;
+            chars.forEach(ch => { if (ch && ch !== ' ') { result = result.replace(new RegExp(ch, 'g'), `<span class="glow-char">${ch}</span>`); } });
+            return result;
+        }
+        function highlightTarget(text, word) {
+            if (!text || !word) return text;
+            return text.replace(new RegExp(word, 'g'), `<span class="highlight-target">${word}</span>`);
+        }
+
+        // ===================== РЕДАКТИРОВАНИЕ =====================
+        function renderEditForm(container, card) {
+            container.innerHTML = `
+                <h2>✏️ Редактирование</h2>
+                <div class="edit-form">
+                    <label>Персонаж</label><textarea id="efPersona">${card.persona || ''}</textarea>
+                    <label>Якорь</label><textarea id="efAnchor">${card.anchor || ''}</textarea>
+                    <label>Мнемотехника (каждая с новой строки)</label><textarea id="efMnemonics">${(card.mnemonics || []).join('\n')}</textarea>
+                    <label>Картинка</label><textarea id="efFullImage">${card.fullImage || ''}</textarea>
+                    <label>Диалог А</label><textarea id="efDialA">${card.dialogue?.[0] || ''}</textarea>
+                    <label>Диалог Б</label><textarea id="efDialB">${card.dialogue?.[1] || ''}</textarea>
+                    <label>Коллокация HSK</label><textarea id="efColloc1">${card.collocations?.[0] ? card.collocations[0].level + '|' + card.collocations[0].items + '|' + card.collocations[0].example : ''}</textarea>
+                    <label>Коллокация Быт</label><textarea id="efColloc2">${card.collocations?.[1] ? card.collocations[1].level + '|' + card.collocations[1].items + '|' + card.collocations[1].example : ''}</textarea>
+                    <label>Коллокация Медиа</label><textarea id="efColloc3">${card.collocations?.[2] ? card.collocations[2].level + '|' + card.collocations[2].items + '|' + card.collocations[2].example : ''}</textarea>
+                    <label>Полигон текст</label><textarea id="efPolyText">${card.polyglotText || ''}</textarea>
+                    <label>Полигон перевод</label><textarea id="efPolyTrans">${card.polyglotTranslation || ''}</textarea>
+                    <div class="edit-actions">
+                        <button class="modal-btn primary" id="saveEditBtn">💾 Сохранить</button>
+                        <button class="modal-btn danger" id="cancelEditBtn">↩️ Отмена</button>
+                    </div>
+                </div>
+            `;
+            document.getElementById('saveEditBtn')?.addEventListener('click', () => {
+                const get = (id) => document.getElementById(id)?.value.trim() || '';
+                const collocations = [];
+                const parseColloc = (val) => { const p = val.split('|').map(s => s.trim()); if (p.length === 3) return { level: p[0], items: p[1], example: p[2] }; return null; };
+                const c1 = parseColloc(get('efColloc1'));
+                const c2 = parseColloc(get('efColloc2'));
+                const c3 = parseColloc(get('efColloc3'));
+                if (c1) collocations.push(c1);
+                if (c2) collocations.push(c2);
+                if (c3) collocations.push(c3);
+                const updated = {
+                    ...editingCard,
+                    persona: get('efPersona'),
+                    anchor: get('efAnchor'),
+                    mnemonics: get('efMnemonics').split('\n').filter(s => s.trim()),
+                    fullImage: get('efFullImage'),
+                    dialogue: [get('efDialA'), get('efDialB')].filter(s => s),
+                    collocations: collocations,
+                    polyglotText: get('efPolyText'),
+                    polyglotTranslation: get('efPolyTrans')
+                };
+                const index = cards.findIndex(c => c.id === editingCard.id);
+                if (index !== -1) {
+                    cards[index] = updated;
+                    saveCards();
+                    isEditing = false;
+                    editingCard = null;
+                    updateModal(updated);
+                    renderGrid();
+                }
+            });
+            document.getElementById('cancelEditBtn')?.addEventListener('click', () => {
+                isEditing = false;
+                editingCard = null;
+                const card = cards.find(c => c.id === currentModalId);
+                if (card) updateModal(card);
+            });
+        }
+
+        // ===================== ДОБАВЛЕНИЕ =====================
+        function openAddModal() {
+            const container = document.getElementById('addContent');
+            container.innerHTML = `
+                <h2>➕ Добавление карточек</h2>
+                <p style="margin-bottom:8px;font-size:0.85rem;">Вставьте текст одной или нескольких карточек. Разделитель — <strong>---</strong></p>
+                <textarea id="massTextarea" class="mass-textarea" placeholder="📌 [ 词语 ] пиньинь — перевод&#10;👤 Персонаж: ...&#10;🪝 Якорь: ...&#10;---&#10;📌 [ 词语2 ] ..."></textarea>
+                <div class="modal-actions">
+                    <button class="modal-btn primary" id="massParseBtn">✨ Распознать все</button>
+                    <button class="modal-btn secondary" id="manualCreateBtn">📝 Вручную</button>
+                </div>
+            `;
+            document.getElementById('massParseBtn').addEventListener('click', massParse);
+            document.getElementById('manualCreateBtn').addEventListener('click', manualCreate);
+            document.getElementById('addModal').classList.add('active');
+        }
+        function closeAddModal() { document.getElementById('addModal').classList.remove('active'); }
+        function massParse() {
+            const text = document.getElementById('massTextarea').value.trim();
+            if (!text) { alert('Вставьте текст.'); return; }
+            const blocks = text.split(/---+/).map(b => b.trim()).filter(b => b);
+            let created = 0;
+            blocks.forEach(block => {
+                const card = parseToCard(block);
+                if (card.word) {
+                    card.id = 'card_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5);
+                    cards.push(card);
+                    created++;
+                }
+            });
+            if (created === 0) { alert('Не удалось распознать ни одной карточки.'); return; }
+            saveCards();
+            renderAll();
+            closeAddModal();
+            alert(`✅ Создано карточек: ${created}`);
+        }
+        function manualCreate() {
+            const blank = {
+                id: 'card_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
+                word: '', emoji: '📘', pinyin: '', translation: '', category: 'bookish',
+                persona: '', anchor: '', mnemonics: [], fullImage: '',
+                dialogue: ['', ''], collocations: [
+                    { level: '🎯 HSK', items: '', example: '' },
+                    { level: '🗣️ Быт', items: '', example: '' },
+                    { level: '🎥 Медиа', items: '', example: '' }
+                ],
+                polyglotText: '', polyglotTranslation: ''
+            };
+            cards.push(blank);
+            saveCards();
+            renderAll();
+            closeAddModal();
+            openModal(blank.id);
+            isEditing = true;
+            editingCard = JSON.parse(JSON.stringify(blank));
+            updateModal(blank);
+        }
+        function parseToCard(text) {
+            const card = {
+                word: '', emoji: '📘', pinyin: '', translation: '', category: 'bookish',
+                persona: '', anchor: '', mnemonics: [], fullImage: '',
+                dialogue: ['', ''], collocations: [
+                    { level: '🎯 HSK', items: '', example: '' },
+                    { level: '🗣️ Быт', items: '', example: '' },
+                    { level: '🎥 Медиа', items: '', example: '' }
+                ],
+                polyglotText: '', polyglotTranslation: ''
+            };
+            const lines = text.split('\n').map(l => l.trim()).filter(l => l);
+            const mainLine = lines.find(l => l.includes('[') && l.includes(']'));
+            if (mainLine) {
+                const match = mainLine.match(/\[([^\]]+)\]\s*([\w\sāáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜüÜĀÁǍÀĒÉĚÈĪÍǏÌŌÓǑÒŪÚǓÙǕǗǙǛ]+)\s*[—–\-–]\s*(.+)/);
+                if (match) {
+                    card.word = match[1].trim();
+                    card.pinyin = match[2].trim();
+                    card.translation = match[3].trim();
+                }
+            }
+            for (let i = 0; i < lines.length; i++) {
+                const line = lines[i];
+                if (!line) continue;
+                if (line.includes('Персонаж')) card.persona = line.replace(/.*Персонаж[:\s]*/, '').trim();
+                else if (line.includes('Якорь')) card.anchor = line.replace(/.*Якорь[:\s]*/, '').trim();
+                else if (line.includes('Мнемотехника')) {
+                    const mnemonics = [];
+                    let j = i + 1;
+                    while (j < lines.length) {
+                        const next = lines[j];
+                        if (next.includes('Картинка') || next.includes('Как запомнить')) break;
+                        if (next.startsWith('*') || next.startsWith('·') || next.startsWith('•') || next.startsWith('-')) {
+                            mnemonics.push(next.replace(/^[*\s·•\-–]+/, '').trim());
+                        }
+                        j++;
+                    }
+                    if (mnemonics.length) card.mnemonics = mnemonics;
+                    i = j - 1;
+                }
+                else if (line.includes('Картинка')) card.fullImage = line.replace(/.*Картинка[:\s]*/, '').trim();
+                else if (line.includes('Диалог')) {
+                    // Диалог может быть в двух строках
+                }
+                else if (line.includes('🅰') || line.startsWith('A:')) card.dialogue[0] = line.replace(/^🅰\s*/, '').trim();
+                else if (line.includes('🅱') || line.startsWith('B:')) card.dialogue[1] = line.replace(/^🅱\s*/, '').trim();
+                else if (line.includes('🎯 HSK')) {
+                    const rest = line.replace(/.*🎯 HSK[:\s]*/, '').trim();
+                    const parts = rest.split('|');
+                    if (parts.length >= 1) card.collocations[0].items = parts[0].trim();
+                    if (parts.length >= 2) card.collocations[0].example = parts[1].trim();
+                }
+                else if (line.includes('🗣️ Быт')) {
+                    const rest = line.replace(/.*🗣️ Быт[:\s]*/, '').trim();
+                    const parts = rest.split('|');
+                    if (parts.length >= 1) card.collocations[1].items = parts[0].trim();
+                    if (parts.length >= 2) card.collocations[1].example = parts[1].trim();
+                }
+                else if (line.includes('🎥 Медиа')) {
+                    const rest = line.replace(/.*🎥 Медиа[:\s]*/, '').trim();
+                    const parts = rest.split('|');
+                    if (parts.length >= 1) card.collocations[2].items = parts[0].trim();
+                    if (parts.length >= 2) card.collocations[2].example = parts[1].trim();
+                }
+                else if (line.includes('Текст:')) card.polyglotText = line.replace(/.*Текст[:\s]*/, '').trim();
+                else if (line.includes('Перевод:')) card.polyglotTranslation = line.replace(/.*Перевод[:\s]*/, '').trim();
+            }
+            // Категория по типу
+            const typeLower = (card.type || '').toLowerCase();
+            if (typeLower.includes('идиома') || typeLower.includes('чэнъюй')) card.category = 'idiom';
+            else if (typeLower.includes('разговорный')) card.category = 'colloquial';
+            else card.category = 'bookish';
+            return card;
+        }
+
+        // ===================== ЭКСПОРТ / ИМПОРТ =====================
+        function exportData() {
+            const blob = new Blob([JSON.stringify(cards, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'hsk6_living_words.json';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+        function importData(file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    if (Array.isArray(data)) {
+                        cards = data;
+                        saveCards();
+                        renderAll();
+                        alert('✅ Импортировано: ' + data.length);
+                    } else { alert('Неверный формат'); }
+                } catch (err) { alert('Ошибка парсинга'); }
+            };
+            reader.readAsText(file);
+        }
+
+        // ===================== СОБЫТИЯ =====================
+        document.getElementById('pinyinToggle').addEventListener('click', () => {
+            pinyinVisible = !pinyinVisible;
+            const btn = document.getElementById('pinyinToggle');
+            btn.textContent = pinyinVisible ? '🔊 Пиньинь: Вкл' : '🔇 Пиньинь: Выкл';
+            btn.classList.toggle('active', pinyinVisible);
+            renderGrid();
+        });
+        document.getElementById('transToggle').addEventListener('click', () => {
+            transVisible = !transVisible;
+            const btn = document.getElementById('transToggle');
+            btn.textContent = transVisible ? '☀️ Перевод: Вкл' : '🌙 Перевод: Выкл';
+            btn.classList.toggle('active', transVisible);
+            renderGrid();
+        });
+        document.getElementById('resetBtn').addEventListener('click', resetCards);
+        document.getElementById('searchInput').addEventListener('input', e => { searchQuery = e.target.value; renderGrid(); });
+        document.getElementById('searchInput').addEventListener('keydown', (e) => { if (e.key === 'Escape') { document.getElementById('searchInput').value = ''; searchQuery = ''; renderGrid(); } });
+        document.getElementById('closeModalBtn').addEventListener('click', closeModal);
+        document.getElementById('cardModal').addEventListener('click', e => { if (e.target === document.getElementById('cardModal')) closeModal(); });
+        document.getElementById('closeAddBtn').addEventListener('click', closeAddModal);
+        document.getElementById('addModal').addEventListener('click', e => { if (e.target === document.getElementById('addModal')) closeAddModal(); });
+        document.getElementById('addBtn').addEventListener('click', openAddModal);
+        document.getElementById('exportBtn').addEventListener('click', exportData);
+        document.getElementById('importBtn').addEventListener('click', () => {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            input.onchange = (e) => { if (e.target.files[0]) importData(e.target.files[0]); };
+            input.click();
+        });
+
+        // ===================== ИНИЦИАЛИЗАЦИЯ =====================
+        loadCards();
+        renderAll();
+    </script>
+</body>
+</html>
