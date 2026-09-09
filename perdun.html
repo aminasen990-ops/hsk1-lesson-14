@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>HSK 6 · 19 карточек</title>
+    <style>
+        :root {
+            --bg: #faf8f5;
+            --surface: #fff;
+            --border: #e8e2d8;
+            --text: #2d2a22;
+            --muted: #8a7a64;
+            --gold: #b8914a;
+            --gold-soft: #fdf9f0;
+            --green: #2e7d32;
+            --green-soft: #e8f5e9;
+            --blue: #4a5b8c;
+            --blue-soft: #eef1f7;
+            --purple: #6a4c9c;
+            --purple-soft: #f3e5f5;
+            --cinnabar: #b5443c;
+            --radius: 20px;
+            --shadow: 0 4px 12px rgba(0,0,0,0.04);
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family:'Segoe UI', Roboto, system-ui, sans-serif; background:var(--bg); color:var(--text); line-height:1.6; padding:16px; }
+        .app { max-width:1200px; margin:0 auto; }
+        h1 { color:var(--green); font-size:1.8rem; margin-bottom:0.3rem; }
+        .subtitle { color:var(--muted); margin-bottom:1rem; }
+
+        .ticker-wrapper { overflow:hidden; background:var(--surface); border-radius:30px; padding:8px 0; margin-bottom:20px; box-shadow:var(--shadow); border:1px solid var(--border); }
+        .ticker { display:flex; gap:20px; white-space:nowrap; animation:tickerScroll 30s linear infinite; font-family:'Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif; font-size:1.1rem; color:var(--muted); }
+        @keyframes tickerScroll { 0%{transform:translateX(0);} 100%{transform:translateX(-50%);} }
+        .ticker span { display:inline-block; white-space:nowrap; }
+
+        .toolbar { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:16px; }
+        .btn { border:1px solid var(--border); background:var(--surface); padding:8px 16px; border-radius:30px; font-weight:600; font-size:0.8rem; cursor:pointer; font-family:inherit; color:var(--text); box-shadow:var(--shadow); }
+        .btn:hover { background:var(--gold-soft); }
+        .btn.active { background:var(--green); color:#fff; border-color:var(--green); }
+        .btn.danger { color:var(--cinnabar); }
+
+        .search-wrap { margin-bottom:16px; }
+        .search-wrap input { width:100%; padding:12px 18px; border-radius:30px; border:1px solid var(--border); font-size:0.9rem; outline:none; font-family:inherit; }
+
+        .cards-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(240px,1fr)); gap:16px; }
+        .card-item { background:var(--surface); border-radius:var(--radius); padding:18px; cursor:pointer; box-shadow:var(--shadow); border:1px solid var(--border); position:relative; display:flex; flex-direction:column; gap:4px; }
+        .card-item:hover { transform:translateY(-3px); box-shadow:0 8px 20px rgba(0,0,0,0.08); }
+        .card-item::before { content:''; position:absolute; top:0; left:0; bottom:0; width:4px; border-radius:var(--radius) 0 0 var(--radius); background:var(--gold); }
+        .card-emoji { font-size:1.8rem; }
+        .card-word { font-family:'Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif; font-size:1.5rem; font-weight:700; }
+        .card-pinyin { font-size:0.85rem; color:var(--muted); }
+        .card-translation { font-size:0.8rem; color:var(--muted); font-style:italic; }
+        .card-delete { position:absolute; top:10px; right:12px; background:none; border:none; font-size:1.2rem; cursor:pointer; color:var(--muted); }
+        .card-delete:hover { color:var(--cinnabar); }
+
+        .no-results { text-align:center; padding:30px; background:var(--surface); border-radius:var(--radius); color:var(--muted); }
+        .add-btn { display:block; width:100%; max-width:400px; margin:20px auto 0; padding:12px; border-radius:30px; border:2px dashed #cfc6b4; background:none; font-weight:600; cursor:pointer; font-family:inherit; color:var(--text); }
+
+        .modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(30,30,30,0.55); z-index:1000; justify-content:center; align-items:center; padding:20px 16px; }
+        .modal.active { display:flex; }
+        .modal-card { background:var(--bg); border-radius:var(--radius); max-width:800px; width:100%; max-height:90vh; overflow-y:auto; padding:24px; box-shadow:0 20px 40px rgba(0,0,0,0.15); position:relative; }
+        .modal-close { position:absolute; top:14px; right:16px; background:none; border:none; font-size:1.5rem; cursor:pointer; color:var(--muted); }
+        .modal-header { text-align:center; margin-bottom:20px; }
+        .modal-emoji { font-size:2.8rem; }
+        .modal-word { font-family:'Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif; font-size:2.4rem; font-weight:700; }
+        .modal-pinyin { font-size:1rem; color:var(--muted); }
+        .modal-translation { font-size:1.05rem; color:var(--muted); font-style:italic; }
+
+        .modal-section { margin-bottom:20px; }
+        .modal-section-title { font-size:0.75rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--muted); margin-bottom:6px; }
+        .modal-section-body { font-size:0.9rem; line-height:1.7; }
+
+        .mnemonic-block { background:var(--green-soft); border-radius:16px; padding:16px; border:1px solid var(--green); margin-bottom:12px; }
+        .mnemonic-part { margin:8px 0; padding-left:12px; border-left:4px solid var(--green); }
+
+        .collocations-cloud { display:flex; flex-wrap:wrap; gap:10px; }
+        .collocation-item { border-radius:16px; padding:10px 14px; flex:1 1 200px; }
+        .collocation-item.hsk { background:var(--gold-soft); border:1px solid var(--gold); }
+        .collocation-item.business { background:var(--blue-soft); border:1px solid var(--blue); }
+        .collocation-item.media { background:var(--purple-soft); border:1px solid var(--purple); }
+        .collocation-level { font-weight:700; font-size:0.75rem; display:block; margin-bottom:4px; }
+        .collocation-item.hsk .collocation-level { color:var(--gold); }
+        .collocation-item.business .collocation-level { color:var(--blue); }
+        .collocation-item.media .collocation-level { color:var(--purple); }
+        .collocation-word { font-weight:600; }
+        .collocation-example { display:block; font-size:0.82rem; color:var(--muted); font-style:italic; margin-top:4px; }
+
+        .highlight-collocation { background:var(--gold-soft); border:1px solid var(--gold); border-radius:4px; padding:0 2px; font-weight:600; }
+        .dialogue-a,.dialogue-b { display:block; margin:4px 0; padding-left:16px; border-left:3px solid var(--green); font-size:0.88rem; }
+        .dialogue-b { border-left-color:var(--gold); }
+        .polyglot-text { background:#f4f0e8; padding:12px; border-radius:8px; font-size:0.9rem; }
+        .polyglot-translation { margin-top:8px; font-style:italic; color:var(--muted); font-size:0.85rem; padding-left:16px; border-left:3px solid #d0c8b8; }
+
+        .modal-canvas-wrap { background:var(--surface); border-radius:16px; padding:12px; margin-top:16px; }
+        .modal-canvas-wrap canvas { width:100%; height:120px; border-radius:8px; border:1px solid var(--border); background:#fffefc; cursor:crosshair; }
+        .modal-canvas-actions { display:flex; gap:8px; margin-top:8px; justify-content:center; }
+        .modal-canvas-actions button { border:1px solid var(--border); background:var(--surface); padding:6px 14px; border-radius:20px; font-size:0.75rem; cursor:pointer; font-family:inherit; }
+
+        .modal-actions { display:flex; gap:10px; margin-top:20px; justify-content:center; }
+        .modal-btn { border:none; padding:8px 20px; border-radius:30px; font-size:0.78rem; font-weight:600; cursor:pointer; font-family:inherit; }
+        .modal-btn.primary { background:var(--text); color:#fff; }
+        .modal-btn.secondary { background:#eae5da; color:var(--text); }
+        .modal-btn.danger { background:#fdf2f0; color:var(--cinnabar); }
+
+        .mass-textarea { width:100%; min-height:200px; padding:14px; border-radius:12px; border:1px solid var(--border); font-family:inherit; font-size:0.88rem; resize:vertical; outline:none; }
+        .edit-form label { display:block; font-size:0.75rem; font-weight:600; color:var(--muted); margin:12px 0 4px; }
+        .edit-form input,.edit-form textarea { width:100%; padding:8px 12px; border-radius:8px; border:1px solid var(--border); font-size:0.88rem; font-family:inherit; background:var(--surface); outline:none; }
+        .edit-form textarea { min-height:60px; resize:vertical; }
+        .edit-actions { display:flex; gap:10px; margin-top:20px; justify-content:center; }
+    </style>
+</head>
+<body>
+<div class="app">
+    <h1>🌱 HSK 6 · 19 карточек</h1>
+    <div class="subtitle">Все слова уже внутри. Нажми на карточку.</div>
+
+    <div class="ticker-wrapper"><div class="ticker" id="ticker"></div></div>
+
+    <div class="toolbar">
+        <button class="btn active" id="pinyinToggle">🔊 Пиньинь: Вкл</button>
+        <button class="btn active" id="transToggle">☀️ Перевод: Вкл</button>
+        <button class="btn" id="exportBtn">📤 Экспорт</button>
+        <button class="btn" id="importBtn">📥 Импорт</button>
+        <button class="btn danger" id="resetBtn">🔄 Сбросить</button>
+    </div>
+
+    <div class="search-wrap"><input type="text" id="searchInput" placeholder="🔍 Поиск..." autocomplete="off"></div>
+
+    <div class="cards-grid" id="cardsGrid"></div>
+    <div id="noResults" class="no-results" style="display:none;">Ничего не нашлось.</div>
+
+    <button class="add-btn" id="addBtn">+ Добавить карточки</button>
+</div>
+
+<div id="cardModal" class="modal">
+    <div class="modal-card">
+        <button class="modal-close" id="closeModalBtn">✕</button>
+        <div id="modalContent"></div>
+    </div>
+</div>
+
+<div id="addModal" class="modal">
+    <div class="modal-card">
+        <button class="modal-close" id="closeAddBtn">✕</button>
+        <div id="addContent"></div>
+    </div>
+</div>
+
+<script>
+const defaultCards = [
+    {
+        id: 'jishi', word: '即时', emoji: '⚡', pinyin: 'jí shí', translation: 'мгновенный, немедленный',
+        category: 'bookish', rhythm: '2-2', type: 'Прилагательное',
+        frame: '即时 + [существительное]',
+        anchor: 'Уведомление в мессенджере, которое приходит сразу, без задержки.',
+        mnemonics: ['即: левая часть 卩 (печать, штамп) + правая 艮; образ: поставил штамп — сразу готово. Не путать с 既 (уже).', '时: солнце 日 + дюйм 寸; солнце показывает время.'],
+        workTogether: '即 = сразу, 时 = время → то, что происходит сразу по времени.',
+        fullImage: 'Ты отправляешь сообщение в WeChat, и оно сразу приходит другу — это 即时消息.',
+        persona: '即时 — это курьер, который прибегает за секунду.',
+        morphemes: '即: немедленно | 时: время',
+        cognates: ['即时 ➔ 即使 jí shǐ (HSK 5) — даже если', '即时 ➔ 及时 jí shí (HSK 4) — своевременный'],
+        expertise: 'Ловушка: 即时 (без задержки) vs 及时 (вовремя).',
+        socialVibe: 'В Xiaohongshu: 即时反馈 — мгновенная обратная связь.',
+        expertInsight: '即时 почти всегда описывает цифровые процессы. Это НЕ глагол.',
+        dialogue: ['这个软件有什么优点？', '它的最大优点是可以收到即时消息。'],
+        collocations: [
+            { level: '🎯 HSK', items: '即时消息 — мгновенное сообщение', example: '我们通过即时消息保持联系。' },
+            { level: '🗣️ Быт', items: '即时通讯 — мгновенная связь', example: 'WeChat 是常用的即时通讯工具。' },
+            { level: '🎥 Медиа', items: '即时播报 — срочный выпуск новостей', example: '电视台进行即时播报。' }
+        ],
+        polyglotText: '我们依靠即时通讯工具获取即时反馈，一定要及时回复重要信息。',
+        polyglotTranslation: 'Мы используем мгновенную связь, нужно своевременно отвечать.',
+        qa: [
+            { question: 'как сказать «мгновенное сообщение»?', answer: '即时消息' },
+            { question: 'как сказать «своевременный»?', answer: '及时' }
+        ]
+    },
+    {
+        id: 'renzhi', word: '认知', emoji: '🧠', pinyin: 'rèn zhī', translation: 'познание, восприятие',
+        category: 'bookish', rhythm: '4-1', type: 'Существительное',
+        frame: '[глагол] + 认知',
+        anchor: 'Как твой мозг понимает новую информацию.',
+        mnemonics: ['认: 言 + 人; человек узнаёт через слова.', '知: 矢 + 口; знать, понимать.'],
+        workTogether: '认 = узнавать, 知 = знать → процесс узнавания и понимания.',
+        fullImage: 'Ты читаешь книгу, получаешь новую информацию — меняется твоё 认知 о мире.',
+        persona: '认知 — это мудрый наблюдатель.',
+        morphemes: '认: узнавать | 知: знать',
+        cognates: ['认知 ➔ 认识 rèn shi (HSK 2) — знать', '认知 ➔ 知道 zhī dào (HSK 1) — знать'],
+        expertise: '认知 — это процесс мышления и восприятия.',
+        socialVibe: 'Xiaohongshu: 提升认知 — повысить уровень понимания.',
+        expertInsight: '认知 — существительное. Нельзя сказать «我认知这个人».',
+        dialogue: ['学习新东西会带来什么改变？', '学习可以提高我们的认知。'],
+        collocations: [
+            { level: '🎯 HSK', items: '认知水平 — уровень понимания', example: '读书可以提升认知水平。' },
+            { level: '🗣️ Быт', items: '认知能力 — когнитивные способности', example: '儿童的认知能力发展很快。' },
+            { level: '🎥 Медиа', items: '认知偏差 — когнитивное искажение', example: '媒体会造成认知偏差。' }
+        ],
+        polyglotText: '我们要不断更新认知，认识新事物，不要局限于旧的知识。',
+        polyglotTranslation: 'Нам нужно постоянно обновлять восприятие.',
+        qa: [
+            { question: 'как сказать «уровень понимания»?', answer: '认知水平' },
+            { question: 'как сказать «когнитивные способности»?', answer: '认知能力' }
+        ]
+    },
+    {
+        id: 'chenji', word: '趁机', emoji: '🎯', pinyin: 'chèn jī', translation: 'воспользоваться моментом',
+        category: 'colloquial', rhythm: '4-1', type: 'Глагольное словосочетание',
+        frame: '趁机 + [действие]',
+        anchor: 'Когда друг ушёл, ты используешь момент и съел его пирог.',
+        mnemonics: ['趁: 走字旁 + 今; использовать текущий момент.', '机: дерево + несколько частей; возможность, шанс.'],
+        workTogether: '趁 = использовать момент, 机 = возможность → использовать шанс.',
+        fullImage: 'Учитель вышел из класса, студенты趁机 отдохнуть.',
+        persona: '趁机 — это ловкий момент.',
+        morphemes: '趁: воспользоваться | 机: возможность',
+        cognates: ['趁机 ➔ 机会 jī huì (HSK 3) — возможность', '趁机 ➔ 趁便 chèn biàn — попутно'],
+        expertise: 'Может иметь лёгкий негативный оттенок.',
+        socialVibe: 'WeChat посты: 趁机打卡.',
+        expertInsight: 'В HSK аудировании проверяют, что действие делается именно в момент ситуации.',
+        dialogue: ['昨天开会的时候你做什么了？', '我趁机整理了笔记。'],
+        collocations: [
+            { level: '🎯 HSK', items: '趁机学习 — воспользоваться моментом для учёбы', example: '趁假期趁机学习中文。' },
+            { level: '🗣️ Быт', items: '趁机休息 — воспользоваться случаем отдохнуть', example: '趁老板不在趁机休息。' },
+            { level: '🎥 Медиа', items: '趁机炒作 — воспользоваться ситуацией для пиара', example: '有些网红喜欢趁机炒作。' }
+        ],
+        polyglotText: '有好机会就要抓住，趁机提升自己。',
+        polyglotTranslation: 'Если есть хороший шанс — хватай его.',
+        qa: [
+            { question: 'как сказать «воспользоваться моментом для учёбы»?', answer: '趁机学习' },
+            { question: 'как сказать «воспользоваться случаем отдохнуть»?', answer: '趁机休息' }
+        ]
+    },
+    {
+        id: 'pingban', word: '平板', emoji: '📱', pinyin: 'píng bǎn', translation: 'планшет; плоская плита',
+        category: 'colloquial', rhythm: '2-3', type: 'Существительное',
+        frame: '用 + 平板 + действие',
+        anchor: 'Тонкий портативный планшет-компьютер.',
+        mnemonics: ['平: 干 + две черты; ровная поверхность.', '板: дерево 木 + 反; плоская доска.'],
+        workTogether: '平 = плоский, 板 = плита → плоское устройство.',
+        fullImage: 'Студент держит тонкий平板, смотрит презентацию.',
+        persona: '平板 — это удобный помощник.',
+        morphemes: '平: плоский | 板: плита',
+        cognates: ['平板 ➔ 平台 píng tái (HSK 5) — платформа', '平板 ➔ 木板 mù bǎn (HSK 3) — доска'],
+        expertise: '95% случаев это сокращение от 平板电脑.',
+        socialVibe: 'Xiaohongshu: 平板学习装备.',
+        expertInsight: 'В письменном задании полная форма 平板电脑 безопаснее.',
+        dialogue: ['你上课带笔记本电脑吗？', '不带，我用平板记笔记。'],
+        collocations: [
+            { level: '🎯 HSK', items: '平板电脑 — планшетный компьютер', example: '很多留学生用平板电脑上课。' },
+            { level: '🗣️ Быт', items: '平板支架 — подставка для планшета', example: '买个平板支架，脖子就不会累。' },
+            { level: '🎥 Медиа', items: '平板市场 — рынок планшетов', example: '今年平板市场销量持续增长。' }
+        ],
+        polyglotText: '这个平台推荐性价比高的平板电脑。',
+        polyglotTranslation: 'Платформа рекомендует недорогие планшеты.',
+        qa: [
+            { question: 'как сказать «планшетный компьютер»?', answer: '平板电脑' },
+            { question: 'как сказать «подставка для планшета»?', answer: '平板支架' }
+        ]
+    },
+    {
+        id: 'shijiao', word: '视角', emoji: '👁️', pinyin: 'shì jiǎo', translation: 'точка зрения, ракурс',
+        category: 'bookish', rhythm: '4-3', type: 'Существительное',
+        frame: '从… 的视角 + глагол',
+        anchor: 'Ты смотришь фильм с позиции главного героя.',
+        mnemonics: ['视: 示 + 见; смотреть, видеть.', '角: рог, угол.'],
+        workTogether: '视 = смотреть, 角 = угол → угол зрения.',
+        fullImage: 'Журналист анализирует проблему с视角 молодых людей.',
+        persona: '视角 — это очки, через которые ты смотришь на мир.',
+        morphemes: '视: смотреть | 角: угол',
+        cognates: ['视角 ➔ 看见 kàn jiàn (HSK 1) — увидеть', '视角 ➔ 角度 jiǎo dù (HSK 4) — угол'],
+        expertise: '视角 подчёркивает субъективное восприятие.',
+        socialVibe: 'Xiaohongshu: 女性视角 — женский ракурс.',
+        expertInsight: 'Обязательная конструкция 从… 的视角.',
+        dialogue: ['这篇文章好在哪里？', '好在它从年轻人的视角讨论社会问题。'],
+        collocations: [
+            { level: '🎯 HSK', items: '不同视角 — разные точки зрения', example: '我们要学会从不同视角看问题。' },
+            { level: '🗣️ Быт', items: '个人视角 — личный ракурс', example: '这只是我的个人视角。' },
+            { level: '🎥 Медиа', items: '叙事视角 — повествовательный ракурс', example: '这部小说的叙事视角非常特别。' }
+        ],
+        polyglotText: '从新的视角看待事件，换一个角度，你就会看见很多细节。',
+        polyglotTranslation: 'Посмотри на событие с новой точки зрения.',
+        qa: [
+            { question: 'как сказать «разные точки зрения»?', answer: '不同视角' },
+            { question: 'как сказать «личный ракурс»?', answer: '个人视角' }
+        ]
+    },
+    {
+        id: 'weilao', word: '慰劳', emoji: '🎁', pinyin: 'wèi láo', translation: 'наградить, поддержать за труд',
+        category: 'bookish', rhythm: '4-2', type: 'Глагол',
+        frame: '慰劳 + [люди, кто трудился]',
+        anchor: 'После акции дают еду и подарки как благодарность.',
+        mnemonics: ['慰: сердце 心 + 尉; успокоить душу.', '劳: сила труда 力; труд.'],
+        workTogether: '慰 = утешить, 劳 = труд → отблагодарить за труд.',
+        fullImage: 'Руководство приехало на стройку, чтобы慰劳 строителей.',
+        persona: '慰劳 — это заботливый начальник.',
+        morphemes: '慰: утешение | 劳: труд',
+        cognates: ['慰劳 ➔ 安慰 ān wèi (HSK 4) — утешить', '慰劳 ➔ 劳动 láo dòng (HSK 3) — трудиться'],
+        expertise: 'Ловушка: 慰劳 = благодарность за труд, 安慰 = утешение горя.',
+        socialVibe: 'В WeChat-публикациях: 慰劳一线工作人员.',
+        expertInsight: 'Не используется в повседневной речи.',
+        dialogue: ['节日的时候公司会做什么？', '公司准备礼物，慰劳辛苦工作的员工。'],
+        collocations: [
+            { level: '🎯 HSK', items: '慰劳员工 — отблагодарить сотрудников', example: '节日期间领导慰劳全体员工。' },
+            { level: '🗣️ Быт', items: '慰劳志愿者 — поддержать волонтёров', example: '我们买饮料慰劳志愿者。' },
+            { level: '🎥 Медиа', items: '慰劳一线人员 — поддержать специалистов', example: '记者记录了慰劳一线医护人员。' }
+        ],
+        polyglotText: '我们要慰劳辛勤劳动的团队成员。',
+        polyglotTranslation: 'Мы должны отблагодарить трудившихся.',
+        qa: [
+            { question: 'как сказать «отблагодарить сотрудников»?', answer: '慰劳员工' },
+            { question: 'как сказать «утешить»?', answer: '安慰' }
+        ]
+    },
+    {
+        id: 'qiansuoweiyou', word: '前所未有', emoji: '🚀', pinyin: 'qián suǒ wèi yǒu', translation: 'беспрецедентный',
+        category: 'idiom', rhythm: '2-3-4-3', type: 'Идиома',
+        frame: '前所未有 + 的 + существительное',
+        anchor: 'Скорость развития интернета, которой не было раньше.',
+        mnemonics: ['前: раньше, 所: маркер, 未: ещё не, 有: иметь → раньше не существовало.'],
+        workTogether: '前 + 所 + 未 + 有 → того, что было раньше — не существовало.',
+        fullImage: 'Страна получает前所未有的 возможности.',
+        persona: '前所未有 — это рекордсмен.',
+        morphemes: '前: прошлое | 所: маркер | 未: не | 有: существовать',
+        cognates: ['前所未有 ➔ 未来 wèi lái (HSK 3) — будущее', '前所未有 ➔ 以前 yǐ qián (HSK 2) — раньше'],
+        expertise: 'Идиома работает только перед существительным с 的.',
+        socialVibe: 'В официальных публикациях WeChat: 前所未有发展机遇.',
+        expertInsight: 'Может описывать и хорошее, и плохое.',
+        dialogue: ['现在的年轻人面临什么样的机会？', '他们拥有前所未有的发展机会。'],
+        collocations: [
+            { level: '🎯 HSK', items: '前所未有的机遇 — беспрецедентные возможности', example: '时代给我们带来前所未有的机遇。' },
+            { level: '🗣️ Быт', items: '前所未有的体验 — уникальный опыт', example: '这次旅行给我前所未有的体验。' },
+            { level: '🎥 Медиа', items: '前所未有的挑战 — беспрецедентные вызовы', example: '行业正遇到前所未有的挑战。' }
+        ],
+        polyglotText: '以前谁都没有想到，我们会迎来前所未有的变化。',
+        polyglotTranslation: 'Раньше никто не мог предположить.',
+        qa: [
+            { question: 'как сказать «беспрецедентные возможности»?', answer: '前所未有的机遇' },
+            { question: 'как сказать «беспрецедентные вызовы»?', answer: '前所未有的挑战' }
+        ]
+    },
+    {
+        id: 'shishiqiushi', word: '实事求是', emoji: '📊', pinyin: 'shí shì qiú shì', translation: 'исходить из фактов',
+        category: 'idiom', rhythm: '2-4-2-4', type: 'Идиома',
+        frame: '实事求是地 + глагол',
+        anchor: 'При анализе опираешься только на реальные доказательства.',
+        mnemonics: ['实: реальный, 事: факт, 求: искать, 是: истина → искать правду.'],
+        workTogether: '实事 + 求是 → объективность.',
+        fullImage: 'Исследователь не подгоняет результат.',
+        persona: '实事求是 — это честный учёный.',
+        morphemes: '实: реальный | 事: факт | 求: искать | 是: истина',
+        cognates: ['实事求是 ➔ 事实 shì shí (HSK 4) — факт', '实事求是 ➔ 真实 zhēn shí (HSK 4) — настоящий'],
+        expertise: 'Важнейшая культурно-специфическая фраза Китая.',
+        socialVibe: 'Используется в официальных аккаунтах WeChat.',
+        expertInsight: 'При действии над глаголом обязательно ставится 地.',
+        dialogue: ['我们做研究最重要的原则是什么？', '最重要的原则就是实事求是。'],
+        collocations: [
+            { level: '🎯 HSK', items: '实事求是地看待问题 — объективно смотреть', example: '我们必须实事求是地看待问题。' },
+            { level: '🗣️ Быт', items: '实事求是的态度 — объективный подход', example: '处理矛盾要有实事求是的态度。' },
+            { level: '🎥 Медиа', items: '实事求是地分析 — анализировать по фактам', example: '媒体应当实事求是地报道。' }
+        ],
+        polyglotText: '我们要尊重事实，实事求是地寻找答案。',
+        polyglotTranslation: 'Нам нужно уважать факты.',
+        qa: [
+            { question: 'как сказать «объективно смотреть на проблему»?', answer: '实事求是地看待问题' },
+            { question: 'как сказать «объективный подход»?', answer: '实事求是的态度' }
+        ]
+    },
+    {
+        id: 'dangxia', word: '当下', emoji: '⏳', pinyin: 'dāng xià', translation: 'сейчас, в настоящий момент',
+        category: 'bookish', rhythm: '1-4', type: 'Существительное-наречие',
+        frame: '当下 + предложение; 在当下',
+        anchor: 'Фраза «живи настоящим» — это 活在当下.',
+        mnemonics: ['当: именно, 下: здесь-сейчас → именно сейчас.'],
+        workTogether: '当 = именно, 下 = настоящий момент → прямо сейчас.',
+        fullImage: 'Философский постер: 珍惜当下.',
+        persona: '当下 — это мудрец настоящего момента.',
+        morphemes: '当: именно | 下: здесь-теперь',
+        cognates: ['当下 ➔ 现在 xiàn zài (HSK 1) — сейчас', '当下 ➔ 当前 dāng qián (HSK 5) — текущий'],
+        expertise: 'Синоним 现在, но более литературный.',
+        socialVibe: 'Xiaohongshu: 活在当下.',
+        expertInsight: 'Ловушка: не путать с 当时 dāng shí.',
+        dialogue: ['你觉得什么最重要？', '我觉得活在当下最重要。'],
+        collocations: [
+            { level: '🎯 HSK', items: '活在当下 — жить настоящим', example: '很多年轻人学会活在当下。' },
+            { level: '🗣️ Быт', items: '当下的选择 — выбор сейчас', example: '尊重你当下的选择。' },
+            { level: '🎥 Медиа', items: '当下社会 — современное общество', example: '当下社会出现很多新变化。' }
+        ],
+        polyglotText: '在当下我们要看清当前局势。',
+        polyglotTranslation: 'В настоящий момент нужно разобраться.',
+        qa: [
+            { question: 'как сказать «жить настоящим»?', answer: '活在当下' },
+            { question: 'как сказать «современное общество»?', answer: '当下社会' }
+        ]
+    },
+    {
+        id: 'zhanxin', word: '崭新', emoji: '✨', pinyin: 'zhǎn xīn', translation: 'совершенно новый',
+        category: 'bookish', rhythm: '3-1', type: 'Прилагательное',
+        frame: '崭新 + 的 + существительное',
+        anchor: 'Распакованный товар без царапин.',
+        mnemonics: ['崭: только что появиться, 新: новый → абсолютно новый.'],
+        workTogether: '崭 = только что показавшийся, 新 = новый → совершенно новый.',
+        fullImage: 'Страна вступает в崭新 этап.',
+        persona: '崭新 — это блестящий новичок.',
+        morphemes: '崭: появляться впервые | 新: новый',
+        cognates: ['崭新 ➔ 新 xīn (HSK 1) — новый', '崭新 ➔ 更新 gēng xīn (HSK 4) — обновлять'],
+        expertise: 'Не описывает людей!',
+        socialVibe: 'Официальные WeChat-посты: 崭新的篇章.',
+        expertInsight: '崭新 подчёркивает начало нового этапа.',
+        dialogue: ['毕业后你会迎来什么样的生活？', '我会迎来崭新的生活。'],
+        collocations: [
+            { level: '🎯 HSK', items: '崭新的时代 — новейшая эпоха', example: '我们走进了崭新的时代。' },
+            { level: '🗣️ Быт', items: '崭新的开始 — новое начало', example: '搬家是崭新的开始。' },
+            { level: '🎥 Медиа', items: '崭新的篇章 — новая глава', example: '行业翻开崭新的篇章。' }
+        ],
+        polyglotText: '告别旧模式，我们翻开崭新的篇章。',
+        polyglotTranslation: 'Попрощавшись со старым, открываем новое.',
+        qa: [
+            { question: 'как сказать «новейшая эпоха»?', answer: '崭新的时代' },
+            { question: 'как сказать «новое начало»?', answer: '崭新的开始' }
+        ]
+    },
+    {
+        id: 'wuyou', word: '无忧', emoji: '😊', pinyin: 'wú yōu', translation: 'без забот, без волнений',
+        category: 'bookish', rhythm: '2-1', type: 'Прилагательное',
+        frame: '无忧 + 的 + существительное',
+        anchor: 'Маленький ребёнок без проблем.',
+        mnemonics: ['无: нет, 忧: волноваться → без забот.'],
+        workTogether: '无 = отсутствие, 忧 = забота → без забот.',
+        fullImage: '无忧 детство.',
+        persona: '无忧 — это беззаботный ребёнок.',
+        morphemes: '无: нет | 忧: беспокойство',
+        cognates: ['无忧 ➔ 担心 dān xīn (HSK 3) — волноваться', '无忧 ➔ 无论 wú lùn (HSK 4) — независимо'],
+        expertise: 'Основная форма: 无忧无虑.',
+        socialVibe: 'Xiaohongshu: 无忧无虑的童年.',
+        expertInsight: 'В HSK-6 чаще встречается полная идиома.',
+        dialogue: ['你最怀念什么时候？', '我怀念小时候无忧无虑的日子。'],
+        collocations: [
+            { level: '🎯 HSK', items: '无忧无虑 — беззаботный', example: '孩子们过着无忧无虑的生活。' },
+            { level: '🗣️ Быт', items: '无忧时光 — время без забот', example: '大学是一段无忧时光。' },
+            { level: '🎥 Медиа', items: '无忧养老 — пенсия без забот', example: '媒体讨论无忧养老。' }
+        ],
+        polyglotText: '童年无忧无虑。',
+        polyglotTranslation: 'Детство проходит беззаботно.',
+        qa: [
+            { question: 'как сказать «беззаботный»?', answer: '无忧无虑' },
+            { question: 'как сказать «время без забот»?', answer: '无忧时光' }
+        ]
+    },
+    {
+        id: 'rezhong', word: '热衷', emoji: '🔥', pinyin: 'rè zhōng', translation: 'горячо увлекаться',
+        category: 'colloquial', rhythm: '4-1', type: 'Глагол',
+        frame: '热衷于 + существительное',
+        anchor: 'Друг, который всё время тратит на хобби.',
+        mnemonics: ['热: страстный, 衷: в душе → страстно увлекаться.'],
+        workTogether: '热 = страстно, 衷 = в душе → страстно увлекаться.',
+        fullImage: 'Молодой человек热衷于 языки.',
+        persona: '热衷 — это энтузиаст.',
+        morphemes: '热: горячий | 衷: душа',
+        cognates: ['热衷 ➔ 热情 rè qíng (HSK 4) — энтузиазм', '热衷 ➔ 衷心 zhōng xīn (HSK 5) — от всего сердца'],
+        expertise: 'Обязательный предлог 于 после слова.',
+        socialVibe: 'Xiaohongshu: 热衷于探店.',
+        expertInsight: 'Может иметь лёгкий негатив.',
+        dialogue: ['你的同学喜欢做什么？', '他热衷于参加社会活动。'],
+        collocations: [
+            { level: '🎯 HSK', items: '热衷于公益 — увлекаться общественно-полезной деятельностью', example: '很多年轻人热衷于公益。' },
+            { level: '🗣️ Быт', items: '热衷于运动 — увлекаться спортом', example: '我弟弟热衷于户外运动。' },
+            { level: '🎥 Медиа', items: '热衷于炒作 — увлекаться пиаром', example: '有些网红热衷于炒作。' }
+        ],
+        polyglotText: '她热衷于志愿服务。',
+        polyglotTranslation: 'Она увлекается волонтёрством.',
+        qa: [
+            { question: 'как сказать «увлекаться общественно-полезной деятельностью»?', answer: '热衷于公益' },
+            { question: 'как сказать «увлекаться спортом»?', answer: '热衷于运动' }
+        ]
+    },
+    {
+        id: 'fengmao', word: '风貌', emoji: '🏛️', pinyin: 'fēng mào', translation: 'облик, стиль-образ',
+        category: 'bookish', rhythm: '1-4', type: 'Существительное',
+        frame: '[существительное] + 的 + 风貌',
+        anchor: 'Облик старого города.',
+        mnemonics: ['风: нравы, стиль, 貌: внешний вид → облик.'],
+        workTogether: '风 = дух, 貌 = вид → облик.',
+        fullImage: 'Фотография старого квартала.',
+        persona: '风貌 — это лицо города.',
+        morphemes: '风: дух | 貌: облик',
+        cognates: ['风貌 ➔ 风景 fēng jǐng (HSK 3) — пейзаж', '风貌 ➔ 面貌 miàn mào (HSK 5) — облик'],
+        expertise: 'Не используется для одного человека.',
+        socialVibe: 'Xiaohongshu: 古城风貌.',
+        expertInsight: '面貌 может относиться к человеку, 风貌 — нет.',
+        dialogue: ['这座古镇最吸引你的是什么？', '是保存完好的古镇风貌。'],
+        collocations: [
+            { level: '🎯 HSK', items: '城市风貌 — облик города', example: '保护老城区的城市风貌。' },
+            { level: '🗣️ Быт', items: '地方风貌 — местный колорит', example: '这条街道保留地方风貌。' },
+            { level: '🎥 Медиа', items: '时代风貌 — облик эпохи', example: '电影展现时代风貌。' }
+        ],
+        polyglotText: '这个小镇的风景很美。',
+        polyglotTranslation: 'Пейзажи прекрасны.',
+        qa: [
+            { question: 'как сказать «облик города»?', answer: '城市风貌' },
+            { question: 'как сказать «местный колорит»?', answer: '地方风貌' }
+        ]
+    },
+    {
+        id: 'zaojiu', word: '造就', emoji: '🏆', pinyin: 'zào jiù', translation: 'воспитать, сформировать',
+        category: 'bookish', rhythm: '4-4', type: 'Глагол',
+        frame: '[условие] + 造就 + [человек]',
+        anchor: 'Сложная ситуация формирует сильного человека.',
+        mnemonics: ['造: создавать, 就: довести до результата → сформировать.'],
+        workTogether: '造 = создавать, 就 = завершить → сформировать.',
+        fullImage: 'Сложная эпоха造就 сильных людей.',
+        persona: '造就 — это скульптор.',
+        morphemes: '造: создавать | 就: достигнуть',
+        cognates: ['造就 ➔ 制造 zhì zào (HSK 4) — производить', '造就 ➔ 成就 chéng jiù (HSK 5) — достижение'],
+        expertise: 'Ловушка: 造就 — для людей, 制造 — для вещей.',
+        socialVibe: 'WeChat: 时代造就人才.',
+        expertInsight: 'Подчёркивает влияние внешних обстоятельств.',
+        dialogue: ['为什么这一代出现很多人才？', '是时代造就了这些人才。'],
+        collocations: [
+            { level: '🎯 HSK', items: '造就人才 — воспитать талантливых людей', example: '良好的教育可以造就人才。' },
+            { level: '🗣️ Быт', items: '造就机遇 — создать возможности', example: '新行业造就机遇。' },
+            { level: '🎥 Медиа', items: '造就英雄 — воспитать героев', example: '危机造就英雄。' }
+        ],
+        polyglotText: '时代造就杰出人才。',
+        polyglotTranslation: 'Эпоха воспитывает выдающихся людей.',
+        qa: [
+            { question: 'как сказать «воспитать талантливых людей»?', answer: '造就人才' },
+            { question: 'как сказать «создать возможности»?', answer: '造就机遇' }
+        ]
+    },
+    {
+        id: 'shexiangtou', word: '摄像头', emoji: '📷', pinyin: 'shè xiàng tóu', translation: 'видеокамера',
+        category: 'colloquial', rhythm: '4-4-2', type: 'Существительное',
+        frame: '[устройство] + 的 + 摄像头',
+        anchor: 'Камера на телефоне или веб-камера.',
+        mnemonics: ['摄: снимать, 像: изображение, 头: модуль → камера.'],
+        workTogether: '摄 = снимать, 像 = изображение, 头 = модуль → камера.',
+        fullImage: 'Ты делаешь фото на телефон.',
+        persona: '摄像头 — это глаз устройства.',
+        morphemes: '摄: снимать | 像: изображение | 头: модуль',
+        cognates: ['摄像头 ➔ 摄影 shè yǐng (HSK 5) — фотография', '摄像头 ➔ 图像 tú xiàng (HSK 4) — изображение'],
+        expertise: 'Обозначает аппаратный модуль.',
+        socialVibe: 'Xiaohongshu: 手机摄像头测评.',
+        expertInsight: 'Три иероглифа — частые ошибки.',
+        dialogue: ['为什么视频会议看不到我？', '你的摄像头可能坏了。'],
+        collocations: [
+            { level: '🎯 HSK', items: '手机摄像头 — камера телефона', example: '这款手机的摄像头质量很好。' },
+            { level: '🗣️ Быт', items: '电脑摄像头 — веб-камера', example: '买一个电脑摄像头。' },
+            { level: '🎥 Медиа', items: '监控摄像头 — камера наблюдения', example: '街道安装监控摄像头。' }
+        ],
+        polyglotText: '摄影爱好者关注手机摄像头参数。',
+        polyglotTranslation: 'Любители фотографии следят за камерами.',
+        qa: [
+            { question: 'как сказать «камера телефона»?', answer: '手机摄像头' },
+            { question: 'как сказать «веб-камера»?', answer: '电脑摄像头' }
+        ]
+    },
+    {
+        id: 'shiye', word: '视野', emoji: '🌍', pinyin: 'shì yě', translation: 'кругозор; поле зрения',
+        category: 'bookish', rhythm: '4-3', type: 'Существительное',
+        frame: '开阔 + 视野',
+        anchor: 'Путешествия расширяют кругозор.',
+        mnemonics: ['视: взгляд, 野: простор → простор взгляда.'],
+        workTogether: '视 = взгляд, 野 = простор → кругозор.',
+        fullImage: 'Человек путешествует, читает.',
+        persona: '视野 — это окно в мир.',
+        morphemes: '视: смотреть | 野: простор',
+        cognates: ['视野 ➔ 看见 kàn jiàn (HSK 1) — увидеть', '视野 ➔ 野外 yě wài (HSK 4) — дикая местность'],
+        expertise: 'Два значения: физическое и интеллектуальное.',
+        socialVibe: 'Xiaohongshu: 开阔视野.',
+        expertInsight: 'Ключевая коллокация: 开阔视野.',
+        dialogue: ['旅行最大的好处是什么？', '旅行可以开阔我们的视野。'],
+        collocations: [
+            { level: '🎯 HSK', items: '开阔视野 — расширить кругозор', example: '阅读可以开阔视野。' },
+            { level: '🗣️ Быт', items: '个人视野 — личный кругозор', example: '多交流拓宽个人视野。' },
+            { level: '🎥 Медиа', items: '国际视野 — международный кругозор', example: '青年要有国际视野。' }
+        ],
+        polyglotText: '在野外旅行能看见很多新东西。',
+        polyglotTranslation: 'Путешествуя, расширяешь кругозор.',
+        qa: [
+            { question: 'как сказать «расширить кругозор»?', answer: '开阔视野' },
+            { question: 'как сказать «личный кругозор»?', answer: '个人视野' }
+        ]
+    },
+    {
+        id: 'beishou', word: '备受', emoji: '📢', pinyin: 'bèi shòu', translation: 'пользоваться вниманием',
+        category: 'bookish', rhythm: '4-4', type: 'Служебная конструкция',
+        frame: '备受 + [существительное]',
+        anchor: 'Новый фильм, на который все обращают внимание.',
+        mnemonics: ['备: полностью, 受: получать → получать в полной мере.'],
+        workTogether: '备 = в полной степени, 受 = получать → получать много.',
+        fullImage: 'Новый проект备受关注.',
+        persona: '备受 — это знаменитость.',
+        morphemes: '备: полностью | 受: получать',
+        cognates: ['备受 ➔ 受到 shòu dào (HSK 4) — получить', '备受 ➔ 准备 zhǔn bèi (HSK 3) — готовиться'],
+        expertise: 'После 备受 идёт только существительное.',
+        socialVibe: 'WeChat: 备受争议.',
+        expertInsight: 'Самые частые: 备受关注、备受争议.',
+        dialogue: ['这部新作品反响怎么样？', '这部新作品备受关注。'],
+        collocations: [
+            { level: '🎯 HSK', items: '备受关注 — пользоваться вниманием', example: '环保问题备受关注。' },
+            { level: '🗣️ Быт', items: '备受喜爱 — пользоваться любовью', example: '这款小吃备受喜爱。' },
+            { level: '🎥 Медиа', items: '备受争议 — вызывать споры', example: '这份方案备受争议。' }
+        ],
+        polyglotText: '这个产品备受消费者喜爱。',
+        polyglotTranslation: 'Этот продукт пользуется любовью.',
+        qa: [
+            { question: 'как сказать «пользоваться вниманием»?', answer: '备受关注' },
+            { question: 'как сказать «вызывать споры»?', answer: '备受争议' }
+        ]
+    },
+    {
+        id: 'pingshi', word: '平视', emoji: '🤝', pinyin: 'píng shì', translation: 'смотреть на одном уровне',
+        category: 'bookish', rhythm: '2-4', type: 'Глагол',
+        frame: '平视 + [объект]',
+        anchor: 'Ты не смотришь на человека свысока.',
+        mnemonics: ['平: равный уровень, 视: смотреть → смотреть на равных.'],
+        workTogether: '平 = равный, 视 = смотреть → смотреть на равных.',
+        fullImage: 'Педагог平视 каждого.',
+        persona: '平视 — это друг, общающийся на равных.',
+        morphemes: '平: равный | 视: смотреть',
+        cognates: ['平视 ➔ 平时 píng shí (HSK 2) — обычно', '平视 ➔ 视角 shì jiǎo (HSK 6) — точка зрения'],
+        expertise: 'Два плана: буквальный и переносный.',
+        socialVibe: 'Xiaohongshu: 平视他人.',
+        expertInsight: 'Антонимы: 仰视, 俯视.',
+        dialogue: ['和别人交往最重要的是什么？', '最重要的是平视每一个人。'],
+        collocations: [
+            { level: '🎯 HSK', items: '平视他人 — относиться как к равным', example: '学会平视他人。' },
+            { level: '🗣️ Быт', items: '平视的态度 — равноправие', example: '保持平视的态度。' },
+            { level: '🎥 Медиа', items: '平视文化 — равноправное восприятие', example: '平视不同文化。' }
+        ],
+        polyglotText: '学会平视每一个人。',
+        polyglotTranslation: 'Научись относиться ко всем как к равным.',
+        qa: [
+            { question: 'как сказать «относиться как к равным»?', answer: '平视他人' },
+            { question: 'как сказать «равноправие»?', answer: '平视的态度' }
+        ]
+    },
+    {
+        id: 'jiejian', word: '节俭', emoji: '💰', pinyin: 'jié jiǎn', translation: 'бережливый, экономный',
+        category: 'colloquial', rhythm: '2-3', type: 'Прилагательное',
+        frame: '[субъект] + 很节俭',
+        anchor: 'Человек не тратит деньги зря.',
+        mnemonics: ['节: ограничивать, 俭: скромный → бережливый.'],
+        workTogether: '节 = ограничивать, 俭 = скромный → бережливый.',
+        fullImage: 'Человек ведёт节俭 образ жизни.',
+        persona: '节俭 — это бережливый хозяин.',
+        morphemes: '节: ограничивать | 俭: скромный',
+        cognates: ['节俭 ➔ 节省 jié shěng (HSK 4) — экономить', '节俭 ➔ 节约 jié yuē (HSK 4) — экономить ресурсы'],
+        expertise: 'Ловушка: 节俭 — черта, 节省/节约 — действие.',
+        socialVibe: 'Xiaohongshu: 生活节俭.',
+        expertInsight: 'Положительная моральная оценка.',
+        dialogue: ['他花钱大手大脚吗？', '不是，他生活很节俭。'],
+        collocations: [
+            { level: '🎯 HSK', items: '生活节俭 — жить бережливо', example: '老一辈生活节俭。' },
+            { level: '🗣️ Быт', items: '节俭的习惯 — бережливость', example: '养成节俭的习惯。' },
+            { level: '🎥 Медиа', items: '节俭风尚 — мода на бережливость', example: '提倡节俭风尚。' }
+        ],
+        polyglotText: '他为人节俭。',
+        polyglotTranslation: 'Он бережлив.',
+        qa: [
+            { question: 'как сказать «жить бережливо»?', answer: '生活节俭' },
+            { question: 'как сказать «бережливость»?', answer: '节俭的习惯' }
+        ]
+    }
+];
+
+let cards = [];
+const STORAGE_KEY = 'hsk6_19cards_fixed_final';
+let pinyinVisible = true;
+let transVisible = true;
+let searchQuery = '';
+let currentModalId = null;
+let isEditing = false;
+let editingCard = null;
+
+function loadCards() {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+        try {
+            cards = JSON.parse(saved);
+            if (!Array.isArray(cards) || cards.length === 0) cards = [...defaultCards];
+        } catch(e) { cards = [...defaultCards]; }
+    } else { cards = [...defaultCards]; }
+}
+function saveCards() { localStorage.setItem(STORAGE_KEY, JSON.stringify(cards)); }
+function resetCards() {
+    if (confirm('Сбросить все карточки к исходным?')) {
+        cards = [...defaultCards];
+        saveCards();
+        renderAll();
+        closeModal();
+    }
+}
+
+function renderAll() {
+    renderTicker();
+    renderGrid();
+}
+function renderTicker() {
+    const ticker = document.getElementById('ticker');
+    if (!ticker) return;
+    if (cards.length === 0) { ticker.innerHTML = ''; return; }
+    const words = cards.map(c => `${c.emoji || '📘'} ${c.word}`).join(' · ');
+    ticker.innerHTML = `<span>${words} ·&nbsp;</span><span>${words} ·&nbsp;</span>`;
+}
+function renderGrid() {
+    const grid = document.getElementById('cardsGrid');
+    const noResults = document.getElementById('noResults');
+    if (!grid) return;
+    const filtered = cards.filter(card => {
+        if (!searchQuery.trim()) return true;
+        const q = searchQuery.trim().toLowerCase();
+        return (card.word + ' ' + card.pinyin + ' ' + card.translation).toLowerCase().includes(q);
+    });
+    if (filtered.length === 0) {
+        grid.innerHTML = '';
+        noResults.style.display = 'block';
+        return;
+    }
+    noResults.style.display = 'none';
+    grid.innerHTML = filtered.map(card => `
+        <div class="card-item" data-id="${card.id}">
+            <button class="card-delete" data-id="${card.id}">✕</button>
+            <div class="card-emoji">${card.emoji || '📘'}</div>
+            <div class="card-word">${card.word}</div>
+            ${pinyinVisible ? `<div class="card-pinyin">${card.pinyin || ''}</div>` : ''}
+            ${transVisible ? `<div class="card-translation">${card.translation || ''}</div>` : ''}
+        </div>
+    `).join('');
+    document.querySelectorAll('.card-item').forEach(el => {
+        el.addEventListener('click', (e) => {
+            if (e.target.classList.contains('card-delete')) return;
+            openModal(el.dataset.id);
+        });
+    });
+    document.querySelectorAll('.card-delete').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (confirm('Удалить карточку?')) {
+                cards = cards.filter(c => c.id !== btn.dataset.id);
+                saveCards();
+                renderAll();
+            }
+        });
+    });
+}
+
+function openModal(id) {
+    const card = cards.find(c => c.id === id);
+    if (!card) return;
+    currentModalId = id;
+    isEditing = false;
+    editingCard = null;
+    updateModal(card);
+    document.getElementById('cardModal').classList.add('active');
+}
+function closeModal() {
+    document.getElementById('cardModal').classList.remove('active');
+    currentModalId = null;
+    isEditing = false;
+    editingCard = null;
+}
+function updateModal(card) {
+    const container = document.getElementById('modalContent');
+    if (!container) return;
+    if (isEditing && editingCard) {
+        renderEditForm(container, editingCard);
+        return;
+    }
+    container.innerHTML = `
+        <div class="modal-header">
+            <div class="modal-emoji">${card.emoji || '📘'}</div>
+            <div class="modal-word">${card.word}</div>
+            <div class="modal-pinyin">${pinyinVisible ? card.pinyin : '🔒 пиньинь скрыт'}</div>
+            <div class="modal-translation">${transVisible ? card.translation : '🔒 перевод скрыт'}</div>
+        </div>
+        ${card.persona ? `
+        <div class="modal-section">
+            <div class="modal-section-title">👤 Персонаж</div>
+            <div class="modal-section-body">${card.persona}</div>
+        </div>` : ''}
+        ${card.anchor ? `
+        <div class="modal-section">
+            <div class="modal-section-title">🪝 Бытовой якорь</div>
+            <div class="modal-section-body">${card.anchor}</div>
+        </div>` : ''}
+        <div class="modal-section">
+            <div class="modal-section-title">👁️ Мнемоника</div>
+            <div class="mnemonic-block">
+                ${(card.mnemonics || []).map(m => `<div class="mnemonic-part">${m}</div>`).join('')}
+                ${card.workTogether ? `<div style="margin-top:8px;font-weight:600;">${card.workTogether}</div>` : ''}
+                ${card.fullImage ? `<div style="margin-top:8px;font-style:italic;">${card.fullImage}</div>` : ''}
+            </div>
+        </div>
+        ${card.dialogue && (card.dialogue[0] || card.dialogue[1]) ? `
+        <div class="modal-section">
+            <div class="modal-section-title">💬 Живой диалог</div>
+            <div class="modal-section-body">
+                ${card.dialogue[0] ? `<div class="dialogue-a">🅰 ${card.dialogue[0]}</div>` : ''}
+                ${card.dialogue[1] ? `<div class="dialogue-b">🅱 ${card.dialogue[1]}</div>` : ''}
+            </div>
+        </div>` : ''}
+        ${card.collocations && card.collocations.length > 0 ? `
+        <div class="modal-section">
+            <div class="modal-section-title">🔗 Коллокации</div>
+            <div class="collocations-cloud">
+                ${card.collocations.map((c, idx) => {
+                    const cls = idx === 0 ? 'hsk' : idx === 1 ? 'business' : 'media';
+                    return `<div class="collocation-item ${cls}"><span class="collocation-level">${c.level}</span><span class="collocation-word">${c.items}</span><span class="collocation-example">${c.example || ''}</span></div>`;
+                }).join('')}
+            </div>
+        </div>` : ''}
+        ${card.polyglotText ? `
+        <div class="modal-section">
+            <div class="modal-section-title">🎯 Полигон</div>
+            <div class="modal-section-body">
+                <div class="polyglot-text">${highlightCollocations(card.polyglotText, card.collocations)}</div>
+                <div class="polyglot-translation">${card.polyglotTranslation || ''}</div>
+            </div>
+        </div>` : ''}
+        <div class="modal-canvas-wrap">
+            <div class="modal-section-title">✏️ Прописи</div>
+            <canvas id="modalCanvas" width="600" height="120"></canvas>
+            <div class="modal-canvas-actions">
+                <button id="modalUndo">↩️</button>
+                <button id="modalRedo">↪️</button>
+                <button id="modalClear">🗑️</button>
+            </div>
+        </div>
+        <div class="modal-actions">
+            <button class="modal-btn secondary" id="editBtn">✏️ Редактировать</button>
+            <button class="modal-btn secondary" id="closeBtn">✕ Закрыть</button>
+        </div>
+    `;
+    document.getElementById('editBtn')?.addEventListener('click', () => {
+        isEditing = true;
+        editingCard = JSON.parse(JSON.stringify(card));
+        updateModal(card);
+    });
+    document.getElementById('closeBtn')?.addEventListener('click', closeModal);
+    initModalCanvas();
+}
+
+function highlightCollocations(text, collocations) {
+    if (!text) return text;
+    let result = text;
+    (collocations || []).forEach(c => {
+        if (!c.items) return;
+        const key = c.items.split('—')[0].trim();
+        if (key && key.length > 0) {
+            result = result.replace(new RegExp(key, 'g'), `<span class="highlight-collocation">${key}</span>`);
+        }
+    });
+    return result;
+}
+
+function initModalCanvas() {
+    const canvas = document.getElementById('modalCanvas');
+    if (!canvas) return;
+    const rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width || 600;
+    canvas.height = 120;
+    const ctx = canvas.getContext('2d');
+    let drawing = false;
+    let strokeHistory = [];
+    let redoHistory = [];
+    ctx.lineWidth = 3;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.strokeStyle = '#2a2a2a';
+    function getPos(e) {
+        const r = canvas.getBoundingClientRect();
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        return { x: clientX - r.left, y: clientY - r.top };
+    }
+    canvas.onmousedown = (e) => {
+        drawing = true;
+        const pos = getPos(e);
+        ctx.beginPath();
+        ctx.moveTo(pos.x, pos.y);
+        strokeHistory.push([{ x: pos.x, y: pos.y }]);
+        redoHistory = [];
+    };
+    canvas.onmousemove = (e) => {
+        if (!drawing) return;
+        const pos = getPos(e);
+        ctx.lineTo(pos.x, pos.y);
+        ctx.stroke();
+        strokeHistory[strokeHistory.length - 1].push({ x: pos.x, y: pos.y });
+    };
+    canvas.onmouseup = () => { drawing = false; };
+    canvas.onmouseleave = () => { drawing = false; };
+    canvas.ontouchstart = (e) => {
+        e.preventDefault();
+        drawing = true;
+        const pos = getPos(e);
+        ctx.beginPath();
+        ctx.moveTo(pos.x, pos.y);
+        strokeHistory.push([{ x: pos.x, y: pos.y }]);
+        redoHistory = [];
+    };
+    canvas.ontouchmove = (e) => {
+        e.preventDefault();
+        if (!drawing) return;
+        const pos = getPos(e);
+        ctx.lineTo(pos.x, pos.y);
+        ctx.stroke();
+        strokeHistory[strokeHistory.length - 1].push({ x: pos.x, y: pos.y });
+    };
+    canvas.ontouchend = () => { drawing = false; };
+
+    function redraw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        strokeHistory.forEach(stroke => {
+            if (stroke.length < 2) return;
+            ctx.beginPath();
+            ctx.moveTo(stroke[0].x, stroke[0].y);
+            for (let i = 1; i < stroke.length; i++) { ctx.lineTo(stroke[i].x, stroke[i].y); }
+            ctx.stroke();
+        });
+    }
+
+    const undoBtn = document.getElementById('modalUndo');
+    const redoBtn = document.getElementById('modalRedo');
+    const clearBtn = document.getElementById('modalClear');
+    if (undoBtn) undoBtn.onclick = () => { if (strokeHistory.length) { redoHistory.push(strokeHistory.pop()); redraw(); } };
+    if (redoBtn) redoBtn.onclick = () => { if (redoHistory.length) { strokeHistory.push(redoHistory.pop()); redraw(); } };
+    if (clearBtn) clearBtn.onclick = () => { strokeHistory = []; redoHistory = []; redraw(); };
+}
+
+function renderEditForm(container, card) {
+    container.innerHTML = `
+        <h2>✏️ Редактирование</h2>
+        <div class="edit-form">
+            <label>Слово</label><input type="text" id="efWord" value="${card.word || ''}">
+            <label>Пиньинь</label><input type="text" id="efPinyin" value="${card.pinyin || ''}">
+            <label>Перевод</label><input type="text" id="efTranslation" value="${card.translation || ''}">
+            <label>Эмодзи</label><input type="text" id="efEmoji" value="${card.emoji || '📘'}">
+            <label>Персонаж</label><textarea id="efPersona">${card.persona || ''}</textarea>
+            <label>Якорь</label><textarea id="efAnchor">${card.anchor || ''}</textarea>
+            <label>Мнемотехника (каждая с новой строки)</label><textarea id="efMnemonics">${(card.mnemonics || []).join('\n')}</textarea>
+            <label>Как работают вместе</label><textarea id="efWorkTogether">${card.workTogether || ''}</textarea>
+            <label>Картинка</label><textarea id="efFullImage">${card.fullImage || ''}</textarea>
+            <label>Диалог А</label><textarea id="efDialA">${(card.dialogue && card.dialogue[0]) || ''}</textarea>
+            <label>Диалог Б</label><textarea id="efDialB">${(card.dialogue && card.dialogue[1]) || ''}</textarea>
+            <label>Коллокация HSK</label><textarea id="efColloc1">${(card.collocations && card.collocations[0]) ? card.collocations[0].level + '|' + card.collocations[0].items + '|' + card.collocations[0].example : ''}</textarea>
+            <label>Коллокация Быт</label><textarea id="efColloc2">${(card.collocations && card.collocations[1]) ? card.collocations[1].level + '|' + card.collocations[1].items + '|' + card.collocations[1].example : ''}</textarea>
+            <label>Коллокация Медиа</label><textarea id="efColloc3">${(card.collocations && card.collocations[2]) ? card.collocations[2].level + '|' + card.collocations[2].items + '|' + card.collocations[2].example : ''}</textarea>
+            <label>Полигон текст</label><textarea id="efPolyText">${card.polyglotText || ''}</textarea>
+            <label>Полигон перевод</label><textarea id="efPolyTrans">${card.polyglotTranslation || ''}</textarea>
+            <div class="edit-actions">
+                <button class="modal-btn primary" id="saveEditBtn">💾 Сохранить</button>
+                <button class="modal-btn danger" id="cancelEditBtn">↩️ Отмена</button>
+            </div>
+        </div>
+    `;
+    document.getElementById('saveEditBtn')?.addEventListener('click', () => {
+        const get = (id) => document.getElementById(id)?.value.trim() || '';
+        const collocations = [];
+        const parseColloc = (val) => {
+            if (!val) return null;
+            const p = val.split('|').map(s => s.trim());
+            return { level: p[0] || '', items: p[1] || '', example: p[2] || '' };
+        };
+        const c1 = parseColloc(get('efColloc1'));
+        const c2 = parseColloc(get('efColloc2'));
+        const c3 = parseColloc(get('efColloc3'));
+        if (c1) collocations.push(c1);
+        if (c2) collocations.push(c2);
+        if (c3) collocations.push(c3);
+
+        const updated = {
+            ...editingCard,
+            word: get('efWord'),
+            pinyin: get('efPinyin'),
+            translation: get('efTranslation'),
+            emoji: get('efEmoji'),
+            persona: get('efPersona'),
+            anchor: get('efAnchor'),
+            mnemonics: get('efMnemonics').split('\n').map(s => s.trim()).filter(Boolean),
+            workTogether: get('efWorkTogether'),
+            fullImage: get('efFullImage'),
+            dialogue: [get('efDialA'), get('efDialB')],
+            collocations: collocations,
+            polyglotText: get('efPolyText'),
+            polyglotTranslation: get('efPolyTrans')
+        };
+
+        const index = cards.findIndex(c => c.id === editingCard.id);
+        if (index !== -1) {
+            cards[index] = updated;
+            saveCards();
+            isEditing = false;
+            editingCard = null;
+            updateModal(updated);
+            renderGrid();
+        }
+    });
+    document.getElementById('cancelEditBtn')?.addEventListener('click', () => {
+        isEditing = false;
+        editingCard = null;
+        const card = cards.find(c => c.id === currentModalId);
+        if (card) updateModal(card);
+    });
+}
+
+function openAddModal() {
+    const container = document.getElementById('addContent');
+    container.innerHTML = `
+        <h2>➕ Добавление карточек</h2>
+        <p style="margin-bottom:8px;font-size:0.85rem;">Вставьте текст карточек. Разделитель — <strong># Карточка по HSK-6:</strong> или <strong>---</strong></p>
+        <textarea id="massTextarea" class="mass-textarea" placeholder="Вставьте текст карточки..."></textarea>
+        <div class="modal-actions">
+            <button class="modal-btn primary" id="massParseBtn">✨ Распознать все</button>
+            <button class="modal-btn secondary" id="manualCreateBtn">📝 Вручную</button>
+        </div>
+    `;
+    document.getElementById('massParseBtn').addEventListener('click', massParse);
+    document.getElementById('manualCreateBtn').addEventListener('click', manualCreate);
+    document.getElementById('addModal').classList.add('active');
+}
+function closeAddModal() { document.getElementById('addModal').classList.remove('active'); }
+
+function massParse() {
+    const text = document.getElementById('massTextarea').value.trim();
+    if (!text) { alert('Вставьте текст.'); return; }
+    const blocks = text.split(/(?:#\s*Карточка по HSK-6:|^---$|---)/gm).map(b => b.trim()).filter(Boolean);
+    let created = 0;
+    blocks.forEach(block => {
+        const card = parseToCard(block);
+        if (card.word) {
+            card.id = 'card_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5);
+            cards.push(card);
+            created++;
+        }
+    });
+    if (created === 0) { alert('Не удалось распознать ни одной карточки. Проверьте формат.'); return; }
+    saveCards();
+    renderAll();
+    closeAddModal();
+    alert(`✅ Создано карточек: ${created}`);
+}
+
+function manualCreate() {
+    const blank = {
+        id: 'card_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
+        word: '新词', emoji: '📘', pinyin: 'xīn cí', translation: 'новое слово', category: 'bookish',
+        persona: '', anchor: '', mnemonics: [], workTogether: '', fullImage: '',
+        dialogue: ['', ''], collocations: [
+            { level: '🎯 HSK', items: '', example: '' },
+            { level: '🗣️ Быт', items: '', example: '' },
+            { level: '🎥 Медиа', items: '', example: '' }
+        ],
+        polyglotText: '', polyglotTranslation: ''
+    };
+    cards.push(blank);
+    saveCards();
+    renderAll();
+    closeAddModal();
+    openModal(blank.id);
+    isEditing = true;
+    editingCard = JSON.parse(JSON.stringify(blank));
+    updateModal(blank);
+}
+
+function parseToCard(text) {
+    const card = {
+        word: '', emoji: '📘', pinyin: '', translation: '', category: 'bookish',
+        persona: '', anchor: '', mnemonics: [], workTogether: '', fullImage: '',
+        dialogue: ['', ''], collocations: [
+            { level: '🎯 HSK', items: '', example: '' },
+            { level: '🗣️ Быт', items: '', example: '' },
+            { level: '🎥 Медиа', items: '', example: '' }
+        ],
+        polyglotText: '', polyglotTranslation: ''
+    };
+    const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
+    const mainLine = lines.find(l => l.includes('📌'));
+    if (mainLine) {
+        const clean = mainLine.replace('📌', '').trim();
+        const match = clean.match(/([\u1F300-\u1F9FF\u2600-\u26FF\u2700-\u27BF])?\s*([\u4e00-\u9fff]+)\s*([a-zA-ZāáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜüÜĀÁǍÀĒÉĚÈĪÍǏÌŌÓǑÒŪÚǓÙǕǗǙǛ\s]+)\s*[\-\u2014\u2013]\s*(.+)/);
+        if (match) {
+            if (match[1]) card.emoji = match[1].trim();
+            card.word = match[2].trim();
+            card.pinyin = match[3].trim();
+            card.translation = match[4].trim();
+        }
+    }
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+        if (line.includes('🎵')) card.rhythm = line.replace(/.*🎵[^:]*[:\s]*/, '').trim();
+        else if (line.includes('📐')) card.type = line.replace(/.*📐[^:]*[:\s]*/, '').trim();
+        else if (line.includes('🧩 Каркас')) card.frame = line.replace(/.*🧩 Каркас[:\s]*/, '').trim();
+        else if (line.includes('🪝 Бытовой якорь')) card.anchor = line.replace(/.*🪝 Бытовой якорь[:\s]*/, '').trim();
+        else if (line.includes('👁️ Визуальная мнемотехника')) {
+            const mnemonics = [];
+            let j = i + 1;
+            while (j < lines.length) {
+                const next = lines[j];
+                if (next.includes('🧩 Как работают вместе') || next.includes('🖼️ Цельная картинка') || next.includes('💬')) break;
+                if (next.startsWith('・') || next.startsWith('•') || next.startsWith('-')) {
+                    mnemonics.push(next.replace(/^[・•\-\s]+/, '').trim());
+                }
+                j++;
+            }
+            if (mnemonics.length) card.mnemonics = mnemonics;
+            i = j - 1;
+        }
+        else if (line.includes('🧩 Как работают вместе')) card.workTogether = line.replace(/.*🧩 Как работают вместе[:\s]*/, '').trim();
+        else if (line.includes('🖼️ Цельная картинка')) card.fullImage = line.replace(/.*🖼️ Цельная картинка[:\s]*/, '').trim();
+        else if (line.includes('💡 Фишка автора')) card.expertise = line.replace(/.*💡 Фишка автора[:\s]*/, '').trim();
+        else if (line.includes('📱 Вайб')) card.socialVibe = line.replace(/.*📱 Вайб[^:]*[:\s]*/, '').trim();
+        else if (line.includes('🧠 Инсайт эксперта')) card.expertInsight = line.replace(/.*🧠 Инсайт эксперта[:\s]*/, '').trim();
+        else if (line.includes('🗣️ Речевая редукция')) card.reduction = line.replace(/.*🗣️ Речевая редукция[:\s]*/, '').trim();
+        else if (line.includes('🅰')) card.dialogue[0] = line.replace(/.*🅰\s*/, '').trim();
+        else if (line.includes('🅱')) card.dialogue[1] = line.replace(/.*🅱\s*/, '').trim();
+        else if (line.includes('🎯 HSK 3.0')) {
+            const rest = line.replace(/.*🎯 HSK 3.0[:\s]*/, '').trim();
+            const parts = rest.split('|');
+            if (parts.length >= 1) card.collocations[0].items = parts[0].trim();
+            if (parts.length >= 2) card.collocations[0].example = parts[1].trim();
+        }
+        else if (line.includes('🗣️ Быт:')) {
+            const rest = line.replace(/.*🗣️ Быт[:\s]*/, '').trim();
+            const parts = rest.split('|');
+            if (parts.length >= 1) card.collocations[1].items = parts[0].trim();
+            if (parts.length >= 2) card.collocations[1].example = parts[1].trim();
+        }
+        else if (line.includes('🎥 Медиа/СМИ')) {
+            const rest = line.replace(/.*🎥 Медиа\/СМИ[:\s]*/, '').trim();
+            const parts = rest.split('|');
+            if (parts.length >= 1) card.collocations[2].items = parts[0].trim();
+            if (parts.length >= 2) card.collocations[2].example = parts[1].trim();
+        }
+        else if (line.includes('🎯 Полигон')) card.polyglotText = line.replace(/.*🎯 Полигон[:\s]*/, '').trim();
+        else if (line.includes('Перевод:')) card.polyglotTranslation = line.replace(/.*Перевод[:\s]*/, '').trim();
+    }
+    if (card.expertise || card.socialVibe) {
+        card.persona = (card.expertise ? card.expertise + ' ' : '') + (card.socialVibe ? card.socialVibe : '');
+    }
+    return card;
+}
+
+function exportData() {
+    const blob = new Blob([JSON.stringify(cards, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'hsk6_19cards.json';
+    a.click();
+    URL.revokeObjectURL(url);
+}
+function importData(file) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        try {
+            const data = JSON.parse(e.target.result);
+            if (Array.isArray(data)) {
+                cards = data;
+                saveCards();
+                renderAll();
+                alert('✅ Импортировано карточек: ' + data.length);
+            } else { alert('Неверный формат файла.'); }
+        } catch (err) { alert('Ошибка парсинга JSON.'); }
+    };
+    reader.readAsText(file);
+}
+
+document.getElementById('pinyinToggle').addEventListener('click', () => {
+    pinyinVisible = !pinyinVisible;
+    const btn = document.getElementById('pinyinToggle');
+    btn.textContent = pinyinVisible ? '🔊 Пиньинь: Вкл' : '🔇 Пиньинь: Выкл';
+    btn.classList.toggle('active', pinyinVisible);
+    renderGrid();
+});
+document.getElementById('transToggle').addEventListener('click', () => {
+    transVisible = !transVisible;
+    const btn = document.getElementById('transToggle');
+    btn.textContent = transVisible ? '☀️ Перевод: Вкл' : '🌙 Перевод: Выкл';
+    btn.classList.toggle('active', transVisible);
+    renderGrid();
+});
+document.getElementById('resetBtn').addEventListener('click', resetCards);
+document.getElementById('searchInput').addEventListener('input', e => { searchQuery = e.target.value; renderGrid(); });
+document.getElementById('searchInput').addEventListener('keydown', (e) => { if (e.key === 'Escape') { document.getElementById('searchInput').value = ''; searchQuery = ''; renderGrid(); } });
+document.getElementById('closeModalBtn').addEventListener('click', closeModal);
+document.getElementById('cardModal').addEventListener('click', e => { if (e.target === document.getElementById('cardModal')) closeModal(); });
+document.getElementById('closeAddBtn').addEventListener('click', closeAddModal);
+document.getElementById('addModal').addEventListener('click', e => { if (e.target === document.getElementById('addModal')) closeAddModal(); });
+document.getElementById('addBtn').addEventListener('click', openAddModal);
+document.getElementById('exportBtn').addEventListener('click', exportData);
+document.getElementById('importBtn').addEventListener('click', () => {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.json';
+    input.onchange = (e) => { if (e.target.files[0]) importData(e.target.files[0]); };
+    input.click();
+});
+
+loadCards();
+renderAll();
+</script>
+</body>
+  </html>
