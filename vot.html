@@ -1,0 +1,1439 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+<title>HSK 1 · Финальный тест · Интерактивная шпаргалка</title>
+<style>
+:root{--bg:#faf8f5;--surface:#fff;--border:#e8e2d8;--text:#2d2a22;--muted:#8a7a64;--gold:#b8914a;--gold-soft:#fdf9f0;--green:#2e7d32;--green-soft:#e8f5e9;--blue:#4a5b8c;--blue-soft:#eef1f7;--purple:#6a4c9c;--purple-soft:#f3e5f5;--cinnabar:#b5443c;--cinnabar-soft:#fdf2f0;--radius:20px;--shadow:0 4px 12px rgba(0,0,0,.05);--cjk:'Noto Sans SC','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Roboto,system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.65;padding:16px;font-size:15px}
+.app{max-width:1100px;margin:0 auto}
+h1{color:var(--green);font-size:1.6rem;margin-bottom:.3rem;line-height:1.25}
+h2{font-size:1.2rem;margin:1.4rem 0 .6rem;color:#4a3f2f;border-bottom:2px solid var(--border);padding-bottom:.4rem}
+h3{font-size:1rem;margin:1rem 0 .5rem;color:#5a4a30}
+.subtitle{color:var(--muted);font-size:.88rem;margin-bottom:1rem}
+.panel{background:var(--surface);border-radius:var(--radius);padding:1.2rem 1.4rem;box-shadow:var(--shadow);margin-bottom:1.2rem;border:1px solid var(--border)}
+
+/* Верхняя навигация */
+.topnav{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px;position:sticky;top:0;background:var(--bg);z-index:50;padding:8px 0;border-bottom:1px solid var(--border)}
+.nav-btn{background:var(--surface);border:1px solid var(--border);padding:7px 12px;border-radius:22px;font-weight:600;font-size:.75rem;cursor:pointer;color:var(--text);font-family:inherit}
+.nav-btn:hover{background:var(--gold-soft)}
+.nav-btn.active{background:var(--green);color:#fff;border-color:var(--green)}
+
+/* Обращение */
+.appeal{background:linear-gradient(135deg,#fdf2f0,#fff8e6);border-left:6px solid var(--cinnabar);border-radius:16px;padding:20px 24px;margin-bottom:20px;font-size:.94rem;line-height:1.85;box-shadow:0 6px 16px rgba(181,68,60,.08)}
+.appeal strong{color:var(--cinnabar)}
+.appeal .quote{background:#fff;border-left:3px solid var(--gold);padding:10px 14px;margin:12px 0;border-radius:8px;font-style:italic;font-size:.9rem}
+.appeal .subscribe{background:#fff;border-radius:12px;padding:14px 18px;margin-top:14px;border:1px dashed var(--cinnabar)}
+.appeal .subscribe strong{display:block;margin-bottom:6px}
+
+/* Шпаргалка */
+.cheat-block{background:var(--green-soft);border-radius:16px;padding:16px 20px;margin-bottom:16px;border:2px solid var(--green)}
+.cheat-header{display:flex;justify-content:space-between;align-items:center;cursor:pointer;user-select:none}
+.cheat-header h3{margin:0;color:var(--green);font-size:1rem}
+.cheat-toggle{background:var(--green);color:#fff;border:none;padding:6px 14px;border-radius:20px;font-size:.75rem;font-weight:600;cursor:pointer;font-family:inherit}
+.cheat-body{margin-top:14px;font-size:.9rem;line-height:1.75;display:none}
+.cheat-body.open{display:block}
+.cheat-body ul{margin:8px 0 8px 20px}
+.cheat-body li{margin:4px 0}
+.cheat-body .hl{background:var(--gold-soft);padding:1px 6px;border-radius:6px;font-weight:700;color:#7a5c2e;font-family:var(--cjk)}
+
+/* Блок пометок лексики */
+.notes-block{background:var(--purple-soft);border-radius:16px;padding:16px 20px;margin-bottom:16px;border:2px solid var(--purple)}
+.notes-block h3{margin:0 0 10px;color:var(--purple);font-size:1rem}
+.notes-block .note-item{background:#fff;border-radius:10px;padding:10px 14px;margin:8px 0;font-size:.9rem;border-left:3px solid var(--purple)}
+.notes-block .note-item .cn{font-family:var(--cjk);font-weight:700;color:#1a3d1a;font-size:1.05rem}
+
+/* Блок "4 ответа" */
+.answers-quick{background:var(--gold-soft);border-radius:16px;padding:16px 20px;margin-bottom:16px;border:2px solid var(--gold)}
+.answers-quick h3{margin:0 0 10px;color:#7a5c2e;font-size:1rem}
+.answers-quick .ans-row{display:flex;gap:10px;flex-wrap:wrap;font-size:.9rem}
+.answers-quick .ans-item{background:#fff;border-radius:10px;padding:8px 14px;border:1px solid var(--border)}
+.answers-quick .ans-item strong{color:var(--cinnabar);font-family:var(--cjk);font-size:1.05rem}
+
+/* Задания */
+.task{background:var(--surface);border-radius:16px;padding:18px 20px;margin-bottom:14px;box-shadow:var(--shadow);border-left:4px solid var(--gold);transition:.15s}
+.task:target{border-left-color:var(--cinnabar);background:#fffaf8}
+.task-header{display:flex;flex-wrap:wrap;gap:10px;align-items:baseline;margin-bottom:10px}
+.task-num{background:var(--green);color:#fff;font-weight:700;font-size:.78rem;padding:3px 12px;border-radius:14px;white-space:nowrap}
+.task-title{font-weight:700;font-size:.95rem;color:#4a3f2f}
+.task-body{font-size:.92rem;line-height:1.75;color:var(--text)}
+
+/* Картинки и варианты */
+.img-desc{background:var(--blue-soft);padding:8px 14px;border-radius:10px;margin:8px 0;font-size:.88rem;border-left:3px solid var(--blue)}
+.option{display:block;padding:6px 0;font-size:.92rem;font-family:inherit;color:var(--text);background:none;border:none;text-align:left;cursor:pointer;width:100%}
+.option:hover{color:var(--green)}
+.option .cn{font-family:var(--cjk);font-weight:600;color:#1a3d1a}
+
+/* Кнопки */
+.btn{background:var(--gold-soft);border:1px solid var(--gold);padding:7px 16px;border-radius:22px;font-size:.78rem;font-weight:600;cursor:pointer;font-family:inherit;color:#7a5c2e;transition:.15s;margin:6px 6px 0 0}
+.btn:hover{background:#f5ead0;transform:translateY(-1px)}
+.btn.primary{background:var(--green);color:#fff;border-color:var(--green)}
+.btn.primary:hover{background:#1b5e20}
+.btn.purple{background:var(--purple);color:#fff;border-color:var(--purple)}
+.btn.purple:hover{background:#5a3c8c}
+
+/* Скрытые блоки */
+.hidden-block{display:none;margin-top:12px;padding:14px 18px;border-radius:12px;font-size:.9rem;line-height:1.75}
+.hidden-block.open{display:block}
+.hidden-block.answer{background:var(--green-soft);border-left:4px solid var(--green)}
+.hidden-block.story{background:#f8f6f0;border-left:4px solid var(--purple)}
+.hidden-block.keys{background:var(--blue-soft);border-left:4px solid var(--blue)}
+.hidden-block .cn{font-family:var(--cjk);font-weight:600;color:#1a3d1a}
+.hidden-block .hl{background:var(--gold-soft);padding:1px 5px;border-radius:5px;font-weight:700;color:#7a5c2e;font-family:var(--cjk)}
+.hidden-block .label{font-weight:700;color:var(--cinnabar);display:block;margin-bottom:6px;font-size:.82rem;letter-spacing:.3px}
+.hidden-block .answer-line{font-family:var(--cjk);font-size:1.1rem;font-weight:700;color:#1a3d1a;padding:8px 12px;background:#fff;border-radius:8px;display:inline-block;margin-bottom:8px}
+
+/* Поля заметок */
+.note-area{width:100%;min-height:70px;padding:10px 14px;border-radius:12px;border:2px solid var(--border);font-family:inherit;font-size:.88rem;resize:vertical;outline:none;background:#fffefc;line-height:1.6;margin-top:10px}
+.note-area:focus{border-color:var(--gold)}
+.save-tag{font-size:.7rem;color:var(--green);opacity:0;transition:.3s;margin-left:8px}
+.save-tag.show{opacity:1}
+
+/* Прогресс */
+.progress-wrap{background:var(--surface);border-radius:12px;padding:12px 16px;margin-bottom:16px;border:1px solid var(--border);display:flex;align-items:center;gap:12px}
+.progress-bar{flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden}
+.progress-fill{height:100%;background:var(--green);width:0%;transition:.3s}
+.progress-text{font-size:.78rem;color:var(--muted);font-weight:600;white-space:nowrap}
+
+/* Экспорт */
+.export-bar{background:var(--green-soft);border-radius:16px;padding:16px 20px;margin-top:20px;border:2px solid var(--green);text-align:center}
+.export-bar .label{font-weight:700;color:var(--green);font-size:.95rem;margin-bottom:8px;display:block}
+.export-bar .hint{font-size:.8rem;color:var(--muted);margin-bottom:12px;display:block}
+.export-btn{background:var(--green);color:#fff;border:none;padding:11px 26px;border-radius:26px;font-weight:700;font-size:.88rem;cursor:pointer;font-family:inherit}
+.export-btn:hover{background:#1b5e20}
+
+/* Секции */
+.section{display:none}
+.section.active{display:block}
+.subsection{margin-bottom:24px}
+
+.toast{position:fixed;bottom:20px;right:20px;background:#2d2a22;color:#f5f0e8;padding:12px 20px;border-radius:12px;font-size:.85rem;box-shadow:0 6px 18px rgba(0,0,0,.3);z-index:999;opacity:0;transform:translateY(20px);transition:.3s;pointer-events:none}
+.toast.show{opacity:1;transform:translateY(0)}
+
+@media(max-width:640px){body{padding:10px}.task{padding:14px 16px}h1{font-size:1.2rem}.appeal{padding:14px 16px}}
+</style>
+</head>
+<body>
+<div class="app">
+
+<h1>🌱 HSK 1 · Финальный тест · Интерактивная шпаргалка</h1>
+<div class="subtitle">70 заданий · все ответы скрыты · разборы по кнопкам</div>
+
+<!-- ОБРАЩЕНИЕ -->
+<div class="appeal">
+<strong>📢 ОБРАЩЕНИЕ К ТЕСТУ:</strong><br><br>
+
+Пожалуйста, не относитесь к этому тесту, как к чему-то реально проверяющему ваши скиллы в китайском. Этот финальный тест самый задрюченный, непонятный, сделанный на коленке и местами 200 раз повторяется что-то. Но в этом и его опасность: получается, что здесь подключается ваша способность механической работы. Умение чётко всё видеть, очень хорошо подготовиться к тому, что именно и именно в том виде сегодня будет.<br><br>
+
+И прошу, давайте не будем мусолить и разбирать совсем простые темы или всё подряд поднимать. Я специально подготовила вопросы и материалы, которые пригодятся для теста. А забивать себе голову лишней информацией не нужно. <strong>Задача — как робот просто сдать тест, чисто для сертификата.</strong><br><br>
+
+Все знания, которые у вас есть — вы уже их наработали к этому моменту, и чуда не произойдёт, если вы когда-то давно вовремя не сели и не закрепили. Если вы сейчас в сотый раз спутаете и попросите повторить различие между <span style="font-family:var(--cjk)">你</span> и <span style="font-family:var(--cjk)">我</span>, или не знаете, что это за иероглиф <span style="font-family:var(--cjk)">点</span>, или что такое <span style="font-family:var(--cjk)">过</span> — ну значит и сейчас это не запомните, и с этим и пойдёте дальше, раз не делали ДЗ вовремя и именно так, как я пишу в руководстве к ДЗ. И всё, что вы имеете на данный момент — это результат вашей же работы тогда.<br><br>
+
+А тест идёт особняком — как скилл нормально видеть и работать с клавиатурой. На сегодня ваша задача — тупо выделять и подписывать для себя, что нужно выучить. Вы откроете эту ссылку и вернётесь именно к сложным заданиям. Поскольку поднимать прям всё-всё-всё бессмысленно и только отнимет у вас время и баллы. На тесте не нужно сидеть по 2–3 часа. Поэтому мы заранее эти два урока используем максимально эффективно и сжато.<br><br>
+
+Будете много писать — пишите так, чтобы потом, в случае чего, вам было удобно обращаться к своим записям во время теста. То есть:
+
+<div class="quote">
+• <strong>подписывайте номер и страницу задания</strong>;<br>
+• пишите <strong>ТОЛЬКО ТО, ЧТО реально понимаете, что самостоятельно ответили неправильно</strong>;<br>
+• <strong>НЕ НАДО переписывать задания целиком</strong> или все задания.
+</div>
+
+Если вы настолько не уверены в себе — откройте эту ссылку во время теста и решайте по ней. Мне вообще всё равно, честно или нечестно решён тест. Я знаю, что главное — это то, что осталось в голове, и что своё вы уже за этот курс наработали, и берёте с собой в будущее: методики и скиллы, ресурсы, подходы в устном разговоре, необходимые вам для продолжения изучения китайского при необходимости.
+</div>
+
+<!-- ПРОГРЕСС -->
+<div class="progress-wrap">
+<span class="progress-text">Пройдено: <span id="progressCount">0</span> / 70</span>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+</div>
+
+<!-- ШПАРГАЛКА -->
+<div class="cheat-block">
+<div class="cheat-header" onclick="toggleCheat()">
+<h3>📝 Шпаргалка — как готовиться (нажми, чтобы раскрыть)</h3>
+<button class="cheat-toggle" id="cheatToggleBtn">Показать</button>
+</div>
+<div class="cheat-body" id="cheatBody">
+Сейчас вы для себя берёте <strong>чистый лист А4</strong>:
+<ul>
+<li>ставите его <strong>горизонтально</strong>;</li>
+<li>делите его <strong>на 4 вертикальные равные части</strong>;</li>
+<li><strong>именно он будет вашей шпорой</strong>;</li>
+<li>в шпору записываем <span class="hl">всё подряд</span>, и <span class="hl">только то</span>, что условно к завтрашнему утру не запомним.</li>
+</ul>
+<strong>Правило:</strong> не переписывать задания целиком. Только номер + страница + то, где ты ошибся.
+</div>
+</div>
+
+<!-- ПОМЕТКИ ЛЕКСИКИ -->
+<div class="notes-block">
+<h3>🎯 Лексика и ответы, которые записываем вместе</h3>
+<div class="note-item">
+<strong>Задания 16–20:</strong> <span class="cn">打车</span> — выражение, которое переводится как <em>«вызвать такси»</em>. <strong>Это верный вариант.</strong>
+</div>
+<div class="note-item">
+<strong>Задания 21–25:</strong> Ответ <span class="cn">他们</span> — верный.
+</div>
+<div class="note-item">
+<strong>Аудирование, Часть 3, № 3:</strong> Для слова <span class="cn">饭店</span> выбираем <strong>картинку Хилтон</strong>.
+</div>
+</div>
+
+<!-- 4 ОТВЕТА -->
+<div class="answers-quick">
+<h3>✅ Ответы по номерам</h3>
+<div class="ans-row">
+<div class="ans-item">1) <strong>С</strong></div>
+<div class="ans-item">2) <strong>2 и 1</strong></div>
+<div class="ans-item">3) <strong>2</strong></div>
+<div class="ans-item">4) <strong>А</strong></div>
+</div>
+</div>
+
+<!-- НАВИГАЦИЯ -->
+<div class="topnav">
+<button class="nav-btn active" data-target="s-audio">🎧 Аудирование</button>
+<button class="nav-btn" data-target="s-reading">📖 Чтение</button>
+<button class="nav-btn" data-target="s-vocab">📚 Лексика</button>
+<button class="nav-btn" data-target="s-grammar">📝 Грамматика</button>
+<button class="nav-btn" data-target="s-writing">✍️ Письмо</button>
+</div>
+
+<!-- ================= АУДИРОВАНИЕ ================= -->
+<div class="section active" id="s-audio">
+<h2>🎧 АУДИРОВАНИЕ</h2>
+
+<h3>Часть 1 (задания 1–5)</h3>
+<p class="subtitle">Выберите правильный вариант ответа.</p>
+
+<div class="task" id="t1">
+<div class="task-header"><span class="task-num">№ 1</span><span class="task-title">Женщина в наушниках</span></div>
+<div class="task-body">
+<div class="img-desc">📸 Женщина в наушниках 🎧, держит кружку ☕, сидит за столом</div>
+<button class="option">1) ○对</button>
+<button class="option">2) ○不对</button>
+<div>
+<button class="btn primary" onclick="toggleBlock('a1-ans')">✅ Показать ответ</button>
+<button class="btn purple" onclick="toggleBlock('a1-story')">📖 Разбор</button>
+</div>
+<div class="hidden-block answer" id="a1-ans">
+<span class="label">✅ Правильный ответ:</span>
+<span class="answer-line">2) 不对</span>
+<strong>Аудио:</strong> 说话 — говорить
+</div>
+<div class="hidden-block story" id="a1-story">
+<span class="label">📖 История и разбор</span>
+В городе жили два брата. Старшего звали <strong>Шуо</strong>. У него язык (舌) и ключ речи (讠) — он всё время говорил. Младшего звали <strong>Тхин</strong>. У него ухо и топор (斤) — он рубил звук и слушал. На картинке ухо (наушники), а в аудио рот (говорить) → <span class="hl">不对</span>.<br><br>
+<strong>Ключи:</strong><br>
+• <span class="cn">说</span> — ключ речи 讠 + язык 舌<br>
+• <span class="cn">话</span> — ключ речи 讠 + язык 舌<br>
+• <span class="cn">听</span> — ключ рта 口 + топор 斤
+</div>
+<textarea class="note-area auto-save" data-key="t1_note" placeholder="Твоя заметка к заданию 1..."></textarea>
+</div>
+</div>
+
+<div class="task" id="t2">
+<div class="task-header"><span class="task-num">№ 2</span><span class="task-title">Девушка ест</span></div>
+<div class="task-body">
+<div class="img-desc">📸 Девушка ест 🥪</div>
+<button class="option">1) ○对</button>
+<button class="option">2) ○不对</button>
+<div>
+<button class="btn primary" onclick="toggleBlock('a2-ans')">✅ Показать ответ</button>
+<button class="btn purple" onclick="toggleBlock('a2-story')">📖 Разбор</button>
+</div>
+<div class="hidden-block answer" id="a2-ans">
+<span class="label">✅ Правильный ответ:</span>
+<span class="answer-line">1) 对</span>
+<strong>Аудио:</strong> 吃饭 — есть
+</div>
+<div class="hidden-block story" id="a2-story">
+<span class="label">📖 История и разбор</span>
+Жил голодный <strong>Чши</strong>. У него ключ рта (口), он всё время просил (乞) еду. Рядом жил <strong>Хэ</strong> — он пил воду.<br>
+Запоминаешь: <span class="hl">吃 = твёрдое</span>, <span class="hl">喝 = жидкое</span>.<br><br>
+<strong>Ключи:</strong><br>
+• <span class="cn">吃</span> — ключ рта 口 + просить 乞<br>
+• <span class="cn">饭</span> — ключ еды 饣 + переворачивать 反<br>
+• <span class="cn">喝</span> — ключ рта 口 + что 曷
+</div>
+<textarea class="note-area auto-save" data-key="t2_note" placeholder="Твоя заметка к заданию 2..."></textarea>
+</div>
+</div>
+
+<div class="task" id="t3">
+<div class="task-header"><span class="task-num">№ 3</span><span class="task-title">Девочка пишет на доске</span></div>
+<div class="task-body">
+<div class="img-desc">📸 Девочка пишет на доске иероглифы ✍️</div>
+<button class="option">1) ○对</button>
+<button class="option">2) ○不对</button>
+<div>
+<button class="btn primary" onclick="toggleBlock('a3-ans')">✅ Показать ответ</button>
+<button class="btn purple" onclick="toggleBlock('a3-story')">📖 Разбор</button>
+</div>
+<div class="hidden-block answer" id="a3-ans">
+<span class="label">✅ Правильный ответ:</span>
+<span class="answer-line">1) 对</span>
+<strong>Аудио:</strong> 学习汉语 — изучать китайский
+</div>
+<div class="hidden-block story" id="a3-story">
+<span class="label">📖 История и разбор</span>
+Жил мальчик <strong>Сюэ</strong>. Он сидел под крышей (冖), тянул руки (⺍) к знаниям и учился. Рядом жил <strong>Си</strong>. Однажды они встретили <strong>Хань</strong>. Хань был у воды (氵) и махал рукой (又).<br><br>
+<strong>Ключи:</strong><br>
+• <span class="cn">学</span> — руки ⺍ + крыша 冖 + ребёнок 子<br>
+• <span class="cn">汉</span> — вода 氵 + рука 又<br>
+• <span class="cn">语</span> — ключ речи 讠 + я 吾
+</div>
+<textarea class="note-area auto-save" data-key="t3_note" placeholder="Твоя заметка к заданию 3..."></textarea>
+</div>
+</div>
+
+<div class="task" id="t4">
+<div class="task-header"><span class="task-num">№ 4</span><span class="task-title">Пустая деревянная скамья</span></div>
+<div class="task-body">
+<div class="img-desc">📸 Пустая деревянная скамья 🪑</div>
+<button class="option">1) ○对</button>
+<button class="option">2) ○不对</button>
+<div>
+<button class="btn primary" onclick="toggleBlock('a4-ans')">✅ Показать ответ</button>
+<button class="btn purple" onclick="toggleBlock('a4-story')">📖 Разбор</button>
+</div>
+<div class="hidden-block answer" id="a4-ans">
+<span class="label">✅ Правильный ответ:</span>
+<span class="answer-line">2) 不对</span>
+<strong>Аудио:</strong> 椅子下面 — под стулом
+</div>
+<div class="hidden-block story" id="a4-story">
+<span class="label">📖 История и разбор</span>
+Жил стул <strong>И</strong>. Он был деревянный (木) и странный (奇). Рядом жил <strong>Ся</strong> — он смотрел вниз (下). Потом пришёл <strong>Шан</strong> — он тянулся вверх (上).<br>
+Запоминаешь: <span class="hl">下面 = под</span>, <span class="hl">上面 = на</span>. На картинке скамья, а в аудио «под стулом» → <span class="hl">不对</span>.<br><br>
+<strong>Ключи:</strong><br>
+• <span class="cn">椅</span> — ключ дерева 木 + странный 奇<br>
+• <span class="cn">下</span> — линия 一 + гадание 卜<br>
+• <span class="cn">上</span> — линия 丨 + линия 一
+</div>
+<textarea class="note-area auto-save" data-key="t4_note" placeholder="Твоя заметка к заданию 4..."></textarea>
+</div>
+</div>
+
+<div class="task" id="t5">
+<div class="task-header"><span class="task-num">№ 5</span><span class="task-title">Люди на пляже</span></div>
+<div class="task-body">
+<div class="img-desc">📸 Люди на пляже у реки/озера 🏖️</div>
+<button class="option">1) ○对</button>
+<button class="option">2) ○不对</button>
+<div>
+<button class="btn primary" onclick="toggleBlock('a5-ans')">✅ Показать ответ</button>
+<button class="btn purple" onclick="toggleBlock('a5-story')">📖 Разбор</button>
+</div>
+<div class="hidden-block answer" id="a5-ans">
+<span class="label">✅ Правильный ответ:</span>
+<span class="answer-line">1) 对</span>
+<strong>Аудио:</strong> 太热了 — очень жарко
+</div>
+<div class="hidden-block story" id="a5-story">
+<span class="label">📖 История и разбор</span>
+Жил большой человек <strong>Тхай</strong>. Он всё время говорил: «Очень!» Однажды встретил <strong>Жэ</strong> — тот держал (执) огонь (灬) — жарко. Потом пришёл <strong>Лэн</strong> — у него лёд (冫) и приказ (令) — холодно.<br>
+Запоминаешь: <span class="hl">太 + прил + 了 = очень</span>.<br><br>
+<strong>Ключи:</strong><br>
+• <span class="cn">太</span> — большой 大 + точка 丶<br>
+• <span class="cn">热</span> — держать 执 + огонь 灬<br>
+• <span class="cn">冷</span> — лёд 冫 + приказ 令
+</div>
+<textarea class="note-area auto-save" data-key="t5_note" placeholder="Твоя заметка к заданию 5..."></textarea>
+</div>
+</div>
+
+<h3>Часть 2 (задания 6–10)</h3>
+<p class="subtitle">Выберите правильную картинку (A, B, C).</p>
+
+<div class="task" id="t6">
+<div class="task-header"><span class="task-num">№ 6</span></div>
+<div class="task-body">
+<div class="img-desc">A) 🌅 Силуэты людей на закате · B) 👥 Группа людей стоит вместе · C) 💬 Несколько девушек разговаривают</div>
+<button class="option">1) ○A</button>
+<button class="option">2) ○B</button>
+<button class="option">3) ○C</button>
+<div>
+<button class="btn primary" onclick="toggleBlock('a6-ans')">✅ Показать ответ</button>
+<button class="btn purple" onclick="toggleBlock('a6-story')">📖 Разбор</button>
+</div>
+<div class="hidden-block answer" id="a6-ans">
+<span class="label">✅ Правильный ответ:</span>
+<span class="answer-line">3) C</span>
+<strong>Аудио:</strong> 我们一共三个人 — нас всего трое
+</div>
+<div class="hidden-block story" id="a6-story">
+<span class="label">📖 История и разбор</span>
+Жил человек <strong>И</strong>. Однажды собрал всех вместе (共) и сказал: «Нас всего трое!» А рядом жил <strong>Тси</strong> — он шёл (走) сам (己) и говорил: «Пойдём вместе!»<br>
+Запоминаешь: <span class="hl">一共 = всего</span>, <span class="hl">一起 = вместе</span>.<br><br>
+<strong>Ключи:</strong><br>
+• <span class="cn">一</span> — линия 一<br>
+• <span class="cn">共</span> — двадцать 廿 + восемь 八<br>
+• <span class="cn">起</span> — идти 走 + себя 己
+</div>
+<textarea class="note-area auto-save" data-key="t6_note" placeholder="Твоя заметка к заданию 6..."></textarea>
+</div>
+</div>
+
+<div class="task" id="t7">
+<div class="task-header"><span class="task-num">№ 7</span></div>
+<div class="task-body">
+<div class="img-desc">A) 👩‍🍳 Женщина готовит на кухне · B) 👨‍🍳 Мужчина на кухне · C) 🛒 Женщина выбирает продукты в магазине</div>
+<button class="option">1) ○A</button>
+<button class="option">2) ○B</button>
+<button class="option">3) ○C</button>
+<div>
+<button class="btn primary" onclick="toggleBlock('a7-ans')">✅ Показать ответ</button>
+<button class="btn purple" onclick="toggleBlock('a7-story')">📖 Разбор</button>
+</div>
+<div class="hidden-block answer" id="a7-ans">
+<span class="label">✅ Правильный ответ:</span>
+<span class="answer-line">1) A</span>
+<strong>Аудио:</strong> 他在做菜呢 — он сейчас готовит
+</div>
+<div class="hidden-block story" id="a7-story">
+<span class="label">📖 История и разбор</span>
+Жил человек <strong>Цзо</strong>. Он был старый (故) и всё время что-то делал (做). Однажды собрал траву (艹) и приготовил блюдо (菜). А рядом <strong>Цзай</strong> стоял на земле (土) и говорил: «Сейчас!» <strong>Нэ</strong> на крыше ртом (口) повторял: «Сейчас!»<br>
+Запоминаешь: <span class="hl">在…呢 = сейчас</span>.<br><br>
+<strong>Ключи:</strong><br>
+• <span class="cn">做</span> — человек 亻 + старый 故<br>
+• <span class="cn">菜</span> — трава 艹 + собирать 采<br>
+• <span class="cn">在</span> — земля 土 + талант 才
+</div>
+<textarea class="note-area auto-save" data-key="t7_note" placeholder="Твоя заметка к заданию 7..."></textarea>
+</div>
+</div>
+
+<div class="task" id="t8">
+<div class="task-header"><span class="task-num">№ 8</span></div>
+<div class="task-body">
+<div class="img-desc">A) 📅 16 мая · B) 📅 18 мая · C) 📅 15 июня</div>
+<button class="option">1) ○A</button>
+<button class="option">2) ○B</button>
+<button class="option">3) ○C</button>
+<div>
+<button class="btn primary" onclick="toggleBlock('a8-ans')">✅ Показать ответ</button>
+<button class="btn purple" onclick="toggleBlock('a8-story')">📖 Разбор</button>
+</div>
+<div class="hidden-block answer" id="a8-ans">
+<span class="label">✅ Правильный ответ:</span>
+<span class="answer-line">2) B</span>
+<strong>Аудио:</strong> 昨天5月18号 — вчера 18 мая
+</div>
+<div class="hidden-block story" id="a8-story">
+<span class="label">📖 История и разбор</span>
+Жил день <strong>Цзо</strong>. Солнце (日) вдруг (乍) село — вчера. Потом пришла луна (月) — месяц. И число (号) — <strong>Хао</strong>. Хао ртом (口) дышал (丂) и считал: «5月18号!»<br><br>
+<strong>Ключи:</strong><br>
+• <span class="cn">昨</span> — солнце 日 + вдруг 乍<br>
+• <span class="cn">月</span> — луна 月<br>
+• <span class="cn">号</span> — рот 口 + дыхание 丂
+</div>
+<textarea class="note-area auto-save" data-key="t8_note" placeholder="Твоя заметка к заданию 8..."></textarea>
+</div>
+</div>
+
+<div class="task" id="t9">
+<div class="task-header"><span class="task-num">№ 9</span></div>
+<div class="task-body">
+<div class="img-desc">A) 💻 Ноутбук на парте · B) 🍽️ Набор посуды · C) ☕ Одна керамическая кружка на столе</div>
+<button class="option">1) ○A</button>
+<button class="option">2) ○B</button>
+<button class="option">3) ○C</button>
+<div>
+<button class="btn primary" onclick="toggleBlock('a9-ans')">✅ Показать ответ</button>
+<button class="btn purple" onclick="toggleBlock('a9-story')">📖 Разбор</button>
+</div>
+<div class="hidden-block answer" id="a9-ans">
+<span class="label">✅ Правильный ответ:</span>
+<span class="answer-line">3) C</span>
+<strong>Аудио:</strong> 茶杯在桌子上 — чашка на столе
+</div>
+<div class="hidden-block story" id="a9-story">
+<span class="label">📖 История и разбор</span>
+Жил человек <strong>Чха</strong>. Под деревом (木) собирал траву (艹) — чай. Рядом жил <strong>Бэй</strong>. У него деревянная (木) чашка (杯). Поставили чашку на стол. Стол <strong>Чжо</strong> был деревянный (木). А <strong>Шан</strong> тянулся вверх (上) и говорил: «На столе!»<br><br>
+<strong>Ключи:</strong><br>
+• <span class="cn">茶</span> — трава 艹 + человек 人 + дерево 木<br>
+• <span class="cn">杯</span> — дерево 木 + нет 不<br>
+• <span class="cn">桌</span> — гадание 卜 + солнце 日 + дерево 木
+</div>
+<textarea class="note-area auto-save" data-key="t9_note" placeholder="Твоя заметка к заданию 9..."></textarea>
+</div>
+</div>
+
+<div class="task" id="t10">
+<div class="task-header"><span class="task-num">№ 10</span></div>
+<div class="task-body">
+<div class="img-desc">A) 🚕 Жёлтое такси · B) ✈️ Самолёт · C) 🚄 Скоростной поезд</div>
+<button class="option">1) ○A</button>
+<button class="option">2) ○B</button>
+<button class="option">3) ○C</button>
+<div>
+<button class="btn primary" onclick="toggleBlock('a10-ans')">✅ Показать ответ</button>
+<button class="btn purple" onclick="toggleBlock('a10-story')">📖 Разбор</button>
+</div>
+<div class="hidden-block answer" id="a10-ans">
+<span class="label">✅ Правильный ответ:</span>
+<span class="answer-line">2) B</span>
+<strong>Аудио:</strong> 我是坐飞机来北京的 — я приехал в Пекин самолётом
+</div>
+<div class="hidden-block story" id="a10-story">
+<span class="label">📖 История и разбор</span>
+Жил человек <strong>Цзо</strong>. Он любил сидеть. Однажды сел в самолёт. Самолёт <strong>Фэй</strong> летал (飞) по небу. Машина <strong>Цзи</strong> была деревянная (木).<br>
+Запоминаешь: <span class="hl">坐飞机 = лететь</span>, <span class="hl">打车 = такси</span>, <span class="hl">开车 = водить</span>.<br><br>
+<strong>Ключи:</strong><br>
+• <span class="cn">坐</span> — человек 人 + человек 人 + земля 土<br>
+• <span class="cn">飞</span> — крылья 飞<br>
+• <span class="cn">机</span> — дерево 木 + столик 几
+</div>
+<textarea class="note-area auto-save" data-key="t10_note" placeholder="Твоя заметка к заданию 10..."></textarea>
+</div>
+</div>
+
+<h3>Часть 3 (задания 11–15)</h3>
+<p class="subtitle">Подберите подходящие картинки к диалогам.</p>
+
+<div class="task" id="t11">
+<div class="task-header"><span class="task-num">№ 11</span></div>
+<div class="task-body">
+<div class="img-desc">A) 🏨 Hilton Beijing Wangfujing · B) 👩‍🍳 Девушка готовит · C) 🤝 Мужчина и женщина жмут руки · D) 👩‍⚕️ Врач в зелёной форме · E) 👧 Девочка машет рукой · F) 🚗 Мужчина за рулём</div>
+<strong>Аудио:</strong><br>
+— 你女儿在哪工作？<br>
+— 她在医院工作，她是大夫。<br><br>
+<button class="option">1) ○A</button>
+<button class="option">2) ○B</button>
+<button class="option">3) ○C</button>
+<button class="option">4) ○D</button>
+<button class="option">5) ○E</button>
+<button class="option">6) ○F</button>
+<div>
+<button class="btn primary" onclick="toggleBlock('a11-ans')">✅ Показать ответ</button>
+<button class="btn purple" onclick="toggleBlock('a11-story')">📖 Разбор</button>
+</div>
+<div class="hidden-block answer" id="a11-ans">
+<span class="label">✅ Правильный ответ:</span>
+<span class="answer-line">4) D</span>
+</div>
+<div class="hidden-block story" id="a11-story">
+<span class="label">📖 История и разбор</span>
+Жила женщина <strong>Нюй</strong>. У неё ребёнок <strong>Эр</strong> — дочь. Дочь работала в больнице. Больница <strong>И</strong> — стрела (矢) в коробке (匚). <strong>Юань</strong> — учреждение на холме (阝).<br><br>
+<strong>Ключи:</strong><br>
+• <span class="cn">女</span> — женщина 女<br>
+• <span class="cn">儿</span> — ребёнок 儿<br>
+• <span class="cn">医</span> — коробка 匚 + стрела 矢<br>
+• <span class="cn">院</span> — холм 阝 + закончить 完
+</div>
+<textarea class="note-area auto-save" data-key="t11_note" placeholder="Твоя заметка к заданию 11..."></textarea>
+</div>
+</div>
+
+<div class="task" id="t12">
+<div class="task-header"><span class="task-num">№ 12</span></div>
+<div class="task-body">
+<div class="img-desc">A–F: см. выше</div>
+<strong>Аудио:</strong><br>
+— 你会做中国菜吗？<br>
+— 我不会，我妈妈会做。<br><br>
+<button class="option">1) ○A</button>
+<button class="option">2) ○B</button>
+<button class="option">3) ○C</button>
+<button class="option">4) ○D</button>
+<button class="option">5) ○E</button>
+<button class="option">6) ○F</button>
+<div>
+<button class="btn primary" onclick="toggleBlock('a12-ans')">✅ Показать ответ</button>
+<button class="btn purple" onclick="toggleBlock('a12-story')">📖 Разбор</button>
+</div>
+<div class="hidden-block answer" id="a12-ans">
+<span class="label">✅ Правильный ответ:</span>
+<span class="answer-line">2) B</span>
+</div>
+<div class="hidden-block story" id="a12-story">
+<span class="label">📖 История и разбор</span>
+Жил человек <strong>Хуэй</strong>. Он парил в облаках (云) и всё умел (会). Рядом жил <strong>Нэн</strong> — у него луна (月) и ложка (匕) — он мог физически.<br>
+Запоминаешь: <span class="hl">会 = навык</span>, <span class="hl">能 = физическая возможность</span>.<br><br>
+<strong>Ключи:</strong><br>
+• <span class="cn">会</span> — человек 人 + облако 云<br>
+• <span class="cn">能</span> — частный 厶 + луна 月 + ложка 匕
+</div>
+<textarea class="note-area auto-save" data-key="t12_note" placeholder="Твоя заметка к заданию 12..."></textarea>
+</div>
+</div>
+
+<div class="task" id="t13">
+<div class="task-header"><span class="task-num">№ 13</span><span class="task-title">⚠️ Здесь Хилтон!</span></div>
+<div class="task-body">
+<div class="img-desc">A) 🏨 Hilton Beijing Wangfujing · B) 👩‍🍳 · C) 🤝 · D) 👩‍⚕️ · E) 👧 · F) 🚗</div>
+<strong>Аудио:</strong><br>
+— 你在北京住哪儿？<br>
+— 北京饭店。<br><br>
+<button class="option">1) ○A</button>
+<button class="option">2) ○B</button>
+<button class="option">3) ○C</button>
+<button class="option">4) ○D</button>
+<button class="option">5) ○E</button>
+<button class="option">6) ○F</button>
+<div>
+<button class="btn primary" onclick="toggleBlock('a13-ans')">✅ Показать ответ</button>
+<button class="btn purple" onclick="toggleBlock('a13-story')">📖 Разбор</button>
+</div>
+<div class="hidden-block answer" id="a13-ans">
+<span class="label">✅ Правильный ответ:</span>
+<span class="answer-line">1) A — Hilton</span>
+<strong>Для слова 饭店 выбираем картинку Хилтон.</strong>
+</div>
+<div class="hidden-block story" id="a13-story">
+<span class="label">📖 История и разбор</span>
+Жил человек <strong>Чжу</strong>. Он был хозяин (主) и жил (住). Однажды спросили: «哪儿?» Он ртом (口) сказал: «那儿!» — там. И показал на Пекин-отель. Отель <strong>Фань</strong> — еда (饣), <strong>Дянь</strong> — крыша (广).<br>
+Запоминаешь: <span class="hl">住哪儿 = где живёшь</span>, <span class="hl">那儿 = там</span>.<br><br>
+<strong>Ключи:</strong><br>
+• <span class="cn">住</span> — человек 亻 + хозяин 主<br>
+• <span class="cn">哪</span> — рот 口 + то 那<br>
+• <span class="cn">饭</span> — еда 饣 + переворачивать 反<br>
+• <span class="cn">店</span> — крыша 广 + занимать 占
+</div>
+<textarea class="note-area auto-save" data-key="t13_note" placeholder="Твоя заметка к заданию 13..."></textarea>
+</div>
+</div>
+
+<div class="task" id="t14">
+<div class="task-header"><span class="task-num">№ 14</span></div>
+<div class="task-body">
+<div class="img-desc">A–F: см. выше</div>
+<strong>Аудио:</strong><br>
+— 大卫去哪了？<br>
+— 他去学车了。<br><br>
+<button class="option">1) ○A</button>
+<button class="option">2) ○B</button>
+<button class="option">3) ○C</button>
+<button class="option">4) ○D</button>
+<button class="option">5) ○E</button>
+<button class="option">6) ○F</button>
+<div>
+<button class="btn primary" onclick="toggleBlock('a14-ans')">✅ Показать ответ</button>
+<button class="btn purple" onclick="toggleBlock('a14-story')">📖 Разбор</button>
+</div>
+<div class="hidden-block answer" id="a14-ans">
+<span class="label">✅ Правильный ответ:</span>
+<span class="answer-line">6) F</span>
+</div>
+<div class="hidden-block story" id="a14-story">
+<span class="label">📖 История и разбор</span>
+Жил мальчик <strong>Сюэ</strong>. Он учился (学). Однажды пошёл (去) учиться водить машину (车). Сел за руль и поехал.<br>
+Запоминаешь: <span class="hl">去学车了 = пошёл учиться водить</span>.<br><br>
+<strong>Ключи:</strong><br>
+• <span class="cn">学</span> — руки ⺍ + крыша 冖 + ребёнок 子<br>
+• <span class="cn">车</span> — повозка 车<br>
+• <span class="cn">去</span> — земля 土 + частный 厶
+</div>
+<textarea class="note-area auto-save" data-key="t14_note" placeholder="Твоя заметка к заданию 14..."></textarea>
+</div>
+</div>
+
+<div class="task" id="t15">
+<div class="task-header"><span class="task-num">№ 15</span></div>
+<div class="task-body">
+<div class="img-desc">A–F: см. выше</div>
+<strong>Аудио:</strong><br>
+— 老师，谢谢您，再见。<br><br>
+<button class="option">1) ○A</button>
+<button class="option">2) ○B</button>
+<button class="option">3) ○C</button>
+<button class="option">4) ○D</button>
+<button class="option">5) ○E</button>
+<button class="option">6) ○F</button>
+<div>
+<button class="btn primary" onclick="toggleBlock('a15-ans')">✅ Показать ответ</button>
+<button class="btn purple" onclick="toggleBlock('a15-story')">📖 Разбор</button>
+</div>
+<div class="hidden-block answer" id="a15-ans">
+<span class="label">✅ Правильный ответ:</span>
+<span class="answer-line">5) E</span>
+</div>
+<div class="hidden-block story" id="a15-story">
+<span class="label">📖 История и разбор</span>
+Жил старый учитель <strong>Лао Ши</strong>. Он был старый (老) и мудрый. Ученик сказал: «谢谢您!» — спасибо вам. Учитель ответил: «再见!» — до свидания.<br><br>
+<strong>Ключи:</strong><br>
+• <span class="cn">老</span> — старый 老<br>
+• <span class="cn">师</span> — нож 刂 + линия 一 + полотенце 巾<br>
+• <span class="cn">谢</span> — речь 讠 + стрелять 射<br>
+• <span class="cn">再</span> — линия 一 + ограда 冂 + земля 土<br>
+• <span class="cn">见</span> — видеть 见<br>
+• <span class="cn">您</span> — ты 你 + сердце 心
+</div>
+<textarea class="note-area auto-save" data-key="t15_note" placeholder="Твоя заметка к заданию 15..."></textarea>
+</div>
+</div>
+
+<h3>Часть 4 (задания 16–20)</h3>
+<p class="subtitle">Выберите правильный вариант ответа на основе услышанного.</p>
+
+<div class="task" id="t16">
+<div class="task-header"><span class="task-num">№ 16</span></div>
+<div class="task-body">
+<strong>Аудио:</strong><br>
+— 张先生是怎么去饭店的？<br>
+— 张先生是打车去饭店的。<br><br>
+<button class="option">1) ○坐车</button>
+<button class="option">2) ○开车</button>
+<button class="option">3) ○打车</button>
+<div>
+<button class="btn primary" onclick="toggleBlock('a16-ans')">✅ Показать ответ</button>
+<button class="btn purple" onclick="toggleBlock('a16-story')">📖 Разбор</button>
+</div>
+<div class="hidden-block answer" id="a16-ans">
+<span class="label">✅ Правильный ответ:</span>
+<span class="answer-line">3) 打车</span>
+<strong>打车 — «вызвать такси». Это верный вариант.</strong>
+</div>
+<div class="hidden-block story" id="a16-story">
+<span class="label">📖 История и разбор</span>
+Жил господин <strong>Джан</strong>. Однажды спросили: «怎么?» — как? Он сердцем (心) вдруг (乍) ответил: «打车!» — на такси.<br>
+Запоминаешь: <span class="hl">怎么 = как</span>, <span class="hl">打车 = такси</span>.<br><br>
+<strong>Ключи:</strong><br>
+• <span class="cn">怎</span> — вдруг 乍 + сердце 心<br>
+• <span class="cn">打</span> — рука 扌 + гвоздь 丁<br>
+• <span class="cn">车</span> — повозка 车
+</div>
+<textarea class="note-area auto-save" data-key="t16_note" placeholder="Твоя заметка к заданию 16..."></textarea>
+</div>
+</div>
+
+<div class="task" id="t17">
+<div class="task-header"><span class="task-num">№ 17</span></div>
+<div class="task-body">
+<strong>Аудио:</strong><br>
+— 大卫现在做什么呢？<br>
+— 大卫没看电视，他在电影院看电影呢。<br><br>
+<button class="option">1) ○看电视</button>
+<button class="option">2) ○看电影</button>
+<button class="option">3) ○看书</button>
+<div>
+<button class="btn primary" onclick="toggleBlock('a17-ans')">✅ Показать ответ</button>
+<button class="btn purple" onclick="toggleBlock('a17-story')">📖 Разбор</button>
+</div>
+<div class="hidden-block answer" id="a17-ans">
+<span class="label">✅ Правильный ответ:</span>
+<span class="answer-line">2) 看电影</span>
+</div>
+<div class="hidden-block story" id="a17-story">
+<span class="label">📖 История и разбор</span>
+Жил человек <strong>Кхань</strong>. Он рукой (手) прикрывал глаз (目) и смотрел. Однажды смотрел телевизор (电视). Но вода (氵) смыла (殳) факт — <strong>没</strong>. Вместо этого пошёл в кинотеатр и смотрел фильм (电影).<br>
+Запоминаешь: <span class="hl">没 = не (факт)</span>, <span class="hl">不 = не (привычка)</span>.<br><br>
+<strong>Ключи:</strong><br>
+• <span class="cn">看</span> — рука 手 + глаз 目<br>
+• <span class="cn">电</span> — солнце 日 + крюк 乚<br>
+• <span class="cn">影</span> — солнце 日 + столица 京 + тень 彡
+</div>
+<textarea class="note-area auto-save" data-key="t17_note" placeholder="Твоя заметка к заданию 17..."></textarea>
+</div>
+</div>
+
+<div class="task" id="t18">
+<div class="task-header"><span class="task-num">№ 18</span></div>
+<div class="task-body">
+<strong>Аудио:</strong><br>
+— 王老师什么时候去北京？<br>
+— 今天星期五，王老师星期日去北京。<br><br>
+<button class="option">1) ○一天前</button>
+<button class="option">2) ○两天前</button>
+<button class="option">3) ○两天后</button>
+<div>
+<button class="btn primary" onclick="toggleBlock('a18-ans')">✅ Показать ответ</button>
+<button class="btn purple" onclick="toggleBlock('a18-story')">📖 Разбор</button>
+</div>
+<div class="hidden-block answer" id="a18-ans">
+<span class="label">✅ Правильный ответ:</span>
+<span class="answer-line">3) 两天后</span>
+</div>
+<div class="hidden-block story" id="a18-story">
+<span class="label">📖 История и разбор</span>
+Жила звезда <strong>Син</strong>. Она жила (生) на солнце (日). Однажды сказала: «Пятница!» Потом пришла луна (月) — период. И день <strong>Жи</strong>.<br>
+Запоминаешь: <span class="hl">星期五 = пятница</span>, <span class="hl">星期日 = воскресенье</span>. Пятница → воскресенье = два дня → <span class="hl">两天后</span>.<br><br>
+<strong>Ключи:</strong><br>
+• <span class="cn">星</span> — солнце 日 + жизнь 生<br>
+• <span class="cn">期</span> — его 其 + луна 月<br>
+• <span class="cn">时</span> — солнце 日 + мера 寸
+</div>
+<textarea class="note-area auto-save" data-key="t18_note" placeholder="Твоя заметка к заданию 18..."></textarea>
+</div>
+</div>
+
+<div class="task" id="t19">
+<div class="task-header"><span class="task-num">№ 19</span></div>
+<div class="task-body">
+<strong>Аудио:</strong><br>
+— 谢小姐昨天去哪了？<br>
+— 谢小姐昨天买了两本汉语书。<br><br>
+<button class="option">1) ○书店</button>
+<button class="option">2) ○学校</button>
+<button class="option">3) ○医院</button>
+<div>
+<button class="btn primary" onclick="toggleBlock('a19-ans')">✅ Показать ответ</button>
+<button class="btn purple" onclick="toggleBlock('a19-story')">📖 Разбор</button>
+</div>
+<div class="hidden-block answer" id="a19-ans">
+<span class="label">✅ Правильный ответ:</span>
+<span class="answer-line">1) 书店</span>
+</div>
+<div class="hidden-block story" id="a19-story">
+<span class="label">📖 История и разбор</span>
+Жила мисс <strong>Се</strong>. Однажды она пошла в магазин. Она головой (头) кивала (乛) и покупала (买). Купила две (两) книги (本). Книга <strong>Шу</strong> — дерево (木) с линией (一). Магазин <strong>Дянь</strong> — крыша (广).<br>
+Запоминаешь: <span class="hl">买了两本汉语书 = купила две книги</span>. Логически → <span class="hl">书店</span>.<br><br>
+<strong>Ключи:</strong><br>
+• <span class="cn">买</span> — крюк 乛 + голова 头<br>
+• <span class="cn">两</span> — линия 一 + ограда 冂 + человек 人<br>
+• <span class="cn">本</span> — дерево 木 + линия 一<br>
+• <span class="cn">书</span> — книга 书
+</div>
+<textarea class="note-area auto-save" data-key="t19_note" placeholder="Твоя заметка к заданию 19..."></textarea>
+</div>
+</div>
+
+<div class="task" id="t20">
+<div class="task-header"><span class="task-num">№ 20</span></div>
+<div class="task-body">
+<strong>Аудио:</strong><br>
+— 他们学校有多少汉语老师？<br>
+— 他们学校有27个汉语老师。<br><br>
+<button class="option">1) ○21</button>
+<button class="option">2) ○23</button>
+<button class="option">3) ○27</button>
+<div>
+<button class="btn primary" onclick="toggleBlock('a20-ans')">✅ Показать ответ</button>
+<button class="btn purple" onclick="toggleBlock('a20-story')">📖 Разбор</button>
+</div>
+<div class="hidden-block answer" id="a20-ans">
+<span class="label">✅ Правильный ответ:</span>
+<span class="answer-line">3) 27</span>
+</div>
+<div class="hidden-block story" id="a20-story">
+<span class="label">📖 История и разбор</span>
+Жил человек <strong>Дуо</strong>. Он видел много (多) вечеров (夕). Рядом жил <strong>Шао</strong> — он видел мало (少). Однажды спросили: «多少?» — сколько?<br>
+Запоминаешь: <span class="hl">多少 = сколько</span>, <span class="hl">27个 = 27 штук</span>.<br><br>
+<strong>Ключи:</strong><br>
+• <span class="cn">多</span> — вечер 夕 + вечер 夕<br>
+• <span class="cn">少</span> — маленький 小 + черта 丿<br>
+• <span class="cn">个</span> — человек 人 + линия 丨
+</div>
+<textarea class="note-area auto-save" data-key="t20_note" placeholder="Твоя заметка к заданию 20..."></textarea>
+</div>
+</div>
+
+</div>
+
+<!-- ================= ЧТЕНИЕ ================= -->
+<div class="section" id="s-reading">
+<h2>📖 ЧТЕНИЕ</h2>
+
+<h3>Часть 1 (задания 21–25)</h3>
+
+<div class="task" id="t21">
+<div class="task-header"><span class="task-num">№ 21</span></div>
+<div class="task-body">
+<div class="img-desc">📸 Чёрно-белый кот 🐈, подпись: <strong>狗</strong></div>
+<button class="option">1) ○对</button>
+<button class="option">2) ○不对</button>
+<div>
+<button class="btn primary" onclick="toggleBlock('a21-ans')">✅ Показать ответ</button>
+<button class="btn purple" onclick="toggleBlock('a21-story')">📖 Разбор</button>
+</div>
+<div class="hidden-block answer" id="a21-ans"><span class="label">✅ Правильный ответ:</span><span class="answer-line">2) 不对</span></div>
+<div class="hidden-block story" id="a21-story">
+<span class="label">📖 История и разбор</span>
+Жила собака <strong>Гоу</strong> — ключ животного (犭) + фраза (句). Она лаяла: «Гав!» А рядом жила кошка <strong>Мао</strong> — ключ животного (犭) + росток (苗). Она мяукала: «Мяу!» На картинке кот, а подпись 狗 → <span class="hl">不对</span>.<br><br>
+<strong>Ключи:</strong> <span class="cn">狗</span> — 犭 + 句 | <span class="cn">猫</span> — 犭 + 苗
+</div>
+<textarea class="note-area auto-save" data-key="t21_note" placeholder="Заметка..."></textarea>
+</div>
+</div>
+
+<div class="task" id="t22">
+<div class="task-header"><span class="task-num">№ 22</span></div>
+<div class="task-body">
+<div class="img-desc">📸 Телевизор 📺, подпись: <strong>电脑</strong></div>
+<button class="option">1) ○对</button>
+<button class="option">2) ○不对</button>
+<div>
+<button class="btn primary" onclick="toggleBlock('a22-ans')">✅ Показать ответ</button>
+<button class="btn purple" onclick="toggleBlock('a22-story')">📖 Разбор</button>
+</div>
+<div class="hidden-block answer" id="a22-ans"><span class="label">✅ Правильный ответ:</span><span class="answer-line">2) 不对</span></div>
+<div class="hidden-block story" id="a22-story">
+<span class="label">📖 История и разбор</span>
+Жил компьютер <strong>Дянь Нао</strong> — ключ электричества (电) + мозг (脑). Рядом жил телевизор <strong>Дянь Ши</strong> — ключ электричества (电) + зрение (视). На картинке телевизор, а подпись 电脑 → <span class="hl">不对</span>.<br><br>
+<strong>Ключи:</strong> <span class="cn">电脑</span> — 电 + 脑 | <span class="cn">电视</span> — 电 + 视
+</div>
+<textarea class="note-area auto-save" data-key="t22_note" placeholder="Заметка..."></textarea>
+</div>
+</div>
+
+<div class="task" id="t23">
+<div class="task-header"><span class="task-num">№ 23</span></div>
+<div class="task-body">
+<div class="img-desc">📸 Дети в классе поднимают руки, подпись: <strong>他们</strong></div>
+<button class="option">1) ○对</button>
+<button class="option">2) ○不对</button>
+<div>
+<button class="btn primary" onclick="toggleBlock('a23-ans')">✅ Показать ответ</button>
+<button class="btn purple" onclick="toggleBlock('a23-story')">📖 Разбор</button>
+</div>
+<div class="hidden-block answer" id="a23-ans">
+<span class="label">✅ Правильный ответ:</span>
+<span class="answer-line">1) 对</span>
+<strong>Ответ 他们 — верный.</strong>
+</div>
+<div class="hidden-block story" id="a23-story">
+<span class="label">📖 История и разбор</span>
+Жил человек <strong>Тха</strong> — ключ человека (亻) + тоже (也). На картинке дети, подпись 他们 → <span class="hl">对</span>.<br><br>
+<strong>Ключи:</strong> <span class="cn">他</span> — 亻 + 也 | <span class="cn">们</span> — 亻 + 门
+</div>
+<textarea class="note-area auto-save" data-key="t23_note" placeholder="Заметка..."></textarea>
+</div>
+</div>
+
+<div class="task" id="t24">
+<div class="task-header"><span class="task-num">№ 24</span></div>
+<div class="task-body">
+<div class="img-desc">📸 Женщина ест фрукт 🍎, подпись: <strong>吃水果</strong></div>
+<button class="option">1) ○对</button>
+<button class="option">2) ○不对</button>
+<div>
+<button class="btn primary" onclick="toggleBlock('a24-ans')">✅ Показать ответ</button>
+<button class="btn purple" onclick="toggleBlock('a24-story')">📖 Разбор</button>
+</div>
+<div class="hidden-block answer" id="a24-ans"><span class="label">✅ Правильный ответ:</span><span class="answer-line">1) 对</span></div>
+<div class="hidden-block story" id="a24-story">
+<span class="label">📖 История и разбор</span>
+Жил голодный <strong>Чши</strong> — ключ рта (口) + просить (乞). Увидел фрукт (水果) и съел. На картинке ест → <span class="hl">对</span>.<br><br>
+<strong>Ключи:</strong> <span class="cn">吃</span> — 口 + 乞 | <span class="cn">水</span> — 水 | <span class="cn">果</span> — 木 + 田
+</div>
+<textarea class="note-area auto-save" data-key="t24_note" placeholder="Заметка..."></textarea>
+</div>
+</div>
+
+<div class="task" id="t25">
+<div class="task-header"><span class="task-num">№ 25</span></div>
+<div class="task-body">
+<div class="img-desc">📸 Девушка слушает 🎧, подпись: <strong>听</strong></div>
+<button class="option">1) ○对</button>
+<button class="option">2) ○不对</button>
+<div>
+<button class="btn primary" onclick="toggleBlock('a25-ans')">✅ Показать ответ</button>
+<button class="btn purple" onclick="toggleBlock('a25-story')">📖 Разбор</button>
+</div>
+<div class="hidden-block answer" id="a25-ans"><span class="label">✅ Правильный ответ:</span><span class="answer-line">1) 对</span></div>
+<div class="hidden-block story" id="a25-story">
+<span class="label">📖 История и разбор</span>
+Жил мальчик <strong>Тхин</strong> — ключ рта (口) + топор (斤). Он рубил звук топором и слушал.<br><br>
+<strong>Ключи:</strong> <span class="cn">听</span> — 口 + 斤
+</div>
+<textarea class="note-area auto-save" data-key="t25_note" placeholder="Заметка..."></textarea>
+</div>
+</div>
+
+<h3>Часть 2 (задания 26–30)</h3>
+<p class="subtitle">Соедините предложение с подходящей картинкой.</p>
+
+<div class="img-desc">A) 📞 Женщина с телефоном и ноутбуком · B) 💻 Комната с компьютерами · C) 🛏️ Женщина лежит в кровати · D) 🛍️ Магазин · E) 📖 Девушка читает в кровати · F) 👨‍👩‍👧 Семья на диване</div>
+
+<div class="task" id="t26">
+<div class="task-header"><span class="task-num">№ 26</span></div>
+<div class="task-body">你能听见吗？她的电话号码是58777062 → ○A ○B ○C ○D ○E ○F
+<div><button class="btn primary" onclick="toggleBlock('a26-ans')">✅ Показать ответ</button></div>
+<div class="hidden-block answer" id="a26-ans"><span class="label">✅</span> <span class="answer-line">A (телефон)</span></div>
+<textarea class="note-area auto-save" data-key="t26_note" placeholder="Заметка..."></textarea>
+</div>
+</div>
+
+<div class="task" id="t27">
+<div class="task-header"><span class="task-num">№ 27</span></div>
+<div class="task-body">儿子没学习，他在看电视呢 → ○A ○B ○C ○D ○E ○F
+<div><button class="btn primary" onclick="toggleBlock('a27-ans')">✅ Показать ответ</button></div>
+<div class="hidden-block answer" id="a27-ans"><span class="label">✅</span> <span class="answer-line">F (смотрит ТВ)</span></div>
+<textarea class="note-area auto-save" data-key="t27_note" placeholder="Заметка..."></textarea>
+</div>
+</div>
+
+<div class="task" id="t28">
+<div class="task-header"><span class="task-num">№ 28</span></div>
+<div class="task-body">昨天我们去商店买了很多东西 → ○A ○B ○C ○D ○E ○F
+<div><button class="btn primary" onclick="toggleBlock('a28-ans')">✅ Показать ответ</button></div>
+<div class="hidden-block answer" id="a28-ans"><span class="label">✅</span> <span class="answer-line">D (магазин)</span></div>
+<textarea class="note-area auto-save" data-key="t28_note" placeholder="Заметка..."></textarea>
+</div>
+</div>
+
+<div class="task" id="t29">
+<div class="task-header"><span class="task-num">№ 29</span></div>
+<div class="task-body">十二点了，她睡觉了 → ○A ○B ○C ○D ○E ○F
+<div><button class="btn primary" onclick="toggleBlock('a29-ans')">✅ Показать ответ</button></div>
+<div class="hidden-block answer" id="a29-ans"><span class="label">✅</span> <span class="answer-line">C (спит)</span></div>
+<textarea class="note-area auto-save" data-key="t29_note" placeholder="Заметка..."></textarea>
+</div>
+</div>
+
+<div class="task" id="t30">
+<div class="task-header"><span class="task-num">№ 30</span></div>
+<div class="task-body">我们的电脑都在那个桌子上 → ○A ○B ○C ○D ○E ○F
+<div><button class="btn primary" onclick="toggleBlock('a30-ans')">✅ Показать ответ</button></div>
+<div class="hidden-block answer" id="a30-ans"><span class="label">✅</span> <span class="answer-line">B (компьютеры)</span></div>
+<textarea class="note-area auto-save" data-key="t30_note" placeholder="Заметка..."></textarea>
+</div>
+</div>
+
+<h3>Часть 3 (задания 31–35)</h3>
+<p class="subtitle">Соедините подходящие по смыслу реплики.</p>
+
+<div class="img-desc">
+A) 那儿，椅子上面。<br>
+B) 在美国买的。<br>
+C) 十一点二十分。<br>
+D) 她叫张小月，是我的中国朋友。<br>
+E) 星期日。<br>
+F) 好的，谢谢！
+</div>
+
+<div class="task" id="t31">
+<div class="task-header"><span class="task-num">№ 31</span></div>
+<div class="task-body">你的电脑是在哪儿买的？ → ○A ○B ○C ○D ○E ○F
+<div><button class="btn primary" onclick="toggleBlock('a31-ans')">✅ Показать ответ</button></div>
+<div class="hidden-block answer" id="a31-ans"><span class="label">✅</span> <span class="answer-line">B (в США)</span></div>
+<textarea class="note-area auto-save" data-key="t31_note" placeholder="Заметка..."></textarea>
+</div>
+</div>
+
+<div class="task" id="t32">
+<div class="task-header"><span class="task-num">№ 32</span></div>
+<div class="task-body">你看见我的衣服了吗？ → ○A ○B ○C ○D ○E ○F
+<div><button class="btn primary" onclick="toggleBlock('a32-ans')">✅ Показать ответ</button></div>
+<div class="hidden-block answer" id="a32-ans"><span class="label">✅</span> <span class="answer-line">A (там, на стуле)</span></div>
+<textarea class="note-area auto-save" data-key="t32_note" placeholder="Заметка..."></textarea>
+</div>
+</div>
+
+<div class="task" id="t33">
+<div class="task-header"><span class="task-num">№ 33</span></div>
+<div class="task-body">现在几点了？ → ○A ○B ○C ○D ○E ○F
+<div><button class="btn primary" onclick="toggleBlock('a33-ans')">✅ Показать ответ</button></div>
+<div class="hidden-block answer" id="a33-ans"><span class="label">✅</span> <span class="answer-line">C (11:20)</span></div>
+<textarea class="note-area auto-save" data-key="t33_note" placeholder="Заметка..."></textarea>
+</div>
+</div>
+
+<div class="task" id="t34">
+<div class="task-header"><span class="task-num">№ 34</span></div>
+<div class="task-body">你后面那个人是谁？ → ○A ○B ○C ○D ○E ○F
+<div><button class="btn primary" onclick="toggleBlock('a34-ans')">✅ Показать ответ</button></div>
+<div class="hidden-block answer" id="a34-ans"><span class="label">✅</span> <span class="answer-line">D (её зовут Чжан Сяоюэ)</span></div>
+<textarea class="note-area auto-save" data-key="t34_note" placeholder="Заметка..."></textarea>
+</div>
+</div>
+
+<div class="task" id="t35">
+<div class="task-header"><span class="task-num">№ 35</span></div>
+<div class="task-body">爸爸什么时候能回来？ → ○A ○B ○C ○D ○E ○F
+<div><button class="btn primary" onclick="toggleBlock('a35-ans')">✅ Показать ответ</button></div>
+<div class="hidden-block answer" id="a35-ans"><span class="label">✅</span> <span class="answer-line">E (воскресенье)</span></div>
+<textarea class="note-area auto-save" data-key="t35_note" placeholder="Заметка..."></textarea>
+</div>
+</div>
+
+</div>
+
+<!-- ================= ЛЕКСИКА ================= -->
+<div class="section" id="s-vocab">
+<h2>📚 ЛЕКСИКА</h2>
+
+<h3>Часть 1 (задания 36–40)</h3>
+<p class="subtitle">Заполните пропуски подходящими по смыслу словами.</p>
+
+<div class="img-desc">
+A) 前面 · B) 请坐 · C) 杯子 · D) 名字 · E) 多少 · F) 怎么样
+</div>
+
+<div class="task" id="t36">
+<div class="task-header"><span class="task-num">№ 36</span></div>
+<div class="task-body">请问，这个椅子____钱？ → ○A ○B ○C ○D ○E ○F
+<div><button class="btn primary" onclick="toggleBlock('a36-ans')">✅ Показать ответ</button></div>
+<div class="hidden-block answer" id="a36-ans"><span class="label">✅</span> <span class="answer-line">E) 多少</span></div>
+<textarea class="note-area auto-save" data-key="t36_note" placeholder="Заметка..."></textarea>
+</div>
+</div>
+
+<div class="task" id="t37">
+<div class="task-header"><span class="task-num">№ 37</span></div>
+<div class="task-body">这是医院，李先生家在医院____。 → ○A ○B ○C ○D ○E ○F
+<div><button class="btn primary" onclick="toggleBlock('a37-ans')">✅ Показать ответ</button></div>
+<div class="hidden-block answer" id="a37-ans"><span class="label">✅</span> <span class="answer-line">A) 前面</span></div>
+<textarea class="note-area auto-save" data-key="t37_note" placeholder="Заметка..."></textarea>
+</div>
+</div>
+
+<div class="task" id="t38">
+<div class="task-header"><span class="task-num">№ 38</span></div>
+<div class="task-body">明天下午我想去商店买一个____。 → ○A ○B ○C ○D ○E ○F
+<div><button class="btn primary" onclick="toggleBlock('a38-ans')">✅ Показать ответ</button></div>
+<div class="hidden-block answer" id="a38-ans"><span class="label">✅</span> <span class="answer-line">C) 杯子</span></div>
+<textarea class="note-area auto-save" data-key="t38_note" placeholder="Заметка..."></textarea>
+</div>
+</div>
+
+<div class="task" id="t39">
+<div class="task-header"><span class="task-num">№ 39</span></div>
+<div class="task-body">男：你好！我能坐这儿吗? 女：____ → ○A ○B ○C ○D ○E ○F
+<div><button class="btn primary" onclick="toggleBlock('a39-ans')">✅ Показать ответ</button></div>
+<div class="hidden-block answer" id="a39-ans"><span class="label">✅</span> <span class="answer-line">B) 请坐</span></div>
+<textarea class="note-area auto-save" data-key="t39_note" placeholder="Заметка..."></textarea>
+</div>
+</div>
+
+<div class="task" id="t40">
+<div class="task-header"><span class="task-num">№ 40</span></div>
+<div class="task-body">男：明天天气____？女：很好，不下雨。 → ○A ○B ○C ○D ○E ○F
+<div><button class="btn primary" onclick="toggleBlock('a40-ans')">✅ Показать ответ</button></div>
+<div class="hidden-block answer" id="a40-ans"><span class="label">✅</span> <span class="answer-line">F) 怎么样</span></div>
+<textarea class="note-area auto-save" data-key="t40_note" placeholder="Заметка..."></textarea>
+</div>
+</div>
+
+<h3>Часть 2 (задания 41–50)</h3>
+<p class="subtitle">Выберите правильный перевод.</p>
+
+<div class="img-desc">магазин · кружка · заболевать · перед · под · школа · иероглиф · читать · больница · хотеть</div>
+
+<div class="task" id="t41"><div class="task-header"><span class="task-num">№ 41</span> 前面</div><div class="task-body">
+<button class="btn primary" onclick="toggleBlock('a41-ans')">✅ Показать ответ</button>
+<div class="hidden-block answer" id="a41-ans"><span class="answer-line">перед</span></div>
+<textarea class="note-area auto-save" data-key="t41_note" placeholder="Заметка..."></textarea>
+</div></div>
+
+<div class="task" id="t42"><div class="task-header"><span class="task-num">№ 42</span> 医院</div><div class="task-body">
+<button class="btn primary" onclick="toggleBlock('a42-ans')">✅ Показать ответ</button>
+<div class="hidden-block answer" id="a42-ans"><span class="answer-line">больница</span></div>
+<textarea class="note-area auto-save" data-key="t42_note" placeholder="Заметка..."></textarea>
+</div></div>
+
+<div class="task" id="t43"><div class="task-header"><span class="task-num">№ 43</span> 生病</div><div class="task-body">
+<button class="btn primary" onclick="toggleBlock('a43-ans')">✅ Показать ответ</button>
+<div class="hidden-block answer" id="a43-ans"><span class="answer-line">заболевать</span></div>
+<textarea class="note-area auto-save" data-key="t43_note" placeholder="Заметка..."></textarea>
+</div></div>
+
+<div class="task" id="t44"><div class="task-header"><span class="task-num">№ 44</span> 想</div><div class="task-body">
+<button class="btn primary" onclick="toggleBlock('a44-ans')">✅ Показать ответ</button>
+<div class="hidden-block answer" id="a44-ans"><span class="answer-line">хотеть</span></div>
+<textarea class="note-area auto-save" data-key="t44_note" placeholder="Заметка..."></textarea>
+</div></div>
+
+<div class="task" id="t45"><div class="task-header"><span class="task-num">№ 45</span> 杯子</div><div class="task-body">
+<button class="btn primary" onclick="toggleBlock('a45-ans')">✅ Показать ответ</button>
+<div class="hidden-block answer" id="a45-ans"><span class="answer-line">кружка</span></div>
+<textarea class="note-area auto-save" data-key="t45_note" placeholder="Заметка..."></textarea>
+</div></div>
+
+<div class="task" id="t46"><div class="task-header"><span class="task-num">№ 46</span> 读</div><div class="task-body">
+<button class="btn primary" onclick="toggleBlock('a46-ans')">✅ Показать ответ</button>
+<div class="hidden-block answer" id="a46-ans"><span class="answer-line">читать</span></div>
+<textarea class="note-area auto-save" data-key="t46_note" placeholder="Заметка..."></textarea>
+</div></div>
+
+<div class="task" id="t47"><div class="task-header"><span class="task-num">№ 47</span> 学校</div><div class="task-body">
+<button class="btn primary" onclick="toggleBlock('a47-ans')">✅ Показать ответ</button>
+<div class="hidden-block answer" id="a47-ans"><span class="answer-line">школа</span></div>
+<textarea class="note-area auto-save" data-key="t47_note" placeholder="Заметка..."></textarea>
+</div></div>
+
+<div class="task" id="t48"><div class="task-header"><span class="task-num">№ 48</span> 汉字</div><div class="task-body">
+<button class="btn primary" onclick="toggleBlock('a48-ans')">✅ Показать ответ</button>
+<div class="hidden-block answer" id="a48-ans"><span class="answer-line">иероглиф</span></div>
+<textarea class="note-area auto-save" data-key="t48_note" placeholder="Заметка..."></textarea>
+</div></div>
+
+<div class="task" id="t49"><div class="task-header"><span class="task-num">№ 49</span> 下面</div><div class="task-body">
+<button class="btn primary" onclick="toggleBlock('a49-ans')">✅ Показать ответ</button>
+<div class="hidden-block answer" id="a49-ans"><span class="answer-line">под</span></div>
+<textarea class="note-area auto-save" data-key="t49_note" placeholder="Заметка..."></textarea>
+</div></div>
+
+<div class="task" id="t50"><div class="task-header"><span class="task-num">№ 50</span> 商店</div><div class="task-body">
+<button class="btn primary" onclick="toggleBlock('a50-ans')">✅ Показать ответ</button>
+<div class="hidden-block answer" id="a50-ans"><span class="answer-line">магазин</span></div>
+<textarea class="note-area auto-save" data-key="t50_note" placeholder="Заметка..."></textarea>
+</div></div>
+
+</div>
+
+<!-- ================= ГРАММАТИКА ================= -->
+<div class="section" id="s-grammar">
+<h2>📝 ГРАММАТИКА</h2>
+
+<h3>Часть 1 (задания 51–60)</h3>
+<p class="subtitle">Верно ли грамматически составлены предложения?</p>
+
+<div class="task" id="t51"><div class="task-header"><span class="task-num">№ 51</span></div><div class="task-body">这是我的狗。 → ○对 ○不对
+<div><button class="btn primary" onclick="toggleBlock('a51-ans')">✅ Показать ответ</button></div>
+<div class="hidden-block answer" id="a51-ans"><span class="answer-line">对</span></div>
+<textarea class="note-area auto-save" data-key="t51_note" placeholder="Заметка..."></textarea>
+</div></div>
+
+<div class="task" id="t52"><div class="task-header"><span class="task-num">№ 52</span></div><div class="task-body">桌子上书是我的。 → ○对 ○不对
+<div><button class="btn primary" onclick="toggleBlock('a52-ans')">✅ Показать ответ</button></div>
+<div class="hidden-block answer" id="a52-ans"><span class="answer-line">不对</span> → нужно <span class="cn">桌子上的书</span></div>
+<textarea class="note-area auto-save" data-key="t52_note" placeholder="Заметка..."></textarea>
+</div></div>
+
+<div class="task" id="t53"><div class="task-header"><span class="task-num">№ 53</span></div><div class="task-body">我不有蓝色的裤子。 → ○对 ○不对
+<div><button class="btn primary" onclick="toggleBlock('a53-ans')">✅ Показать ответ</button></div>
+<div class="hidden-block answer" id="a53-ans"><span class="answer-line">不对</span> → нужно <span class="cn">我没有</span></div>
+<textarea class="note-area auto-save" data-key="t53_note" placeholder="Заметка..."></textarea>
+</div></div>
+
+<div class="task" id="t54"><div class="task-header"><span class="task-num">№ 54</span></div><div class="task-body">他是中国的人。 → ○对 ○不对
+<div><button class="btn primary" onclick="toggleBlock('a54-ans')">✅ Показать ответ</button></div>
+<div class="hidden-block answer" id="a54-ans"><span class="answer-line">不对</span> → нужно <span class="cn">他是中国人</span></div>
+<textarea class="note-area auto-save" data-key="t54_note" placeholder="Заметка..."></textarea>
+</div></div>
+
+<div class="task" id="t55"><div class="task-header"><span class="task-num">№ 55</span></div><div class="task-body">她的头发是黄色的。 → ○对 ○不对
+<div><button class="btn primary" onclick="toggleBlock('a55-ans')">✅ Показать ответ</button></div>
+<div class="hidden-block answer" id="a55-ans"><span class="answer-line">对</span></div>
+<textarea class="note-area auto-save" data-key="t55_note" placeholder="Заметка..."></textarea>
+</div></div>
+
+<div class="task" id="t56"><div class="task-header"><span class="task-num">№ 56</span></div><div class="task-body">这是老师的书。 → ○对 ○不对
+<div><button class="btn primary" onclick="toggleBlock('a56-ans')">✅ Показать ответ</button></div>
+<div class="hidden-block answer" id="a56-ans"><span class="answer-line">对</span></div>
+<textarea class="note-area auto-save" data-key="t56_note" placeholder="Заметка..."></textarea>
+</div></div>
+
+<div class="task" id="t57"><div class="task-header"><span class="task-num">№ 57</span></div><div class="task-body">我没有认识你。 → ○对 ○不对
+<div><button class="btn primary" onclick="toggleBlock('a57-ans')">✅ Показать ответ</button></div>
+<div class="hidden-block answer" id="a57-ans"><span class="answer-line">不对</span> → нужно <span class="cn">我不认识你</span></div>
+<textarea class="note-area auto-save" data-key="t57_note" placeholder="Заметка..."></textarea>
+</div></div>
+
+<div class="task" id="t58"><div class="task-header"><span class="task-num">№ 58</span></div><div class="task-body">他喜欢米饭。 → ○对 ○不对
+<div><button class="btn primary" onclick="toggleBlock('a58-ans')">✅ Показать ответ</button></div>
+<div class="hidden-block answer" id="a58-ans"><span class="answer-line">对</span></div>
+<textarea class="note-area auto-save" data-key="t58_note" placeholder="Заметка..."></textarea>
+</div></div>
+
+<div class="task" id="t59"><div class="task-header"><span class="task-num">№ 59</span></div><div class="task-body">他们是昨天到北京。 → ○对 ○不对
+<div><button class="btn primary" onclick="toggleBlock('a59-ans')">✅ Показать ответ</button></div>
+<div class="hidden-block answer" id="a59-ans"><span class="answer-line">不对</span> → нужно <span class="cn">他们是昨天到北京的</span></div>
+<textarea class="note-area auto-save" data-key="t59_note" placeholder="Заметка..."></textarea>
+</div></div>
+
+<div class="task" id="t60"><div class="task-header"><span class="task-num">№ 60</span></div><div class="task-body">我朋友法国来。 → ○对 ○不对
+<div><button class="btn primary" onclick="toggleBlock('a60-ans')">✅ Показать ответ</button></div>
+<div class="hidden-block answer" id="a60-ans"><span class="answer-line">不对</span> → нужно <span class="cn">我朋友从法国来</span></div>
+<textarea class="note-area auto-save" data-key="t60_note" placeholder="Заметка..."></textarea>
+</div></div>
+
+<h3>Часть 2 (задания 61–70)</h3>
+
+<div class="task" id="t61"><div class="task-header"><span class="task-num">№ 61</span></div><div class="task-body">我们____来中国学习汉语的。 → ○不 ○是 ○想
+<div><button class="btn primary" onclick="toggleBlock('a61-ans')">✅ Показать ответ</button></div>
+<div class="hidden-block answer" id="a61-ans"><span class="answer-line">是</span></div>
+<textarea class="note-area auto-save" data-key="t61_note" placeholder="Заметка..."></textarea>
+</div></div>
+
+<div class="task" id="t62"><div class="task-header"><span class="task-num">№ 62</span></div><div class="task-body">我的电脑____？ → ○吗 ○呢 ○吧
+<div><button class="btn primary" onclick="toggleBlock('a62-ans')">✅ Показать ответ</button></div>
+<div class="hidden-block answer" id="a62-ans"><span class="answer-line">呢</span></div>
+<textarea class="note-area auto-save" data-key="t62_note" placeholder="Заметка..."></textarea>
+</div></div>
+
+<div class="task" id="t63"><div class="task-header"><span class="task-num">№ 63</span></div><div class="task-body">我爸爸买了两____汉语书。 → ○本 ○个 ○杯
+<div><button class="btn primary" onclick="toggleBlock('a63-ans')">✅ Показать ответ</button></div>
+<div class="hidden-block answer" id="a63-ans"><span class="answer-line">本</span></div>
+<textarea class="note-area auto-save" data-key="t63_note" placeholder="Заметка..."></textarea>
+</div></div>
+
+<div class="task" id="t64"><div class="task-header"><span class="task-num">№ 64</span></div><div class="task-body">今天是2030____7____19____。 → ○月/日/年 ○年/号/月 ○年/月/号
+<div><button class="btn primary" onclick="toggleBlock('a64-ans')">✅ Показать ответ</button></div>
+<div class="hidden-block answer" id="a64-ans"><span class="answer-line">年/月/号</span></div>
+<textarea class="note-area auto-save" data-key="t64_note" placeholder="Заметка..."></textarea>
+</div></div>
+
+<div class="task" id="t65"><div class="task-header"><span class="task-num">№ 65</span></div><div class="task-body">这次你们去____？ → ○几号 ○几个 ○年 ○几天
+<div><button class="btn primary" onclick="toggleBlock('a65-ans')">✅ Показать ответ</button></div>
+<div class="hidden-block answer" id="a65-ans"><span class="answer-line">几天</span></div>
+<textarea class="note-area auto-save" data-key="t65_note" placeholder="Заметка..."></textarea>
+</div></div>
+
+<div class="task" id="t66"><div class="task-header"><span class="task-num">№ 66</span></div><div class="task-body">我姐姐在一____医院工作。 → ○块 ○家 ○杯
+<div><button class="btn primary" onclick="toggleBlock('a66-ans')">✅ Показать ответ</button></div>
+<div class="hidden-block answer" id="a66-ans"><span class="answer-line">家</span></div>
+<textarea class="note-area auto-save" data-key="t66_note" placeholder="Заметка..."></textarea>
+</div></div>
+
+<div class="task" id="t67"><div class="task-header"><span class="task-num">№ 67</span></div><div class="task-body">你们公司有____人？ → ○多少 ○几 ○多少几
+<div><button class="btn primary" onclick="toggleBlock('a67-ans')">✅ Показать ответ</button></div>
+<div class="hidden-block answer" id="a67-ans"><span class="answer-line">多少</span></div>
+<textarea class="note-area auto-save" data-key="t67_note" placeholder="Заметка..."></textarea>
+</div></div>
+
+<div class="task" id="t68"><div class="task-header"><span class="task-num">№ 68</span></div><div class="task-body">我们明天八点上课，对____？ → ○吗 ○呢 ○吧
+<div><button class="btn primary" onclick="toggleBlock('a68-ans')">✅ Показать ответ</button></div>
+<div class="hidden-block answer" id="a68-ans"><span class="answer-line">吧</span></div>
+<textarea class="note-area auto-save" data-key="t68_note" placeholder="Заметка..."></textarea>
+</div></div>
+
+<div class="task" id="t69"><div class="task-header"><span class="task-num">№ 69</span></div><div class="task-body">他什么时候来北京____？ → ○吗 ○的 ○吧
+<div><button class="btn primary" onclick="toggleBlock('a69-ans')">✅ Показать ответ</button></div>
+<div class="hidden-block answer" id="a69-ans"><span class="answer-line">的</span></div>
+<textarea class="note-area auto-save" data-key="t69_note" placeholder="Заметка..."></textarea>
+</div></div>
+
+<div class="task" id="t70"><div class="task-header"><span class="task-num">№ 70</span></div><div class="task-body">请坐，喝____茶吧。 → ○家 ○本 ○杯
+<div><button class="btn primary" onclick="toggleBlock('a70-ans')">✅ Показать ответ</button></div>
+<div class="hidden-block answer" id="a70-ans"><span class="answer-line">杯</span></div>
+<textarea class="note-area auto-save" data-key="t70_note" placeholder="Заметка..."></textarea>
+</div></div>
+
+</div>
+
+<!-- ================= ПИСЬМО ================= -->
+<div class="section" id="s-writing">
+<h2>✍️ ПИСЬМО</h2>
+<div class="task">
+<div class="task-header"><span class="task-title">Напишите о себе (30 иероглифов)</span></div>
+<div class="task-body">
+<strong>Шаблон:</strong><br>
+我叫（китайское имя).<br>
+来自俄罗斯。<br>
+在（название компании）公司当（профессия）.<br>
+今年（возраст）岁.<br>
+学中文半年了.<br>
+每个周末喜欢去（куда）做（что）.<br><br>
+
+<strong>Пример:</strong><br>
+我叫李明。<br>
+来自俄罗斯。<br>
+在华为公司当工程师。<br>
+今年25岁。<br>
+学中文半年了。<br>
+每个周末喜欢去公园跑步。
+</div>
+</div>
+</div>
+
+<!-- ЭКСПОРТ -->
+<div class="export-bar">
+<span class="label">💾 Скачать все заметки одним файлом</span>
+<span class="hint">Все твои заметки из всех заданий — в один .txt</span>
+<button class="export-btn" onclick="exportNotes()">📄 Скачать .txt</button>
+</div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ============ Переключение скрытых блоков ============
+function toggleBlock(id){
+    const el = document.getElementById(id);
+    if(!el) return;
+    el.classList.toggle('open');
+}
+
+// ============ Шпаргалка ============
+function toggleCheat(){
+    const body = document.getElementById('cheatBody');
+    const btn = document.getElementById('cheatToggleBtn');
+    body.classList.toggle('open');
+    btn.textContent = body.classList.contains('open') ? 'Скрыть' : 'Показать';
+}
+
+// ============ Навигация по секциям ============
+document.querySelectorAll('.nav-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+        document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+        document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+        btn.classList.add('active');
+        const target = document.getElementById(btn.dataset.target);
+        if(target) target.classList.add('active');
+        window.scrollTo({top:0,behavior:'smooth'});
+    });
+});
+
+// ============ Автосохранение ============
+const STORAGE_PREFIX = 'hsk1_final_';
+function initAutoSave(){
+    document.querySelectorAll('.auto-save').forEach(el=>{
+        const key = STORAGE_PREFIX + el.dataset.key;
+        const saved = localStorage.getItem(key);
+        if(saved !== null) el.value = saved;
+        el.addEventListener('input',()=>{
+            localStorage.setItem(key, el.value);
+            updateProgress();
+        });
+    });
+}
+initAutoSave();
+
+// ============ Прогресс ============
+function updateProgress(){
+    let filled = 0;
+    document.querySelectorAll('.auto-save').forEach(el=>{
+        if((el.value || '').trim()) filled++;
+    });
+    document.getElementById('progressCount').textContent = filled;
+    document.getElementById('progressFill').style.width = (filled / 70 * 100) + '%';
+}
+updateProgress();
+
+// ============ Экспорт ============
+function exportNotes(){
+    const data = {};
+    let count = 0;
+    for(let i = 0; i < localStorage.length; i++){
+        const key = localStorage.key(i);
+        if(key && key.startsWith(STORAGE_PREFIX)){
+            const value = localStorage.getItem(key);
+            if(value && value.trim()){
+                data[key.replace(STORAGE_PREFIX,'')] = value;
+                count++;
+            }
+        }
+    }
+    if(count === 0){
+        showToast('Пока нет заметок');
+        return;
+    }
+    let out = 'HSK 1 · Финальный тест · Мои заметки\n';
+    out += '='.repeat(50) + '\n';
+    out += 'Дата: ' + new Date().toLocaleString('ru-RU') + '\n';
+    out += '='.repeat(50) + '\n\n';
+    Object.keys(data).sort().forEach(key=>{
+        const num = key.replace('t','').replace('_note','');
+        out += '📌 Задание ' + num + ':\n' + data[key] + '\n\n';
+    });
+    const blob = new Blob(['\ufeff' + out], {type:'text/plain;charset=utf-8'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'hsk1_final_notes_' + new Date().toISOString().slice(0,10) + '.txt';
+    a.style.display = 'none';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(()=>URL.revokeObjectURL(url), 1000);
+    showToast('✅ Файл скачан');
+}
+
+function showToast(msg){
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._t);
+    t._t = setTimeout(()=>t.classList.remove('show'), 2200);
+}
+</script>
+</body>
+</html>
