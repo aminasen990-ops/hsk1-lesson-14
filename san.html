@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>每周三问 · 口语练习</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #f0ede6;
+    --surface: #ffffff;
+    --ink: #1a2a1a;
+    --ink-soft: #4a5a4a;
+    --ink-muted: #8a9a8a;
+    --line: #ddd6c8;
+    --line-soft: #ece7dc;
+    --accent: #2e4a3a;
+    --accent-2: #8b6b4a;
+    --accent-3: #6b4a6b;
+    --tag-bg: #f2ede3;
+    --tag-bg-hover: #e8e0d0;
+    --pinyin-bg: #ece6d8;
+    --pinyin-ink: #7a6a50;
+  }
+
+  body {
+    font-family: 'Inter', 'Noto Sans SC', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    padding: 48px 24px 72px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.55;
+  }
+
+  .deck {
+    width: 100%;
+    max-width: 1120px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  /* ============ SLIDE ============ */
+  .slide {
+    background: var(--surface);
+    border-radius: 28px;
+    padding: 44px 48px;
+    border: 1px solid var(--line-soft);
+    box-shadow:
+      0 1px 2px rgba(0,0,0,.02),
+      0 8px 24px -12px rgba(30,40,30,.10);
+    display: grid;
+    grid-template-columns: 1fr 220px;
+    gap: 44px;
+    align-items: flex-start;
+    animation: fadeUp .5s ease both;
+  }
+
+  .slide:hover {
+    box-shadow:
+      0 1px 2px rgba(0,0,0,.02),
+      0 12px 32px -12px rgba(30,40,30,.14);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .slide:nth-child(1) { animation-delay: .04s; }
+  .slide:nth-child(2) { animation-delay: .10s; }
+  .slide:nth-child(3) { animation-delay: .16s; }
+  .slide:nth-child(4) { animation-delay: .22s; }
+  .slide:nth-child(5) { animation-delay: .28s; }
+
+  /* ============ BODY ============ */
+  .slide-body { min-width: 0; }
+
+  /* ============ BADGE ============ */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--accent);
+    color: #fff;
+    font-size: .68rem;
+    font-weight: 600;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 40px;
+    margin-bottom: 20px;
+  }
+
+  .badge.badge-2 { background: var(--accent-2); }
+  .badge.badge-3 { background: var(--accent-3); }
+
+  /* ============ QUESTION ============ */
+  .q {
+    font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    font-size: 1.75rem;
+    font-weight: 700;
+    line-height: 1.48;
+    color: var(--ink);
+    letter-spacing: -.005em;
+    margin-bottom: 14px;
+  }
+
+  .q-sub {
+    font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    font-size: 1.02rem;
+    font-weight: 400;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    padding: 14px 20px;
+    background: #f9f8f4;
+    border-radius: 14px;
+    border-left: 3px solid #c9bfa8;
+    margin-bottom: 26px;
+  }
+
+  .q-sub .hint {
+    display: block;
+    font-size: .8rem;
+    color: var(--ink-muted);
+    margin-top: 6px;
+    font-style: italic;
+  }
+
+  /* ============ VOCAB ============ */
+  .vocab {
+    background: #f7f5ef;
+    border-radius: 18px;
+    padding: 22px 26px 20px;
+    border: 1px solid #e6e0d4;
+  }
+
+  .vocab-head {
+    font-size: .7rem;
+    text-transform: uppercase;
+    letter-spacing: .2em;
+    font-weight: 700;
+    color: #9e8f76;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .vocab-head::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, #ddd5c5, transparent);
+  }
+
+  .vocab-row {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    flex-wrap: wrap;
+    padding: 10px 0;
+    border-bottom: 1px solid #ede8dd;
+  }
+
+  .vocab-row:last-child { border-bottom: none; padding-bottom: 0; }
+
+  .vocab-word {
+    font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #1e3a1e;
+    min-width: 96px;
+    line-height: 1.3;
+  }
+
+  .vocab-pinyin {
+    font-size: .74rem;
+    color: var(--pinyin-ink);
+    font-weight: 500;
+    letter-spacing: .04em;
+    background: var(--pinyin-bg);
+    padding: 3px 11px;
+    border-radius: 30px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .vocab-def {
+    font-size: .92rem;
+    color: #3d4d3d;
+    flex: 1;
+    min-width: 160px;
+    line-height: 1.5;
+  }
+
+  .vocab-def .extra {
+    display: block;
+    font-size: .78rem;
+    color: var(--ink-muted);
+    margin-top: 3px;
+    font-style: italic;
+  }
+
+  /* ============ VISUAL ============ */
+  .visual {
+    grid-row: 1 / -1;
+    grid-column: 2;
+    width: 100%;
+    height: 100%;
+    min-height: 340px;
+    border-radius: 18px;
+    background: linear-gradient(180deg, #faf8f4, #f3efe7);
+    border: 1.5px dashed #d9d2c5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 24px 14px;
+    position: relative;
+    overflow: hidden;
+    align-self: stretch;
+  }
+
+  .visual .glyph {
+    font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    font-size: 3.4rem;
+    font-weight: 700;
+    color: #e0d8c8;
+    line-height: 1;
+    letter-spacing: .05em;
+    user-select: none;
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+  }
+
+  .visual .cap {
+    font-size: .7rem;
+    color: #b5a994;
+    letter-spacing: .12em;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  /* ============ SLIDE: TITLE ============ */
+  .slide-title {
+    grid-template-columns: 1fr 220px;
+  }
+
+  .title-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    padding: 24px 0;
+  }
+
+  .title-eyebrow {
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .28em;
+    text-transform: uppercase;
+    color: #9e8f76;
+  }
+
+  .title-main {
+    font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    font-size: 2.8rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--ink);
+    letter-spacing: .02em;
+  }
+
+  .title-sub {
+    font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    font-size: 1.05rem;
+    color: var(--ink-soft);
+    line-height: 1.7;
+    max-width: 480px;
+  }
+
+  .title-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 8px;
+  }
+
+  .title-item {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    font-size: .92rem;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+
+  .title-item .num {
+    font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--accent);
+    min-width: 28px;
+  }
+
+  /* ============ SLIDE: THANKS ============ */
+  .slide-thanks {
+    grid-template-columns: 1fr 220px;
+  }
+
+  .thanks-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 24px 0;
+  }
+
+  .thanks-eyebrow {
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .28em;
+    text-transform: uppercase;
+    color: #9e8f76;
+  }
+
+  .thanks-main {
+    font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    font-size: 3.2rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--ink);
+    letter-spacing: .04em;
+  }
+
+  .thanks-sub {
+    font-size: .95rem;
+    color: var(--ink-soft);
+    line-height: 1.7;
+    font-style: italic;
+  }
+
+  /* ============ SEP ============ */
+  .sep {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    user-select: none;
+    padding: 4px 0;
+  }
+
+  .sep .line { width: 40px; height: 1px; background: #d9d2c5; }
+  .sep .dot { width: 6px; height: 6px; border-radius: 50%; background: #c4b9a5; }
+  .sep .dot.active { background: var(--accent); }
+
+  /* ============ SUMMARY ============ */
+  .summary {
+    width: 100%;
+    background: var(--surface);
+    border-radius: 24px;
+    padding: 32px 40px;
+    border: 1px solid var(--line-soft);
+    box-shadow: 0 6px 20px -12px rgba(30,40,30,.10);
+    animation: fadeUp .5s ease .35s both;
+  }
+
+  .summary-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 22px;
+  }
+
+  .summary-head h2 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: .02em;
+  }
+
+  .summary-head .tag {
+    font-size: .68rem;
+    font-weight: 600;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    background: #e8e2d6;
+    color: #6b5e4a;
+    padding: 4px 12px;
+    border-radius: 40px;
+  }
+
+  .summary-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 12px;
+  }
+
+  .summary-item {
+    display: flex;
+    align-items: baseline;
+    gap: 9px;
+    background: #faf9f7;
+    border: 1px solid #ece7dd;
+    border-radius: 40px;
+    padding: 8px 18px 8px 16px;
+    transition: all .2s ease;
+  }
+
+  .summary-item:hover {
+    background: #f4f1e9;
+    border-color: #d9d2c5;
+  }
+
+  .summary-item .w {
+    font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #1e3a1e;
+  }
+
+  .summary-item .p {
+    font-size: .72rem;
+    color: #9e8f76;
+    letter-spacing: .04em;
+    font-weight: 500;
+  }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 880px) {
+    body { padding: 24px 14px 48px; }
+    .slide,
+    .slide-title,
+    .slide-thanks {
+      grid-template-columns: 1fr;
+      padding: 28px 22px;
+      gap: 24px;
+    }
+    .visual {
+      grid-row: auto;
+      grid-column: 1;
+      min-height: 160px;
+      padding: 18px 14px;
+    }
+    .visual .glyph { writing-mode: horizontal-tb; font-size: 2.6rem; }
+    .q { font-size: 1.35rem; }
+    .q-sub { font-size: .92rem; padding: 12px 16px; }
+    .title-main { font-size: 2rem; }
+    .thanks-main { font-size: 2.2rem; }
+  }
+
+  @media (max-width: 480px) {
+    .vocab-row { flex-direction: column; gap: 6px; padding: 10px 0; }
+    .vocab-word { font-size: 1.15rem; min-width: auto; }
+    .vocab-def { font-size: .86rem; min-width: auto; }
+    .summary { padding: 22px 18px; }
+    .title-main { font-size: 1.6rem; }
+    .thanks-main { font-size: 1.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="deck">
+
+  <!-- ================ TITLE ================ -->
+  <div class="slide slide-title">
+    <div class="title-content">
+      <div class="title-eyebrow">Speaking Practice · Weekly</div>
+      <h1 class="title-main">本周三问</h1>
+      <div class="title-sub">
+        本周的三个口语话题。每一题都可以从自己的故事出发，慢慢说，不用急。
+      </div>
+      <div class="title-list">
+        <div class="title-item"><span class="num">01</span><span>童年 · 国民动漫 · 主角</span></div>
+        <div class="title-item"><span class="num">02</span><span>独立生活 · 省钱 · 冲动消费</span></div>
+        <div class="title-item"><span class="num">03</span><span>长大 · 无忧无虑 · 找回</span></div>
+      </div>
+    </div>
+    <div class="visual">
+      <div class="glyph">三问</div>
+      <div class="cap">每 周 三 问</div>
+    </div>
+  </div>
+
+  <div class="sep">
+    <span class="line"></span><span class="dot active"></span>
+    <span class="dot"></span><span class="dot"></span>
+    <span class="dot"></span><span class="line"></span>
+  </div>
+
+  <!-- ================ Q1 ================ -->
+  <div class="slide">
+    <div class="slide-body">
+      <div class="badge">第一题 · 童年</div>
+      <h2 class="q">在你们国家，有没有几乎所有小孩都知道的国民动漫？</h2>
+      <div class="q-sub">
+        可以讲讲你小学时期最喜欢的那部动漫吗？
+        <span class="hint">聊一聊童年时最爱的那部动画</span>
+      </div>
+
+      <div class="vocab">
+        <div class="vocab-head">关键词</div>
+        <div class="vocab-row">
+          <span class="vocab-word">国民动漫</span>
+          <span class="vocab-pinyin">guó mín dòng màn</span>
+          <span class="vocab-def">全国很多人都熟悉的动漫作品<span class="extra">家喻户晓的动画</span></span>
+        </div>
+        <div class="vocab-row">
+          <span class="vocab-word">主角</span>
+          <span class="vocab-pinyin">zhǔ jiǎo</span>
+          <span class="vocab-def">故事里最主要的人物<span class="extra">故事的核心人物</span></span>
+        </div>
+      </div>
+    </div>
+    <div class="visual">
+      <div class="glyph">动漫</div>
+      <div class="cap">图片区 · 竖版</div>
+    </div>
+  </div>
+
+  <div class="sep">
+    <span class="line"></span><span class="dot"></span>
+    <span class="dot active"></span><span class="dot"></span>
+    <span class="dot"></span><span class="line"></span>
+  </div>
+
+  <!-- ================ Q2 ================ -->
+  <div class="slide">
+    <div class="slide-body">
+      <div class="badge badge-2">第二题 · 独立生活</div>
+      <h2 class="q">如果你刚刚搬出去独自生活，离开父母，你有什么省钱小窍门？</h2>
+      <div class="q-sub">
+        平时怎么管住自己，避免冲动消费？
+        <span class="hint">聊聊控制开销、理性消费的方法</span>
+      </div>
+
+      <div class="vocab">
+        <div class="vocab-head">关键词</div>
+        <div class="vocab-row">
+          <span class="vocab-word">小窍门</span>
+          <span class="vocab-pinyin">xiǎo qiào mén</span>
+          <span class="vocab-def">简单好用的小方法<span class="extra">实用的生活小妙招</span></span>
+        </div>
+        <div class="vocab-row">
+          <span class="vocab-word">冲动消费</span>
+          <span class="vocab-pinyin">chōng dòng xiāo fèi</span>
+          <span class="vocab-def">没有仔细思考就立刻买东西<span class="extra">不理智的即时购买</span></span>
+        </div>
+      </div>
+    </div>
+    <div class="visual">
+      <div class="glyph">省钱</div>
+      <div class="cap">图片区 · 竖版</div>
+    </div>
+  </div>
+
+  <div class="sep">
+    <span class="line"></span><span class="dot"></span>
+    <span class="dot"></span><span class="dot active"></span>
+    <span class="dot"></span><span class="line"></span>
+  </div>
+
+  <!-- ================ Q3 ================ -->
+  <div class="slide">
+    <div class="slide-body">
+      <div class="badge badge-3">第三题 · 长大</div>
+      <h2 class="q">你觉得长大之后还能找回这种轻松自在的感觉吗？</h2>
+      <div class="q-sub">
+        很多人都说童年是无忧无虑的日子。你有没有某个瞬间，和谁在一起的时候，重新体会到过这种感受？
+        <span class="hint">回忆一个重新感到轻松自在的时刻</span>
+      </div>
+
+      <div class="vocab">
+        <div class="vocab-head">关键词</div>
+        <div class="vocab-row">
+          <span class="vocab-word">无忧无虑</span>
+          <span class="vocab-pinyin">wú yōu wú lǜ</span>
+          <span class="vocab-def">没有烦恼，不用发愁<span class="extra">内心安宁，没有压力</span></span>
+        </div>
+        <div class="vocab-row">
+          <span class="vocab-word">童年</span>
+          <span class="vocab-pinyin">tóng nián</span>
+          <span class="vocab-def">儿童时代，小时候<span class="extra">儿时岁月</span></span>
+        </div>
+        <div class="vocab-row">
+          <span class="vocab-word">找回</span>
+          <span class="vocab-pinyin">zhǎo huí</span>
+          <span class="vocab-def">再次得到以前有的感觉或者东西<span class="extra">重新获得曾经拥有的</span></span>
+        </div>
+        <div class="vocab-row">
+          <span class="vocab-word">瞬间</span>
+          <span class="vocab-pinyin">shùn jiān</span>
+          <span class="vocab-def">很短很短的时间<span class="extra">一刹那</span></span>
+        </div>
+        <div class="vocab-row">
+          <span class="vocab-word">体会</span>
+          <span class="vocab-pinyin">tǐ huì</span>
+          <span class="vocab-def">亲身感受到一种感觉<span class="extra">用心去感受</span></span>
+        </div>
+      </div>
+    </div>
+    <div class="visual">
+      <div class="glyph">回忆</div>
+      <div class="cap">图片区 · 竖版</div>
+    </div>
+  </div>
+
+  <div class="sep">
+    <span class="line"></span><span class="dot"></span>
+    <span class="dot"></span><span class="dot"></span>
+    <span class="dot active"></span><span class="line"></span>
+  </div>
+
+  <!-- ================ THANKS ================ -->
+  <div class="slide slide-thanks">
+    <div class="thanks-content">
+      <div class="thanks-eyebrow">End of deck</div>
+      <h2 class="thanks-main">谢谢大家<br>的注意力</h2>
+      <div class="thanks-sub">
+        谢谢大家 · 下周再见
+      </div>
+    </div>
+    <div class="visual">
+      <div class="glyph">谢谢</div>
+      <div class="cap">感谢 · 下周见</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ================ SUMMARY ================ -->
+<div class="summary">
+  <div class="summary-head">
+    <h2>全部词汇 · 方便复习</h2>
+    <span class="tag">速查表</span>
+  </div>
+  <div class="summary-grid">
+    <div class="summary-item"><span class="w">国民动漫</span><span class="p">guó mín dòng màn</span></div>
+    <div class="summary-item"><span class="w">主角</span><span class="p">zhǔ jiǎo</span></div>
+    <div class="summary-item"><span class="w">小窍门</span><span class="p">xiǎo qiào mén</span></div>
+    <div class="summary-item"><span class="w">冲动消费</span><span class="p">chōng dòng xiāo fèi</span></div>
+    <div class="summary-item"><span class="w">无忧无虑</span><span class="p">wú yōu wú lǜ</span></div>
+    <div class="summary-item"><span class="w">童年</span><span class="p">tóng nián</span></div>
+    <div class="summary-item"><span class="w">找回</span><span class="p">zhǎo huí</span></div>
+    <div class="summary-item"><span class="w">瞬间</span><span class="p">shùn jiān</span></div>
+    <div class="summary-item"><span class="w">体会</span><span class="p">tǐ huì</span></div>
+  </div>
+</div>
+
+</body>
+  </html>
