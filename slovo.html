@@ -1,0 +1,1485 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HSK 5–6 · Поколение Z · Справочник</title>
+<style>
+  :root{
+    --bg:#0f1115;
+    --card:#171a21;
+    --card2:#1e222b;
+    --line:#2a2f3a;
+    --txt:#e7eaf0;
+    --muted:#9aa3b2;
+    --accent:#ffb454;
+    --accent2:#5aa9ff;
+    --ok:#4ade80;
+    --warn:#fbbf24;
+    --bad:#f87171;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--txt);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"PingFang SC","Microsoft YaHei",sans-serif;
+    font-size:16px;line-height:1.5}
+  a{color:var(--accent2)}
+
+  /* ===== HEADER ===== */
+  .top{
+    position:sticky;top:0;z-index:50;
+    background:rgba(15,17,21,.95);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+    padding:12px 14px 8px;
+  }
+  .top h1{margin:0 0 4px;font-size:18px;font-weight:700}
+  .top .sub{font-size:12.5px;color:var(--muted)}
+
+  /* ===== NAV (справочник) ===== */
+  .nav-wrap{
+    position:sticky;top:64px;z-index:40;
+    background:rgba(15,17,21,.95);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+    padding:8px 10px;
+  }
+  .nav-title{font-size:12px;color:var(--muted);margin:0 0 6px 4px;letter-spacing:.5px}
+  .nav{
+    display:flex;flex-wrap:wrap;gap:6px;
+    max-height:132px;overflow-y:auto;
+    padding-bottom:4px;
+  }
+  .nav a{
+    display:inline-block;
+    padding:6px 10px;
+    font-size:13px;
+    background:var(--card2);
+    color:var(--txt);
+    border:1px solid var(--line);
+    border-radius:999px;
+    text-decoration:none;
+    white-space:nowrap;
+    transition:.15s;
+  }
+  .nav a:active{background:var(--accent);color:#111;border-color:var(--accent)}
+
+  /* ===== MAIN ===== */
+  main{padding:12px 12px 80px;max-width:820px;margin:0 auto}
+
+  /* ===== WORD CARD ===== */
+  .word{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    margin:0 0 14px;
+    padding:14px;
+    scroll-margin-top:190px; /* чтобы при клике карточка не уходила под sticky */
+  }
+  .word:target{border-color:var(--accent);box-shadow:0 0 0 2px rgba(255,180,84,.18)}
+
+  .w-head{display:flex;flex-direction:column;gap:4px;margin-bottom:10px}
+  .w-emoji{font-size:22px}
+  .w-cn{font-size:28px;font-weight:700;letter-spacing:2px}
+  .w-py{font-size:14px;color:var(--accent);letter-spacing:1px}
+  .w-ru{font-size:14px;color:var(--muted);margin-top:2px}
+  .w-ru button{
+    background:none;border:1px dashed var(--line);color:var(--muted);
+    border-radius:8px;font-size:12px;padding:2px 8px;margin-left:6px
+  }
+
+  h4{
+    font-size:14.5px;margin:14px 0 6px;
+    color:var(--accent);
+    letter-spacing:.3px;
+  }
+  p{margin:6px 0}
+  .cn{color:#ffe6b8}
+  .ru{color:var(--muted);font-size:13.5px}
+  .ex-ru{display:block;color:var(--muted);font-size:13px;margin-top:2px}
+
+  /* trace */
+  .c-wrap{
+    background:var(--card2);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:10px;
+    margin:8px 0 4px;
+  }
+  .c-wrap h4{margin-top:0}
+  .c-wrap canvas{
+    width:100%;height:140px;background:#0b0d11;border-radius:8px;
+    border:1px dashed var(--line);display:block;touch-action:none;
+  }
+  .c-wrap .btns{display:flex;gap:8px;margin-top:8px}
+  .c-wrap button{
+    flex:1;padding:10px;font-size:14px;border-radius:10px;
+    background:var(--card);border:1px solid var(--line);color:var(--txt);
+  }
+  .c-wrap button:active{background:var(--accent);color:#111}
+
+  /* char rows */
+  .char-row{
+    background:var(--card2);border:1px solid var(--line);
+    border-radius:10px;padding:8px 10px;margin:6px 0;font-size:14px;
+  }
+  .char-row .warn{display:block;color:var(--warn);font-size:12.5px;margin-top:4px}
+
+  /* trap */
+  .trap{
+    background:#1d1a14;border:1px solid #4a3a1a;border-radius:10px;
+    padding:10px;margin:10px 0;
+  }
+  .trap .head{color:var(--warn);font-weight:700;margin-bottom:4px;font-size:14px}
+  .qa{margin-top:6px;font-size:13.5px}
+  .qa .q{color:var(--accent2)}
+  .qa .a{color:var(--ok)}
+  .qa .why{color:var(--muted);font-size:13px}
+  .qa .mem{color:var(--accent);font-size:13px}
+
+  /* colloc */
+  .colloc{
+    background:var(--card2);border:1px solid var(--line);
+    border-radius:10px;padding:8px 10px;margin:6px 0;font-size:14px;
+  }
+  .tag-hsk{background:#1e2a44;color:#8ab4ff;font-size:11px;padding:1px 6px;border-radius:6px;margin-right:6px}
+  .tag-byt{background:#1e3a2a;color:#8fe3a3;font-size:11px;padding:1px 6px;border-radius:6px;margin-right:6px}
+  .tag-media{background:#3a1f2a;color:#ff9bb8;font-size:11px;padding:1px 6px;border-radius:6px;margin-right:6px}
+
+  .cogn{padding:4px 0;border-bottom:1px dashed var(--line);font-size:14px}
+  .cogn:last-child{border-bottom:none}
+  .cogn .py{color:var(--accent);margin-left:6px;font-size:13px}
+  .cogn .ru{display:block;color:var(--muted);font-size:13px}
+  .cogn .lvl{font-size:11px;color:#9aa3b2;background:#222733;padding:1px 6px;border-radius:6px;margin-left:6px}
+  .cogn-link{color:var(--muted);font-size:13px;margin-top:6px}
+
+  .example{background:var(--card2);border-left:3px solid var(--accent2);
+    border-radius:0 10px 10px 0;padding:8px 10px;margin:8px 0;font-size:14px}
+  .example .ru{display:block;color:var(--muted);font-size:13px;margin-top:4px}
+
+  textarea{
+    width:100%;min-height:70px;border-radius:10px;
+    background:#0b0d11;border:1px solid var(--line);color:var(--txt);
+    padding:10px;font-size:14px;resize:vertical;margin-top:6px;
+  }
+  textarea:focus{outline:2px solid var(--accent);border-color:transparent}
+  label{font-size:13.5px;color:var(--accent);display:block;margin-top:6px}
+  label span{color:var(--ok);font-size:12px;margin-left:6px}
+
+  /* КНОПКА НАВЕРХ */
+  .to-top{
+    position:fixed;right:14px;bottom:14px;z-index:60;
+    width:48px;height:48px;border-radius:50%;
+    background:var(--accent);color:#111;border:none;font-size:20px;
+    box-shadow:0 6px 18px rgba(0,0,0,.5);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .to-top:active{transform:scale(.95)}
+
+  @media (min-width:640px){
+    .w-head{flex-direction:row;align-items:center;gap:12px}
+    .w-cn{font-size:32px}
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <h1>📱 Поколение Z — новый потребительский рынок Китая</h1>
+  <div class="sub">HSK 5–6 · лексика про молодёжь, культуру, экономику и потребление</div>
+</header>
+
+<!-- СПРАВОЧНИК (навигация) -->
+<div class="nav-wrap">
+  <div class="nav-title">📚 Справочник · нажми на слово</div>
+  <nav class="nav">
+    <a href="#w-促成">促成</a>
+    <a href="#w-线上">线上</a>
+    <a href="#w-情怀">情怀</a>
+    <a href="#w-主旋律">主旋律</a>
+    <a href="#w-回馈">回馈</a>
+    <a href="#w-坦白">坦白</a>
+    <a href="#w-低调">低调</a>
+    <a href="#w-良心">良心</a>
+    <a href="#w-火爆">火爆</a>
+    <a href="#w-涌入">涌入</a>
+    <a href="#w-同比">同比</a>
+    <a href="#w-大幅度">大幅度</a>
+    <a href="#w-空前">空前</a>
+    <a href="#w-展览会">展览会</a>
+    <a href="#w-奥运会">奥运会</a>
+    <a href="#w-文创雪糕">文创雪糕</a>
+    <a href="#w-汉服">汉服</a>
+    <a href="#w-穿越">穿越</a>
+    <a href="#w-承载">承载</a>
+  </nav>
+</div>
+
+<main>
+
+<!-- ===== 促成 ===== -->
+<div class="word" id="w-促成" data-word="促成" data-pinyin="cù chéng" data-trans="содействовать, способствовать осуществлению">
+  <div class="w-head">
+    <span class="w-emoji">🤝</span>
+    <span class="w-cn">促成</span>
+    <span class="w-py">cù chéng</span>
+    <span class="w-ru">содействовать, способствовать осуществлению <button>👁️ перевод</button></span>
+  </div>
+  <div class="c-wrap">
+    <h4>✏️ Прописи · 促成</h4>
+    <p class="ru">пиши по памяти</p>
+    <canvas></canvas>
+    <div class="btns">
+      <button>↩️ отменить</button>
+      <button>↪️ повторить</button>
+      <button>🗑️ очистить</button>
+    </div>
+  </div>
+  <div>
+    <h4>🧠 Суть</h4>
+    <p>Прилагать усилия, чтобы какое-то дело успешно завершилось, помочь осуществить событие.</p>
+    <p><span class="cn">促成：努力让一件事情成功发生。</span></p>
+  </div>
+  <div>
+    <h4>🎯 Как запомнить</h4>
+    <p>🪝 Друзья долго не могли договориться о совместном проекте, и именно ты помог им договориться. <strong>Ты способствовал успеху, ты 促成 это дело.</strong></p>
+    <div class="char-row">
+      <p>促 cù: ✋ 亻(человек) + 足(нога) = подталкивать, побуждать</p>
+      <p>成 chéng: 🧱 戈 + 囗 = завершить, сделать успешным</p>
+      <span class="warn">⚠️ Похожий иероглиф: 城 chéng (город). Не перепутай: 促成 — подтолкнуть к успеху, 城市 — город.</span>
+    </div>
+    <p>🧩 Мнемоника: ✋подтолкнуть + 🧱завершить = способствовать осуществлению</p>
+    <div class="trap">
+      <p class="head">⚠️ Ловушка: 促成 ≠ 完成 (wán chéng)</p>
+      <p>完成 — самому закончить работу; 促成 — только помочь, подтолкнуть других, не обязательно делать всё самому.</p>
+      <div class="qa">
+        <p class="q">🎯 Если я сам закончил работу, можно сказать «我促成这件事»?</p>
+        <p class="a">✅ Нет, лучше 完成.</p>
+        <p class="why"><strong>Почему:</strong> 促成 подразумевает помощь другим, а не самостоятельное завершение.</p>
+        <p class="mem"><strong>Как запомнить:</strong> 促成 = помог другим добиться цели; 完成 = сам сделал до конца.</p>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h4>🔗 Коллокации</h4>
+    <div class="colloc"><span class="tag-hsk">🎯 HSK</span> 促成合作 — способствовать заключению сотрудничества <span class="ex-ru">这次会谈促成了两国合作。Эта встреча помогла наладить сотрудничество двух стран.</span></div>
+    <div class="colloc"><span class="tag-byt">🗣️ Быт</span> 促成姻缘 — свести пару, способствовать свадьбе <span class="ex-ru">是她促成他们的姻缘。Именно она свела эту пару.</span></div>
+    <div class="colloc"><span class="tag-media">📰 Медиа</span> 促成交易 — помочь сторонам заключить сделку <span class="ex-ru">政策促成大量跨境交易。Политика способствовала росту трансграничных сделок.</span></div>
+  </div>
+  <div>
+    <h4>🌳 Однокоренные</h4>
+    <div class="cogn"><span class="cn">促进</span><span class="py">cù jìn</span><span class="ru">продвигать</span><span class="lvl">HSK5</span></div>
+    <div class="cogn"><span class="cn">成功</span><span class="py">chéng gōng</span><span class="ru">успех</span><span class="lvl">HSK4</span></div>
+    <div class="cogn"><span class="cn">成长</span><span class="py">chéng zhǎng</span><span class="ru">расти</span><span class="lvl">HSK4</span></div>
+    <div class="cogn-link">Общий иероглиф 成 — значение «завершить, добиться результата».</div>
+  </div>
+  <div>
+    <h4>📝 Живой пример HSK 6</h4>
+    <div class="example">
+      <span class="cn">多方的沟通与理解最终促成了这项面向Z世代消费市场的新项目。</span>
+      <span class="ru">Общение и взаимопонимание всех сторон в итоге способствовали запуску этого нового проекта для потребительского рынка поколения Z.</span>
+    </div>
+  </div>
+  <label>✏️ Своё предложение <span>✓ сохранено</span></label>
+  <textarea placeholder="Напиши своё предложение с 促成..."></textarea>
+</div>
+
+<!-- ===== 线上 ===== -->
+<div class="word" id="w-线上" data-word="线上" data-pinyin="xiàn shàng" data-trans="онлайн, в сети">
+  <div class="w-head">
+    <span class="w-emoji">🌐</span>
+    <span class="w-cn">线上</span>
+    <span class="w-py">xiàn shàng</span>
+    <span class="w-ru">онлайн, в сети <button>👁️ перевод</button></span>
+  </div>
+  <div class="c-wrap">
+    <h4>✏️ Прописи · 线上</h4>
+    <p class="ru">пиши по памяти</p>
+    <canvas></canvas>
+    <div class="btns"><button>↩️ отменить</button><button>↪️ повторить</button><button>🗑️ очистить</button></div>
+  </div>
+  <div>
+    <h4>🧠 Суть</h4>
+    <p>Обозначает всё, что происходит через интернет, онлайн. Противоположность — 线下 (офлайн).</p>
+    <p><span class="cn">线上：在互联网上进行的事情，反义词是线下。</span></p>
+  </div>
+  <div>
+    <h4>🎯 Как запомнить</h4>
+    <p>🪝 Ты учишь китайский по видеозвонку, не приходя в класс. <strong>Это обучение 线上 — онлайн.</strong></p>
+    <div class="char-row">
+      <p>线 xiàn: 🧵 纟(нить) + 戔 = линия, провод, сеть</p>
+      <p>上 shàng: ⬆️ верх, на, над</p>
+      <span class="warn">⚠️ Похожий иероглиф: 钱 qián (деньги). 线 — нить/сеть, 钱 — деньги.</span>
+    </div>
+    <p>🧩 Мнемоника: 🧵сеть + ⬆️на = на сети, онлайн</p>
+    <div class="trap">
+      <p class="head">⚠️ Ловушка: 线上 ≠ 网上 (wǎng shàng)</p>
+      <p>网上 просто означает «в интернете», а 线上 чаще используется как термин для формата мероприятия, обучения, торговли.</p>
+      <div class="qa">
+        <p class="q">🎯 Фраза «线上会议» можно заменить на «网上会议»?</p>
+        <p class="a">✅ Можно, но 线上 звучит более официально, про формат мероприятия.</p>
+        <p class="why"><strong>Почему:</strong> В текстах HSK 线上 чаще используется для описания формата занятий, продаж, встреч.</p>
+        <p class="mem"><strong>Как запомнить:</strong> 线上 = формат онлайн; 网上 = просто внутри сети.</p>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h4>🔗 Коллокации</h4>
+    <div class="colloc"><span class="tag-hsk">🎯 HSK</span> 线上教学 — онлайн-обучение <span class="ex-ru">疫情期间很多学校开展线上教学。Во время пандемии многие школы перешли на онлайн-обучение.</span></div>
+    <div class="colloc"><span class="tag-byt">🗣️ Быт</span> 线上购物 — онлайн-покупки <span class="ex-ru">我周末喜欢线上购物。По выходным я люблю делать покупки в интернете.</span></div>
+    <div class="colloc"><span class="tag-media">📰 Медиа</span> 线上发布会 — онлайн-пресс-конференция <span class="ex-ru">品牌举办线上发布会吸引Z世代。Бренд устроил онлайн-презентацию для привлечения поколения Z.</span></div>
+  </div>
+  <div>
+    <h4>🌳 Однокоренные</h4>
+    <div class="cogn"><span class="cn">电线</span><span class="py">diàn xiàn</span><span class="ru">электропровод</span><span class="lvl">HSK4</span></div>
+    <div class="cogn"><span class="cn">上面</span><span class="py">shàng miàn</span><span class="ru">сверху</span><span class="lvl">HSK2</span></div>
+    <div class="cogn"><span class="cn">线下</span><span class="py">xiàn xià</span><span class="ru">офлайн</span><span class="lvl">HSK5</span></div>
+    <div class="cogn-link">Общий иероглиф 线 — «линия, сеть»; 上/下 указывают «на сети / вне сети».</div>
+  </div>
+  <div>
+    <h4>📝 Живой пример HSK 6</h4>
+    <div class="example">
+      <span class="cn">很多Z世代年轻人更喜欢线上消费，因为这样节省大量的时间。</span>
+      <span class="ru">Многие молодые люди из поколения Z предпочитают онлайн-покупки, потому что это экономит много времени.</span>
+    </div>
+  </div>
+  <label>✏️ Своё предложение <span>✓ сохранено</span></label>
+  <textarea placeholder="Напиши своё предложение с 线上..."></textarea>
+</div>
+
+<!-- ===== 情怀 ===== -->
+<div class="word" id="w-情怀" data-word="情怀" data-pinyin="qíng huái" data-trans="душевная привязанность, глубокое чувство">
+  <div class="w-head">
+    <span class="w-emoji">💛</span>
+    <span class="w-cn">情怀</span>
+    <span class="w-py">qíng huái</span>
+    <span class="w-ru">душевная привязанность, глубокое чувство <button>👁️ перевод</button></span>
+  </div>
+  <div class="c-wrap">
+    <h4>✏️ Прописи · 情怀</h4>
+    <p class="ru">пиши по памяти</p>
+    <canvas></canvas>
+    <div class="btns"><button>↩️ отменить</button><button>↪️ повторить</button><button>🗑️ очистить</button></div>
+  </div>
+  <div>
+    <h4>🧠 Суть</h4>
+    <p>Глубокие эмоции, особое душевное отношение к чему-то; не простое временное настроение, а стойкое чувство.</p>
+    <p><span class="cn">情怀：长久的、深沉的情感和心境。</span></p>
+  </div>
+  <div>
+    <h4>🎯 Как запомнить</h4>
+    <p>🪝 Молодые люди покупают ханьфу не просто за одежду, они любят древнюю культуру. <strong>Это культурная 情怀 — душевная привязанность.</strong></p>
+    <div class="char-row">
+      <p>情 qíng: ❤️ 忄(сердце) + 青 = чувство, эмоция</p>
+      <p>怀 huái: 🤰 忄(сердце) + 不 + 心 = хранить в душе</p>
+      <span class="warn">⚠️ Похожий иероглиф: 杯 bēi (стакан). 怀 — в душе, 杯 — чашка.</span>
+    </div>
+    <p>🧩 Мнемоника: ❤️чувство + 🤍хранить в душе = глубокая душевная привязанность</p>
+    <div class="trap">
+      <p class="head">⚠️ Ловушка: 情怀 ≠ 感情 (gǎn qíng)</p>
+      <p>感情 — обычные чувства, привязанность между людьми; 情怀 более возвышенное, относится к идеям, культуре, родине.</p>
+      <div class="qa">
+        <p class="q">🎯 Можно сказать «我和朋友有家国情怀»?</p>
+        <p class="a">✅ Нет, 家国情怀 — чувство к родине, между людьми используют 感情.</p>
+        <p class="why"><strong>Почему:</strong> 情怀 используется к абстрактным ценностям, не к межличностным отношениям.</p>
+        <p class="mem"><strong>Как запомнить:</strong> 感情 — чувства между людьми; 情怀 — высокое чувство к культуре/родине.</p>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h4>🔗 Коллокации</h4>
+    <div class="colloc"><span class="tag-hsk">🎯 HSK</span> 家国情怀 — патриотические чувства, любовь к родине <span class="ex-ru">这部电影充满家国情怀。Фильм наполнен любовью к родине.</span></div>
+    <div class="colloc"><span class="tag-byt">🗣️ Быт</span> 少女情怀 — девичьи переживания, романтические чувства <span class="ex-ru">这首歌写的是少女情怀。Эта песня про романтические переживания девушки.</span></div>
+    <div class="colloc"><span class="tag-media">📰 Медиа</span> 文化情怀 — культурная привязанность <span class="ex-ru">文创产品满足年轻人的文化情怀。Культурные сувениры удовлетворяют культурные чувства молодёжи.</span></div>
+  </div>
+  <div>
+    <h4>🌳 Однокоренные</h4>
+    <div class="cogn"><span class="cn">心情</span><span class="py">xīn qíng</span><span class="ru">настроение</span><span class="lvl">HSK3</span></div>
+    <div class="cogn"><span class="cn">怀念</span><span class="py">huái niàn</span><span class="ru">скучать по</span><span class="lvl">HSK5</span></div>
+    <div class="cogn"><span class="cn">热情</span><span class="py">rè qíng</span><span class="ru">энтузиазм</span><span class="lvl">HSK4</span></div>
+    <div class="cogn-link">Оба иероглифа имеют элемент 忄 — всё связано с эмоциями и душой.</div>
+  </div>
+  <div>
+    <h4>📝 Живой пример HSK 6</h4>
+    <div class="example">
+      <span class="cn">许多Z世代购买文创产品，是出于对中华传统文化的情怀。</span>
+      <span class="ru">Многие представители поколения Z покупают культурные сувениры из-за душевной привязанности к традиционной китайской культуре.</span>
+    </div>
+  </div>
+  <label>✏️ Своё предложение <span>✓ сохранено</span></label>
+  <textarea placeholder="Напиши своё предложение с 情怀..."></textarea>
+</div>
+
+<!-- ===== 主旋律 ===== -->
+<div class="word" id="w-主旋律" data-word="主旋律" data-pinyin="zhǔ xuán lǜ" data-trans="главная идея, основная тема">
+  <div class="w-head">
+    <span class="w-emoji">🎵</span>
+    <span class="w-cn">主旋律</span>
+    <span class="w-py">zhǔ xuán lǜ</span>
+    <span class="w-ru">главная идея, основная тема <button>👁️ перевод</button></span>
+  </div>
+  <div class="c-wrap">
+    <h4>✏️ Прописи · 主旋律</h4>
+    <p class="ru">пиши по памяти</p>
+    <canvas></canvas>
+    <div class="btns"><button>↩️ отменить</button><button>↪️ повторить</button><button>🗑️ очистить</button></div>
+  </div>
+  <div>
+    <h4>🧠 Суть</h4>
+    <p>Буквально главная мелодия в музыке; переносно — основная мысль, доминирующая тема фильма, книги, общества.</p>
+    <p><span class="cn">主旋律：原本指音乐的主调，现在指文章、电影、社会的主要思想。</span></p>
+  </div>
+  <div>
+    <h4>🎯 Как запомнить</h4>
+    <p>🪝 В фильме много второстепенных сюжетов, но одна главная мысль, вокруг которой всё строится. <strong>Это — 主旋律 фильма.</strong></p>
+    <div class="char-row">
+      <p>主 zhǔ: 👑 王 + 丶 = главный, основной</p>
+      <p>旋 xuán: 🔄 方 + 㐅 + 止 = кружиться, вихрь (звук)</p>
+      <p>律 lǜ: 🎶 彳 + 聿 = ритм, закон, мелодия</p>
+      <span class="warn">⚠️ Похожий иероглиф: 津 jīn (река). Не путать 律 и 津.</span>
+    </div>
+    <p>🧩 Мнемоника: 👑главная + 🔄звук + 🎶ритм = главная мелодия, основная идея</p>
+    <div class="trap">
+      <p class="head">⚠️ Ловушка: 主旋律 ≠ 主题 (zhǔ tí)</p>
+      <p>主题 — просто тема текста/фильма; 主旋律 имеет оттенок «доминирующая, основная идея, которую продвигают».</p>
+      <div class="qa">
+        <p class="q">🎯 При анализе фильма можно заменить 主旋律 на 主题?</p>
+        <p class="a">✅ Частично, но 主旋律 больше используется в публицистике, в новостях.</p>
+        <p class="why"><strong>Почему:</strong> В HSK6 主旋律 часто встречается в текстах про культуру, кино, общество.</p>
+        <p class="mem"><strong>Как запомнить:</strong> 主题 = тема; 主旋律 = доминирующая основная мысль.</p>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h4>🔗 Коллокации</h4>
+    <div class="colloc"><span class="tag-hsk">🎯 HSK</span> 时代主旋律 — основная идея эпохи <span class="ex-ru">和平是时代的主旋律。Мир — главная идея нашей эпохи.</span></div>
+    <div class="colloc"><span class="tag-byt">🗣️ Быт</span> 电影的主旋律 — основная идея фильма <span class="ex-ru">这部电影的主旋律是勇敢。Главная идея этого фильма — смелость.</span></div>
+    <div class="colloc"><span class="tag-media">📰 Медиа</span> 弘扬主旋律 — продвигать основные ценности <span class="ex-ru">文艺作品要弘扬主旋律。Художественные произведения должны продвигать основные ценности.</span></div>
+  </div>
+  <div>
+    <h4>🌳 Однокоренные</h4>
+    <div class="cogn"><span class="cn">主要</span><span class="py">zhǔ yào</span><span class="ru">главный</span><span class="lvl">HSK3</span></div>
+    <div class="cogn"><span class="cn">旋转</span><span class="py">xuán zhuǎn</span><span class="ru">вращаться</span><span class="lvl">HSK5</span></div>
+    <div class="cogn"><span class="cn">规律</span><span class="py">guī lǜ</span><span class="ru">закономерность</span><span class="lvl">HSK5</span></div>
+    <div class="cogn-link">主 = главный, остальные два иероглифа связаны с музыкой и ритмом.</div>
+  </div>
+  <div>
+    <h4>📝 Живой пример HSK 6</h4>
+    <div class="example">
+      <span class="cn">不少面向Z世代的影视作品，把热爱传统文化作为作品的主旋律。</span>
+      <span class="ru">Многие фильмы и сериалы для поколения Z берут любовь к традиционной культуре как основную идею произведений.</span>
+    </div>
+  </div>
+  <label>✏️ Своё предложение <span>✓ сохранено</span></label>
+  <textarea placeholder="Напиши своё предложение с 主旋律..."></textarea>
+</div>
+
+<!-- ===== 回馈 ===== -->
+<div class="word" id="w-回馈" data-word="回馈" data-pinyin="huí kuì" data-trans="отдача, вознаграждение, ответный дар">
+  <div class="w-head">
+    <span class="w-emoji">🎁</span>
+    <span class="w-cn">回馈</span>
+    <span class="w-py">huí kuì</span>
+    <span class="w-ru">отдача, вознаграждение, ответный дар <button>👁️ перевод</button></span>
+  </div>
+  <div class="c-wrap">
+    <h4>✏️ Прописи · 回馈</h4>
+    <p class="ru">пиши по памяти</p>
+    <canvas></canvas>
+    <div class="btns"><button>↩️ отменить</button><button>↪️ повторить</button><button>🗑️ очистить</button></div>
+  </div>
+  <div>
+    <h4>🧠 Суть</h4>
+    <p>Отдавать что-то взамен, возвращать пользу; часто о помощи обществу, благодарности за поддержку.</p>
+    <p><span class="cn">回馈：回报、给予好处，经常指个人或企业回报社会。</span></p>
+  </div>
+  <div>
+    <h4>🎯 Как запомнить</h4>
+    <p>🪝 Компания заработала много денег и теперь строит бесплатные библиотеки для молодёжи. <strong>Это 回馈 обществу — отдача обществу.</strong></p>
+    <div class="char-row">
+      <p>回 huí: ↩️ вернуться, возвращать</p>
+      <p>馈 kuì: 🎁 饣(еда) + 贵 — дарить, подносить подарок</p>
+      <span class="warn">⚠️ Похожий иероглиф: 溃 kuì (разрушаться). Не путать 馈 и 溃.</span>
+    </div>
+    <p>🧩 Мнемоника: ↩️вернуть + 🎁подарок = отдача, ответный дар</p>
+    <div class="trap">
+      <p class="head">⚠️ Ловушка: 回馈 ≠ 回报 (huí bào)</p>
+      <p>回报 — любая ответная благодарность, может быть личной; 回馈 чаще используется для больших действий: бизнес, общество.</p>
+      <div class="qa">
+        <p class="q">🎯 Я подарил другу подарок взамен, можно назвать это 回馈?</p>
+        <p class="a">✅ Лучше 回报, 回馈 звучит слишком масштабно для простого личного случая.</p>
+        <p class="why"><strong>Почему:</strong> 回馈 чаще про крупные проекты для общества, а не личные подарки.</p>
+        <p class="mem"><strong>Как запомнить:</strong> 回馈 = отдача обществу; 回报 = личная благодарность взамен.</p>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h4>🔗 Коллокации</h4>
+    <div class="colloc"><span class="tag-hsk">🎯 HSK</span> 回馈社会 — отдавать обществу <span class="ex-ru">企业家捐款，以此回馈社会。Предприниматель пожертвовал деньги, чтобы отдать обществу.</span></div>
+    <div class="colloc"><span class="tag-byt">🗣️ Быт</span> 回馈粉丝 — порадовать подписчиков <span class="ex-ru">网红直播回馈粉丝。Блогер устроил трансляцию как подарок для подписчиков.</span></div>
+    <div class="colloc"><span class="tag-media">📰 Медиа</span> 市场回馈 — рыночная отдача <span class="ex-ru">品牌的真诚获得市场的回馈。Искренность бренда получила отдачу от рынка.</span></div>
+  </div>
+  <div>
+    <h4>🌳 Однокоренные</h4>
+    <div class="cogn"><span class="cn">回来</span><span class="py">huí lái</span><span class="ru">вернуться</span><span class="lvl">HSK2</span></div>
+    <div class="cogn"><span class="cn">馈赠</span><span class="py">kuì zèng</span><span class="ru">дар, подарок</span><span class="lvl">HSK6</span></div>
+    <div class="cogn"><span class="cn">回忆</span><span class="py">huí yì</span><span class="ru">воспоминание</span><span class="lvl">HSK4</span></div>
+    <div class="cogn-link">回 = возвращать; 馈 = дарить подарок, еду.</div>
+  </div>
+  <div>
+    <h4>📝 Живой пример HSK 6</h4>
+    <div class="example">
+      <span class="cn">很多获得成功的Z世代创业者选择用公益项目来回馈社会。</span>
+      <span class="ru">Многие успешные предприниматели из поколения Z выбирают благотворительные проекты как способ отдать обществу.</span>
+    </div>
+  </div>
+  <label>✏️ Своё предложение <span>✓ сохранено</span></label>
+  <textarea placeholder="Напиши своё предложение с 回馈..."></textarea>
+</div>
+
+<!-- ===== 坦白 ===== -->
+<div class="word" id="w-坦白" data-word="坦白" data-pinyin="tǎn bái" data-trans="откровенно говорить, признаться">
+  <div class="w-head">
+    <span class="w-emoji">🤍</span>
+    <span class="w-cn">坦白</span>
+    <span class="w-py">tǎn bái</span>
+    <span class="w-ru">откровенно говорить, признаться <button>👁️ перевод</button></span>
+  </div>
+  <div class="c-wrap">
+    <h4>✏️ Прописи · 坦白</h4>
+    <p class="ru">пиши по памяти</p>
+    <canvas></canvas>
+    <div class="btns"><button>↩️ отменить</button><button>↪️ повторить</button><button>🗑️ очистить</button></div>
+  </div>
+  <div>
+    <h4>🧠 Суть</h4>
+    <p>Говорить честно и открыто, скрывать ничего не надо; часто когда признаёшься в ошибке или тайне.</p>
+    <p><span class="cn">坦白：没有隐瞒，诚实地说出事情。</span></p>
+  </div>
+  <div>
+    <h4>🎯 Как запомнить</h4>
+    <p>🪝 Ты сделал ошибку и не скрываешь её, честно рассказываешь всё другу. <strong>Ты 坦白 всё ему.</strong></p>
+    <div class="char-row">
+      <p>坦 tǎn: 🧱 土 + 旦 = ровный, открытый</p>
+      <p>白 bái: ⚪ белый, чистый, ясный</p>
+      <span class="warn">⚠️ Похожий иероглиф: 担 dān (нести на плечах). Не путать 坦 и 担.</span>
+    </div>
+    <p>🧩 Мнемоника: 🧱открытый + ⚪чистый = открыто и честно признаться</p>
+    <div class="trap">
+      <p class="head">⚠️ Ловушка: 坦白 ≠ 坦率 (tǎn shuài)</p>
+      <p>坦白 — действие: признаться, раскрыть тайну; 坦率 — черта характера, откровенный человек.</p>
+      <div class="qa">
+        <p class="q">🎯 «他为人坦白» — правильно ли?</p>
+        <p class="a">✅ Лучше «他为人坦率». 坦白 — это действие, а не постоянная черта.</p>
+        <p class="why"><strong>Почему:</strong> 坦白 — разовый акт признания; 坦率 — постоянное качество личности.</p>
+        <p class="mem"><strong>Как запомнить:</strong> 坦白 = признаться в чём-то; 坦率 = человек открытый по характеру.</p>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h4>🔗 Коллокации</h4>
+    <div class="colloc"><span class="tag-hsk">🎯 HSK</span> 坦白说出 — сказать откровенно <span class="ex-ru">请坦白说出你的想法。Пожалуйста, честно расскажи свои мысли.</span></div>
+    <div class="colloc"><span class="tag-byt">🗣️ Быт</span> 坦白交代 — всё рассказать без утайки <span class="ex-ru">他向父母坦白交代这件事。Он всё честно рассказал родителям.</span></div>
+    <div class="colloc"><span class="tag-media">📰 Медиа</span> 坦白心声 — откровенно высказать переживания <span class="ex-ru">博主坦白心声，打动很多Z世代观众。Блогер откровенно поделился переживаниями и тронул зрителей поколения Z.</span></div>
+  </div>
+  <div>
+    <h4>🌳 Однокоренные</h4>
+    <div class="cogn"><span class="cn">平坦</span><span class="py">píng tǎn</span><span class="ru">ровный</span><span class="lvl">HSK5</span></div>
+    <div class="cogn"><span class="cn">白色</span><span class="py">bái sè</span><span class="ru">белый</span><span class="lvl">HSK1</span></div>
+    <div class="cogn"><span class="cn">明白</span><span class="py">míng bái</span><span class="ru">понять</span><span class="lvl">HSK2</span></div>
+    <div class="cogn-link">坦 — открытость, ровность; 白 — ясность, без тайн.</div>
+  </div>
+  <div>
+    <h4>📝 Живой пример HSK 6</h4>
+    <div class="example">
+      <span class="cn">很多Z世代年轻人愿意在社交平台坦白自己真实的感受与想法。</span>
+      <span class="ru">Многие молодые люди из поколения Z готовы откровенно рассказывать о своих настоящих чувствах и мыслях в соцсетях.</span>
+    </div>
+  </div>
+  <label>✏️ Своё предложение <span>✓ сохранено</span></label>
+  <textarea placeholder="Напиши своё предложение с 坦白..."></textarea>
+</div>
+
+<!-- ===== 低调 ===== -->
+<div class="word" id="w-低调" data-word="低调" data-pinyin="dī diào" data-trans="сдержанный, не выставляющий себя напоказ">
+  <div class="w-head">
+    <span class="w-emoji">🤫</span>
+    <span class="w-cn">低调</span>
+    <span class="w-py">dī diào</span>
+    <span class="w-ru">сдержанный, не выставляющий себя напоказ <button>👁️ перевод</button></span>
+  </div>
+  <div class="c-wrap">
+    <h4>✏️ Прописи · 低调</h4>
+    <p class="ru">пиши по памяти</p>
+    <canvas></canvas>
+    <div class="btns"><button>↩️ отменить</button><button>↪️ повторить</button><button>🗑️ очистить</button></div>
+  </div>
+  <div>
+    <h4>🧠 Суть</h4>
+    <p>Не хвастаться, не привлекать лишнего внимания, вести себя спокойно, скромно; противоположность 高调.</p>
+    <p><span class="cn">低调：不张扬，不炫耀，不吸引别人注意。反义词是高调。</span></p>
+  </div>
+  <div>
+    <h4>🎯 Как запомнить</h4>
+    <p>🪝 Человек много достиг, но не рассказывает всем о своих успехах. <strong>Он 低调.</strong></p>
+    <div class="char-row">
+      <p>低 dī: ⬇️ низкий, пониженный</p>
+      <p>调 diào: 🎼 мелодия, тон</p>
+      <span class="warn">⚠️ Похожий иероглиф: 凋 diāo (увядать). Не путать 调 и 凋.</span>
+    </div>
+    <p>🧩 Мнемоника: ⬇️низкий + 🎼тон = тихий тон, не хвастаться, сдержанный</p>
+    <div class="trap">
+      <p class="head">⚠️ Ловушка: 低调 ≠ 谦虚 (qiān xū)</p>
+      <p>谦虚 — скромный по характеру; 低调 — стиль поведения, может быть временным.</p>
+      <div class="qa">
+        <p class="q">🎯 Если человек не хочет публичности, это значит он 谦虚?</p>
+        <p class="a">✅ Нет, это 低调 — стиль поведения, не обязательно черта характера.</p>
+        <p class="why"><strong>Почему:</strong> 低调 — внешнее поведение; 谦虚 — внутреннее качество личности.</p>
+        <p class="mem"><strong>Как запомнить:</strong> 低调 = не выставляться напоказ; 谦虚 = не переоценивать себя.</p>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h4>🔗 Коллокации</h4>
+    <div class="colloc"><span class="tag-hsk">🎯 HSK</span> 低调处理 — решать дело тихо, без шума <span class="ex-ru">这件事我们要低调处理。Нам нужно решить это дело без лишнего шума.</span></div>
+    <div class="colloc"><span class="tag-byt">🗣️ Быт</span> 生活低调 — вести скромный образ жизни <span class="ex-ru">他很有钱，但是生活很低调。У него много денег, но он живёт скромно.</span></div>
+    <div class="colloc"><span class="tag-media">📰 Медиа</span> 低调走红 — стать популярным тихо, без пиара <span class="ex-ru">这位Z世代设计师低调走红。Этот дизайнер из поколения Z стал известным без лишнего шума.</span></div>
+  </div>
+  <div>
+    <h4>🌳 Однокоренные</h4>
+    <div class="cogn"><span class="cn">降低</span><span class="py">jiàng dī</span><span class="ru">понижать</span><span class="lvl">HSK4</span></div>
+    <div class="cogn"><span class="cn">声调</span><span class="py">shēng diào</span><span class="ru">тон речи</span><span class="lvl">HSK3</span></div>
+    <div class="cogn"><span class="cn">高调</span><span class="py">gāo diào</span><span class="ru">пафосно, напоказ</span><span class="lvl">HSK5</span></div>
+    <div class="cogn-link">低/高 — низкий/высокий; 调 — тон поведения.</div>
+  </div>
+  <div>
+    <h4>📝 Живой пример HSK 6</h4>
+    <div class="example">
+      <span class="cn">不少Z世代的成功创作者选择保持低调，不愿在网络上过度炫耀。</span>
+      <span class="ru">Многие успешные создатели контента из поколения Z предпочитают вести себя сдержанно и не хвастаться слишком сильно в сети.</span>
+    </div>
+  </div>
+  <label>✏️ Своё предложение <span>✓ сохранено</span></label>
+  <textarea placeholder="Напиши своё предложение с 低调..."></textarea>
+</div>
+
+<!-- ===== 良心 ===== -->
+<div class="word" id="w-良心" data-word="良心" data-pinyin="liáng xīn" data-trans="совесть">
+  <div class="w-head">
+    <span class="w-emoji">❤️</span>
+    <span class="w-cn">良心</span>
+    <span class="w-py">liáng xīn</span>
+    <span class="w-ru">совесть <button>👁️ перевод</button></span>
+  </div>
+  <div class="c-wrap">
+    <h4>✏️ Прописи · 良心</h4>
+    <p class="ru">пиши по памяти</p>
+    <canvas></canvas>
+    <div class="btns"><button>↩️ отменить</button><button>↪️ повторить</button><button>🗑️ очистить</button></div>
+  </div>
+  <div>
+    <h4>🧠 Суть</h4>
+    <p>Внутреннее чувство, что такое хорошо и плохо; моральный компас внутри человека.</p>
+    <p><span class="cn">良心：人内心判断对错的道德感。</span></p>
+  </div>
+  <div>
+    <h4>🎯 Как запомнить</h4>
+    <p>🪝 Продавец не обманывает покупателей, делает честный товар. <strong>У него есть 良心 — совесть.</strong></p>
+    <div class="char-row">
+      <p>良 liáng: ✅ хороший, добрый</p>
+      <p>心 xīn: ❤️ сердце, душа</p>
+      <span class="warn">⚠️ Похожий иероглиф: 食 shí (еда). Не путать 良 и 食.</span>
+    </div>
+    <p>🧩 Мнемоника: ✅добрый + ❤️сердце = доброе сердце, совесть</p>
+    <div class="trap">
+      <p class="head">⚠️ Ловушка: 良心 ≠ 好心 (hǎo xīn)</p>
+      <p>好心 — доброе намерение, желание помочь; 良心 — моральное чувство правильного и неправильного.</p>
+      <div class="qa">
+        <p class="q">🎯 «他好心办事» означает, что он действует по совести?</p>
+        <p class="a">✅ Нет, это значит «он хотел сделать добро», не обязательно по моральным принципам.</p>
+        <p class="why"><strong>Почему:</strong> 良心 относится к морали, 好心 просто про добрые намерения.</p>
+        <p class="mem"><strong>Как запомнить:</strong> 良心 = внутреннее чувство добра и зла; 好心 = доброе желание помочь.</p>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h4>🔗 Коллокации</h4>
+    <div class="colloc"><span class="tag-hsk">🎯 HSK</span> 凭良心办事 — действовать по совести <span class="ex-ru">做生意要凭良心。В бизнесе нужно действовать по совести.</span></div>
+    <div class="colloc"><span class="tag-byt">🗣️ Быт</span> 有良心 — иметь совесть <span class="ex-ru">你这个人很有良心。У тебя есть совесть.</span></div>
+    <div class="colloc"><span class="tag-media">📰 Медиа</span> 良心产品 — честный качественный товар <span class="ex-ru">这款文创雪糕是良心产品。Это культурное мороженое — честный качественный товар.</span></div>
+  </div>
+  <div>
+    <h4>🌳 Однокоренные</h4>
+    <div class="cogn"><span class="cn">良好</span><span class="py">liáng hǎo</span><span class="ru">хороший</span><span class="lvl">HSK4</span></div>
+    <div class="cogn"><span class="cn">心情</span><span class="py">xīn qíng</span><span class="ru">настроение</span><span class="lvl">HSK3</span></div>
+    <div class="cogn"><span class="cn">善良</span><span class="py">shàn liáng</span><span class="ru">добрый</span><span class="lvl">HSK4</span></div>
+    <div class="cogn-link">良 = хороший; 心 = сердце, внутренние чувства.</div>
+  </div>
+  <div>
+    <h4>📝 Живой пример HSK 6</h4>
+    <div class="example">
+      <span class="cn">面向Z世代的品牌只有守住良心，才能长期获得年轻人的信任。</span>
+      <span class="ru">Только сохраняя совесть, бренды для поколения Z могут надолго завоевать доверие молодёжи.</span>
+    </div>
+  </div>
+  <label>✏️ Своё предложение <span>✓ сохранено</span></label>
+  <textarea placeholder="Напиши своё предложение с 良心..."></textarea>
+</div>
+
+<!-- ===== 火爆 ===== -->
+<div class="word" id="w-火爆" data-word="火爆" data-pinyin="huǒ bào" data-trans="бурный, очень популярный, горячий">
+  <div class="w-head">
+    <span class="w-emoji">🔥</span>
+    <span class="w-cn">火爆</span>
+    <span class="w-py">huǒ bào</span>
+    <span class="w-ru">бурный, очень популярный, горячий <button>👁️ перевод</button></span>
+  </div>
+  <div class="c-wrap">
+    <h4>✏️ Прописи · 火爆</h4>
+    <p class="ru">пиши по памяти</p>
+    <canvas></canvas>
+    <div class="btns"><button>↩️ отменить</button><button>↪️ повторить</button><button>🗑️ очистить</button></div>
+  </div>
+  <div>
+    <h4>🧠 Суть</h4>
+    <p>Очень популярный, большой ажиотаж; может описывать событие, товар, спрос, атмосферу.</p>
+    <p><span class="cn">火爆：形容非常受欢迎，气氛热烈，很火。</span></p>
+  </div>
+  <div>
+    <h4>🎯 Как запомнить</h4>
+    <p>🪝 Новый музейный 文创雪糕, все молодые люди хотят купить, очередь огромная. <strong>这个商品很火爆 — товар очень популярен.</strong></p>
+    <div class="char-row">
+      <p>火 huǒ: 🔥 огонь</p>
+      <p>爆 bào: 💥 взрыв, вспышка</p>
+      <span class="warn">⚠️ Похожий иероглиф: 曝 bào (показывать). Не путать 爆 и 曝.</span>
+    </div>
+    <p>🧩 Мнемоника: 🔥огонь + 💥взрыв = огромный ажиотаж, очень популярный</p>
+    <div class="trap">
+      <p class="head">⚠️ Ловушка: 火爆 ≠ 热门 (rè mén)</p>
+      <p>热门 — просто популярная тема/вещь; 火爆 подчёркивает сильный ажиотаж, взрывной рост интереса.</p>
+      <div class="qa">
+        <p class="q">🎯 «热门电影» можно заменить «火爆电影»?</p>
+        <p class="a">✅ Можно, но 火爆 подчеркнёт сильный ажиотаж и полные залы.</p>
+        <p class="why"><strong>Почему:</strong> 火爆 сильнее по эмоции, чем обычное слово 热门.</p>
+        <p class="mem"><strong>Как запомнить:</strong> 热门 = популярный; 火爆 = очень горячий, ажиотажный.</p>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h4>🔗 Коллокации</h4>
+    <div class="colloc"><span class="tag-hsk">🎯 HSK</span> 场面火爆 — бурная атмосфера мероприятия <span class="ex-ru">展览会场面火爆。На выставке была бурная атмосфера.</span></div>
+    <div class="colloc"><span class="tag-byt">🗣️ Быт</span> 生意火爆 — бизнес процветает, много клиентов <span class="ex-ru">这家奶茶店生意火爆。У этого магазина чая с молоком много клиентов.</span></div>
+    <div class="colloc"><span class="tag-media">📰 Медиа</span> 火爆出圈 — стать вирусным, завоевать аудиторию <span class="ex-ru">汉服文化在Z世代群体中火爆出圈。Культура ханьфу стала вирусной среди поколения Z.</span></div>
+  </div>
+  <div>
+    <h4>🌳 Однокоренные</h4>
+    <div class="cogn"><span class="cn">火热</span><span class="py">huǒ rè</span><span class="ru">горячий</span><span class="lvl">HSK4</span></div>
+    <div class="cogn"><span class="cn">爆炸</span><span class="py">bào zhà</span><span class="ru">взрыв</span><span class="lvl">HSK5</span></div>
+    <div class="cogn"><span class="cn">大火</span><span class="py">dà huǒ</span><span class="ru">большой хайп</span><span class="lvl">HSK4</span></div>
+    <div class="cogn-link">火 — огонь, популярность; 爆 — взрыв, резкий рост.</div>
+  </div>
+  <div>
+    <h4>📝 Живой пример HSK 6</h4>
+    <div class="example">
+      <span class="cn">博物馆推出的文创雪糕一经上线，就在Z世代消费者当中变得十分火爆。</span>
+      <span class="ru">Как только музей выпустил культурное мороженое, оно стало очень популярным среди покупателей из поколения Z.</span>
+    </div>
+  </div>
+  <label>✏️ Своё предложение <span>✓ сохранено</span></label>
+  <textarea placeholder="Напиши своё предложение с 火爆..."></textarea>
+</div>
+
+<!-- ===== 涌入 ===== -->
+<div class="word" id="w-涌入" data-word="涌入" data-pinyin="yǒng rù" data-trans="массово хлынуть, потоком входить">
+  <div class="w-head">
+    <span class="w-emoji">🌊</span>
+    <span class="w-cn">涌入</span>
+    <span class="w-py">yǒng rù</span>
+    <span class="w-ru">массово хлынуть, потоком входить <button>👁️ перевод</button></span>
+  </div>
+  <div class="c-wrap">
+    <h4>✏️ Прописи · 涌入</h4>
+    <p class="ru">пиши по памяти</p>
+    <canvas></canvas>
+    <div class="btns"><button>↩️ отменить</button><button>↪️ повторить</button><button>🗑️ очистить</button></div>
+  </div>
+  <div>
+    <h4>🧠 Суть</h4>
+    <p>Множество людей или вещей одновременно потоком входят куда-то, как волна воды.</p>
+    <p><span class="cn">涌入：像潮水一样大量进入某个地方。</span></p>
+  </div>
+  <div>
+    <h4>🎯 Как запомнить</h4>
+    <p>🪝 Открылась большая выставка, тысячи молодых людей одновременно заходят в зал. <strong>人群涌入会场 — толпы хлынули в зал.</strong></p>
+    <div class="char-row">
+      <p>涌 yǒng: 🌊 氵(вода) + 甬 — бить ключом, хлынуть</p>
+      <p>入 rù: ⬇️ входить</p>
+      <span class="warn">⚠️ Похожий иероглиф: 踊 yǒng (прыгать). Не путать 涌 и 踊.</span>
+    </div>
+    <p>🧩 Мнемоника: 🌊водная волна + ⬇️входить = хлынуть потоком</p>
+    <div class="trap">
+      <p class="head">⚠️ Ловушка: 涌入 ≠ 进入 (jìn rù)</p>
+      <p>进入 — просто войти; 涌入 обязательно подчёркивает МАССОВОЕ движение, много людей сразу.</p>
+      <div class="qa">
+        <p class="q">🎯 Один человек вошёл в зал — можно сказать «他涌入会场»?</p>
+        <p class="a">✅ Нет, 涌入 только для большой группы людей, один человек 进入.</p>
+        <p class="why"><strong>Почему:</strong> Иероглиф 涌 с элементом воды, подразумевает волну, массу.</p>
+        <p class="mem"><strong>Как запомнить:</strong> 进入 = войти; 涌入 = толпы хлынули, как волна.</p>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h4>🔗 Коллокации</h4>
+    <div class="colloc"><span class="tag-hsk">🎯 HSK</span> 涌入国门 — хлынуть в страну <span class="ex-ru">大量海外商品涌入国门。Многие зарубежные товары хлынули в страну.</span></div>
+    <div class="colloc"><span class="tag-byt">🗣️ Быт</span> 涌入会场 — хлынуть в зал <span class="ex-ru">观众涌入展览会会场。Зрители хлынули в зал выставки.</span></div>
+    <div class="colloc"><span class="tag-media">📰 Медиа</span> 涌入市场 — хлынуть на рынок <span class="ex-ru">大量新品牌涌入面向Z世代的消费市场。Многие новые бренды хлынули на рынок поколения Z.</span></div>
+  </div>
+  <div>
+    <h4>🌳 Однокоренные</h4>
+    <div class="cogn"><span class="cn">涌现</span><span class="py">yǒng xiàn</span><span class="ru">появляться массово</span><span class="lvl">HSK6</span></div>
+    <div class="cogn"><span class="cn">入口</span><span class="py">rù kǒu</span><span class="ru">вход</span><span class="lvl">HSK3</span></div>
+    <div class="cogn"><span class="cn">进入</span><span class="py">jìn rù</span><span class="ru">входить</span><span class="lvl">HSK3</span></div>
+    <div class="cogn-link">涌 — водный поток, массовость; 入 — вход.</div>
+  </div>
+  <div>
+    <h4>📝 Живой пример HSK 6</h4>
+    <div class="example">
+      <span class="cn">假期到来，大批Z世代年轻人涌入博物馆，打卡各类文创产品。</span>
+      <span class="ru">С началом каникул огромное количество молодых людей из поколения Z хлынули в музеи, чтобы посмотреть на культурные сувениры.</span>
+    </div>
+  </div>
+  <label>✏️ Своё предложение <span>✓ сохранено</span></label>
+  <textarea placeholder="Напиши своё предложение с 涌入..."></textarea>
+</div>
+
+<!-- ===== 同比 ===== -->
+<div class="word" id="w-同比" data-word="同比" data-pinyin="tóng bǐ" data-trans="по сравнению с аналогичным периодом прошлого года">
+  <div class="w-head">
+    <span class="w-emoji">📊</span>
+    <span class="w-cn">同比</span>
+    <span class="w-py">tóng bǐ</span>
+    <span class="w-ru">год к году, по сравнению с прошлым годом <button>👁️ перевод</button></span>
+  </div>
+  <div class="c-wrap">
+    <h4>✏️ Прописи · 同比</h4>
+    <p class="ru">пиши по памяти</p>
+    <canvas></canvas>
+    <div class="btns"><button>↩️ отменить</button><button>↪️ повторить</button><button>🗑️ очистить</button></div>
+  </div>
+  <div>
+    <h4>🧠 Суть</h4>
+    <p>Статистический термин: сравнение показателя с тем же периодом прошлого года.</p>
+    <p><span class="cn">同比：统计用词，和上一年同一个时期比较。</span></p>
+  </div>
+  <div>
+    <h4>🎯 Как запомнить</h4>
+    <p>🪝 Продажи этого сентября сравнивают с продажами сентября прошлого года. <strong>Это 同比 сравнение.</strong></p>
+    <div class="char-row">
+      <p>同 tóng: 🤝 тот же, одинаковый</p>
+      <p>比 bǐ: 📈 сравнивать</p>
+      <span class="warn">⚠️ Похожий иероглиф: 此 cǐ (этот). Не путать 比 и 此.</span>
+    </div>
+    <p>🧩 Мнемоника: 🤝тот же период + 📈сравнение = год к году</p>
+    <div class="trap">
+      <p class="head">⚠️ Ловушка: 同比 ≠ 环比 (huán bǐ)</p>
+      <p>同比 — сравнение с прошлым годом, тот же месяц; 环比 — сравнение с предыдущим месяцем.</p>
+      <div class="qa">
+        <p class="q">🎯 Сравнение продаж сентября с августом — это 同比?</p>
+        <p class="a">✅ Нет, это 环比, сравнение с прошлым месяцем.</p>
+        <p class="why"><strong>Почему:</strong> 同比 сравнивает одинаковый период разных лет, не соседние месяцы.</p>
+        <p class="mem"><strong>Как запомнить:</strong> 同比 = тот же период прошлого года; 环比 = предыдущий месяц.</p>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h4>🔗 Коллокации</h4>
+    <div class="colloc"><span class="tag-hsk">🎯 HSK</span> 同比增长 — рост год к году <span class="ex-ru">销售额同比增长30%。Объём продаж вырос на 30% год к году.</span></div>
+    <div class="colloc"><span class="tag-byt">🗣️ Быт</span> 同比下降 — падение год к году <span class="ex-ru">今年游客数量同比下降。Количество туристов в этом году снизилось год к году.</span></div>
+    <div class="colloc"><span class="tag-media">📰 Медиа</span> 同比数据 — данные год к году <span class="ex-ru">Z世代消费的同比数据值得关注。Данные год к году по потреблению поколения Z заслуживают внимания.</span></div>
+  </div>
+  <div>
+    <h4>🌳 Однокоренные</h4>
+    <div class="cogn"><span class="cn">同样</span><span class="py">tóng yàng</span><span class="ru">такой же</span><span class="lvl">HSK2</span></div>
+    <div class="cogn"><span class="cn">比较</span><span class="py">bǐ jiào</span><span class="ru">сравнивать</span><span class="lvl">HSK3</span></div>
+    <div class="cogn"><span class="cn">同时</span><span class="py">tóng shí</span><span class="ru">одновременно</span><span class="lvl">HSK3</span></div>
+    <div class="cogn-link">同 = одинаковый; 比 = сравнивать.</div>
+  </div>
+  <div>
+    <h4>📝 Живой пример HSK 6</h4>
+    <div class="example">
+      <span class="cn">文创产品的销量在今年第二季度同比大幅上升，主要买家是Z世代年轻人。</span>
+      <span class="ru">Продажи культурных сувениров значительно выросли год к году во втором квартале этого года, основными покупателями стали молодые люди из поколения Z.</span>
+    </div>
+  </div>
+  <label>✏️ Своё предложение <span>✓ сохранено</span></label>
+  <textarea placeholder="Напиши своё предложение с 同比..."></textarea>
+</div>
+
+<!-- ===== 大幅度 ===== -->
+<div class="word" id="w-大幅度" data-word="大幅度" data-pinyin="dà fú dù" data-trans="значительно, резко, в большой степени">
+  <div class="w-head">
+    <span class="w-emoji">📈</span>
+    <span class="w-cn">大幅度</span>
+    <span class="w-py">dà fú dù</span>
+    <span class="w-ru">значительно, резко, в большой степени <button>👁️ перевод</button></span>
+  </div>
+  <div class="c-wrap">
+    <h4>✏️ Прописи · 大幅度</h4>
+    <p class="ru">пиши по памяти</p>
+    <canvas></canvas>
+    <div class="btns"><button>↩️ отменить</button><button>↪️ повторить</button><button>🗑️ очистить</button></div>
+  </div>
+  <div>
+    <h4>🧠 Суть</h4>
+    <p>На большую величину, сильно, резко; используется в статистике, когда изменение очень заметное.</p>
+    <p><span class="cn">大幅度：变化的程度很大，多用于数字、增长、减少。</span></p>
+  </div>
+  <div>
+    <h4>🎯 Как запомнить</h4>
+    <p>🪝 Продажи выросли не на 5%, а на 80%, очень большой скачок. <strong>大幅度增长 — значительный рост.</strong></p>
+    <div class="char-row">
+      <p>大 dà: ➕ большой</p>
+      <p>幅 fú: 📐 ширина, размах</p>
+      <p>度 dù: 📏 степень, мера</p>
+      <span class="warn">⚠️ Похожий иероглиф: 福 fú (счастье). Не путать 幅 и 福.</span>
+    </div>
+    <p>🧩 Мнемоника: ➕большой + 📐размах + 📏мера = в большой степени, резко</p>
+    <div class="trap">
+      <p class="head">⚠️ Ловушка: 大幅度 ≠ 大量 (dà liàng)</p>
+      <p>大量 — много предметов/людей; 大幅度 — степень изменения, насколько сильно что-то изменилось.</p>
+      <div class="qa">
+        <p class="q">🎯 «大幅度游客» — правильно?</p>
+        <p class="a">✅ Нет. Можно «大量游客» (много туристов), а 大幅度 описывает изменение.</p>
+        <p class="why"><strong>Почему:</strong> 大幅度 характеризует изменение, не количество объектов.</p>
+        <p class="mem"><strong>Как запомнить:</strong> 大量 = много чего-то; 大幅度 = изменение на большую величину.</p>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h4>🔗 Коллокации</h4>
+    <div class="colloc"><span class="tag-hsk">🎯 HSK</span> 大幅度增长 — значительный рост <span class="ex-ru">线上消费大幅度增长。Онлайн-потребление значительно выросло.</span></div>
+    <div class="colloc"><span class="tag-byt">🗣️ Быт</span> 大幅度降价 — сильно снизить цену <span class="ex-ru">节日商品大幅度降价。Товары к празднику сильно подешевели.</span></div>
+    <div class="colloc"><span class="tag-media">📰 Медиа</span> 大幅度提升 — значительно повысить <span class="ex-ru">Z世代的文化消费能力大幅度提升。Культурная покупательская способность поколения Z сильно выросла.</span></div>
+  </div>
+  <div>
+    <h4>🌳 Однокоренные</h4>
+    <div class="cogn"><span class="cn">巨大</span><span class="py">jù dà</span><span class="ru">огромный</span><span class="lvl">HSK4</span></div>
+    <div class="cogn"><span class="cn">程度</span><span class="py">chéng dù</span><span class="ru">степень</span><span class="lvl">HSK5</span></div>
+    <div class="cogn"><span class="cn">幅度</span><span class="py">fú dù</span><span class="ru">размах изменений</span><span class="lvl">HSK5</span></div>
+    <div class="cogn-link">大 = большой; 幅+度 — размах и степень.</div>
+  </div>
+  <div>
+    <h4>📝 Живой пример HSK 6</h4>
+    <div class="example">
+      <span class="cn">近几年，Z世代对传统文化产品的需求大幅度上升，带动文创行业发展。</span>
+      <span class="ru">В последние годы спрос поколения Z на товары традиционной культуры резко вырос и стимулировал развитие индустрии культурных сувениров.</span>
+    </div>
+  </div>
+  <label>✏️ Своё предложение <span>✓ сохранено</span></label>
+  <textarea placeholder="Напиши своё предложение с 大幅度..."></textarea>
+</div>
+
+<!-- ===== 空前 ===== -->
+<div class="word" id="w-空前" data-word="空前" data-pinyin="kōng qián" data-trans="беспрецедентный, невиданный ранее">
+  <div class="w-head">
+    <span class="w-emoji">🚀</span>
+    <span class="w-cn">空前</span>
+    <span class="w-py">kōng qián</span>
+    <span class="w-ru">беспрецедентный, невиданный ранее <button>👁️ перевод</button></span>
+  </div>
+  <div class="c-wrap">
+    <h4>✏️ Прописи · 空前</h4>
+    <p class="ru">пиши по памяти</p>
+    <canvas></canvas>
+    <div class="btns"><button>↩️ отменить</button><button>↪️ повторить</button><button>🗑️ очистить</button></div>
+  </div>
+  <div>
+    <h4>🧠 Суть</h4>
+    <p>Такого ещё не было в прошлом, невиданный раньше, рекордный.</p>
+    <p><span class="cn">空前：以前从来没有发生过，从来没有这么厉害。</span></p>
+  </div>
+  <div>
+    <h4>🎯 Как запомнить</h4>
+    <p>🪝 Интерес молодёжи к традиционной культуре достиг рекордного уровня, раньше такого не было. <strong>得到空前发展 — получил беспрецедентное развитие.</strong></p>
+    <div class="char-row">
+      <p>空 kōng: 🕳️ пустой, ничего нет</p>
+      <p>前 qián: ⏪ раньше, перед</p>
+      <span class="warn">⚠️ Похожий иероглиф: 简 jiǎn (простой). Не путать 空 и 简.</span>
+    </div>
+    <p>🧩 Мнемоника: 🕳️пусто + ⏪ранее = беспрецедентный, раньше такого не было</p>
+    <div class="trap">
+      <p class="head">⚠️ Ловушка: 空前 ≠ 巨大 (jù dà)</p>
+      <p>巨大 — просто огромный по размеру; 空前 подчёркивает: раньше такого масштаба ещё не существовало.</p>
+      <div class="qa">
+        <p class="q">🎯 «空前的大楼» — правильно?</p>
+        <p class="a">✅ Нет. Можно «巨大的大楼», 空前 подходит для событий, развития, роста.</p>
+        <p class="why"><strong>Почему:</strong> 空前 описывает явление, которое не встречалось раньше, не размер предметов.</p>
+        <p class="mem"><strong>Как запомнить:</strong> 巨大 = огромный; 空前 = беспрецедентный, невиданный прежде.</p>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h4>🔗 Коллокации</h4>
+    <div class="colloc"><span class="tag-hsk">🎯 HSK</span> 空前发展 — беспрецедентное развитие <span class="ex-ru">文创产业得到空前发展。Индустрия культурных сувениров получила беспрецедентное развитие.</span></div>
+    <div class="colloc"><span class="tag-byt">🗣️ Быт</span> 空前热闹 — невероятно многолюдно <span class="ex-ru">节日的街上空前热闹。На улицах на праздник было невиданно многолюдно.</span></div>
+    <div class="colloc"><span class="tag-media">📰 Медиа</span> 空前繁荣 — беспрецедентный расцвет <span class="ex-ru">Z世代带动国潮文化迎来空前繁荣。Поколение Z принесло беспрецедентный расцвет национальной модной культуры.</span></div>
+  </div>
+  <div>
+    <h4>🌳 Однокоренные</h4>
+    <div class="cogn"><span class="cn">空白</span><span class="py">kōng bái</span><span class="ru">пустое место</span><span class="lvl">HSK4</span></div>
+    <div class="cogn"><span class="cn">前面</span><span class="py">qián miàn</span><span class="ru">впереди</span><span class="lvl">HSK2</span></div>
+    <div class="cogn"><span class="cn">空前绝后</span><span class="py">kōng qián jué hòu</span><span class="ru">уникальный в истории</span><span class="lvl">HSK6</span></div>
+    <div class="cogn-link">空 — пусто (не было); 前 — раньше, в прошлом.</div>
+  </div>
+  <div>
+    <h4>📝 Живой пример HSK 6</h4>
+    <div class="example">
+      <span class="cn">在Z世代的推动下，中华传统文化的市场影响力达到了空前的高度。</span>
+      <span class="ru">Благодаря поколению Z рыночное влияние традиционной китайской культуры достигло беспрецедентного уровня.</span>
+    </div>
+  </div>
+  <label>✏️ Своё предложение <span>✓ сохранено</span></label>
+  <textarea placeholder="Напиши своё предложение с 空前..."></textarea>
+</div>
+
+<!-- ===== 展览会 ===== -->
+<div class="word" id="w-展览会" data-word="展览会" data-pinyin="zhǎn lǎn huì" data-trans="выставка">
+  <div class="w-head">
+    <span class="w-emoji">🖼️</span>
+    <span class="w-cn">展览会</span>
+    <span class="w-py">zhǎn lǎn huì</span>
+    <span class="w-ru">выставка <button>👁️ перевод</button></span>
+  </div>
+  <div class="c-wrap">
+    <h4>✏️ Прописи · 展览会</h4>
+    <p class="ru">пиши по памяти</p>
+    <canvas></canvas>
+    <div class="btns"><button>↩️ отменить</button><button>↪️ повторить</button><button>🗑️ очистить</button></div>
+  </div>
+  <div>
+    <h4>🧠 Суть</h4>
+    <p>Мероприятие, где показывают товары, работы, коллекции; люди приходят смотреть и знакомиться с экспонатами.</p>
+    <p><span class="cn">展览会：展示物品，让大家参观欣赏的大型集会。</span></p>
+  </div>
+  <div>
+    <h4>🎯 Как запомнить</h4>
+    <p>🪝 Приехали разные компании, показывают новые товары, посетители смотрят. <strong>Это 展览会 — выставка.</strong></p>
+    <div class="char-row">
+      <p>展 zhǎn: ✋ раскрывать, показывать</p>
+      <p>览 lǎn: 👀 смотреть, осматривать</p>
+      <p>会 huì: 🤝 собрание, мероприятие</p>
+      <span class="warn">⚠️ Похожий иероглиф: 揽 lǎn (обхватывать). Не путать 览 и 揽.</span>
+    </div>
+    <p>🧩 Мнемоника: ✋показать + 👀посмотреть + 🤝собрание = выставка</p>
+    <div class="trap">
+      <p class="head">⚠️ Ловушка: 展览会 ≠ 博物馆 (bó wù guǎn)</p>
+      <p>博物馆 — постоянное здание с экспонатами; 展览会 — временное мероприятие на несколько дней.</p>
+      <div class="qa">
+        <p class="q">🎯 Если выставка работает круглый год в здании, это 展览会?</p>
+        <p class="a">✅ Нет, это музей, 展览会 — временное событие.</p>
+        <p class="why"><strong>Почему:</strong> 会 означает «встреча, мероприятие», значит событие ограничено по времени.</p>
+        <p class="mem"><strong>Как запомнить:</strong> 博物馆 — постоянное здание; 展览会 — временная выставка-мероприятие.</p>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h4>🔗 Коллокации</h4>
+    <div class="colloc"><span class="tag-hsk">🎯 HSK</span> 大型展览会 — большая выставка <span class="ex-ru">城市举办大型展览会。Город проводит большую выставку.</span></div>
+    <div class="colloc"><span class="tag-byt">🗣️ Быт</span> 汽车展览会 — автомобильная выставка <span class="ex-ru">很多年轻人去汽车展览会。Много молодых людей ходят на автосалон.</span></div>
+    <div class="colloc"><span class="tag-media">📰 Медиа</span> 文创展览会 — выставка культурных сувениров <span class="ex-ru">文创展览会吸引大量Z世代观众。Выставка культурных сувениров привлекла много зрителей из поколения Z.</span></div>
+  </div>
+  <div>
+    <h4>🌳 Однокоренные</h4>
+    <div class="cogn"><span class="cn">展示</span><span class="py">zhǎn shì</span><span class="ru">показывать</span><span class="lvl">HSK4</span></div>
+    <div class="cogn"><span class="cn">会议</span><span class="py">huì yì</span><span class="ru">совещание</span><span class="lvl">HSK3</span></div>
+    <div class="cogn"><span class="cn">展览</span><span class="py">zhǎn lǎn</span><span class="ru">выставлять</span><span class="lvl">HSK5</span></div>
+    <div class="cogn-link">展 = показывать; 览 = смотреть; 会 = собрание, событие.</div>
+  </div>
+  <div>
+    <h4>📝 Живой пример HSK 6</h4>
+    <div class="example">
+      <span class="cn">这场传统文化展览会吸引了大量Z世代参观者，他们喜欢拍照打卡文创展品。</span>
+      <span class="ru">Эта выставка традиционной культуры привлекла множество посетителей из поколения Z, они любят фотографироваться рядом с экспонатами культурных сувениров.</span>
+    </div>
+  </div>
+  <label>✏️ Своё предложение <span>✓ сохранено</span></label>
+  <textarea placeholder="Напиши своё предложение с 展览会..."></textarea>
+</div>
+
+<!-- ===== 奥运会 ===== -->
+<div class="word" id="w-奥运会" data-word="奥运会" data-pinyin="ào yùn huì" data-trans="Олимпийские игры">
+  <div class="w-head">
+    <span class="w-emoji">🏅</span>
+    <span class="w-cn">奥运会</span>
+    <span class="w-py">ào yùn huì</span>
+    <span class="w-ru">Олимпийские игры <button>👁️ перевод</button></span>
+  </div>
+  <div class="c-wrap">
+    <h4>✏️ Прописи · 奥运会</h4>
+    <p class="ru">пиши по памяти</p>
+    <canvas></canvas>
+    <div class="btns"><button>↩️ отменить</button><button>↪️ повторить</button><button>🗑️ очистить</button></div>
+  </div>
+  <div>
+    <h4>🧠 Суть</h4>
+    <p>Международные Олимпийские спортивные игры, крупнейшее спортивное соревнование мира.</p>
+    <p><span class="cn">奥运会：国际大型体育比赛，奥林匹克运动会的简称。</span></p>
+  </div>
+  <div>
+    <h4>🎯 Как запомнить</h4>
+    <p>🪝 Каждые четыре года лучшие спортсмены мира встречаются на соревнованиях. <strong>Это — 奥运会.</strong></p>
+    <div class="char-row">
+      <p>奥 ào: Олимпия (транскрипция)</p>
+      <p>运 yùn: 🏃 движение, спорт, удача</p>
+      <p>会 huì: 🤝 собрание, соревнование</p>
+      <span class="warn">⚠️ Похожий иероглиф: 澳 ào (Австралия). 奥 = Олимпия, 澳 = залив.</span>
+    </div>
+    <p>🧩 Мнемоника: 奥(Олимпия) + 运(спорт) + 会(соревнование) = Олимпийские игры</p>
+    <div class="trap">
+      <p class="head">⚠️ Ловушка: 奥运会 ≠ 运动会 (yùn dòng huì)</p>
+      <p>运动会 — любые спортивные соревнования; 奥运会 — только международные Олимпийские игры.</p>
+      <div class="qa">
+        <p class="q">🎯 Школьные спортивные соревнования — это 奥运会?</p>
+        <p class="a">✅ Нет, это 运动会, 奥运会 это мировое соревнование.</p>
+        <p class="why"><strong>Почему:</strong> 奥运会 это конкретное название крупнейших мировых игр.</p>
+        <p class="mem"><strong>Как запомнить:</strong> 运动会 — любые спортивные игры; 奥运会 — Олимпиада.</p>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h4>🔗 Коллокации</h4>
+    <div class="colloc"><span class="tag-hsk">🎯 HSK</span> 举办奥运会 — проводить Олимпийские игры <span class="ex-ru">北京曾经举办奥运会。Пекин проводил Олимпийские игры.</span></div>
+    <div class="colloc"><span class="tag-byt">🗣️ Быт</span> 奥运会开幕式 — церемония открытия <span class="ex-ru">很多Z世代看过奥运会开幕式。Многие из поколения Z смотрели церемонию открытия Олимпиады.</span></div>
+    <div class="colloc"><span class="tag-media">📰 Медиа</span> 奥运会文创 — олимпийские сувениры <span class="ex-ru">奥运会文创产品当年非常火爆。Олимпийские сувениры тогда имели огромный ажиотаж.</span></div>
+  </div>
+  <div>
+    <h4>🌳 Однокоренные</h4>
+    <div class="cogn"><span class="cn">运动</span><span class="py">yùn dòng</span><span class="ru">спорт</span><span class="lvl">HSK2</span></div>
+    <div class="cogn"><span class="cn">开会</span><span class="py">kāi huì</span><span class="ru">проводить встречу</span><span class="lvl">HSK2</span></div>
+    <div class="cogn"><span class="cn">奥运</span><span class="py">ào yùn</span><span class="ru">олимпийский</span><span class="lvl">HSK4</span></div>
+    <div class="cogn-link">运 = спорт, движение; 会 = мероприятие, соревнование.</div>
+  </div>
+  <div>
+    <h4>📝 Живой пример HSK 6</h4>
+    <div class="example">
+      <span class="cn">奥运会的文创产品当年受到无数Z世代年轻人的喜爱，销量空前高涨。</span>
+      <span class="ru">Олимпийские культурные сувениры тогда полюбились множеству молодых людей из поколения Z, продажи были рекордно высокими.</span>
+    </div>
+  </div>
+  <label>✏️ Своё предложение <span>✓ сохранено</span></label>
+  <textarea placeholder="Напиши своё предложение с 奥运会..."></textarea>
+</div>
+
+<!-- ===== 文创雪糕 ===== -->
+<div class="word" id="w-文创雪糕" data-word="文创雪糕" data-pinyin="wén chuàng xuě gāo" data-trans="культурно-сувенирное мороженое">
+  <div class="w-head">
+    <span class="w-emoji">🍦</span>
+    <span class="w-cn">文创雪糕</span>
+    <span class="w-py">wén chuàng xuě gāo</span>
+    <span class="w-ru">культурно-сувенирное мороженое <button>👁️ перевод</button></span>
+  </div>
+  <div class="c-wrap">
+    <h4>✏️ Прописи · 文创雪糕</h4>
+    <p class="ru">пиши по памяти</p>
+    <canvas></canvas>
+    <div class="btns"><button>↩️ отменить</button><button>↪️ повторить</button><button>🗑️ очистить</button></div>
+  </div>
+  <div>
+    <h4>🧠 Суть</h4>
+    <p>Мороженое с формой достопримечательностей, символов музеев; продают в парках и музеях как культурный сувенир.</p>
+    <p><span class="cn">文创雪糕：景区、博物馆推出的，做成文物或建筑样子的雪糕。</span></p>
+  </div>
+  <div>
+    <h4>🎯 Как запомнить</h4>
+    <p>🪝 В музее покупаешь мороженое в форме древней башни, фотографируешь и публикуешь в соцсети. <strong>Это 文创雪糕.</strong></p>
+    <div class="char-row">
+      <p>文 wén: 📖 культура, письменность</p>
+      <p>创 chuàng: ✨ создавать, творить</p>
+      <p>雪 xuě: ❄️ снег, холод</p>
+      <p>糕 gāo: 🍰 сладкое изделие, пирожное</p>
+      <span class="warn">⚠️ Похожий иероглиф: 稿 gǎo (черновик). Не путать 糕 и 稿.</span>
+    </div>
+    <p>🧩 Мнемоника: 📖культура + ✨создать + ❄️холод + 🍰сладость = сувенирное мороженое</p>
+    <div class="trap">
+      <p class="head">⚠️ Ловушка: 文创雪糕 ≠ 普通雪糕 (pǔ tōng xuě gāo)</p>
+      <p>普通雪糕 — обычное мороженое; 文创雪糕 это сувенир, его покупают не только чтобы съесть, но и для фото.</p>
+      <div class="qa">
+        <p class="q">🎯 Обычное молочное мороженое из супермаркета — это 文创雪糕?</p>
+        <p class="a">✅ Нет, это обычное 普通雪糕, без культурного дизайна.</p>
+        <p class="why"><strong>Почему:</strong> 文创 означает «культурное творчество», обязательно дизайн с культурным символом.</p>
+        <p class="mem"><strong>Как запомнить:</strong> 普通雪糕 = просто мороженое; 文创雪糕 = мороженое-сувенир с дизайном.</p>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h4>🔗 Коллокации</h4>
+    <div class="colloc"><span class="tag-hsk">🎯 HSK</span> 博物馆文创雪糕 — музейное сувенирное мороженое <span class="ex-ru">博物馆的文创雪糕非常受欢迎。Музейное сувенирное мороженое очень популярно.</span></div>
+    <div class="colloc"><span class="tag-byt">🗣️ Быт</span> 打卡文创雪糕 — сфотографироваться с культурным мороженым <span class="ex-ru">很多年轻人打卡文创雪糕。Многие молодые люди фотографируются с сувенирным мороженым.</span></div>
+    <div class="colloc"><span class="tag-media">📰 Медиа</span> 文创雪糕出圈 — мороженое стало вирусным трендом <span class="ex-ru">文创雪糕在社交平台火爆出圈。Сувенирное мороженое стало вирусным трендом в соцсетях.</span></div>
+  </div>
+  <div>
+    <h4>🌳 Однокоренные</h4>
+    <div class="cogn"><span class="cn">文化</span><span class="py">wén huà</span><span class="ru">культура</span><span class="lvl">HSK2</span></div>
+    <div class="cogn"><span class="cn">创新</span><span class="py">chuàng xīn</span><span class="ru">инновация</span><span class="lvl">HSK4</span></div>
+    <div class="cogn"><span class="cn">雪糕</span><span class="py">xuě gāo</span><span class="ru">мороженое</span><span class="lvl">HSK4</span></div>
+    <div class="cogn-link">文创 = культурное творчество; 雪糕 — мороженое.</div>
+  </div>
+  <div>
+    <h4>📝 Живой пример HSK 6</h4>
+    <div class="example">
+      <span class="cn">许多Z世代游客来到博物馆，第一件事就是购买一支造型精美的文创雪糕。</span>
+      <span class="ru">Многие туристы из поколения Z, приходя в музей, первым делом покупают красивое сувенирное мороженое.</span>
+    </div>
+  </div>
+  <label>✏️ Своё предложение <span>✓ сохранено</span></label>
+  <textarea placeholder="Напиши своё предложение с 文创雪糕..."></textarea>
+</div>
+
+<!-- ===== 汉服 ===== -->
+<div class="word" id="w-汉服" data-word="汉服" data-pinyin="hàn fú" data-trans="ханьфу, традиционная одежда народа хань">
+  <div class="w-head">
+    <span class="w-emoji">👘</span>
+    <span class="w-cn">汉服</span>
+    <span class="w-py">hàn fú</span>
+    <span class="w-ru">ханьфу, традиционная одежда народа хань <button>👁️ перевод</button></span>
+  </div>
+  <div class="c-wrap">
+    <h4>✏️ Прописи · 汉服</h4>
+    <p class="ru">пиши по памяти</p>
+    <canvas></canvas>
+    <div class="btns"><button>↩️ отменить</button><button>↪️ повторить</button><button>🗑️ очистить</button></div>
+  </div>
+  <div>
+    <h4>🧠 Суть</h4>
+    <p>Традиционная одежда этноса хань, древний костюм Китая, который снова стал популярным у молодёжи.</p>
+    <p><span class="cn">汉服：汉民族的传统古代服饰。</span></p>
+  </div>
+  <div>
+    <h4>🎯 Как запомнить</h4>
+    <p>🪝 Молодые люди надевают старинные длинные костюмы, гуляют в парках и фотографируются. <strong>Они одеты в 汉服 — ханьфу.</strong></p>
+    <div class="char-row">
+      <p>汉 hàn: 🧑 народ хань</p>
+      <p>服 fú: 👕 одежда, костюм</p>
+      <span class="warn">⚠️ Похожий иероглиф: 汗 hàn (пот). Не путать 汉 и 汗.</span>
+    </div>
+    <p>🧩 Мнемоника: 🧑народ Хань + 👕одежда = ханьфу, традиционная одежда ханьцев</p>
+    <div class="trap">
+      <p class="head">⚠️ Ловушка: 汉服 ≠ 唐装 (táng zhuāng)</p>
+      <p>唐装 — современный костюм в стиле эпохи Тан; 汉服 это полный комплекс древней одежды народа Хань разных династий.</p>
+      <div class="qa">
+        <p class="q">🎯 唐装就是汉服，对吗？</p>
+        <p class="a">✅ Нет, это разные виды одежды.</p>
+        <p class="why"><strong>Почему:</strong> 汉服 — исторический костюм народа хань; 唐装 — современный праздничный костюм.</p>
+        <p class="mem"><strong>Как запомнить:</strong> 汉服 — древняя традиционная одежда; 唐装 — современный костюм в китайском стиле.</p>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h4>🔗 Коллокации</h4>
+    <div class="colloc"><span class="tag-hsk">🎯 HSK</span> 汉服文化 — культура ханьфу <span class="ex-ru">汉服文化受到很多年轻人喜爱。Культура ханьфу нравится многим молодым людям.</span></div>
+    <div class="colloc"><span class="tag-byt">🗣️ Быт</span> 穿汉服 — носить ханьфу <span class="ex-ru">周末很多人穿汉服逛公园。По выходным много людей гуляют по парку в ханьфу.</span></div>
+    <div class="colloc"><span class="tag-media">📰 Медиа</span> 汉服出圈 — ханьфу стал популярным трендом <span class="ex-ru">汉服在Z世代群体中火爆出圈。Ханьфу стал вирусным трендом среди поколения Z.</span></div>
+  </div>
+  <div>
+    <h4>🌳 Однокоренные</h4>
+    <div class="cogn"><span class="cn">汉语</span><span class="py">hàn yǔ</span><span class="ru">китайский язык</span><span class="lvl">HSK1</span></div>
+    <div class="cogn"><span class="cn">服装</span><span class="py">fú zhuāng</span><span class="ru">одежда</span><span class="lvl">HSK4</span></div>
+    <div class="cogn"><span class="cn">汉族</span><span class="py">hàn zú</span><span class="ru">народ хань</span><span class="lvl">HSK4</span></div>
+    <div class="cogn-link">汉 = народ Хань; 服 = одежда.</div>
+  </div>
+  <div>
+    <h4>📝 Живой пример HSK 6</h4>
+    <div class="example">
+      <span class="cn">许多Z世代年轻人热爱汉服，把它当作表达对传统文化情怀的方式。</span>
+      <span class="ru">Многие молодые люди из поколения Z любят ханьфу и используют его как способ выразить душевную привязанность к традиционной культуре.</span>
+    </div>
+  </div>
+  <label>✏️ Своё предложение <span>✓ сохранено</span></label>
+  <textarea placeholder="Напиши своё предложение с 汉服..."></textarea>
+</div>
+
+<!-- ===== 穿越 ===== -->
+<div class="word" id="w-穿越" data-word="穿越" data-pinyin="chuān yuè" data-trans="пересекать, проходить сквозь">
+  <div class="w-head">
+    <span class="w-emoji">🚶</span>
+    <span class="w-cn">穿越</span>
+    <span class="w-py">chuān yuè</span>
+    <span class="w-ru">пересекать, проходить сквозь <button>👁️ перевод</button></span>
+  </div>
+  <div class="c-wrap">
+    <h4>✏️ Прописи · 穿越</h4>
+    <p class="ru">пиши по памяти</p>
+    <canvas></canvas>
+    <div class="btns"><button>↩️ отменить</button><button>↪️ повторить</button><button>🗑️ очистить</button></div>
+  </div>
+  <div>
+    <h4>🧠 Суть</h4>
+    <p>Пройти сквозь пространство, пересечь территорию; также в интернет-сленге — «путешествие во времени».</p>
+    <p><span class="cn">穿越：穿过、通过某个地方；小说里也指回到过去或者未来。</span></p>
+  </div>
+  <div>
+    <h4>🎯 Как запомнить</h4>
+    <p>🪝 Экспедиция идёт через пустыню, с одного края на другой. <strong>Они 穿越沙漠 — пересекают пустыню.</strong></p>
+    <div class="char-row">
+      <p>穿 chuān: 🧵 протянуть сквозь, пройти через</p>
+      <p>越 yuè: ⬆️ перешагнуть, пересечь границу</p>
+      <span class="warn">⚠️ Похожий иероглиф: 跃 yuè (прыгать). Не путать 越 и 跃.</span>
+    </div>
+    <p>🧩 Мнемоника: 🧵пройти сквозь + ⬆️перешагнуть = пересечь, пройти сквозь</p>
+    <div class="trap">
+      <p class="head">⚠️ Ловушка: 穿越 ≠ 通过 (tōng guò)</p>
+      <p>通过 — просто пройти через место; 穿越 чаще про большие пространства: пустыня, горы, граница.</p>
+      <div class="qa">
+        <p class="q">🎯 «穿越马路» — правильно?</p>
+        <p class="a">✅ Лучше «通过马路». 穿越 звучит слишком масштабно для обычной дороги.</p>
+        <p class="why"><strong>Почему:</strong> 穿越 используется для больших пространств.</p>
+        <p class="mem"><strong>Как запомнить:</strong> 通过 = пройти (обычное); 穿越 = пересечь большое пространство.</p>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h4>🔗 Коллокации</h4>
+    <div class="colloc"><span class="tag-hsk">🎯 HSK</span> 穿越沙漠 — пересечь пустыню <span class="ex-ru">探险队穿越沙漠。Экспедиция пересекла пустыню.</span></div>
+    <div class="colloc"><span class="tag-byt">🗣️ Быт</span> 穿越边境 — пересечь границу <span class="ex-ru">他们徒步穿越边境。Они пешком пересекли границу.</span></div>
+    <div class="colloc"><span class="tag-media">📰 Медиа</span> 穿越历史 — пройти сквозь историю <span class="ex-ru">文创产品穿越历史，连接现代Z世代。Культурные сувениры проходят сквозь историю и соединяют поколение Z.</span></div>
+  </div>
+  <div>
+    <h4>🌳 Однокоренные</h4>
+    <div class="cogn"><span class="cn">穿过</span><span class="py">chuān guò</span><span class="ru">пройти сквозь</span><span class="lvl">HSK3</span></div>
+    <div class="cogn"><span class="cn">超越</span><span class="py">chāo yuè</span><span class="ru">превзойти</span><span class="lvl">HSK5</span></div>
+    <div class="cogn"><span class="cn">穿衣</span><span class="py">chuān yī</span><span class="ru">одеваться</span><span class="lvl">HSK1</span></div>
+    <div class="cogn-link">穿 = сквозь; 越 = перешагнуть, пересечь границу.</div>
+  </div>
+  <div>
+    <h4>📝 Живой пример HSK 6</h4>
+    <div class="example">
+      <span class="cn">这些精美的文创产品穿越百年时光，让Z世代感受到古代文化的魅力。</span>
+      <span class="ru">Эти прекрасные культурные сувениры проходят сквозь столетия и позволяют поколению Z почувствовать очарование древней культуры.</span>
+    </div>
+  </div>
+  <label>✏️ Своё предложение <span>✓ сохранено</span></label>
+  <textarea placeholder="Напиши своё предложение с 穿越..."></textarea>
+</div>
+
+<!-- ===== 承载 ===== -->
+<div class="word" id="w-承载" data-word="承载" data-pinyin="chéng zài" data-trans="нести на себе, выдерживать вес; нести смысл">
+  <div class="w-head">
+    <span class="w-emoji">📦</span>
+    <span class="w-cn">承载</span>
+    <span class="w-py">chéng zài</span>
+    <span class="w-ru">нести на себе, выдерживать вес; нести смысл <button>👁️ перевод</button></span>
+  </div>
+  <div class="c-wrap">
+    <h4>✏️ Прописи · 承载</h4>
+    <p class="ru">пиши по памяти</p>
+    <canvas></canvas>
+    <div class="btns"><button>↩️ отменить</button><button>↪️ повторить</button><button>🗑️ очистить</button></div>
+  </div>
+  <div>
+    <h4>🧠 Суть</h4>
+    <p>Буквально: выдерживать вес, груз; переносно: содержать в себе смысл, культуру, ценности.</p>
+    <p><span class="cn">承载：承受重量；也指包含文化、意义、价值。</span></p>
+  </div>
+  <div>
+    <h4>🎯 Как запомнить</h4>
+    <p>🪝 Ханьфу не просто ткань, в нём история и традиции. <strong>它承载文化价值 — оно несёт в себе культурную ценность.</strong></p>
+    <div class="char-row">
+      <p>承 chéng: 🤲 принять на себя, выдержать</p>
+      <p>载 zài: 🚛 перевозить, нести груз</p>
+      <span class="warn">⚠️ Похожий иероглиф: 裁 cái (кроить). Не путать 载 и 裁.</span>
+    </div>
+    <p>🧩 Мнемоника: 🤲принять на себя + 🚛нести груз = нести вес или смысл</p>
+    <div class="trap">
+      <p class="head">⚠️ Ловушка: 承载 ≠ 承受 (chéng shòu)</p>
+      <p>承受 — переносить боль, давление; 承载 чаще про груз или абстрактные ценности, культуру.</p>
+      <div class="qa">
+        <p class="q">🎯 «承载压力» — правильно?</p>
+        <p class="a">✅ Лучше «承受压力». 承载 для груза, смысла, культуры.</p>
+        <p class="why"><strong>Почему:</strong> 承载 — выдерживать груз/ценность; 承受 — выдерживать негатив.</p>
+        <p class="mem"><strong>Как запомнить:</strong> 承载 = нести груз/культуру; 承受 = выдерживать боль/давление.</p>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h4>🔗 Коллокации</h4>
+    <div class="colloc"><span class="tag-hsk">🎯 HSK</span> 承载文化 — нести культуру <span class="ex-ru">汉服承载着传统文化。Ханьфу несёт традиционную культуру.</span></div>
+    <div class="colloc"><span class="tag-byt">🗣️ Быт</span> 承载重量 — выдерживать вес <span class="ex-ru">这个桥能承载1000公斤。Этот мост выдерживает 1000 кг.</span></div>
+    <div class="colloc"><span class="tag-media">📰 Медиа</span> 承载历史 — нести историю <span class="ex-ru">博物馆承载着民族的历史记忆。Музей несёт историческую память народа.</span></div>
+  </div>
+  <div>
+    <h4>🌳 Однокоренные</h4>
+    <div class="cogn"><span class="cn">承受</span><span class="py">chéng shòu</span><span class="ru">выдерживать</span><span class="lvl">HSK5</span></div>
+    <div class="cogn"><span class="cn">载重</span><span class="py">zài zhòng</span><span class="ru">грузоподъёмность</span><span class="lvl">HSK6</span></div>
+    <div class="cogn"><span class="cn">承担</span><span class="py">chéng dān</span><span class="ru">брать на себя</span><span class="lvl">HSK5</span></div>
+    <div class="cogn-link">承 = принять на себя; 载 = нести груз.</div>
+  </div>
+  <div>
+    <h4>📝 Живой пример HSK 6</h4>
+    <div class="example">
+      <span class="cn">这些文创产品不仅承载着文化意义，还体现了Z世代对传统的热爱。</span>
+      <span class="ru">Эти культурные сувениры не только несут культурный смысл, но и отражают любовь поколения Z к традициям.</span>
+    </div>
+  </div>
+  <label>✏️ Своё предложение <span>✓ сохранено</span></label>
+  <textarea placeholder="Напиши своё предложение с 承载..."></textarea>
+</div>
+
+</main>
+
+<button class="to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+/* ===== ПРОСТАЯ РИСОВАЛКА ДЛЯ ПРОПИСЕЙ ===== */
+document.querySelectorAll('.c-wrap').forEach(wrap=>{
+  const canvas = wrap.querySelector('canvas');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let drawing=false, history=[], redo=[];
+  function resize(){
+    const r = canvas.getBoundingClientRect();
+    const dpr = window.devicePixelRatio||1;
+    canvas.width = r.width*dpr;
+    canvas.height = r.height*dpr;
+    ctx.scale(dpr,dpr);
+    ctx.lineWidth = 6;
+    ctx.lineCap='round';
+    ctx.lineJoin='round';
+    ctx.strokeStyle='#ffb454';
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  function pos(e){
+    const r = canvas.getBoundingClientRect();
+    const p = e.touches ? e.touches[0] : e;
+    return {x:p.clientX-r.left, y:p.clientY-r.top};
+  }
+  function start(e){e.preventDefault();drawing=true;const p=pos(e);ctx.beginPath();ctx.moveTo(p.x,p.y);redo=[];}
+  function move(e){if(!drawing)return;e.preventDefault();const p=pos(e);ctx.lineTo(p.x,p.y);ctx.stroke();}
+  function end(){if(!drawing)return;drawing=false;history.push(canvas.toDataURL());}
+
+  canvas.addEventListener('mousedown',start);
+  canvas.addEventListener('mousemove',move);
+  canvas.addEventListener('mouseup',end);
+  canvas.addEventListener('mouseleave',end);
+  canvas.addEventListener('touchstart',start,{passive:false});
+  canvas.addEventListener('touchmove',move,{passive:false});
+  canvas.addEventListener('touchend',end);
+
+  const btns = wrap.querySelectorAll('.btns button');
+  btns[0]?.addEventListener('click',()=>{ if(history.length>1){redo.push(history.pop()); const img=new Image(); img.onload=()=>{ctx.clearRect(0,0,canvas.width,canvas.height);ctx.drawImage(img,0,0,canvas.width/ (window.devicePixelRatio||1),canvas.height/(window.devicePixelRatio||1));}; img.src=history[history.length-1];} else {ctx.clearRect(0,0,canvas.width,canvas.height);history=[];} });
+  btns[1]?.addEventListener('click',()=>{ if(redo.length){const d=redo.pop();history.push(d);const img=new Image();img.onload=()=>{ctx.clearRect(0,0,canvas.width,canvas.height);ctx.drawImage(img,0,0,canvas.width/(window.devicePixelRatio||1),canvas.height/(window.devicePixelRatio||1));};img.src=d;} });
+  btns[2]?.addEventListener('click',()=>{ctx.clearRect(0,0,canvas.width,canvas.height);history=[];redo=[];});
+});
+
+/* ===== ПЕРЕКЛЮЧАТЕЛЬ ПЕРЕВОДА ===== */
+document.querySelectorAll('.w-ru button').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const span = btn.parentElement;
+    const hidden = span.querySelector('.hidden');
+    if(hidden){hidden.classList.remove('hidden');btn.style.display='none';}
+  });
+});
+</script>
+</body>
+</html>
