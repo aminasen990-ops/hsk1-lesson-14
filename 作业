@@ -1,0 +1,2076 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>时代的决斗：冲突、美学与Z世代哲学 | DUEL OF ERAS</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;600&family=Noto+Sans+Myanmar:wght@400;600&family=Noto+Sans+SC:wght@400;500;700;800;900&display=swap');
+
+    :root {
+      --bg-cream: #F9F8F3;
+      --surface-white: #FFFFFF;
+      --surface-border: #E8E3DA;
+      --surface-subtle: #F3EFE6;
+
+      --accent-terracotta: #E05A47;
+      --accent-terracotta-light: #FDF0EE;
+      --accent-sage: #2EB886;
+      --accent-sage-light: #E8F8F3;
+      --accent-yellow: #FFB800;
+      --accent-yellow-light: #FFF8E6;
+
+      --text-main: #22252A;
+      --text-sub: #6C727E;
+      --text-muted: #9DA3AF;
+
+      --lex-bg: rgba(255, 255, 255, 0.82);
+      --lex-border: rgba(46, 184, 134, 0.35);
+      --lex-label: #9DA3AF;
+
+      --font-zh: "PingFang SC", "Microsoft YaHei UI", "Noto Sans SC", sans-serif;
+      --font-multi: var(--font-zh), 'Noto Sans Thai', 'Noto Sans Myanmar', sans-serif;
+      --transition-smooth: 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg-cream);
+      color: var(--text-main);
+      font-family: var(--font-zh);
+      height: 100vh;
+      height: 100dvh;
+      width: 100vw;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .deck-container {
+      position: relative;
+      width: 100%;
+      max-width: 1920px;
+      height: 100dvh;
+      aspect-ratio: 16 / 9;
+      background: var(--bg-cream);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    @media (min-aspect-ratio: 16/9) {
+      .deck-container {
+        height: 100dvh;
+        width: calc(100dvh * 16 / 9);
+      }
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      padding: clamp(24px, 4vw, 70px);
+      padding-bottom: clamp(240px, 24vh, 300px);
+      padding-right: clamp(160px, 14vw, 220px);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(12px) scale(0.99);
+      transition: opacity var(--transition-smooth), transform var(--transition-smooth), visibility var(--transition-smooth);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      gap: 1.2rem;
+      z-index: 1;
+      overflow-y: auto;
+    }
+
+    .slide::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(46, 184, 134, 0.028) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(46, 184, 134, 0.028) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .slide > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .slide.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0) scale(1);
+      z-index: 2;
+    }
+
+    .progress {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 3px;
+      width: 0;
+      background: var(--accent-sage);
+      transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+      z-index: 20;
+    }
+
+    .slide-header {
+      position: relative;
+      margin-bottom: 0.4rem;
+    }
+
+    .slide-header::before {
+      content: attr(data-num);
+      position: absolute;
+      top: -30px;
+      left: -14px;
+      font-size: clamp(90px, 10vw, 160px);
+      font-weight: 900;
+      color: rgba(46, 184, 134, 0.07);
+      line-height: 1;
+      pointer-events: none;
+      z-index: 0;
+      letter-spacing: -0.05em;
+    }
+
+    .slide-header > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .slide-title {
+      font-size: clamp(24px, 2.6vw, 42px);
+      font-weight: 800;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+      color: var(--text-main);
+    }
+
+    .slide-title.has-emoji::before {
+      content: attr(data-emoji);
+      display: inline-block;
+      font-size: 1.15em;
+      margin-right: 12px;
+      vertical-align: -0.08em;
+    }
+
+    .sub-title {
+      font-size: clamp(13px, 1vw, 17px);
+      font-weight: 500;
+      color: var(--text-sub);
+      line-height: 1.5;
+      margin-top: 0.4rem;
+    }
+
+    .tag-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 30px;
+      font-size: clamp(11px, 0.78vw, 13px);
+      font-weight: 700;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      background: var(--surface-subtle);
+      color: var(--text-sub);
+      border: 1px dashed #D0C8B8;
+      width: fit-content;
+      margin-bottom: 0.8rem;
+    }
+
+    .tag-terracotta {
+      background: var(--accent-terracotta-light);
+      color: var(--accent-terracotta);
+      border-color: rgba(224, 90, 71, 0.3);
+    }
+
+    .tag-sage {
+      background: var(--accent-sage-light);
+      color: var(--accent-sage);
+      border-color: rgba(46, 184, 134, 0.3);
+    }
+
+    .highlight-yellow {
+      background: linear-gradient(120deg, rgba(255, 184, 0, 0.3) 0%, rgba(255, 184, 0, 0.3) 100%);
+      background-repeat: no-repeat;
+      background-size: 100% 40%;
+      background-position: 0 88%;
+      padding: 0 4px;
+    }
+
+    .card {
+      background: var(--surface-white);
+      border: 2px solid var(--surface-border);
+      border-radius: 20px;
+      padding: clamp(18px, 1.8vw, 30px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.03);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      position: relative;
+    }
+
+    .card--quote {
+      border-left: 4px solid var(--accent-sage);
+      background: linear-gradient(90deg, var(--accent-sage-light) 0%, var(--surface-white) 45%);
+    }
+
+    .card-title {
+      font-size: clamp(15px, 1.25vw, 21px);
+      font-weight: 700;
+      line-height: 1.35;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .card-icon {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      color: var(--accent-sage);
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .card-icon--terracotta { color: var(--accent-terracotta); }
+    .card-icon--yellow { color: var(--accent-yellow); }
+
+    .card-body {
+      font-size: clamp(13px, 0.98vw, 16px);
+      font-weight: 400;
+      line-height: 1.65;
+      color: var(--text-sub);
+    }
+
+    .key {
+      background: linear-gradient(180deg, transparent 62%, rgba(255, 184, 0, 0.5) 62%);
+      padding: 0 3px;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .term {
+      font-weight: 600;
+      color: var(--text-main);
+      border-bottom: 2px solid rgba(46, 184, 134, 0.5);
+      padding-bottom: 1px;
+    }
+
+    .chip {
+      display: inline-block;
+      background: var(--accent-terracotta-light);
+      color: var(--accent-terracotta);
+      font-weight: 700;
+      padding: 2px 9px;
+      border-radius: 6px;
+      font-size: 0.88em;
+    }
+
+    .chip--sage { background: var(--accent-sage-light); color: var(--accent-sage); }
+    .chip--terracotta { background: var(--accent-terracotta-light); color: var(--accent-terracotta); }
+
+    .speakable { cursor: pointer; transition: color 0.2s; }
+    .speakable:hover { color: var(--accent-sage); }
+
+    .grid-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .grid-3col {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      align-items: stretch;
+    }
+
+    .character-avatar {
+      width: 100%;
+      max-width: 240px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .title-scene {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      margin: 1rem 0;
+      width: 100%;
+    }
+
+    .title-scene svg {
+      width: 100%;
+      max-width: 620px;
+      height: auto;
+      display: block;
+    }
+
+    .dashed-arrow-down {
+      width: 2px;
+      height: 40px;
+      border-left: 2px dashed var(--accent-sage);
+      margin: 8px auto;
+      position: relative;
+    }
+    .dashed-arrow-down::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: -4px;
+      width: 0;
+      height: 0;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 6px solid var(--accent-sage);
+    }
+
+    .guide {
+      position: absolute;
+      right: clamp(12px, 2vw, 32px);
+      bottom: 88px;
+      width: clamp(120px, 10vw, 150px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      z-index: 8;
+      pointer-events: none;
+    }
+
+    .guide__bubble {
+      position: relative;
+      background: rgba(255, 255, 255, 0.97);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 2px solid var(--surface-border);
+      border-radius: 14px 14px 14px 3px;
+      padding: 8px 11px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+      pointer-events: auto;
+      max-width: 100%;
+      max-height: 110px;
+      overflow: hidden;
+      transition: transform var(--transition-smooth), border-color var(--transition-smooth);
+    }
+    .guide__bubble:hover { transform: translateY(-2px); }
+
+    .guide__bubble[data-mood="calm"]      { border-color: rgba(46,184,134,0.45); }
+    .guide__bubble[data-mood="thinking"]  { border-color: rgba(108,114,126,0.45); }
+    .guide__bubble[data-mood="concerned"] { border-color: rgba(224,90,71,0.45); }
+    .guide__bubble[data-mood="curious"]   { border-color: rgba(255,184,0,0.55); }
+    .guide__bubble[data-mood="warm"]      { border-color: rgba(240,168,104,0.55); }
+
+    .guide__bubble::after {
+      content: "";
+      position: absolute;
+      bottom: -8px;
+      left: 18px;
+      width: 0;
+      height: 0;
+      border-left: 8px solid transparent;
+      border-right: 0 solid transparent;
+      border-top: 10px solid rgba(255, 255, 255, 0.97);
+      filter: drop-shadow(0 2px 0 var(--surface-border));
+    }
+
+    .guide__text {
+      font-size: clamp(11px, 0.78vw, 13px);
+      line-height: 1.45;
+      color: var(--text-sub);
+      font-weight: 500;
+    }
+
+    .guide__figure {
+      width: 100%;
+      max-width: 95px;
+      filter: drop-shadow(0 6px 12px rgba(0,0,0,0.08));
+      animation: guideFloat 4s ease-in-out infinite;
+    }
+
+    @keyframes guideFloat {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(-4px); }
+    }
+
+    .lex-panel {
+      position: absolute;
+      bottom: 96px;
+      left: clamp(24px, 4vw, 70px);
+      right: clamp(180px, 16vw, 220px);
+      display: flex;
+      gap: 22px;
+      padding: 14px 22px;
+      background: var(--lex-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--surface-border);
+      border-left: 3px solid var(--lex-border);
+      border-radius: 14px;
+      font-family: var(--font-multi);
+      opacity: 0.96;
+      transition: opacity 0.3s;
+      z-index: 4;
+      max-height: 130px;
+      overflow: hidden;
+    }
+    .lex-panel:hover { opacity: 1; }
+
+    .lex-panel__label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      font-size: 10px;
+      letter-spacing: 3px;
+      color: var(--lex-label);
+      border-right: 1px dashed var(--surface-border);
+      padding-right: 12px;
+      padding-left: 4px;
+      font-weight: 600;
+    }
+
+    .lex-item {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .lex-item__head {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      margin-bottom: 3px;
+    }
+
+    .lex-item__zh {
+      font-size: 1.18em;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .lex-item__py {
+      font-size: 0.85em;
+      color: var(--accent-sage);
+      font-weight: 600;
+    }
+
+    .lex-item__def {
+      font-size: 0.85em;
+      line-height: 1.5;
+      color: var(--text-main);
+      font-weight: 500;
+      margin-bottom: 3px;
+    }
+
+    .lex-item__ru {
+      font-size: 0.78em;
+      color: var(--text-muted);
+      font-style: italic;
+      margin-bottom: 6px;
+      line-height: 1.3;
+    }
+
+    .lex-item__row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 14px;
+      font-size: 0.8em;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    .lex-tr {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      line-height: 1.2;
+    }
+
+    .lex-flag {
+      width: 17px;
+      height: 12px;
+      flex-shrink: 0;
+      border-radius: 2.5px;
+      box-shadow: 0 0 0 0.5px rgba(0,0,0,0.06);
+      vertical-align: middle;
+    }
+
+    .nav-bar {
+      position: absolute;
+      bottom: 24px;
+      left: clamp(24px, 4vw, 70px);
+      right: clamp(24px, 4vw, 70px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .nav-controls {
+      display: flex;
+      gap: 12px;
+      pointer-events: auto;
+    }
+
+    .nav-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--surface-white);
+      border: 2px solid var(--surface-border);
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      font-size: 1.2rem;
+      font-weight: bold;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      transition: all var(--transition-smooth);
+    }
+
+    .nav-btn:hover {
+      border-color: var(--accent-sage);
+      color: var(--accent-sage);
+      transform: translateY(-2px);
+    }
+
+    .nav-btn.is-disabled {
+      opacity: 0.3;
+      pointer-events: none;
+      cursor: not-allowed;
+    }
+
+    .slide-indicator {
+      font-size: 14px;
+      color: var(--text-sub);
+      font-weight: 600;
+      background: var(--surface-white);
+      padding: 8px 18px;
+      border-radius: 30px;
+      border: 2px solid var(--surface-border);
+      pointer-events: auto;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    }
+
+    @media (max-width: 1024px) {
+      .guide { width: clamp(100px, 11vw, 130px); bottom: 100px; }
+      .guide__figure { max-width: 80px; }
+      .lex-panel { right: clamp(140px, 15vw, 180px); max-height: 150px; }
+      .slide { padding-right: clamp(120px, 13vw, 160px); }
+    }
+
+    @media (max-width: 768px) {
+      .deck-container { aspect-ratio: auto; height: 100dvh; }
+      .slide { padding: 20px 16px 220px 16px; overflow-y: auto; }
+      .grid-split,
+      .grid-3col { grid-template-columns: 1fr; gap: 1rem; }
+      .guide { display: none; }
+      .lex-panel {
+        position: static;
+        margin-top: 1rem;
+        flex-direction: column;
+        right: auto;
+        left: auto;
+        bottom: auto;
+        max-height: none;
+      }
+      .lex-panel__label {
+        writing-mode: horizontal-tb;
+        border-right: none;
+        border-bottom: 1px dashed var(--surface-border);
+        padding-right: 0;
+        padding-bottom: 6px;
+        padding-left: 0;
+        justify-content: flex-start;
+      }
+      .slide-header::before { font-size: 70px; top: -14px; }
+      .nav-bar { left: 16px; right: 16px; bottom: 16px; }
+      .title-scene svg { max-width: 100%; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+<main class="deck-container" id="deck">
+
+  <div class="progress" id="progress"></div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SVG DEFS — хостер
+       ВАЖНО: НЕ display:none, иначе <use> перестаёт работать
+       ═══════════════════════════════════════════════════════════ -->
+  <svg xmlns="http://www.w3.org/2000/svg"
+       style="position: absolute; width: 0; height: 0; overflow: hidden; pointer-events: none;"
+       aria-hidden="true" focusable="false">
+    <defs>
+
+      <!-- ═══ ПЕРСОНАЖ 1: ОН (Gen Z) ═══ -->
+      <g id="boy-base">
+        <rect x="85" y="110" width="30" height="25" fill="#F0C8B0" rx="5"/>
+        <ellipse cx="100" cy="85" rx="32" ry="35" fill="#FCD3B8"/>
+        <ellipse cx="80" cy="90" rx="6" ry="3" fill="#FF9E9E" opacity="0.5"/>
+        <ellipse cx="120" cy="90" rx="6" ry="3" fill="#FF9E9E" opacity="0.5"/>
+        <path d="M 62 75 C 55 60, 65 40, 80 42 C 85 30, 105 28, 115 38 C 128 32, 142 45, 138 60 C 145 72, 135 88, 132 88 C 130 75, 126 65, 120 60 C 110 50, 90 50, 80 62 C 72 65, 68 70, 62 75 Z" fill="#D99B4E"/>
+        <circle cx="70" cy="52" r="13" fill="#D99B4E"/>
+        <circle cx="85" cy="40" r="14" fill="#E2A85C"/>
+        <circle cx="103" cy="38" r="15" fill="#D99B4E"/>
+        <circle cx="122" cy="45" r="13" fill="#E2A85C"/>
+        <circle cx="132" cy="60" r="11" fill="#D99B4E"/>
+        <circle cx="68" cy="66" r="10" fill="#E2A85C"/>
+      </g>
+
+      <!-- ═══ ЭМОЦИИ «ОН» ═══ -->
+      <g id="face-calm">
+        <circle cx="88" cy="82" r="4.5" fill="#22252A"/>
+        <circle cx="112" cy="82" r="4.5" fill="#22252A"/>
+        <path d="M 92 98 Q 100 105 108 98" stroke="#22252A" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      </g>
+
+      <g id="face-thinking">
+        <path d="M 83 82 Q 88 78 93 82" stroke="#22252A" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M 107 82 Q 112 78 117 82" stroke="#22252A" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M 80 72 Q 88 68 96 72" stroke="#8B6B3D" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <path d="M 104 70 Q 112 68 120 72" stroke="#8B6B3D" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <path d="M 94 99 Q 100 103 106 99" stroke="#22252A" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      </g>
+
+      <g id="face-concerned">
+        <circle cx="88" cy="82" r="4.5" fill="#22252A"/>
+        <circle cx="112" cy="82" r="4.5" fill="#22252A"/>
+        <path d="M 78 70 Q 88 74 96 72" stroke="#8B6B3D" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <path d="M 104 72 Q 112 74 122 70" stroke="#8B6B3D" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <path d="M 92 100 Q 100 99 108 100" stroke="#22252A" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      </g>
+
+      <g id="face-curious">
+        <circle cx="88" cy="82" r="5.5" fill="#22252A"/>
+        <circle cx="112" cy="82" r="5.5" fill="#22252A"/>
+        <circle cx="89.5" cy="80.5" r="1.5" fill="#FFF"/>
+        <circle cx="113.5" cy="80.5" r="1.5" fill="#FFF"/>
+        <ellipse cx="100" cy="100" rx="4" ry="5" fill="#22252A"/>
+      </g>
+
+      <g id="face-warm">
+        <path d="M 83 82 Q 88 78 93 82" stroke="#22252A" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M 107 82 Q 112 78 117 82" stroke="#22252A" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M 90 97 Q 100 108 110 97" stroke="#22252A" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <ellipse cx="78" cy="92" rx="7" ry="4" fill="#FF9E9E" opacity="0.7"/>
+        <ellipse cx="122" cy="92" rx="7" ry="4" fill="#FF9E9E" opacity="0.7"/>
+      </g>
+
+      <!-- ═══ ХУДИ ═══ -->
+      <g id="hoodie-sage"><path d="M 45 135 Q 100 120 155 135 L 165 200 L 35 200 Z" fill="#2EB886"/></g>
+      <g id="hoodie-yellow"><path d="M 45 135 Q 100 120 155 135 L 165 200 L 35 200 Z" fill="#FFB800"/></g>
+      <g id="hoodie-grey"><path d="M 45 135 Q 100 120 155 135 L 165 200 L 35 200 Z" fill="#6C727E"/></g>
+      <g id="hoodie-terracotta"><path d="M 45 135 Q 100 120 155 135 L 165 200 L 35 200 Z" fill="#E05A47"/></g>
+
+      <!-- ═══ ПЕРСОНАЖ 2: ОНА (архетип) ═══ -->
+      <g id="woman-base">
+        <rect x="85" y="110" width="30" height="25" fill="#F5D5C0" rx="5"/>
+        <ellipse cx="100" cy="85" rx="30" ry="33" fill="#FCE0CC"/>
+        <path d="M 68 88 C 60 70, 66 48, 82 42 C 92 32, 112 32, 122 42 C 138 48, 144 70, 136 88 C 140 100, 142 112, 138 118 C 132 112, 128 100, 126 92 C 122 82, 118 76, 110 74 C 100 70, 92 72, 86 78 C 82 84, 78 92, 74 100 C 72 108, 70 114, 66 118 C 60 112, 62 100, 68 88 Z" fill="#E8C77A"/>
+        <path d="M 76 60 Q 88 50 100 50 Q 112 50 122 60" stroke="#F4D89A" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.8"/>
+        <path d="M 92 100 Q 100 104 108 100 Q 100 103 92 100 Z" fill="#E05A47"/>
+      </g>
+
+      <g id="woman-face-calm">
+        <circle cx="85" cy="82" r="10" fill="none" stroke="#22252A" stroke-width="2.5"/>
+        <circle cx="115" cy="82" r="10" fill="none" stroke="#22252A" stroke-width="2.5"/>
+        <line x1="95" y1="82" x2="105" y2="82" stroke="#22252A" stroke-width="2.5"/>
+        <circle cx="85" cy="82" r="3.5" fill="#22252A"/>
+        <circle cx="115" cy="82" r="3.5" fill="#22252A"/>
+        <path d="M 93 100 Q 100 105 107 100" stroke="#22252A" stroke-width="2" fill="none" stroke-linecap="round"/>
+      </g>
+
+      <g id="blazer-dark">
+        <path d="M 45 135 Q 100 120 155 135 L 165 200 L 35 200 Z" fill="#22252A"/>
+        <path d="M 85 138 L 100 165 L 115 138" stroke="#3A3E45" stroke-width="2" fill="none"/>
+        <path d="M 92 138 L 100 175 L 108 138 Z" fill="#FFFFFF" opacity="0.95"/>
+      </g>
+
+      <g id="dog-chihuahua">
+        <ellipse cx="155" cy="160" rx="14" ry="10" fill="#E8C77A"/>
+        <circle cx="162" cy="148" r="9" fill="#E8C77A"/>
+        <path d="M 156 142 L 154 134 L 160 140 Z" fill="#D4AF5E"/>
+        <path d="M 168 142 L 170 134 L 164 140 Z" fill="#D4AF5E"/>
+        <circle cx="160" cy="148" r="1.5" fill="#22252A"/>
+        <circle cx="165" cy="148" r="1.5" fill="#22252A"/>
+        <circle cx="163" cy="152" r="1" fill="#22252A"/>
+      </g>
+
+      <!-- ═══ КРУГЛЫЙ СТОЛ ═══ -->
+      <g id="round-table">
+        <ellipse cx="300" cy="286" rx="200" ry="14" fill="#22252A" opacity="0.06"/>
+        <ellipse cx="300" cy="270" rx="220" ry="38" fill="#E8DCC4"/>
+        <ellipse cx="300" cy="266" rx="220" ry="38" fill="#F3EFE6"/>
+        <path d="M 80 266 Q 80 290 300 290 Q 520 290 520 266" fill="none" stroke="#D4C9AE" stroke-width="2"/>
+      </g>
+
+      <g id="table-laptop">
+        <rect x="255" y="235" width="44" height="28" rx="3" fill="#22252A"/>
+        <rect x="258" y="238" width="38" height="22" rx="2" fill="#3A3E45"/>
+        <rect x="252" y="263" width="50" height="3" rx="1" fill="#22252A"/>
+      </g>
+
+      <g id="table-coffee">
+        <ellipse cx="220" cy="258" rx="14" ry="4" fill="#FFFFFF" stroke="#22252A" stroke-width="1.5"/>
+        <path d="M 206 258 Q 206 272 220 272 Q 234 272 234 258" fill="#FFFFFF" stroke="#22252A" stroke-width="1.5"/>
+        <path d="M 234 260 Q 242 260 242 266 Q 242 270 234 270" stroke="#22252A" stroke-width="1.5" fill="none"/>
+        <path d="M 216 250 Q 218 246 216 242" stroke="#9DA3AF" stroke-width="1" fill="none" stroke-linecap="round"/>
+        <path d="M 224 250 Q 226 246 224 242" stroke="#9DA3AF" stroke-width="1" fill="none" stroke-linecap="round"/>
+      </g>
+
+      <g id="table-notebook">
+        <rect x="335" y="248" width="34" height="22" rx="2" fill="#FFB800" stroke="#22252A" stroke-width="1.5"/>
+        <line x1="340" y1="254" x2="364" y2="254" stroke="#22252A" stroke-width="1"/>
+        <line x1="340" y1="260" x2="364" y2="260" stroke="#22252A" stroke-width="1"/>
+      </g>
+
+      <!-- ═══ АКСЕССУАРЫ ГИДА ═══ -->
+      <g id="acc-coffee">
+        <rect x="120" y="140" width="22" height="28" rx="4" fill="#FFFFFF" stroke="#22252A" stroke-width="2"/>
+        <path d="M 142 146 C 148 146, 148 160, 142 160" stroke="#22252A" stroke-width="2" fill="none"/>
+      </g>
+
+      <g id="acc-phone">
+        <rect x="130" y="110" width="30" height="50" rx="5" fill="#22252A"/>
+        <circle cx="145" cy="125" r="6" fill="#2EB886"/>
+      </g>
+
+      <g id="acc-headphones">
+        <path d="M 60 70 C 60 30, 140 30, 140 70" stroke="#22252A" stroke-width="6" fill="none"/>
+        <rect x="52" y="65" width="16" height="30" rx="6" fill="#FFB800"/>
+        <rect x="132" y="65" width="16" height="30" rx="6" fill="#FFB800"/>
+      </g>
+
+      <g id="acc-book">
+        <rect x="125" y="145" width="30" height="22" rx="2" fill="#E05A47" stroke="#22252A" stroke-width="1.5"/>
+        <line x1="140" y1="145" x2="140" y2="167" stroke="#22252A" stroke-width="1.5"/>
+      </g>
+
+      <g id="acc-toycar">
+        <rect x="130" y="155" width="28" height="12" rx="2" fill="#E05A47"/>
+        <rect x="136" y="148" width="16" height="8" rx="1" fill="#FDF0EE" stroke="#22252A" stroke-width="1"/>
+        <circle cx="137" cy="168" r="3" fill="#22252A"/>
+        <circle cx="151" cy="168" r="3" fill="#22252A"/>
+      </g>
+
+      <g id="acc-box">
+        <rect x="125" y="145" width="32" height="26" fill="#D4A574" stroke="#22252A" stroke-width="1.5"/>
+        <line x1="125" y1="152" x2="157" y2="152" stroke="#22252A" stroke-width="1"/>
+        <rect x="137" y="145" width="8" height="6" fill="#F3EFE6"/>
+      </g>
+
+      <g id="acc-backpack">
+        <path d="M 128 148 Q 128 138 145 138 Q 162 138 162 148 L 164 170 L 126 170 Z" fill="#FFB800" stroke="#22252A" stroke-width="1.5"/>
+        <rect x="138" y="158" width="14" height="8" rx="2" fill="#FFF8E6" stroke="#22252A" stroke-width="1"/>
+      </g>
+
+      <g id="acc-hourglass">
+        <rect x="131" y="138" width="28" height="3" rx="1" fill="#22252A"/>
+        <rect x="131" y="167" width="28" height="3" rx="1" fill="#22252A"/>
+        <path d="M 134 141 L 156 141 L 145 152 L 156 167 L 134 167 L 145 152 Z" fill="#F3EFE6" stroke="#22252A" stroke-width="1.5"/>
+        <path d="M 136 142 L 154 142 L 145 150 Z" fill="#FFB800"/>
+        <path d="M 138 165 L 152 165 L 145 156 Z" fill="#FFB800"/>
+      </g>
+
+      <g id="acc-shield">
+        <path d="M 145 138 L 162 143 L 162 158 Q 162 170 145 175 Q 128 170 128 158 L 128 143 Z" fill="#E8F8F3" stroke="#2EB886" stroke-width="2"/>
+        <path d="M 137 155 L 143 162 L 154 148" stroke="#2EB886" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+
+      <g id="acc-lemonwater">
+        <path d="M 132 142 L 158 142 L 155 168 L 135 168 Z" fill="#E8F8F3" stroke="#22252A" stroke-width="1.5" opacity="0.9"/>
+        <circle cx="145" cy="147" r="5" fill="#FFB800"/>
+        <line x1="141" y1="147" x2="149" y2="147" stroke="#FFF" stroke-width="0.8"/>
+        <line x1="145" y1="143" x2="145" y2="151" stroke="#FFF" stroke-width="0.8"/>
+      </g>
+
+      <g id="acc-hearts">
+        <path d="M 138 152 C 138 148, 142 145, 145 148 C 148 145, 152 148, 152 152 C 152 158, 145 165, 145 165 C 145 165, 138 158, 138 152 Z" fill="#E05A47"/>
+        <path d="M 150 142 C 150 140, 152 138, 154 140 C 156 138, 158 140, 158 142 C 158 145, 154 149, 154 149 C 154 149, 150 145, 150 142 Z" fill="#FDF0EE" stroke="#E05A47" stroke-width="1"/>
+      </g>
+
+      <g id="acc-controller">
+        <rect x="125" y="148" width="40" height="20" rx="8" fill="#6C727E"/>
+        <circle cx="136" cy="156" r="4" fill="#22252A"/>
+        <circle cx="136" cy="163" r="4" fill="#22252A"/>
+        <circle cx="156" cy="156" r="3" fill="#FFB800"/>
+        <circle cx="152" cy="162" r="3" fill="#E05A47"/>
+      </g>
+
+      <g id="acc-exclaim">
+        <text x="150" y="130" font-size="42" font-weight="800" fill="#E05A47" font-family="sans-serif">!</text>
+      </g>
+
+      <!-- ═══ ИКОНКИ (symbol, самодостаточные) ═══ -->
+      <symbol id="icon-target" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="9"/>
+        <circle cx="12" cy="12" r="5"/>
+        <circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/>
+      </symbol>
+
+      <symbol id="icon-scales" viewBox="0 0 24 24">
+        <line x1="12" y1="4" x2="12" y2="20"/>
+        <line x1="6" y1="8" x2="18" y2="8"/>
+        <path d="M 6 8 L 3 14 L 9 14 Z"/>
+        <path d="M 18 8 L 15 14 L 21 14 Z"/>
+      </symbol>
+
+      <symbol id="icon-lock" viewBox="0 0 24 24">
+        <rect x="5" y="11" width="14" height="10" rx="2"/>
+        <path d="M 9 11 V 7 A 3 3 0 0 1 15 7 V 11"/>
+      </symbol>
+
+      <symbol id="icon-unlock" viewBox="0 0 24 24">
+        <rect x="5" y="11" width="14" height="10" rx="2"/>
+        <path d="M 9 11 V 7 A 3 3 0 0 1 15 4"/>
+      </symbol>
+
+      <symbol id="icon-bulb" viewBox="0 0 24 24">
+        <path d="M 12 4 A 6 6 0 0 1 15 15 L 15 18 L 9 18 L 9 15 A 6 6 0 0 1 12 4 Z"/>
+        <line x1="10" y1="20" x2="14" y2="20"/>
+      </symbol>
+
+      <symbol id="icon-door" viewBox="0 0 24 24">
+        <rect x="5" y="4" width="14" height="17" rx="1"/>
+        <circle cx="15" cy="12.5" r="1" fill="currentColor" stroke="none"/>
+      </symbol>
+
+      <symbol id="icon-puzzle" viewBox="0 0 24 24">
+        <path d="M 10 6 A 2 2 0 0 1 14 6 L 14 8 L 16 8 A 2 2 0 0 1 16 12 L 14 12 L 14 14 L 16 14 A 2 2 0 0 1 16 18 L 12 18 L 12 16 A 2 2 0 0 0 8 16 L 8 18 L 5 18 A 2 2 0 0 1 5 14 L 8 14 L 8 12 L 5 12 A 2 2 0 0 1 5 8 L 10 8 Z"/>
+      </symbol>
+
+      <symbol id="icon-chart" viewBox="0 0 24 24">
+        <line x1="4" y1="20" x2="20" y2="20"/>
+        <rect x="6" y="14" width="3" height="6" fill="currentColor" stroke="none"/>
+        <rect x="11" y="10" width="3" height="10" fill="currentColor" stroke="none"/>
+        <rect x="16" y="6" width="3" height="14" fill="currentColor" stroke="none"/>
+      </symbol>
+
+      <!-- ═══ ФЛАГИ ═══ -->
+      <symbol id="flag-jp" viewBox="0 0 21 15">
+        <rect width="21" height="15" rx="2" fill="#FFFFFF" stroke="#E8E3DA" stroke-width="0.5"/>
+        <circle cx="10.5" cy="7.5" r="4" fill="#BC002D"/>
+      </symbol>
+
+      <symbol id="flag-kr" viewBox="0 0 21 15">
+        <rect width="21" height="15" rx="2" fill="#FFFFFF" stroke="#E8E3DA" stroke-width="0.5"/>
+        <circle cx="10.5" cy="7.5" r="4" fill="#CD2E3A"/>
+        <path d="M 6.5 7.5 A 4 4 0 0 0 14.5 7.5 A 2 2 0 0 1 6.5 7.5 Z" fill="#0047A0"/>
+        <g fill="#22252A">
+          <rect x="3.5" y="3" width="3" height="0.7"/>
+          <rect x="3.5" y="4.2" width="3" height="0.7"/>
+          <rect x="14.5" y="3" width="3" height="0.7"/>
+          <rect x="14.5" y="4.2" width="3" height="0.7"/>
+          <rect x="3.5" y="10.5" width="3" height="0.7"/>
+          <rect x="3.5" y="11.7" width="3" height="0.7"/>
+          <rect x="14.5" y="10.5" width="3" height="0.7"/>
+          <rect x="14.5" y="11.7" width="3" height="0.7"/>
+        </g>
+      </symbol>
+
+      <symbol id="flag-th" viewBox="0 0 21 15">
+        <rect width="21" height="15" rx="2" fill="#FFFFFF"/>
+        <rect width="21" height="2.5" y="0" fill="#A51931"/>
+        <rect width="21" height="2.5" y="12.5" fill="#A51931"/>
+        <rect width="21" height="2" y="2.5" fill="#F4F5F8"/>
+        <rect width="21" height="2" y="10.5" fill="#F4F5F8"/>
+        <rect width="21" height="5" y="5" fill="#2D2A4A"/>
+        <rect width="21" height="15" rx="2" fill="none" stroke="#E8E3DA" stroke-width="0.5"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 1 — ОБЛОЖКА
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide active" id="slide-1">
+    <div class="slide-header" style="text-align: center;">
+      <div class="tag-badge tag-sage speakable" onclick="speakZH('文化解析与代际对话')">文化解析｜代际对话</div>
+      <h1 class="slide-title has-emoji speakable" data-emoji="🎭" style="font-size: clamp(28px, 3.2vw, 48px); text-align:center;" onclick="speakZH('时代的决斗：冲突、美学与Z世代哲学')">
+        时代的决斗：冲突、美学与 <span class="highlight-yellow">Z世代哲学</span>
+      </h1>
+      <p class="sub-title">DUEL OF ERAS: CONFLICT, AESTHETICS &amp; GEN Z PHILOSOPHY</p>
+    </div>
+
+    <div class="title-scene">
+      <svg viewBox="0 0 600 340" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <use href="#round-table"/>
+        <use href="#table-notebook"/>
+        <use href="#table-laptop"/>
+        <use href="#table-coffee"/>
+
+        <g transform="translate(85, 95) scale(0.85)">
+          <use href="#boy-base"/>
+          <use href="#face-warm"/>
+          <use href="#hoodie-sage"/>
+        </g>
+
+        <g transform="translate(320, 95) scale(0.85)">
+          <use href="#woman-base"/>
+          <use href="#woman-face-calm"/>
+          <use href="#blazer-dark"/>
+          <use href="#dog-chihuahua"/>
+        </g>
+
+        <text x="170" y="325" text-anchor="middle" font-size="11" font-weight="700" fill="#6C727E" font-family="sans-serif" letter-spacing="1">GEN Z</text>
+        <text x="405" y="325" text-anchor="middle" font-size="11" font-weight="700" fill="#6C727E" font-family="sans-serif" letter-spacing="1">MILLENNIAL</text>
+      </svg>
+    </div>
+
+    <div style="text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+      💡 点击任意文字可朗读中文（语音教学辅助）
+    </div>
+
+    <aside class="guide" aria-label="Комментарий гида">
+      <div class="guide__bubble" data-mood="warm">
+        <p class="guide__text speakable" onclick="speakZH('我们一起看看：两代人到底在争什么？')">
+          我们一起看看：两代人到底在争什么？
+        </p>
+      </div>
+      <svg viewBox="0 0 200 200" class="guide__figure" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <use href="#boy-base"/>
+        <use href="#face-warm"/>
+        <use href="#hoodie-sage"/>
+        <use href="#acc-coffee"/>
+      </svg>
+    </aside>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 2 — ДВЕ ПОЗИЦИИ
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-2">
+    <div class="slide-header" data-num="01">
+      <div class="tag-badge">对话主角</div>
+      <h2 class="slide-title has-emoji speakable" data-emoji="⚔️" onclick="speakZH('两种立场的交锋')">两种立场的交锋</h2>
+      <p class="sub-title">当“控制与成就”遇上“后讽刺与边界”</p>
+    </div>
+
+    <div class="grid-split">
+      <div class="card" style="border-top: 5px solid var(--accent-terracotta);">
+        <div class="tag-badge tag-terracotta">千禧一代 · 索布恰克</div>
+        <h3 class="card-title speakable" onclick="speakZH('精英视角与掌控感')">
+          <svg class="card-icon card-icon--terracotta" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#icon-target"/></svg>
+          精英视角与掌控感
+        </h3>
+        <p class="card-body speakable" onclick="speakZH('习惯设定议程，追求极致高效与自我实现，认为奋斗与结果代表个人价值。')">
+          习惯设定 <span class="term">议程</span>，追求极致高效与自我实现，认为
+          <span class="key">奋斗与结果代表个人价值</span>。
+        </p>
+      </div>
+
+      <div class="card" style="border-top: 5px solid var(--accent-sage);">
+        <div class="tag-badge tag-sage">Z世代 · 鲁查克</div>
+        <h3 class="card-title speakable" onclick="speakZH('解构视角与心理安全')">
+          <svg class="card-icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#icon-scales"/></svg>
+          解构视角与心理安全
+        </h3>
+        <p class="card-body speakable" onclick="speakZH('用轻松幽默解构严肃与内卷，优先守护个人心理边界与当下生活的舒适度。')">
+          用轻松幽默解构严肃与内卷，优先守护
+          <span class="key">个人心理边界</span> 与当下生活的舒适度。
+        </p>
+      </div>
+    </div>
+
+    <div class="lex-panel">
+      <div class="lex-panel__label">关键术语</div>
+
+      <div class="lex-item">
+        <div class="lex-item__head">
+          <span class="lex-item__zh">议程</span>
+          <span class="lex-item__py">yì chéng</span>
+        </div>
+        <div class="lex-item__def">谁决定讨论什么、怎么讨论，谁就在掌控局面。</div>
+        <div class="lex-item__ru">повестка, agenda</div>
+        <div class="lex-item__row">
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-jp"/></svg><span>アジェンダ</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-kr"/></svg><span>의제</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-th"/></svg><span>วาระ</span></span>
+        </div>
+      </div>
+
+      <div class="lex-item">
+        <div class="lex-item__head">
+          <span class="lex-item__zh">心理边界</span>
+          <span class="lex-item__py">xīn lǐ biān jiè</span>
+        </div>
+        <div class="lex-item__def">我的情绪和选择，由我自己负责。</div>
+        <div class="lex-item__ru">психологические границы</div>
+        <div class="lex-item__row">
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-jp"/></svg><span>心理的境界線</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-kr"/></svg><span>심리적 경계</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-th"/></svg><span>ขอบเขตทางจิตใจ</span></span>
+        </div>
+      </div>
+    </div>
+
+    <aside class="guide" aria-label="Комментарий гида">
+      <div class="guide__bubble" data-mood="calm">
+        <p class="guide__text speakable" onclick="speakZH('不是敌人，是两种活法。')">不是敌人，是两种活法。</p>
+      </div>
+      <svg viewBox="0 0 200 200" class="guide__figure" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <use href="#boy-base"/>
+        <use href="#face-calm"/>
+        <use href="#hoodie-sage"/>
+        <use href="#acc-book"/>
+      </svg>
+    </aside>
+  </section>
+    <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 3 — ПОРТРЕТ Z-СПИКЕРА
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-3">
+    <div class="slide-header" data-num="02">
+      <div class="tag-badge tag-sage">人物画像</div>
+      <h2 class="slide-title speakable" onclick="speakZH('Z世代之声：职场生态的镜子')">Z世代之声：职场生态的镜子</h2>
+    </div>
+
+    <div class="grid-split">
+      <div style="text-align: center;">
+        <svg viewBox="0 0 200 200" style="width: 220px;" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <use href="#boy-base"/>
+          <use href="#face-curious"/>
+          <use href="#hoodie-yellow"/>
+          <use href="#acc-phone"/>
+        </svg>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 1rem;">
+        <div class="card">
+          <strong class="card-title speakable" onclick="speakZH('短视频表达')">
+            <svg class="card-icon card-icon--yellow" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#icon-bulb"/></svg>
+            短视频表达
+          </strong>
+          <p class="card-body speakable" onclick="speakZH('通过短视频剖析办公日常，既有幽默讽刺，又有理性的观察。')">
+            通过短视频剖析办公日常，<span class="key">既有幽默讽刺，又有理性的观察</span>。
+          </p>
+        </div>
+        <div class="card">
+          <strong class="card-title speakable" onclick="speakZH('双向视角')">
+            <svg class="card-icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#icon-scales"/></svg>
+            双向视角
+          </strong>
+          <p class="card-body speakable" onclick="speakZH('既能指出来自年轻人的避世心态，也能揭示前辈们的内卷与焦虑。')">
+            既能指出来自年轻人的 <span class="term">避世</span> 心态，也能揭示前辈们的内卷与焦虑。
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="lex-panel">
+      <div class="lex-panel__label">关键术语</div>
+
+      <div class="lex-item">
+        <div class="lex-item__head">
+          <span class="lex-item__zh">避世</span>
+          <span class="lex-item__py">bì shì</span>
+        </div>
+        <div class="lex-item__def">主动减少与外界的接触，不是懒惰，是自保。</div>
+        <div class="lex-item__ru">уход от мира, эскапизм</div>
+        <div class="lex-item__row">
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-jp"/></svg><span>逃避現実</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-kr"/></svg><span>현실 도피</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-th"/></svg><span>การหนีจากโลก</span></span>
+        </div>
+      </div>
+    </div>
+
+    <aside class="guide" aria-label="Комментарий гида">
+      <div class="guide__bubble" data-mood="curious">
+        <p class="guide__text speakable" onclick="speakZH('我拍的不是段子，是生活。')">我拍的不是段子，是生活。</p>
+      </div>
+      <svg viewBox="0 0 200 200" class="guide__figure" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <use href="#boy-base"/>
+        <use href="#face-curious"/>
+        <use href="#hoodie-yellow"/>
+        <use href="#acc-phone"/>
+      </svg>
+    </aside>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 4 — РАЗБОР ВИРУСНОГО КОНТЕНТА
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-4">
+    <div class="slide-header" data-num="03">
+      <div class="tag-badge">内容观察</div>
+      <h2 class="slide-title speakable" onclick="speakZH('爆款视频背后的真实心理')">爆款视频背后的真实心理</h2>
+    </div>
+
+    <div class="grid-3col">
+      <div class="card">
+        <h3 class="card-title speakable" onclick="speakZH('科学省钱')">
+          <svg class="card-icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#icon-chart"/></svg>
+          《科学省钱》
+        </h3>
+        <p class="card-body speakable" onclick="speakZH('用买咖啡的快乐对抗三十年房贷的沉重，选择即时满足。')">
+          用买咖啡的快乐对抗 30 年房贷的沉重，选择 <span class="key">即时满足</span>。
+        </p>
+      </div>
+
+      <div class="card">
+        <h3 class="card-title speakable" onclick="speakZH('结束远程')">
+          <svg class="card-icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#icon-door"/></svg>
+          《结束远程》
+        </h3>
+        <p class="card-body speakable" onclick="speakZH('描述重返办公室后的文化休克，习惯自主控制生活节奏。')">
+          描述重返办公室后的 <span class="key">文化休克</span>，习惯自主控制生活节奏。
+        </p>
+      </div>
+
+      <div class="card">
+        <h3 class="card-title speakable" onclick="speakZH('职场午休')">
+          <svg class="card-icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#icon-bulb"/></svg>
+          《职场午休》
+        </h3>
+        <p class="card-body speakable" onclick="speakZH('用童趣和幽默解构严肃的职场规则，缓解工作压力。')">
+          用童趣和幽默解构严肃的职场规则，<span class="key">缓解工作压力</span>。
+        </p>
+      </div>
+    </div>
+
+    <div class="lex-panel">
+      <div class="lex-panel__label">关键术语</div>
+
+      <div class="lex-item">
+        <div class="lex-item__head">
+          <span class="lex-item__zh">内卷</span>
+          <span class="lex-item__py">nèi juǎn</span>
+        </div>
+        <div class="lex-item__def">在有限的资源下，大家过度竞争，结果谁也没得到更多。</div>
+        <div class="lex-item__ru">внутренняя конкуренция без выхода</div>
+        <div class="lex-item__row">
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-jp"/></svg><span>内巻き化</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-kr"/></svg><span>내권</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-th"/></svg><span>การแข่งขันภายใน</span></span>
+        </div>
+      </div>
+
+      <div class="lex-item">
+        <div class="lex-item__head">
+          <span class="lex-item__zh">即时满足</span>
+          <span class="lex-item__py">jí shí mǎn zú</span>
+        </div>
+        <div class="lex-item__def">不等遥远的回报，现在就想要结果。</div>
+        <div class="lex-item__ru">немедленное удовлетворение</div>
+        <div class="lex-item__row">
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-jp"/></svg><span>即時満足</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-kr"/></svg><span>즉각적 만족</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-th"/></svg><span>ความพึงพอใจทันที</span></span>
+        </div>
+      </div>
+    </div>
+
+    <aside class="guide" aria-label="Комментарий гида">
+      <div class="guide__bubble" data-mood="thinking">
+        <p class="guide__text speakable" onclick="speakZH('为什么火？因为太真实了。')">为什么火？因为太真实了。</p>
+      </div>
+      <svg viewBox="0 0 200 200" class="guide__figure" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <use href="#boy-base"/>
+        <use href="#face-thinking"/>
+        <use href="#hoodie-grey"/>
+        <use href="#acc-phone"/>
+      </svg>
+    </aside>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 5 — МОДЕЛЬ «СТАРШЕГО БРАТА»
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-5">
+    <div class="slide-header" data-num="04">
+      <div class="tag-badge tag-terracotta">心理模型</div>
+      <h2 class="slide-title speakable" onclick="speakZH('代际关系：长兄模型')">代际关系：“长兄”模型</h2>
+      <p class="sub-title">两代人不是敌人，而是家庭中的兄长与晚辈</p>
+    </div>
+
+    <div style="max-width: 700px; margin: 0 auto; width: 100%;">
+      <div class="card" style="background: var(--accent-terracotta-light); border-color: rgba(224, 90, 71, 0.3);">
+        <strong style="color: var(--accent-terracotta); font-size: 1.05em;" class="speakable" onclick="speakZH('千禧一代：兄长角色')">千禧一代（兄长）</strong>
+        <p class="card-body speakable" onclick="speakZH('开辟了心理边界，承载了过去的牺牲，因此容易产生保护执念与说教欲望。')">
+          开辟了心理边界，承载了过去的牺牲，因此容易产生
+          <span class="term">保护执念</span> 与 <span class="term">说教</span> 欲望。
+        </p>
+      </div>
+
+      <div class="dashed-arrow-down"></div>
+
+      <div class="card" style="background: var(--accent-sage-light); border-color: rgba(46, 184, 134, 0.3);">
+        <strong style="color: var(--accent-sage); font-size: 1.05em;" class="speakable" onclick="speakZH('Z世代：享受红利者')">Z世代（晚辈）</strong>
+        <p class="card-body speakable" onclick="speakZH('享受了前人争取来的边界红利，用幽默解构严肃，寻求更平等的对话。')">
+          享受了前人争取来的 <span class="key">边界红利</span>，用幽默解构严肃，寻求更平等的对话。
+        </p>
+      </div>
+    </div>
+
+    <div class="lex-panel">
+      <div class="lex-panel__label">关键术语</div>
+
+      <div class="lex-item">
+        <div class="lex-item__head">
+          <span class="lex-item__zh">保护执念</span>
+          <span class="lex-item__py">bǎo hù zhí niàn</span>
+        </div>
+        <div class="lex-item__def">因为自己吃过苦，所以想替别人做决定。</div>
+        <div class="lex-item__ru">навязчивое желание опекать</div>
+        <div class="lex-item__row">
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-jp"/></svg><span>保護執念</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-kr"/></svg><span>보호 강박</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-th"/></svg><span>ความหมกมุ่นในการปกป้อง</span></span>
+        </div>
+      </div>
+
+      <div class="lex-item">
+        <div class="lex-item__head">
+          <span class="lex-item__zh">说教</span>
+          <span class="lex-item__py">shuō jiào</span>
+        </div>
+        <div class="lex-item__def">用道理压人，而不是和人商量。</div>
+        <div class="lex-item__ru">нравоучение, морализаторство</div>
+        <div class="lex-item__row">
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-jp"/></svg><span>説教</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-kr"/></svg><span>설교</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-th"/></svg><span>การเทศนา</span></span>
+        </div>
+      </div>
+    </div>
+
+    <aside class="guide" aria-label="Комментарий гида">
+      <div class="guide__bubble" data-mood="warm">
+        <p class="guide__text speakable" onclick="speakZH('哥哥走了很远，弟弟想走自己的路。')">哥哥走了很远，弟弟想走自己的路。</p>
+      </div>
+      <svg viewBox="0 0 200 200" class="guide__figure" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <use href="#boy-base"/>
+        <use href="#face-warm"/>
+        <use href="#hoodie-sage"/>
+        <use href="#acc-toycar"/>
+      </svg>
+    </aside>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 6 — ВЫБОР ЖИЛЬЯ
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-6">
+    <div class="slide-header" data-num="05">
+      <div class="tag-badge">消费观念</div>
+      <h2 class="slide-title has-emoji speakable" data-emoji="🏠" onclick="speakZH('住房抉择：拒绝房贷枷锁')">住房抉择：拒绝房贷枷锁</h2>
+    </div>
+
+    <div class="grid-split">
+      <div class="card" style="text-align: center;">
+        <svg viewBox="0 0 160 120" style="width: 130px; margin: 0 auto;" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="20" y="30" width="120" height="70" rx="8" fill="#E05A47"/>
+          <rect x="20" y="45" width="120" height="15" fill="#22252A"/>
+          <circle cx="50" cy="75" r="3" fill="#FFF"/>
+          <circle cx="70" cy="75" r="3" fill="#FFF"/>
+          <path d="M 55 88 Q 60 82 65 88" stroke="#FFF" stroke-width="2" fill="none"/>
+          <path d="M 72 78 C 72 82, 68 85, 68 85 C 68 85, 64 82, 64 78 C 64 75, 72 75, 72 78 Z" fill="#70C7FF"/>
+        </svg>
+        <h3 class="card-title speakable" onclick="speakZH('传统的房贷压力')" style="justify-content: center;">
+          <svg class="card-icon card-icon--terracotta" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#icon-lock"/></svg>
+          <span class="chip chip--terracotta">30 年</span>
+          债务
+        </h3>
+        <p class="card-body speakable" onclick="speakZH('大都市高昂的房价脱离了薪资现实，长期的贷款限制了职业选择自由。')">
+          高昂房价脱离薪资现实，长期的债务剥夺了人生的 <span class="key">流动性</span>。
+        </p>
+      </div>
+
+      <div class="card" style="text-align: center; border-color: var(--accent-sage);">
+        <svg viewBox="0 0 160 120" style="width: 130px; margin: 0 auto;" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M 80 25 L 125 60 L 35 60 Z" fill="#2EB886"/>
+          <rect x="45" y="60" width="70" height="45" fill="#E8F8F3" stroke="#2EB886" stroke-width="2"/>
+          <rect x="70" y="75" width="20" height="30" fill="#2EB886"/>
+        </svg>
+        <h3 class="card-title speakable" onclick="speakZH('灵活的品质租居')" style="justify-content: center;">
+          <svg class="card-icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#icon-unlock"/></svg>
+          品质租居与自由
+        </h3>
+        <p class="card-body speakable" onclick="speakZH('保持生活的流动性，将资金投入到体验、学习与能带来即时快乐的地方。')">
+          保持生活的流动性，将资金投入到 <span class="key">体验与能带来快乐的地方</span>。
+        </p>
+      </div>
+    </div>
+
+    <div class="lex-panel">
+      <div class="lex-panel__label">关键术语</div>
+
+      <div class="lex-item">
+        <div class="lex-item__head">
+          <span class="lex-item__zh">流动性</span>
+          <span class="lex-item__py">liú dòng xìng</span>
+        </div>
+        <div class="lex-item__def">不被房子、城市、职位绑住，随时可以走。</div>
+        <div class="lex-item__ru">мобильность (свобода сменить город)</div>
+        <div class="lex-item__row">
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-jp"/></svg><span>流動性</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-kr"/></svg><span>유동성</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-th"/></svg><span>ความคล่องตัว</span></span>
+        </div>
+      </div>
+
+      <div class="lex-item">
+        <div class="lex-item__head">
+          <span class="lex-item__zh">枷锁</span>
+          <span class="lex-item__py">jiā suǒ</span>
+        </div>
+        <div class="lex-item__def">看似自愿，其实是束缚。</div>
+        <div class="lex-item__ru">кандалы, оковы (метафора ипотеки)</div>
+        <div class="lex-item__row">
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-jp"/></svg><span>枷鎖</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-kr"/></svg><span>족쇄</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-th"/></svg><span>โซ่ตรวน</span></span>
+        </div>
+      </div>
+    </div>
+
+    <aside class="guide" aria-label="Комментарий гида">
+      <div class="guide__bubble" data-mood="concerned">
+        <p class="guide__text speakable" onclick="speakZH('三十年的贷款，换得来自由吗？')">三十年的贷款，换得来自由吗？</p>
+      </div>
+      <svg viewBox="0 0 200 200" class="guide__figure" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <use href="#boy-base"/>
+        <use href="#face-concerned"/>
+        <use href="#hoodie-terracotta"/>
+        <use href="#acc-box"/>
+      </svg>
+    </aside>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 7 — ЭКОНОМИКА ВПЕЧАТЛЕНИЙ
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-7">
+    <div class="slide-header" data-num="06">
+      <div class="tag-badge tag-sage">体验经济</div>
+      <h2 class="slide-title speakable" onclick="speakZH('拥抱体验经济：为情绪价值买单')">拥抱体验经济：为情绪价值买单</h2>
+    </div>
+
+    <div class="grid-split">
+      <div>
+        <svg viewBox="0 0 200 180" class="character-avatar" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <use href="#boy-base"/>
+          <use href="#face-curious"/>
+          <use href="#hoodie-yellow"/>
+        </svg>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 1rem;">
+        <div class="card">
+          <strong class="card-title speakable" onclick="speakZH('购买体验而非资产')">
+            <svg class="card-icon card-icon--yellow" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#icon-bulb"/></svg>
+            购买体验，而非固定资产
+          </strong>
+          <p class="card-body speakable" onclick="speakZH('旅行、音乐节、数码产品与兴趣爱好，成为年轻人主要的消费方向。')">
+            旅行、音乐节与兴趣爱好，成为年轻人主要的消费方向。
+          </p>
+        </div>
+        <div class="card card--quote">
+          <strong class="card-title speakable" onclick="speakZH('关注情绪回报率')">
+            <svg class="card-icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#icon-chart"/></svg>
+            关注情绪回报率（ROE）
+          </strong>
+          <p class="card-body speakable" onclick="speakZH('相比于未知的远期投资，能够即时改善精神状态的消费更受欢迎。')">
+            相比于未知的远期投资，<span class="key">能够即时改善精神状态的消费</span> 更受欢迎。
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="lex-panel">
+      <div class="lex-panel__label">关键术语</div>
+
+      <div class="lex-item">
+        <div class="lex-item__head">
+          <span class="lex-item__zh">情绪价值</span>
+          <span class="lex-item__py">qíng xù jià zhí</span>
+        </div>
+        <div class="lex-item__def">花钱买到好心情，这本身就是回报。</div>
+        <div class="lex-item__ru">эмоциональная ценность</div>
+        <div class="lex-item__row">
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-jp"/></svg><span>感情的価値</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-kr"/></svg><span>정서적 가치</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-th"/></svg><span>คุณค่าทางอารมณ์</span></span>
+        </div>
+      </div>
+
+      <div class="lex-item">
+        <div class="lex-item__head">
+          <span class="lex-item__zh">回报率</span>
+          <span class="lex-item__py">huí bào lǜ</span>
+        </div>
+        <div class="lex-item__def">投入换来的东西，值不值。</div>
+        <div class="lex-item__ru">ROI, отдача (эмоциональная)</div>
+        <div class="lex-item__row">
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-jp"/></svg><span>投資収益率</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-kr"/></svg><span>수익률</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-th"/></svg><span>อัตราผลตอบแทน</span></span>
+        </div>
+      </div>
+    </div>
+
+    <aside class="guide" aria-label="Комментарий гида">
+      <div class="guide__bubble" data-mood="warm">
+        <p class="guide__text speakable" onclick="speakZH('花钱买心情，不亏。')">花钱买心情，不亏。</p>
+      </div>
+      <svg viewBox="0 0 200 200" class="guide__figure" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <use href="#boy-base"/>
+        <use href="#face-warm"/>
+        <use href="#hoodie-yellow"/>
+        <use href="#acc-backpack"/>
+      </svg>
+    </aside>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 8 — ПОЧЕМУ 2 ГОДА
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-8">
+    <div class="slide-header" data-num="07">
+      <div class="tag-badge">职场法则</div>
+      <h2 class="slide-title speakable" onclick="speakZH('为何两年内必然跳槽？')">为何两年内必然跳槽？</h2>
+      <p class="sub-title">打破传统忠诚度观点的背后逻辑</p>
+    </div>
+
+    <div class="grid-3col">
+      <div class="card">
+        <span style="font-size: 1.6rem; color: var(--accent-sage); font-weight: 800; line-height: 1;">01</span>
+        <h3 class="card-title speakable" onclick="speakZH('24个月天花板')">
+          <svg class="card-icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#icon-chart"/></svg>
+          <span class="chip chip--sage">24个月</span>
+          天花板
+        </h3>
+        <p class="card-body speakable" onclick="speakZH('如果两年内缺少晋升机会或技能停滞，会果断寻找新的可能性。')">
+          如果两年内缺少晋升机会或技能停滞，会 <span class="key">果断寻找新的可能性</span>。
+        </p>
+      </div>
+
+      <div class="card">
+        <span style="font-size: 1.6rem; color: var(--accent-sage); font-weight: 800; line-height: 1;">02</span>
+        <h3 class="card-title speakable" onclick="speakZH('学习曲线平缓')">
+          <svg class="card-icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#icon-puzzle"/></svg>
+          学习曲线平缓
+        </h3>
+        <p class="card-body speakable" onclick="speakZH('拒绝重复性的机械劳动，当工作失去挑战性时便开启下一程。')">
+          拒绝重复性的机械劳动，当工作 <span class="key">失去挑战性</span> 时便开启下一程。
+        </p>
+      </div>
+
+      <div class="card">
+        <span style="font-size: 1.6rem; color: var(--accent-sage); font-weight: 800; line-height: 1;">03</span>
+        <h3 class="card-title speakable" onclick="speakZH('主动掌控职业路径')">
+          <svg class="card-icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#icon-target"/></svg>
+          主动掌控路径
+        </h3>
+        <p class="card-body speakable" onclick="speakZH('不再等待企业的安排，而是将自己视为独立的个人品牌来运营。')">
+          不再等待企业的安排，而是将自己视为独立的 <span class="term">个人品牌</span> 来运营。
+        </p>
+      </div>
+    </div>
+
+    <div class="lex-panel">
+      <div class="lex-panel__label">关键术语</div>
+
+      <div class="lex-item">
+        <div class="lex-item__head">
+          <span class="lex-item__zh">天花板</span>
+          <span class="lex-item__py">tiān huā bǎn</span>
+        </div>
+        <div class="lex-item__def">再努力也升不上去的那道线。</div>
+        <div class="lex-item__ru">«потолок» (предел роста)</div>
+        <div class="lex-item__row">
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-jp"/></svg><span>天井</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-kr"/></svg><span>천장</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-th"/></svg><span>เพดาน</span></span>
+        </div>
+      </div>
+
+      <div class="lex-item">
+        <div class="lex-item__head">
+          <span class="lex-item__zh">个人品牌</span>
+          <span class="lex-item__py">gè rén pǐn pái</span>
+        </div>
+        <div class="lex-item__def">把自己当成一家公司来经营。</div>
+        <div class="lex-item__ru">личный бренд</div>
+        <div class="lex-item__row">
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-jp"/></svg><span>パーソナルブランド</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-kr"/></svg><span>개인 브랜드</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-th"/></svg><span>แบรนด์ส่วนตัว</span></span>
+        </div>
+      </div>
+    </div>
+
+    <aside class="guide" aria-label="Комментарий гида">
+      <div class="guide__bubble" data-mood="thinking">
+        <p class="guide__text speakable" onclick="speakZH('两年，是一个合理的期限。')">两年，是一个合理的期限。</p>
+      </div>
+      <svg viewBox="0 0 200 200" class="guide__figure" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <use href="#boy-base"/>
+        <use href="#face-thinking"/>
+        <use href="#hoodie-grey"/>
+        <use href="#acc-hourglass"/>
+      </svg>
+    </aside>
+  </section>
+    <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 9 — ПСИХОЛОГИЧЕСКАЯ БЕЗОПАСНОСТЬ
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-9">
+    <div class="slide-header" data-num="08">
+      <div class="tag-badge tag-terracotta">职场边界</div>
+      <h2 class="slide-title has-emoji speakable" data-emoji="🛡️" onclick="speakZH('拒绝毒性高薪：心理安全至上')">拒绝“毒性高薪”：心理安全至上</h2>
+    </div>
+
+    <div style="max-width: 780px; margin: 0 auto; width: 100%;">
+      <div class="card card--quote" style="padding: 2.2rem; text-align: center;">
+        <h3 style="font-size: 1.35rem; margin-bottom: 1rem; color: var(--text-main); display: flex; align-items: center; justify-content: center; gap: 8px;" class="speakable" onclick="speakZH('全新的职场衡量公式')">
+          <svg class="card-icon" style="width:24px;height:24px;" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#icon-scales"/></svg>
+          全新的职场衡量公式
+        </h3>
+
+        <div style="display: flex; justify-content: center; align-items: center; gap: 1.5rem; flex-wrap: wrap; margin: 1.2rem 0;">
+          <div class="chip chip--terracotta" style="padding: 10px 18px; font-size: 0.95rem;">
+            高薪 + 极致加班
+          </div>
+          <div style="font-size: 1.3rem; font-weight: bold; color: var(--text-sub);">&lt;</div>
+          <div class="chip chip--sage" style="padding: 10px 18px; font-size: 0.95rem;">
+            合理薪资 + 弹性工时 + 心理安全
+          </div>
+        </div>
+
+        <p class="card-body speakable" onclick="speakZH('年轻一代不再愿意为了虚幻的未来承诺而牺牲当下的身心健康。')">
+          年轻一代不再愿意 <span class="key">为了虚幻的未来承诺而牺牲当下的身心健康</span>。
+        </p>
+      </div>
+    </div>
+
+    <div class="lex-panel">
+      <div class="lex-panel__label">关键术语</div>
+
+      <div class="lex-item">
+        <div class="lex-item__head">
+          <span class="lex-item__zh">毒性高薪</span>
+          <span class="lex-item__py">dú xìng gāo xīn</span>
+        </div>
+        <div class="lex-item__def">钱多，但代价是精神和健康。</div>
+        <div class="lex-item__ru">«токсичная» высокая зарплата</div>
+        <div class="lex-item__row">
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-jp"/></svg><span>有毒な高給</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-kr"/></svg><span>독성 고연봉</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-th"/></svg><span>เงินเดือนสูงแบบเป็นพิษ</span></span>
+        </div>
+      </div>
+
+      <div class="lex-item">
+        <div class="lex-item__head">
+          <span class="lex-item__zh">心理安全</span>
+          <span class="lex-item__py">xīn lǐ ān quán</span>
+        </div>
+        <div class="lex-item__def">错了也不会被羞辱，可以放心说话。</div>
+        <div class="lex-item__ru">психологическая безопасность</div>
+        <div class="lex-item__row">
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-jp"/></svg><span>心理的安全性</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-kr"/></svg><span>심리적 안전감</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-th"/></svg><span>ความปลอดภัยทางจิตใจ</span></span>
+        </div>
+      </div>
+    </div>
+
+    <aside class="guide" aria-label="Комментарий гида">
+      <div class="guide__bubble" data-mood="concerned">
+        <p class="guide__text speakable" onclick="speakZH('高薪治不好抑郁。')">高薪治不好抑郁。</p>
+      </div>
+      <svg viewBox="0 0 200 200" class="guide__figure" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <use href="#boy-base"/>
+        <use href="#face-concerned"/>
+        <use href="#hoodie-terracotta"/>
+        <use href="#acc-shield"/>
+      </svg>
+    </aside>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 10 — КУЛЬТУРА КОНТРОЛЯ АЛКОГОЛЯ
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-10">
+    <div class="slide-header" data-num="09">
+      <div class="tag-badge tag-sage">生活态度</div>
+      <h2 class="slide-title speakable" onclick="speakZH('控酒文化：清醒是新的成熟')">控酒文化：清醒是新的成熟</h2>
+      <p class="sub-title">Sober Curiosity &amp; 自我掌控崇拜</p>
+    </div>
+
+    <div class="grid-split">
+      <div style="text-align: center;">
+        <svg viewBox="0 0 200 180" class="character-avatar" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <use href="#boy-base"/>
+          <use href="#face-calm"/>
+          <use href="#hoodie-sage"/>
+        </svg>
+      </div>
+
+      <div class="card card--quote">
+        <h3 class="card-title speakable" onclick="speakZH('摆脱饮酒等于成年的旧执念')">
+          <svg class="card-icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#icon-unlock"/></svg>
+          摆脱“饮酒 = 成年”的旧执念
+        </h3>
+        <p class="card-body speakable" onclick="speakZH('不再将推杯换盏视为社交必备技能。选择无酒精特调或气泡水，代表着对身体与大脑的绝对掌控。')">
+          不再将推杯换盏视为 <span class="term">社交必备</span> 技能。选择无酒精特调或气泡水，代表着
+          <span class="key">对身体与大脑的绝对掌控</span>。
+        </p>
+      </div>
+    </div>
+
+    <div class="lex-panel">
+      <div class="lex-panel__label">关键术语</div>
+
+      <div class="lex-item">
+        <div class="lex-item__head">
+          <span class="lex-item__zh">清醒</span>
+          <span class="lex-item__py">qīng xǐng</span>
+        </div>
+        <div class="lex-item__def">不靠酒精也能放松和社交。</div>
+        <div class="lex-item__ru">трезвость (новый символ зрелости)</div>
+        <div class="lex-item__row">
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-jp"/></svg><span>しらふ</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-kr"/></svg><span>맑은 정신</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-th"/></svg><span>การมีสติ</span></span>
+        </div>
+      </div>
+
+      <div class="lex-item">
+        <div class="lex-item__head">
+          <span class="lex-item__zh">社交必备</span>
+          <span class="lex-item__py">shè jiāo bì bèi</span>
+        </div>
+        <div class="lex-item__def">大家都默认必须会的事。</div>
+        <div class="lex-item__ru">«обязательный атрибут социализации»</div>
+        <div class="lex-item__row">
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-jp"/></svg><span>社交の必須</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-kr"/></svg><span>사교 필수</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-th"/></svg><span>สิ่งจำเป็นทางสังคม</span></span>
+        </div>
+      </div>
+    </div>
+
+    <aside class="guide" aria-label="Комментарий гида">
+      <div class="guide__bubble" data-mood="calm">
+        <p class="guide__text speakable" onclick="speakZH('清醒，是一种新的酷。')">清醒，是一种新的酷。</p>
+      </div>
+      <svg viewBox="0 0 200 200" class="guide__figure" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <use href="#boy-base"/>
+        <use href="#face-calm"/>
+        <use href="#hoodie-sage"/>
+        <use href="#acc-lemonwater"/>
+      </svg>
+    </aside>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 11 — РАЦИОНАЛЬНЫЕ ОТНОШЕНИЯ
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-11">
+    <div class="slide-header" data-num="10">
+      <div class="tag-badge">情感哲学</div>
+      <h2 class="slide-title speakable" onclick="speakZH('理性关系：高标准与情绪安全')">理性关系：高标准与情绪安全</h2>
+    </div>
+
+    <div class="grid-split">
+      <div class="card">
+        <h3 class="card-title speakable" onclick="speakZH('拒绝无意义的凑合')">
+          <svg class="card-icon card-icon--terracotta" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#icon-door"/></svg>
+          拒绝无意义的凑合
+        </h3>
+        <p class="card-body speakable" onclick="speakZH('单身不再被视为一种遗憾，而是拥有完整独立生活的体现。')">
+          单身不再被视为一种遗憾，而是 <span class="key">拥有完整独立生活</span> 的体现。
+        </p>
+      </div>
+
+      <div class="card card--quote">
+        <h3 class="card-title speakable" onclick="speakZH('追求高质量的共情')">
+          <svg class="card-icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#icon-bulb"/></svg>
+          追求高质量的共情
+        </h3>
+        <p class="card-body speakable" onclick="speakZH('在亲密关系中，相处舒适与情绪安全远比符合外界眼光更为重要。')">
+          在亲密关系中，<span class="key">相处舒适与情绪安全</span> 远比符合外界眼光更为重要。
+        </p>
+      </div>
+    </div>
+
+    <div class="lex-panel">
+      <div class="lex-panel__label">关键术语</div>
+
+      <div class="lex-item">
+        <div class="lex-item__head">
+          <span class="lex-item__zh">凑合</span>
+          <span class="lex-item__py">còu he</span>
+        </div>
+        <div class="lex-item__def">不合适也先将就，因为怕麻烦。</div>
+        <div class="lex-item__ru">«лишь бы было» — компромисс без любви</div>
+        <div class="lex-item__row">
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-jp"/></svg><span>間に合わせ</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-kr"/></svg><span>대충 맞춤</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-th"/></svg><span>การประนีประนอม</span></span>
+        </div>
+      </div>
+
+      <div class="lex-item">
+        <div class="lex-item__head">
+          <span class="lex-item__zh">共情</span>
+          <span class="lex-item__py">gòng qíng</span>
+        </div>
+        <div class="lex-item__def">站在对方的位置上感受。</div>
+        <div class="lex-item__ru">эмпатия, сопереживание</div>
+        <div class="lex-item__row">
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-jp"/></svg><span>共感</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-kr"/></svg><span>공감</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-th"/></svg><span>ความเห็นอกเห็นใจ</span></span>
+        </div>
+      </div>
+    </div>
+
+    <aside class="guide" aria-label="Комментарий гида">
+      <div class="guide__bubble" data-mood="warm">
+        <p class="guide__text speakable" onclick="speakZH('单身不是缺口，是完整。')">单身不是缺口，是完整。</p>
+      </div>
+      <svg viewBox="0 0 200 200" class="guide__figure" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <use href="#boy-base"/>
+        <use href="#face-warm"/>
+        <use href="#hoodie-yellow"/>
+        <use href="#acc-hearts"/>
+      </svg>
+    </aside>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 12 — ACG И МЕТА-ИРОНИЯ
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-12">
+    <div class="slide-header" data-num="11">
+      <div class="tag-badge">文化基因</div>
+      <h2 class="slide-title speakable" onclick="speakZH('动漫文化与高共情视角')">动漫文化与高共情视角</h2>
+    </div>
+
+    <div class="grid-split">
+      <div>
+        <svg viewBox="0 0 200 180" class="character-avatar" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <use href="#boy-base"/>
+          <use href="#face-curious"/>
+          <use href="#hoodie-grey"/>
+          <use href="#acc-headphones"/>
+        </svg>
+      </div>
+
+      <div class="card card--quote">
+        <h3 class="card-title speakable" onclick="speakZH('信息的快速筛选能力')">
+          <svg class="card-icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#icon-bulb"/></svg>
+          极速信息过滤
+        </h3>
+        <p class="card-body speakable" onclick="speakZH('从小接触海量数字内容的年轻一代，拥有极快的信息筛选与元讽刺理解能力。')">
+          从小接触海量数字内容的年轻一代，拥有极快的
+          <span class="term">信息筛选</span> 与 <span class="term">元讽刺</span> 理解能力。
+        </p>
+      </div>
+    </div>
+
+    <div class="lex-panel">
+      <div class="lex-panel__label">关键术语</div>
+
+      <div class="lex-item">
+        <div class="lex-item__head">
+          <span class="lex-item__zh">元讽刺</span>
+          <span class="lex-item__py">yuán fěng cì</span>
+        </div>
+        <div class="lex-item__def">连讽刺本身也一起讽刺。</div>
+        <div class="lex-item__ru">мета-ирония (ирония над самой иронией)</div>
+        <div class="lex-item__row">
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-jp"/></svg><span>メタ・アイロニー</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-kr"/></svg><span>메타 아이러니</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-th"/></svg><span>การเสียดสีเชิงเมตา</span></span>
+        </div>
+      </div>
+
+      <div class="lex-item">
+        <div class="lex-item__head">
+          <span class="lex-item__zh">信息筛选</span>
+          <span class="lex-item__py">xìn xī shāi xuǎn</span>
+        </div>
+        <div class="lex-item__def">一秒钟判断这条内容值不值得看。</div>
+        <div class="lex-item__ru">фильтрация информации</div>
+        <div class="lex-item__row">
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-jp"/></svg><span>情報フィルタリング</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-kr"/></svg><span>정보 필터링</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-th"/></svg><span>การกรองข้อมูล</span></span>
+        </div>
+      </div>
+    </div>
+
+    <aside class="guide" aria-label="Комментарий гида">
+      <div class="guide__bubble" data-mood="curious">
+        <p class="guide__text speakable" onclick="speakZH('我们看得懂梗，也看得懂你。')">我们看得懂梗，也看得懂你。</p>
+      </div>
+      <svg viewBox="0 0 200 200" class="guide__figure" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <use href="#boy-base"/>
+        <use href="#face-curious"/>
+        <use href="#hoodie-grey"/>
+        <use href="#acc-controller"/>
+      </svg>
+    </aside>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 13 — ПРОМПТ-ИНЖИНИРИНГ И ИИ
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-13">
+    <div class="slide-header" data-num="12">
+      <div class="tag-badge tag-sage">未来技能</div>
+      <h2 class="slide-title speakable" onclick="speakZH('技能重构：提示词工程与 AI 驾驭力')">技能重构：提示词工程与 AI 驾驭力</h2>
+    </div>
+
+    <div class="grid-split">
+      <div class="card" style="background: var(--accent-sage-light); border-color: rgba(46, 184, 134, 0.4);">
+        <strong style="color: var(--accent-sage); font-size: 1em;" class="card-title speakable" onclick="speakZH('外界的刻板印象')">
+          <svg class="card-icon card-icon--terracotta" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#icon-lock"/></svg>
+          外界的刻板印象
+        </strong>
+        <p class="card-body speakable" onclick="speakZH('阅读碎片化，缺乏传统知识体系积累。')" style="font-style: italic;">
+          “阅读碎片化，缺乏传统知识体系积累。”
+        </p>
+      </div>
+
+      <div class="card card--quote">
+        <strong style="color: var(--accent-sage); font-size: 1em;" class="card-title speakable" onclick="speakZH('真实的新时代技能')">
+          <svg class="card-icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#icon-bulb"/></svg>
+          真实的新时代技能
+        </strong>
+        <p class="card-body speakable" onclick="speakZH('将 AI 作为智力杠杆，秒级构建工作流与解决方案。重点从死记硬背转向精准提问与逻辑解构。')">
+          将 AI 作为 <span class="term">智力杠杆</span>，秒级构建工作流。重点从“死记硬背”转向
+          <span class="key">精准提问与逻辑解构</span>。
+        </p>
+      </div>
+    </div>
+
+    <div class="lex-panel">
+      <div class="lex-panel__label">关键术语</div>
+
+      <div class="lex-item">
+        <div class="lex-item__head">
+          <span class="lex-item__zh">提示词工程</span>
+          <span class="lex-item__py">tí shì cí gōng chéng</span>
+        </div>
+        <div class="lex-item__def">把问题问清楚，AI 才给得出好答案。</div>
+        <div class="lex-item__ru">prompt engineering</div>
+        <div class="lex-item__row">
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-jp"/></svg><span>プロンプトエンジニアリング</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-kr"/></svg><span>프롬프트 엔지니어링</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-th"/></svg><span>วิศวกรรมพรอมต์</span></span>
+        </div>
+      </div>
+
+      <div class="lex-item">
+        <div class="lex-item__head">
+          <span class="lex-item__zh">智力杠杆</span>
+          <span class="lex-item__py">zhì lì gàng gǎn</span>
+        </div>
+        <div class="lex-item__def">用工具把自己的思考放大十倍。</div>
+        <div class="lex-item__ru">интеллектуальный рычаг</div>
+        <div class="lex-item__row">
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-jp"/></svg><span>知能のレバレッジ</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-kr"/></svg><span>지적 지렛대</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-th"/></svg><span>คานงัดทางปัญญา</span></span>
+        </div>
+      </div>
+    </div>
+
+    <aside class="guide" aria-label="Комментарий гида">
+      <div class="guide__bubble" data-mood="thinking">
+        <p class="guide__text speakable" onclick="speakZH('问题问得好，答案自然来。')">问题问得好，答案自然来。</p>
+      </div>
+      <svg viewBox="0 0 200 200" class="guide__figure" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <use href="#boy-base"/>
+        <use href="#face-thinking"/>
+        <use href="#hoodie-sage"/>
+        <use href="#acc-phone"/>
+      </svg>
+    </aside>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 14 — ЗАКЛЮЧЕНИЕ
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-14">
+    <div class="slide-header" data-num="13" style="text-align: center;">
+      <div class="tag-badge tag-sage">结语</div>
+      <h2 class="slide-title has-emoji speakable" data-emoji="🕊️" onclick="speakZH('代际对话：经验与自由的交融')" style="text-align: center;">代际对话：经验与自由的交融</h2>
+    </div>
+
+    <div style="max-width: 780px; margin: 1.5rem auto 0 auto;">
+      <div class="card" style="padding: 2.5rem; background: var(--surface-white); border: 2px dashed var(--accent-sage); text-align: center;">
+        <p class="speakable" style="font-size: clamp(16px, 1.4vw, 22px); line-height: 1.7; font-weight: 600; color: var(--text-main);" onclick="speakZH('代际对话不是谁战胜谁，而是经验与自由的交融。千禧一代争取了做自己的权利；Z世代则教会了前辈止步、呼吸与放手。')">
+          “代际对话不是谁战胜谁，而是
+          <span class="key">经验与自由的交融</span>。
+          千禧一代争取了做自己的权利；
+          Z世代则教会了前辈止步、呼吸与放手。”
+        </p>
+      </div>
+
+      <div style="display: flex; justify-content: center; margin-top: 2rem;">
+        <svg viewBox="0 0 200 120" style="width: 140px;" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <use href="#boy-base"/>
+          <use href="#face-warm"/>
+          <use href="#hoodie-sage"/>
+        </svg>
+      </div>
+    </div>
+
+    <aside class="guide" aria-label="Комментарий гида">
+      <div class="guide__bubble" data-mood="warm">
+        <p class="guide__text speakable" onclick="speakZH('经验与自由，缺一不可。')">经验与自由，缺一不可。</p>
+      </div>
+      <svg viewBox="0 0 200 200" class="guide__figure" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <use href="#boy-base"/>
+        <use href="#face-warm"/>
+        <use href="#hoodie-sage"/>
+        <use href="#acc-coffee"/>
+      </svg>
+    </aside>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       НАВИГАЦИЯ
+       ═══════════════════════════════════════════════════════════ -->
+  <footer class="nav-bar">
+    <div class="slide-indicator" id="slide-indicator">第 1 页 / 共 14 页</div>
+    <div class="nav-controls">
+      <button class="nav-btn" id="prev-btn" aria-label="Previous Slide">←</button>
+      <button class="nav-btn" id="next-btn" aria-label="Next Slide">→</button>
+    </div>
+  </footer>
+
+</main>
+
+<script>
+  class SlideDeck {
+    constructor() {
+      this.slides = Array.from(document.querySelectorAll('.slide'));
+      this.indicator = document.getElementById('slide-indicator');
+      this.prevBtn = document.getElementById('prev-btn');
+      this.nextBtn = document.getElementById('next-btn');
+      this.progressBar = document.getElementById('progress');
+
+      const savedSlide = parseInt(localStorage.getItem('active_slide_v6'), 10);
+      this.currentIdx = (!isNaN(savedSlide) && savedSlide >= 0 && savedSlide < this.slides.length)
+        ? savedSlide
+        : 0;
+
+      this.init();
+    }
+
+    init() {
+      this.updateSlides();
+
+      this.prevBtn.addEventListener('click', () => this.prev());
+      this.nextBtn.addEventListener('click', () => this.next());
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === ' ') {
+          e.preventDefault();
+          this.next();
+        }
+        if (e.key === 'ArrowLeft') this.prev();
+      });
+
+      let touchStartX = 0;
+      let touchEndX = 0;
+
+      document.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+      }, { passive: true });
+
+      document.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        if (touchStartX - touchEndX > 50) this.next();
+        if (touchEndX - touchStartX > 50) this.prev();
+      }, { passive: true });
+    }
+
+    goTo(index) {
+      if (index < 0 || index >= this.slides.length) return;
+      this.currentIdx = index;
+      this.updateSlides();
+      localStorage.setItem('active_slide_v6', this.currentIdx);
+    }
+
+    next() {
+      if (this.currentIdx < this.slides.length - 1) this.goTo(this.currentIdx + 1);
+    }
+
+    prev() {
+      if (this.currentIdx > 0) this.goTo(this.currentIdx - 1);
+    }
+
+    updateSlides() {
+      this.slides.forEach((slide, idx) => {
+        slide.classList.toggle('active', idx === this.currentIdx);
+      });
+
+      this.indicator.textContent = `第 ${this.currentIdx + 1} 页 / 共 ${this.slides.length} 页`;
+      this.prevBtn.classList.toggle('is-disabled', this.currentIdx === 0);
+      this.nextBtn.classList.toggle('is-disabled', this.currentIdx === this.slides.length - 1);
+
+      if (this.progressBar) {
+        const percent = ((this.currentIdx + 1) / this.slides.length) * 100;
+        this.progressBar.style.width = percent + '%';
+      }
+    }
+  }
+
+  function speakZH(text) {
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'zh-CN';
+      utterance.rate = 0.9;
+      window.speechSynthesis.speak(utterance);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    window.deck = new SlideDeck();
+  });
+</script>
+</body>
+</html>
