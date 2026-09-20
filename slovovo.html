@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HSK 5–6 · Общество, семья, экзамены и медиа</title>
+<style>
+  :root{
+    --bg:#f6f7fb; --card:#fff; --text:#1e2230; --muted:#6b7280;
+    --accent:#5b7cfa; --accent2:#8b5cf6; --green:#10b981; --red:#ef4444;
+    --amber:#f59e0b; --border:#e5e7eb; --shadow:0 4px 18px rgba(20,30,60,.07);
+    --radius:16px;
+  }
+  [data-theme="dark"]{
+    --bg:#0f1220; --card:#181c2e; --text:#e8eaf2; --muted:#9aa3b8;
+    --border:#2a2f45; --shadow:0 4px 18px rgba(0,0,0,.4);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    background:var(--bg); color:var(--text); line-height:1.55; padding-bottom:80px;
+    transition:background .25s,color .25s;
+  }
+
+  /* ---------- ВЕРХНЯЯ ПАНЕЛЬ ---------- */
+  .topbar{
+    position:sticky; top:0; z-index:100; background:var(--card);
+    border-bottom:1px solid var(--border); box-shadow:var(--shadow);
+    padding:10px 16px; backdrop-filter:blur(8px);
+  }
+  .topbar-inner{max-width:900px;margin:0 auto;display:flex;flex-direction:column;gap:10px}
+  .topbar-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .topbar h1{font-size:1.05rem;font-weight:700;flex:1;min-width:200px}
+  .topbar h1 small{display:block;font-weight:400;font-size:.78rem;color:var(--muted)}
+  .icon-btn{
+    border:1px solid var(--border);background:var(--card);color:var(--text);
+    border-radius:10px;padding:6px 12px;font-size:.85rem;cursor:pointer;
+    transition:.2s; white-space:nowrap;
+  }
+  .icon-btn:hover{border-color:var(--accent);color:var(--accent)}
+  #search{
+    flex:1;min-width:180px;padding:9px 14px;border-radius:10px;
+    border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:.9rem;
+  }
+  #search:focus{outline:2px solid var(--accent);outline-offset:1px}
+  .progress-wrap{height:6px;background:var(--border);border-radius:6px;overflow:hidden}
+  .progress-bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .4s}
+  .stats{font-size:.8rem;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap}
+  .stats b{color:var(--accent)}
+
+  /* ---------- ЗАГОЛОВОК РАЗДЕЛА ---------- */
+  .section-header{
+    max-width:900px;margin:24px auto 8px;padding:22px 24px;border-radius:var(--radius);
+    background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;
+    box-shadow:var(--shadow);
+  }
+  .section-header h2{font-size:1.35rem;margin-bottom:6px}
+  .section-header p{font-size:.92rem;opacity:.95}
+
+  /* ---------- СПИСОК БЫСТРОЙ НАВИГАЦИИ ---------- */
+  .quick-nav{
+    max-width:900px;margin:14px auto;padding:12px 16px;background:var(--card);
+    border-radius:var(--radius);border:1px solid var(--border);box-shadow:var(--shadow);
+    display:flex;flex-wrap:wrap;gap:8px;
+  }
+  .quick-nav a{
+    font-size:.82rem;padding:5px 12px;border-radius:20px;background:var(--bg);
+    color:var(--text);text-decoration:none;border:1px solid var(--border);transition:.2s;
+  }
+  .quick-nav a:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .quick-nav a.known{opacity:.5;text-decoration:line-through}
+
+  /* ---------- КАРТОЧКА ---------- */
+  .word-card{
+    max-width:900px;margin:18px auto;background:var(--card);border-radius:var(--radius);
+    box-shadow:var(--shadow);border:1px solid var(--border);overflow:hidden;
+    scroll-margin-top:130px;
+  }
+  .word-card[data-known="1"]{opacity:.6}
+  .word-card[data-known="1"] .w-cn{text-decoration:line-through}
+
+  /* ШАПКА КАРТОЧКИ */
+  .w-head{
+    display:flex;align-items:center;gap:12px;padding:16px 20px;flex-wrap:wrap;
+    background:linear-gradient(90deg,rgba(91,124,250,.12),transparent);
+    border-bottom:1px solid var(--border);
+  }
+  .w-emoji{font-size:1.8rem}
+  .w-cn{font-size:1.9rem;font-weight:700;letter-spacing:2px}
+  .w-py{color:var(--accent);font-weight:600;font-size:1rem}
+  .w-ru-row{display:flex;align-items:center;gap:8px;margin-left:auto}
+  .hidden-trans{
+    font-size:.88rem;color:var(--muted);max-width:260px;display:none;
+  }
+  .hidden-trans.show{display:inline}
+  .w-ru-row button{
+    border:1px solid var(--border);background:var(--card);border-radius:8px;
+    padding:5px 10px;cursor:pointer;font-size:.82rem;transition:.2s;
+  }
+  .w-ru-row button:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+  /* ЗНАЮ / НЕ ЗНАЮ */
+  .know-row{display:flex;gap:8px;margin-left:auto}
+  .know-btn{
+    border:1px solid var(--border);background:var(--card);border-radius:8px;
+    padding:5px 10px;cursor:pointer;font-size:.82rem;transition:.2s;
+  }
+  .know-btn[data-state="yes"]{background:var(--green);color:#fff;border-color:var(--green)}
+  .know-btn[data-state="no"]{background:var(--red);color:#fff;border-color:var(--red)}
+
+  /* ПРОПИСИ */
+  .c-wrap{padding:14px 20px;border-bottom:1px solid var(--border);background:var(--bg)}
+  .c-wrap h3{font-size:.95rem;margin-bottom:4px}
+  .c-wrap p{font-size:.78rem;color:var(--muted);margin-bottom:8px}
+  .c-wrap canvas{
+    width:100%;height:120px;background:repeating-linear-gradient(
+      to bottom,transparent 0 38px,var(--border) 38px 40px);
+    border:1px dashed var(--border);border-radius:10px;touch-action:none;cursor:crosshair;
+  }
+  .btns{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+  .btns button{
+    border:1px solid var(--border);background:var(--card);border-radius:8px;
+    padding:6px 12px;cursor:pointer;font-size:.82rem;transition:.2s;
+  }
+  .btns button:hover{border-color:var(--accent);color:var(--accent)}
+
+  /* БЛОКИ */
+  .block{padding:16px 20px;border-bottom:1px solid var(--border)}
+  .block:last-child{border-bottom:none}
+  .block h3{font-size:1rem;margin-bottom:8px;color:var(--accent)}
+  .block p{font-size:.9rem;margin-bottom:6px}
+  .block .cn-def{font-size:.88rem;color:var(--muted);font-style:italic}
+
+  .mrow{margin:10px 0}
+  .mrow h4{font-size:.9rem;margin-bottom:4px;color:var(--accent2)}
+
+  .char-row p{font-size:.88rem;margin-bottom:5px;padding-left:6px;border-left:3px solid var(--accent2)}
+  .char-row .warn{color:var(--amber);font-size:.85rem;border-left-color:var(--amber)}
+
+  /* ЛОВУШКА */
+  .trap{
+    background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.35);
+    border-radius:12px;padding:12px 14px;margin-top:10px;
+  }
+  .trap h4{color:var(--amber);font-size:.92rem;margin-bottom:6px}
+  .trap p{font-size:.88rem}
+  .qa-block{
+    margin-top:10px;background:var(--card);border-radius:10px;padding:10px 12px;
+    border:1px dashed var(--border);font-size:.86rem;
+  }
+  .qa-block p{margin-bottom:5px}
+  .qa-block .q{color:var(--accent2);font-weight:600}
+  .qa-block .a{color:var(--green);font-weight:600}
+  .qa-block .why{color:var(--muted)}
+  .qa-block .mem{color:var(--accent);font-weight:600}
+
+  /* КОЛЛОКАЦИИ */
+  .colloc-item{
+    background:var(--bg);border-radius:12px;padding:12px 14px;margin-bottom:10px;
+    border-left:4px solid var(--accent);
+  }
+  .colloc-item:last-child{margin-bottom:0}
+  .colloc-item .tag{
+    display:inline-block;font-size:.72rem;padding:2px 8px;border-radius:20px;
+    font-weight:600;margin-bottom:6px;
+  }
+  .tag-hsk{background:rgba(91,124,250,.15);color:var(--accent)}
+  .tag-byt{background:rgba(16,185,129,.15);color:var(--green)}
+  .tag-media{background:rgba(139,92,246,.15);color:var(--accent2)}
+  .colloc-cn{font-weight:700;font-size:.95rem;margin-bottom:2px}
+  .colloc-ru{font-size:.85rem;color:var(--muted);margin-bottom:4px}
+  .colloc-ex{font-size:.85rem}
+  .colloc-ex .py{color:var(--accent);font-size:.78rem;display:block}
+
+  /* ОДНОКОРЕННЫЕ */
+  .cogn-item{
+    display:inline-block;background:var(--bg);border-radius:20px;
+    padding:5px 12px;margin:4px 6px 4px 0;font-size:.84rem;border:1px solid var(--border);
+  }
+  .cogn-item b{color:var(--accent)}
+  .cogn-item .lvl{font-size:.72rem;color:var(--muted);margin-left:4px}
+  .cogn-link{font-size:.85rem;color:var(--muted);margin-top:8px;font-style:italic}
+
+  /* ПРИМЕР HSK 6 */
+  .block-sent{background:linear-gradient(135deg,rgba(91,124,250,.07),rgba(139,92,246,.07))}
+  .block-sent .cn{font-size:.95rem;font-weight:600;margin-bottom:4px}
+  .block-sent .py{font-size:.82rem;color:var(--accent);margin-bottom:6px}
+  .block-sent .ru{font-size:.88rem;color:var(--muted)}
+
+  /* ЗАМЕТКИ */
+  .block-notes label{
+    display:flex;justify-content:space-between;font-size:.9rem;
+    font-weight:600;margin-bottom:6px;
+  }
+  .block-notes label span{font-size:.78rem;color:var(--green);opacity:0;transition:.3s}
+  .block-notes label span.show{opacity:1}
+  .block-notes textarea{
+    width:100%;min-height:70px;border-radius:10px;border:1px solid var(--border);
+    background:var(--bg);color:var(--text);padding:10px;font-size:.88rem;resize:vertical;
+    font-family:inherit;
+  }
+  .block-notes textarea:focus{outline:2px solid var(--accent);outline-offset:1px}
+
+  /* КНОПКА НАВЕРХ */
+  #toTop{
+    position:fixed;right:18px;bottom:18px;z-index:200;width:46px;height:46px;
+    border-radius:50%;border:none;background:var(--accent);color:#fff;font-size:1.2rem;
+    cursor:pointer;box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:.3s;
+  }
+  #toTop.show{opacity:1;pointer-events:auto}
+
+  /* СКРЫТИЕ ПРИ ПОИСКЕ */
+  .word-card.hidden{display:none}
+
+  @media(max-width:600px){
+    .w-cn{font-size:1.55rem}
+    .w-py{width:100%}
+    .w-ru-row,.know-row{margin-left:0;width:100%}
+    .section-header{padding:16px}
+    .block{padding:14px 16px}
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= ВЕРХНЯЯ ПАНЕЛЬ ================= -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="topbar-row">
+      <h1>📚 Общество, семья, экзамены и медиа <small>HSK 5–6 · 22 слова · учись в своём темпе</small></h1>
+      <button class="icon-btn" id="themeBtn">🌙 Тема</button>
+      <button class="icon-btn" id="resetBtn">♻️ Сброс</button>
+    </div>
+    <div class="topbar-row">
+      <input id="search" placeholder="🔍 Найти слово, пиньинь или перевод...">
+    </div>
+    <div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
+    <div class="stats">
+      <span>Изучено: <b id="knownCount">0</b> / 22</span>
+      <span>Найдено: <b id="visibleCount">22</b></span>
+      <span>Прогресс: <b id="progressPct">0%</b></span>
+    </div>
+  </div>
+</div>
+
+<!-- ================= ЗАГОЛОВОК РАЗДЕЛА ================= -->
+<div class="section-header">
+  <h2>📚 Общество, семья, экзамены и медиа</h2>
+  <p>Слова про народности, семью, воспитание детей, экзамены, известность и интернет-культуру Китая. Уровень HSK 5–6.</p>
+</div>
+
+<!-- ================= БЫСТРАЯ НАВИГАЦИЯ ================= -->
+<nav class="quick-nav" id="quickNav"></nav>
+
+<!-- ================= КАРТОЧКИ ================= -->
+
+<!-- 1. 蒙古族 -->
+<div class="word-card" id="w1" data-word="蒙古族" data-pinyin="měng gǔ zú" data-trans="Монголы (один из малых народов Китая)">
+  <div class="w-head">
+    <span class="w-emoji">🐎</span>
+    <span class="w-cn">蒙古族</span>
+    <span class="w-py">měng gǔ zú</span>
+    <span class="w-ru-row">
+      <span class="hidden-trans">Монголы (один из малых народов Китая)</span>
+      <button class="transBtn">👁️ перевод</button>
+    </span>
+    <span class="know-row">
+      <button class="know-btn" data-state="">✅ знаю</button>
+      <button class="know-btn" data-state="">❌ учу</button>
+    </span>
+  </div>
+  <div class="c-wrap">
+    <h3>✏️ Прописи · 蒙古族</h3>
+    <p>пиши по памяти</p>
+    <canvas></canvas>
+    <div class="btns">
+      <button data-act="undo">↩️ отменить</button>
+      <button data-act="redo">↪️ повторить</button>
+      <button data-act="clear">🗑️ очистить</button>
+    </div>
+  </div>
+  <div class="block">
+    <h3>🧠 Суть</h3>
+    <p>Название монгольского этноса, одна из официально признанных национальных меньшинств Китая.</p>
+    <p class="cn-def">中国少数民族之一，擅长骑马，有独特舞蹈与文化。</p>
+  </div>
+  <div class="block">
+    <h3>🎯 Как запомнить</h3>
+    <div class="mrow">
+      <h4>🪝 Ассоциация</h4>
+      <p>В летнем кочевом лагере на лугу люди в национальной одежде танцуют и скачут на лошадях. Это — <b>蒙古族</b>.</p>
+    </div>
+    <div class="char-row">
+      <p>蒙 méng：⺌(крыша) + 豕(свинья) + 冖(покрытие) — туман, покрывало.</p>
+      <p>古 gǔ：口(рот) + 十(десять) — древний, старый.</p>
+      <p>族 zú：方(знамя) + 矢(стрела) — род, народ, племя.</p>
+      <p class="warn">⚠️ Похожий иероглиф: 族 легко перепутать с 旅 lǚ (путешествие, отряд).</p>
+    </div>
+    <div class="mrow">
+      <h4>🧩 Мнемоника</h4>
+      <p>🌫️+📜+🏹: туман + древность + племя = монгольский народ</p>
+    </div>
+    <div class="trap">
+      <h4>⚠️ Ловушка: 蒙古族 ≠ 蒙古 (měng gǔ)</h4>
+      <p>«蒙古» — Монголия (страна), «蒙古族» — этнос монголов в Китае. HSK проверяет разницу между народом и страной.</p>
+      <div class="qa-block">
+        <p class="q">q: 🎯 Если написать «蒙古» вместо «蒙古族»?</p>
+        <p class="a">a: ✅ Ты назовёшь страну, а не народность.</p>
+        <p class="why">why: в китайском суффикс 族 обязателен для названия этноса.</p>
+        <p class="mem">mem: 族 = народ, добавляй 族 для названия народа.</p>
+      </div>
+    </div>
+  </div>
+  <div class="block">
+    <h3>🔗 Коллокации</h3>
+    <div class="colloc-item">
+      <span class="tag tag-hsk">🎯 HSK</span>
+      <p class="colloc-cn">蒙古族文化</p>
+      <p class="colloc-ru">культура монгольского народа</p>
+      <p class="colloc-ex">蒙古族文化包含草原音乐。<span class="py">měng gǔ zú wén huà bāo hán cǎo yuán yīn yuè</span>В культуре монголов есть степная музыка.</p>
+    </div>
+    <div class="colloc-item">
+      <span class="tag tag-byt">🗣️ Быт</span>
+      <p class="colloc-cn">蒙古族舞蹈</p>
+      <p class="colloc-ru">монгольский танец</p>
+      <p class="colloc-ex">我很喜欢蒙古族舞蹈。<span class="py">wǒ hěn xǐ huān měng gǔ zú wǔ dǎo</span>Мне очень нравятся монгольские танцы.</p>
+    </div>
+    <div class="colloc-item">
+      <span class="tag tag-media">📰 Медиа</span>
+      <p class="colloc-cn">蒙古族传统</p>
+      <p class="colloc-ru">традиции монгольского народа</p>
+      <p class="colloc-ex">媒体介绍蒙古族传统节日。<span class="py">méi tǐ jiè shào měng gǔ zú chuán tǒng jié rì</span>СМИ рассказывают о традиционных праздниках монголов.</p>
+    </div>
+  </div>
+  <div class="block">
+    <h3>🌳 Однокоренные</h3>
+    <span class="cogn-item"><b>民族</b> mín zú — народность<span class="lvl">HSK4</span></span>
+    <span class="cogn-item"><b>家族</b> jiā zú — семья, род<span class="lvl">HSK5</span></span>
+    <span class="cogn-item"><b>种族</b> zhǒng zú — раса<span class="lvl">HSK6</span></span>
+    <p class="cogn-link">Общий иероглиф 族 — род, племя, группа людей.</p>
+  </div>
+  <div class="block block-sent">
+    <h3>📝 Живой пример HSK 6</h3>
+    <p class="cn">蒙古族的青年一代，正在用短视频向全国展示草原文化。</p>
+    <p class="py">měng gǔ zú de qīng nián yí dài, zhèng zài yòng duǎn shì pín xiàng quán guó zhǎn shì cǎo yuán wén huà。</p>
+    <p class="ru">Молодое поколение монголов с помощью коротких видео показывает степную культуру всей стране.</p>
+  </div>
+  <div class="block block-notes">
+    <label>✏️ Своё предложение <span>✓ сохранено</span></label>
+    <textarea placeholder="Напиши своё предложение с 蒙古族..."></textarea>
+  </div>
+</div>
+
+<!-- 2. 抚养 -->
+<div class="word-card" id="w2" data-word="抚养" data-pinyin="fǔ yǎng" data-trans="воспитывать, растить (детей)">
+  <div class="w-head">
+    <span class="w-emoji">👨‍👩‍👧</span>
+    <span class="w-cn">抚养</span>
+    <span class="w-py">fǔ yǎng</span>
+    <span class="w-ru-row"><span class="hidden-trans">воспитывать, растить (детей)</span><button class="transBtn">👁️ перевод</button></span>
+    <span class="know-row"><button class="know-btn" data-state="">✅ знаю</button><button class="know-btn" data-state="">❌ учу</button></span>
+  </div>
+  <div class="c-wrap">
+    <h3>✏️ Прописи · 抚养</h3><p>пиши по памяти</p><canvas></canvas>
+    <div class="btns"><button data-act="undo">↩️ отменить</button><button data-act="redo">↪️ повторить</button><button data-act="clear">🗑️ очистить</button></div>
+  </div>
+  <div class="block">
+    <h3>🧠 Суть</h3>
+    <p>Заботиться, кормить и воспитывать маленьких детей, обычно до их взросления.</p>
+    <p class="cn-def">保护、教育孩子长大，多指父母对子女。</p>
+  </div>
+  <div class="block">
+    <h3>🎯 Как запомнить</h3>
+    <div class="mrow"><h4>🪝 Ассоциация</h4><p>Мама каждый день кормит, учит и заботится о маленьком ребёнке, пока он не вырастет. Это — <b>抚养</b>.</p></div>
+    <div class="char-row">
+      <p>抚 fǔ：扌✋(рука) + 无 — гладить, бережно трогать, заботиться.</p>
+      <p>养 yǎng：羊🐑 + 食🍜 — кормить, выращивать.</p>
+      <p class="warn">⚠️ Похожий иероглиф: 抚 легко перепутать с 扶 fú (поддерживать, помогать подняться).</p>
+    </div>
+    <div class="mrow"><h4>🧩 Мнемоника</h4><p>✋+🍜: бережная рука + кормить = растить и воспитывать детей</p></div>
+    <div class="trap">
+      <h4>⚠️ Ловушка: 抚养 ≠ 赡养 (shàn yǎng)</h4>
+      <p>抚养 — растить маленьких детей; 赡养 — содержать пожилых родителей.</p>
+      <div class="qa-block">
+        <p class="q">q: 🎯 «содержать пожилую мать» — можно 抚养?</p>
+        <p class="a">a: ✅ Нет, нужно 赡养.</p>
+        <p class="why">why: направление разное: 抚养 — взрослые → дети, 赡养 — дети → пожилые родители.</p>
+        <p class="mem">mem: 抚 — для детей, 赡 — для пожилых.</p>
+      </div>
+    </div>
+  </div>
+  <div class="block">
+    <h3>🔗 Коллокации</h3>
+    <div class="colloc-item"><span class="tag tag-hsk">🎯 HSK</span><p class="colloc-cn">抚养子女</p><p class="colloc-ru">воспитывать детей</p><p class="colloc-ex">父母有义务抚养子女。<span class="py">fù mǔ yǒu yì wù fǔ yǎng zǐ nǚ</span>Родители обязаны воспитывать детей.</p></div>
+    <div class="colloc-item"><span class="tag tag-byt">🗣️ Быт</span><p class="colloc-cn">抚养长大</p><p class="colloc-ru">вырастить (ребёнка)</p><p class="colloc-ex">奶奶把他抚养长大。<span class="py">nǎi nai bǎ tā fǔ yǎng zhǎng dà</span>Бабушка его вырастила.</p></div>
+    <div class="colloc-item"><span class="tag tag-media">📰 Медиа</span><p class="colloc-cn">共同抚养</p><p class="colloc-ru">совместное воспитание</p><p class="colloc-ex">离婚后父母共同抚养孩子。<span class="py">lí hūn hòu fù mǔ gòng tóng fǔ yǎng hái zi</span>После развода родители воспитывают ребёнка вместе.</p></div>
+  </div>
+  <div class="block">
+    <h3>🌳 Однокоренные</h3>
+    <span class="cogn-item"><b>养育</b> yǎng yù — взращивать<span class="lvl">HSK5</span></span>
+    <span class="cogn-item"><b>养老</b> yǎng lǎo — забота о пожилых<span class="lvl">HSK6</span></span>
+    <span class="cogn-item"><b>培养</b> péi yǎng — взращивать таланты<span class="lvl">HSK5</span></span>
+    <p class="cogn-link">Общий иероглиф 养 — кормить, выращивать, заботиться.</p>
+  </div>
+  <div class="block block-sent">
+    <h3>📝 Живой пример HSK 6</h3>
+    <p class="cn">独自抚养孩子的母亲，常常要面对经济与精神双重压力。</p>
+    <p class="py">dú zì fǔ yǎng hái zi de mǔ qīn, cháng cháng yào miàn duì jīng jì yǔ jīng shén shuāng chóng yā lì。</p>
+    <p class="ru">Матерям, воспитывающим детей в одиночку, часто приходится сталкиваться и с финансовыми, и с эмоциональными трудностями.</p>
+  </div>
+  <div class="block block-notes"><label>✏️ Своё предложение <span>✓ сохранено</span></label><textarea placeholder="Напиши своё предложение с 抚养..."></textarea></div>
+</div>
+
+<!-- 3. 领养 -->
+<div class="word-card" id="w3" data-word="领养" data-pinyin="lǐng yǎng" data-trans="усыновить, удочерить">
+  <div class="w-head">
+    <span class="w-emoji">🤝</span><span class="w-cn">领养</span><span class="w-py">lǐng yǎng</span>
+    <span class="w-ru-row"><span class="hidden-trans">усыновить, удочерить</span><button class="transBtn">👁️ перевод</button></span>
+    <span class="know-row"><button class="know-btn" data-state="">✅ знаю</button><button class="know-btn" data-state="">❌ учу</button></span>
+  </div>
+  <div class="c-wrap"><h3>✏️ Прописи · 领养</h3><p>пиши по памяти</p><canvas></canvas>
+    <div class="btns"><button data-act="undo">↩️ отменить</button><button data-act="redo">↪️ повторить</button><button data-act="clear">🗑️ очистить</button></div>
+  </div>
+  <div class="block">
+    <h3>🧠 Суть</h3>
+    <p>Официально взять чужого ребёнка из приюта и стать его законными родителями.</p>
+    <p class="cn-def">合法地收下别人的孩子，当成自己的孩子养育。</p>
+  </div>
+  <div class="block">
+    <h3>🎯 Как запомнить</h3>
+    <div class="mrow"><h4>🪝 Ассоциация</h4><p>Бездетная пара проходит все документы, берёт малыша из детского дома и воспитывает его. Это — <b>领养</b>.</p></div>
+    <div class="char-row">
+      <p>领 lǐng：页📄 + 令 — получить, взять по документу.</p>
+      <p>养 yǎng：羊🐑 + 食🍜 — кормить, выращивать.</p>
+      <p class="warn">⚠️ Похожий иероглиф: 领 легко перепутать с 岭 lǐng (горный хребет).</p>
+    </div>
+    <div class="mrow"><h4>🧩 Мнемоника</h4><p>📄+🍜: взять по документам + растить = усыновить</p></div>
+    <div class="trap">
+      <h4>⚠️ Ловушка: 领养 ≠ 抚养 (fǔ yǎng)</h4>
+      <p>领养 — официально взять ребёнка себе; 抚养 — просто растить любого ребёнка.</p>
+      <div class="qa-block">
+        <p class="q">q: 🎯 «领养自己亲生的孩子» — можно?</p>
+        <p class="a">a: ✅ Нет, 领养 только для приёмных детей.</p>
+        <p class="why">why: в слове 领 есть смысл «получить, взять» ребёнка не из своей семьи.</p>
+        <p class="mem">mem: 领养 = взять чужого ребёнка по закону.</p>
+      </div>
+    </div>
+  </div>
+  <div class="block">
+    <h3>🔗 Коллокации</h3>
+    <div class="colloc-item"><span class="tag tag-hsk">🎯 HSK</span><p class="colloc-cn">领养孤儿</p><p class="colloc-ru">усыновить сироту</p><p class="colloc-ex">他们希望领养孤儿。<span class="py">tā men xī wàng lǐng yǎng gū ér</span>Они хотят усыновить сироту.</p></div>
+    <div class="colloc-item"><span class="tag tag-byt">🗣️ Быт</span><p class="colloc-cn">领养孩子</p><p class="colloc-ru">взять ребён
