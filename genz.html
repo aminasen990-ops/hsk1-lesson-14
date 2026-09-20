@@ -1,0 +1,3190 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>时代的决斗：冲突、美学与Z世代哲学 | DUEL OF ERAS</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;600&family=Noto+Sans+Myanmar:wght@400;600&family=Noto+Sans+SC:wght@400;500;700;800;900&display=swap');
+
+    :root {
+      --bg-cream: #F9F8F3;
+      --surface-white: #FFFFFF;
+      --surface-border: #E8E3DA;
+      --surface-subtle: #F3EFE6;
+
+      --accent-terracotta: #E05A47;
+      --accent-terracotta-light: #FDF0EE;
+      --accent-sage: #2EB886;
+      --accent-sage-light: #E8F8F3;
+      --accent-yellow: #FFB800;
+      --accent-yellow-light: #FFF8E6;
+      --accent-blue: #5B8DB8;
+      --accent-blue-light: #EEF4F9;
+
+      --text-main: #22252A;
+      --text-sub: #6C727E;
+      --text-muted: #9DA3AF;
+
+      --lex-bg: rgba(255, 255, 255, 0.84);
+      --lex-border: rgba(46, 184, 134, 0.35);
+      --lex-label: #9DA3AF;
+
+      --font-zh: "PingFang SC", "Microsoft YaHei UI", "Noto Sans SC", sans-serif;
+      --font-multi: var(--font-zh), 'Noto Sans Thai', 'Noto Sans Myanmar', sans-serif;
+      --transition-smooth: 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg-cream);
+      color: var(--text-main);
+      font-family: var(--font-zh);
+      height: 100vh;
+      height: 100dvh;
+      width: 100vw;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* ═══ КОНТЕЙНЕР ═══ */
+    .deck-container {
+      position: relative;
+      width: 100%;
+      max-width: 1920px;
+      height: 100dvh;
+      aspect-ratio: 16 / 9;
+      background: var(--bg-cream);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    @media (min-aspect-ratio: 16/9) {
+      .deck-container {
+        height: 100dvh;
+        width: calc(100dvh * 16 / 9);
+      }
+    }
+
+    /* ═══ СЛАЙДЫ ═══ */
+    .slide {
+      position: absolute;
+      inset: 0;
+      padding: clamp(36px, 4.5vw, 90px);
+      padding-bottom: clamp(280px, 28vh, 340px);
+      padding-right: clamp(200px, 16vw, 260px);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(12px) scale(0.99);
+      transition: opacity var(--transition-smooth), transform var(--transition-smooth), visibility var(--transition-smooth);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      gap: 1.5rem;
+      z-index: 1;
+      overflow-y: auto;
+    }
+
+    .slide > * {
+      max-width: 1800px;
+      width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .slide::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(46, 184, 134, 0.028) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(46, 184, 134, 0.028) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .slide.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0) scale(1);
+      z-index: 2;
+    }
+
+    /* ═══ ПРОГРЕСС-БАР ═══ */
+    .progress {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 4px;
+      width: 0;
+      background: linear-gradient(90deg, var(--accent-sage), var(--accent-blue));
+      transition: width 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+      z-index: 20;
+      border-radius: 0 4px 4px 0;
+    }
+
+    /* ═══ ЗАГОЛОВКИ ═══ */
+    .slide-header {
+      position: relative;
+      margin-bottom: 0.8rem;
+    }
+
+    .slide-header::before {
+      content: attr(data-num);
+      position: absolute;
+      top: -50px;
+      left: -24px;
+      font-size: clamp(140px, 15vw, 260px);
+      font-weight: 900;
+      color: rgba(46, 184, 134, 0.07);
+      line-height: 1;
+      pointer-events: none;
+      z-index: 0;
+      letter-spacing: -0.05em;
+    }
+
+    .slide-header > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .slide-title {
+      font-size: clamp(40px, 4.2vw, 70px);
+      font-weight: 800;
+      line-height: 1.22;
+      letter-spacing: -0.01em;
+      color: var(--text-main);
+    }
+
+    .slide-title.has-emoji::before {
+      content: attr(data-emoji);
+      display: inline-block;
+      font-size: 1.05em;
+      margin-right: 16px;
+      vertical-align: -0.08em;
+    }
+
+    .sub-title {
+      font-size: clamp(20px, 1.6vw, 28px);
+      font-weight: 500;
+      color: var(--text-sub);
+      line-height: 1.5;
+      margin-top: 0.6rem;
+    }
+
+    .tag-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 20px;
+      border-radius: 30px;
+      font-size: clamp(15px, 1.05vw, 18px);
+      font-weight: 700;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      background: var(--surface-subtle);
+      color: var(--text-sub);
+      border: 1px dashed #D0C8B8;
+      width: fit-content;
+      margin-bottom: 1rem;
+    }
+
+    .tag-terracotta {
+      background: var(--accent-terracotta-light);
+      color: var(--accent-terracotta);
+      border-color: rgba(224, 90, 71, 0.3);
+    }
+
+    .tag-sage {
+      background: var(--accent-sage-light);
+      color: var(--accent-sage);
+      border-color: rgba(46, 184, 134, 0.3);
+    }
+
+    .tag-blue {
+      background: var(--accent-blue-light);
+      color: var(--accent-blue);
+      border-color: rgba(91, 141, 184, 0.3);
+    }
+
+    .highlight-yellow {
+      background: linear-gradient(120deg, rgba(255, 184, 0, 0.3) 0%, rgba(255, 184, 0, 0.3) 100%);
+      background-repeat: no-repeat;
+      background-size: 100% 40%;
+      background-position: 0 88%;
+      padding: 0 5px;
+    }
+
+    /* ═══ КАРТОЧКИ ═══ */
+    .card {
+      background: var(--surface-white);
+      border: 2px solid var(--surface-border);
+      border-radius: 22px;
+      padding: clamp(24px, 2.2vw, 38px);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.035);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      position: relative;
+    }
+
+    .card--quote {
+      border-left: 5px solid var(--accent-sage);
+      background: linear-gradient(90deg, var(--accent-sage-light) 0%, var(--surface-white) 45%);
+    }
+
+    .card--terracotta {
+      border-left: 5px solid var(--accent-terracotta);
+      background: linear-gradient(90deg, var(--accent-terracotta-light) 0%, var(--surface-white) 45%);
+    }
+
+    .card--blue {
+      border-left: 5px solid var(--accent-blue);
+      background: linear-gradient(90deg, var(--accent-blue-light) 0%, var(--surface-white) 45%);
+    }
+
+    .card-title {
+      font-size: clamp(24px, 2vw, 34px);
+      font-weight: 700;
+      line-height: 1.35;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .card-icon {
+      width: 30px;
+      height: 30px;
+      flex-shrink: 0;
+      color: var(--accent-sage);
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .card-icon--terracotta { color: var(--accent-terracotta); }
+    .card-icon--yellow { color: var(--accent-yellow); }
+    .card-icon--blue { color: var(--accent-blue); }
+
+    .card-body {
+      font-size: clamp(19px, 1.5vw, 26px);
+      font-weight: 400;
+      line-height: 1.7;
+      color: var(--text-sub);
+    }
+
+    /* ═══ АКЦЕНТЫ ═══ */
+    .key {
+      background: linear-gradient(180deg, transparent 62%, rgba(255, 184, 0, 0.5) 62%);
+      padding: 0 5px;
+      font-weight: 600;
+      color: var(--text-main);
+      position: relative;
+    }
+
+    .slide.active .key {
+      animation: keyPulse 2s ease-in-out 1;
+    }
+
+    @keyframes keyPulse {
+      0%   { background-color: transparent; }
+      50%  { background-color: rgba(255, 184, 0, 0.18); }
+      100% { background-color: transparent; }
+    }
+
+    .term {
+      font-weight: 600;
+      color: var(--text-main);
+      border-bottom: 2px solid rgba(46, 184, 134, 0.5);
+      padding-bottom: 1px;
+    }
+
+    .chip {
+      display: inline-block;
+      background: var(--accent-terracotta-light);
+      color: var(--accent-terracotta);
+      font-weight: 700;
+      padding: 3px 12px;
+      border-radius: 7px;
+      font-size: 0.85em;
+      letter-spacing: 0.2px;
+    }
+
+    .chip--sage { background: var(--accent-sage-light); color: var(--accent-sage); }
+    .chip--terracotta { background: var(--accent-terracotta-light); color: var(--accent-terracotta); }
+    .chip--yellow { background: var(--accent-yellow-light); color: #B37E00; }
+    .chip--blue { background: var(--accent-blue-light); color: var(--accent-blue); }
+
+    .speakable { cursor: pointer; transition: color 0.2s; }
+    .speakable:hover { color: var(--accent-sage); }
+
+    /* ═══ СЕТКИ ═══ */
+    .grid-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    .grid-3col {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      align-items: stretch;
+    }
+
+    .character-avatar {
+      width: 100%;
+      max-width: 320px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    /* ═══ ТИТУЛЬНАЯ СЦЕНА ═══ */
+    .title-scene {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      margin: 1.5rem 0;
+      width: 100%;
+    }
+
+    .title-scene svg {
+      width: 100%;
+      max-width: 820px;
+      height: auto;
+      display: block;
+    }
+
+    /* Подпрыгивание — по очереди */
+       .scene-boy,
+    .scene-woman {
+      transform-origin: center bottom;
+    }
+
+    .slide.active .scene-boy {
+      animation: bobBoy 3s ease-in-out infinite;
+    }
+    .slide.active .scene-woman {
+      animation: bobWoman 3s ease-in-out infinite;
+      animation-delay: 1.5s;
+    }
+
+    @keyframes bobBoy {
+      0%, 100% { transform: translateY(0); }
+      15%      { transform: translateY(-8px); }
+      30%      { transform: translateY(0); }
+    }
+    @keyframes bobWoman {
+      0%, 100% { transform: translateY(0); }
+      15%      { transform: translateY(-8px); }
+      30%      { transform: translateY(0); }
+    }
+
+    /* ═══ ТАБЛИЦА-СРАВНЕНИЕ ═══ */
+    .compare-table {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border-radius: 22px;
+      overflow: hidden;
+      border: 2px solid var(--surface-border);
+      background: var(--surface-white);
+    }
+
+    .compare-col {
+      padding: clamp(26px, 2.4vw, 40px);
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .compare-col:first-child {
+      background: linear-gradient(180deg, var(--accent-terracotta-light) 0%, rgba(253, 240, 238, 0.4) 100%);
+    }
+
+    .compare-col:last-child {
+      background: linear-gradient(180deg, var(--accent-sage-light) 0%, rgba(232, 248, 243, 0.4) 100%);
+    }
+
+    .compare-header {
+      font-size: clamp(22px, 1.8vw, 30px);
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .compare-col:first-child .compare-header { color: var(--accent-terracotta); }
+    .compare-col:last-child .compare-header { color: var(--accent-sage); }
+
+    .compare-row {
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      font-size: clamp(18px, 1.4vw, 24px);
+      line-height: 1.5;
+    }
+
+    .compare-label {
+      font-weight: 700;
+      color: var(--text-main);
+      flex-shrink: 0;
+      min-width: 70px;
+    }
+
+    .compare-value {
+      color: var(--text-sub);
+    }
+
+    /* ═══ ПЛИТКИ-ЧИПЫ ═══ */
+    .tile-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .tile {
+      background: var(--surface-white);
+      border: 2px solid var(--surface-border);
+      border-radius: 20px;
+      padding: 22px 26px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+
+    .tile:hover {
+      border-color: var(--accent-sage);
+      transform: translateX(4px);
+    }
+
+    .tile__icon {
+      width: 40px;
+      height: 40px;
+      flex-shrink: 0;
+      color: var(--accent-sage);
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      animation: tilePulse 4s ease-in-out infinite;
+    }
+
+    @keyframes tilePulse {
+      0%, 100% { transform: scale(1); }
+      50%      { transform: scale(1.06); }
+    }
+
+    .tile__content {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .tile__title {
+      font-size: clamp(20px, 1.5vw, 26px);
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .tile__desc {
+      font-size: clamp(17px, 1.2vw, 21px);
+      color: var(--text-sub);
+      line-height: 1.55;
+    }
+
+    /* ═══ ПОТОК ПЛИТОК ═══ */
+    .flow-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      align-items: stretch;
+    }
+
+    .flow-card {
+      background: var(--surface-white);
+      border: 2px solid var(--surface-border);
+      border-radius: 22px;
+      padding: clamp(24px, 2.2vw, 34px);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    .slide.active .flow-card {
+      animation: flowIn 0.7s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    }
+
+    .slide.active .flow-card:nth-child(1) { animation-delay: 0.1s; }
+    .slide.active .flow-card:nth-child(2) { animation-delay: 0.35s; }
+    .slide.active .flow-card:nth-child(3) { animation-delay: 0.6s; }
+
+    @keyframes flowIn {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .flow-card__icon {
+      width: 48px;
+      height: 48px;
+      color: var(--accent-sage);
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .flow-card__title {
+      font-size: clamp(20px, 1.5vw, 26px);
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .flow-card__body {
+      font-size: clamp(17px, 1.2vw, 21px);
+      color: var(--text-sub);
+      line-height: 1.55;
+    }
+
+    /* ═══ ПИРАМИДА ═══ */
+    .pyramid {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .pyramid__layer {
+      width: 100%;
+      padding: clamp(24px, 2.2vw, 34px);
+      border-radius: 22px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      position: relative;
+    }
+
+    .pyramid__layer--top {
+      background: var(--accent-terracotta-light);
+      border: 2px solid rgba(224, 90, 71, 0.35);
+    }
+
+    .pyramid__layer--bottom {
+      background: var(--accent-sage-light);
+      border: 2px solid rgba(46, 184, 134, 0.35);
+    }
+
+    .slide.active .pyramid__layer--top {
+      animation: layerGlow 3s ease-in-out infinite;
+    }
+    .slide.active .pyramid__layer--bottom {
+      animation: layerGlow 3s ease-in-out infinite;
+      animation-delay: 1.5s;
+    }
+
+    @keyframes layerGlow {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+      50%      { box-shadow: 0 0 0 10px rgba(255, 255, 255, 0.5); }
+    }
+
+    .pyramid__connector {
+      width: 100%;
+      height: 60px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .pyramid__connector-line {
+      width: 3px;
+      height: 100%;
+      background-image: linear-gradient(to bottom, var(--accent-sage) 50%, transparent 50%);
+      background-size: 3px 12px;
+      position: relative;
+    }
+
+    .slide.active .pyramid__connector-line {
+      animation: dashFlow 1.6s linear infinite;
+    }
+
+    @keyframes dashFlow {
+      from { background-position-y: 0; }
+      to   { background-position-y: 12px; }
+    }
+
+    .pyramid__connector-arrow {
+      position: absolute;
+      bottom: -4px;
+      width: 0;
+      height: 0;
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      border-top: 12px solid var(--accent-sage);
+    }
+
+    /* ═══ ЧАСЫ (inline SVG, фикс) ═══ */
+    .clock-face {
+      width: 120px;
+      height: 120px;
+      margin: 0 auto;
+      display: block;
+    }
+
+    .slide.active .clock-hand-rotor {
+      transform-origin: 50% 50%;
+      animation: clockTick 20s linear infinite;
+    }
+
+    @keyframes clockTick {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    /* ═══ ROE-ДИАГРАММА ═══ */
+    .roe-chart {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      gap: 50px;
+      padding: 30px 0;
+      height: 260px;
+    }
+
+    .roe-bar {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      width: 120px;
+    }
+
+    .roe-bar__fill {
+      width: 80px;
+      border-radius: 10px 10px 0 0;
+      height: 0;
+    }
+
+    .slide.active .roe-bar__fill {
+      animation: barGrow 1s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    }
+
+    .roe-bar:nth-child(1) .roe-bar__fill {
+      background: var(--accent-blue);
+      --target-h: 70px;
+      animation-delay: 0.2s;
+    }
+    .roe-bar:nth-child(2) .roe-bar__fill {
+      background: var(--accent-sage);
+      --target-h: 190px;
+      animation-delay: 0.5s;
+    }
+
+    @keyframes barGrow {
+      to { height: var(--target-h); }
+    }
+
+    .roe-bar__label {
+      font-size: clamp(17px, 1.2vw, 22px);
+      font-weight: 700;
+      color: var(--text-main);
+      text-align: center;
+      line-height: 1.3;
+    }
+
+    .roe-bar__value {
+      font-size: clamp(15px, 1.05vw, 18px);
+      color: var(--text-muted);
+    }
+
+    /* ═══ ТАЙМЛАЙН ═══ */
+    .timeline {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      width: 100%;
+      max-width: 1200px;
+      margin: 2rem auto 0;
+      position: relative;
+      padding: 50px 0;
+    }
+
+    .timeline__line {
+      position: absolute;
+      top: 50%;
+      left: 5%;
+      right: 5%;
+      height: 4px;
+      background: var(--surface-border);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .timeline__line-fill {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, var(--accent-terracotta), var(--accent-yellow), var(--accent-sage));
+      transform-origin: left;
+      transform: scaleX(0);
+    }
+
+    .slide.active .timeline__line-fill {
+      animation: timelineGrow 2s cubic-bezier(0.25, 1, 0.5, 1) 0.3s forwards;
+    }
+
+    @keyframes timelineGrow {
+      to { transform: scaleX(1); }
+    }
+
+    .timeline__points {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      position: relative;
+      z-index: 2;
+    }
+
+    .timeline__point {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      flex: 1;
+    }
+
+    .timeline__dot {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--surface-white);
+      border: 4px solid var(--accent-sage);
+      opacity: 0;
+    }
+
+    .slide.active .timeline__point:nth-child(1) .timeline__dot {
+      animation: dotIn 0.5s ease-out 0.4s forwards;
+    }
+    .slide.active .timeline__point:nth-child(2) .timeline__dot {
+      animation: dotIn 0.5s ease-out 1.2s forwards;
+    }
+    .slide.active .timeline__point:nth-child(3) .timeline__dot {
+      animation: dotIn 0.5s ease-out 2s forwards;
+      border-color: var(--accent-terracotta);
+    }
+
+    @keyframes dotIn {
+      from { opacity: 0; transform: scale(0); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    .timeline__label {
+      font-size: clamp(18px, 1.4vw, 24px);
+      font-weight: 700;
+      color: var(--text-main);
+      text-align: center;
+      line-height: 1.35;
+    }
+
+    .timeline__sublabel {
+      font-size: clamp(15px, 1.05vw, 18px);
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    /* ═══ ВЕСЫ ═══ */
+    .scales {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 40px;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px 0;
+    }
+
+    .scale-side {
+      flex: 1;
+      padding: clamp(24px, 2.2vw, 34px);
+      border-radius: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .scale-side--heavy {
+      background: var(--accent-terracotta-light);
+      border: 2px solid rgba(224, 90, 71, 0.4);
+    }
+
+    .scale-side--balance {
+      background: var(--accent-sage-light);
+      border: 2px solid rgba(46, 184, 134, 0.4);
+    }
+
+    .slide.active .scale-side--heavy {
+      animation: tiltHeavy 6s ease-in-out infinite;
+    }
+    .slide.active .scale-side--balance {
+      animation: tiltBalance 6s ease-in-out infinite;
+    }
+
+    @keyframes tiltHeavy {
+      0%, 100% { transform: rotate(0deg) translateY(0); }
+      50%      { transform: rotate(-2deg) translateY(5px); }
+    }
+    @keyframes tiltBalance {
+      0%, 100% { transform: rotate(0deg) translateY(0); }
+      50%      { transform: rotate(2deg) translateY(-5px); }
+    }
+
+    .scale-title {
+      font-size: clamp(22px, 1.7vw, 28px);
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .scale-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: clamp(17px, 1.3vw, 22px);
+      color: var(--text-sub);
+    }
+
+    .scale-list li::before {
+      content: "· ";
+      color: var(--text-muted);
+      font-weight: 900;
+    }
+
+    .scales__symbol {
+      font-size: clamp(32px, 2.6vw, 44px);
+      font-weight: 900;
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+
+    /* ═══ ЧАШКИ ═══ */
+    .cups-pair {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.2rem;
+      align-items: stretch;
+    }
+
+    .cup-card {
+      background: var(--surface-white);
+      border: 2px solid var(--surface-border);
+      border-radius: 22px;
+      padding: clamp(24px, 2.2vw, 34px);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      align-items: center;
+      text-align: center;
+    }
+
+    .cup-card__svg {
+      width: 130px;
+      height: 130px;
+    }
+
+    .cup-card__title {
+      font-size: clamp(21px, 1.6vw, 27px);
+      font-weight: 800;
+    }
+
+    .cup-card__body {
+      font-size: clamp(17px, 1.2vw, 21px);
+      color: var(--text-sub);
+      line-height: 1.55;
+    }
+
+    .bubble {
+      animation: bubbleUp 2.5s ease-in infinite;
+      transform-origin: center bottom;
+    }
+    .bubble:nth-child(2) { animation-delay: 0.8s; }
+    .bubble:nth-child(3) { animation-delay: 1.6s; }
+
+    @keyframes bubbleUp {
+      0%   { transform: translateY(0); opacity: 0.8; }
+      100% { transform: translateY(-24px); opacity: 0; }
+    }
+
+    /* ═══ ВЕНН ═══ */
+    .venn-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px 0;
+      width: 100%;
+    }
+
+    .venn-wrap svg {
+      width: 100%;
+      max-width: 520px;
+      height: auto;
+    }
+
+    .slide.active .venn-overlap {
+      animation: vennPulse 3s ease-in-out infinite;
+      transform-origin: 200px 150px;
+    }
+
+    @keyframes vennPulse {
+      0%, 100% { opacity: 0.9; }
+      50%      { opacity: 1; }
+    }
+
+    /* ═══ КОНВЕЙЕР (фикс) ═══ */
+    .conveyor {
+      position: relative;
+      width: 100%;
+      height: 220px;
+      overflow: hidden;
+      border-radius: 20px;
+      background: var(--accent-blue-light);
+      border: 2px solid rgba(91, 141, 184, 0.25);
+    }
+
+    .conveyor__track {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      display: flex;
+      gap: 32px;
+      white-space: nowrap;
+      transform: translate(100%, -50%);
+      will-change: transform;
+    }
+
+    .slide.active .conveyor__track {
+      animation: conveyorMove 16s linear infinite;
+    }
+
+    @keyframes conveyorMove {
+      from { transform: translate(100%, -50%); }
+      to   { transform: translate(-1800px, -50%); }
+    }
+
+    .conveyor__item {
+      width: 54px;
+      height: 54px;
+      flex-shrink: 0;
+      color: var(--accent-blue);
+      opacity: 0.7;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .conveyor__filter {
+      position: absolute;
+      right: 60px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 110px;
+      height: 110px;
+      z-index: 5;
+      pointer-events: none;
+    }
+
+    .conveyor__output {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 44px;
+      z-index: 6;
+      pointer-events: none;
+    }
+
+    /* ═══ ПАЙПЛАЙН (фикс nth-of-type) ═══ */
+    .pipeline {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px 0;
+      flex-wrap: wrap;
+    }
+
+    .pipeline__node {
+      flex: 1;
+      min-width: 220px;
+      padding: clamp(24px, 2.2vw, 32px);
+      border-radius: 20px;
+      background: var(--surface-white);
+      border: 2px solid var(--surface-border);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      text-align: center;
+    }
+
+    .slide.active .pipeline__node:nth-of-type(1) {
+      animation: nodeGlow 4s ease-in-out infinite;
+    }
+    .slide.active .pipeline__node:nth-of-type(2) {
+      animation: nodeGlow 4s ease-in-out infinite;
+      animation-delay: 1.3s;
+    }
+    .slide.active .pipeline__node:nth-of-type(3) {
+      animation: nodeGlow 4s ease-in-out infinite;
+      animation-delay: 2.6s;
+    }
+
+    @keyframes nodeGlow {
+      0%, 60%, 100% {
+        border-color: var(--surface-border);
+        box-shadow: 0 0 0 0 transparent;
+      }
+      20%, 40% {
+        border-color: var(--accent-sage);
+        box-shadow: 0 0 0 6px var(--accent-sage-light);
+      }
+    }
+
+    .pipeline__icon {
+      width: 48px;
+      height: 48px;
+      color: var(--accent-sage);
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .pipeline__title {
+      font-size: clamp(19px, 1.4vw, 24px);
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .pipeline__sub {
+      font-size: clamp(15px, 1.05vw, 18px);
+      color: var(--text-sub);
+      line-height: 1.5;
+    }
+
+    .pipeline__arrow {
+      font-size: 32px;
+      color: var(--text-muted);
+      flex-shrink: 0;
+      font-weight: 300;
+    }
+
+    /* ═══ ФИНАЛЬНЫЕ ЧАШКИ ═══ */
+    .final-cups {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      gap: 60px;
+      padding: 30px 0;
+    }
+
+    .final-cup {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .final-cup svg {
+      width: 100px;
+      height: 110px;
+    }
+
+    .slide.active .final-cup:nth-child(1) {
+      animation: cupToast 5s ease-in-out infinite;
+    }
+    .slide.active .final-cup:nth-child(2) {
+      animation: cupToast 5s ease-in-out infinite;
+      animation-delay: 0.3s;
+    }
+
+    @keyframes cupToast {
+      0%, 100% { transform: rotate(-2deg); }
+      50%      { transform: rotate(2deg); }
+    }
+
+    .final-cup__label {
+      font-size: clamp(17px, 1.2vw, 21px);
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    /* ═══ ГИД ═══ */
+    .guide {
+      position: absolute;
+      right: clamp(20px, 2.4vw, 48px);
+      bottom: 120px;
+      width: clamp(130px, 11vw, 160px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      z-index: 8;
+      pointer-events: none;
+    }
+
+    .guide__bubble {
+      position: relative;
+      background: rgba(255, 255, 255, 0.97);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 2px solid var(--surface-border);
+      border-radius: 16px 16px 16px 4px;
+      padding: 10px 14px;
+      box-shadow: 0 8px 22px rgba(0,0,0,0.08);
+      pointer-events: auto;
+      max-width: 100%;
+      transition: transform var(--transition-smooth), border-color var(--transition-smooth);
+    }
+    .guide__bubble:hover { transform: translateY(-2px); }
+
+    .guide__bubble[data-mood="calm"]      { border-color: rgba(46,184,134,0.45); }
+    .guide__bubble[data-mood="thinking"]  { border-color: rgba(91,141,184,0.45); }
+    .guide__bubble[data-mood="concerned"] { border-color: rgba(224,90,71,0.45); }
+    .guide__bubble[data-mood="curious"]   { border-color: rgba(255,184,0,0.55); }
+    .guide__bubble[data-mood="warm"]      { border-color: rgba(240,168,104,0.55); }
+
+    .guide__bubble::after {
+      content: "";
+      position: absolute;
+      bottom: -9px;
+      left: 20px;
+      width: 0;
+      height: 0;
+      border-left: 9px solid transparent;
+      border-right: 0 solid transparent;
+      border-top: 11px solid rgba(255, 255, 255, 0.97);
+      filter: drop-shadow(0 2px 0 var(--surface-border));
+    }
+
+    .guide__text {
+      font-size: clamp(15px, 1.05vw, 18px);
+      line-height: 1.5;
+      color: var(--text-sub);
+      font-weight: 500;
+    }
+
+    .guide__figure {
+      width: 100%;
+      max-width: 110px;
+      filter: drop-shadow(0 6px 12px rgba(0,0,0,0.08));
+      animation: guideFloat 4s ease-in-out infinite;
+    }
+
+    @keyframes guideFloat {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(-5px); }
+    }
+
+    /* ═══ ЛЕКСИЧЕСКАЯ ПАНЕЛЬ ═══ */
+    .lex-panel {
+      position: absolute;
+      bottom: 110px;
+      left: clamp(24px, 4vw, 80px);
+      right: clamp(240px, 18vw, 280px);
+      display: flex;
+      gap: 28px;
+      padding: 18px 28px;
+      background: var(--lex-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--surface-border);
+      border-left: 4px solid var(--lex-border);
+      border-radius: 18px;
+      font-family: var(--font-multi);
+      opacity: 0.96;
+      transition: opacity 0.3s;
+      z-index: 4;
+      max-height: 180px;
+      overflow: hidden;
+    }
+    .lex-panel:hover { opacity: 1; }
+
+    .lex-panel__label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      font-size: 12px;
+      letter-spacing: 4px;
+      color: var(--lex-label);
+      border-right: 1px dashed var(--surface-border);
+      padding-right: 16px;
+      padding-left: 4px;
+      font-weight: 600;
+    }
+
+    .lex-item {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .lex-item__head {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 4px;
+    }
+
+    .lex-item__zh {
+      font-size: 1.5em;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .lex-item__py {
+      font-size: 1em;
+      color: var(--accent-sage);
+      font-weight: 600;
+    }
+
+    .lex-item__def {
+      font-size: 1.05em;
+      line-height: 1.5;
+      color: var(--text-main);
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .lex-item__ru {
+      font-size: 0.95em;
+      color: var(--text-muted);
+      font-style: italic;
+      margin-bottom: 8px;
+      line-height: 1.35;
+    }
+
+    .lex-item__row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 18px;
+      font-size: 0.95em;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .lex-tr {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      line-height: 1.2;
+    }
+
+    .lex-flag {
+      width: 20px;
+      height: 14px;
+      flex-shrink: 0;
+      border-radius: 2.5px;
+      box-shadow: 0 0 0 0.5px rgba(0,0,0,0.06);
+      vertical-align: middle;
+    }
+
+    /* ═══ НАВИГАЦИЯ ═══ */
+    .nav-bar {
+      position: absolute;
+      bottom: 26px;
+      left: clamp(24px, 4vw, 80px);
+      right: clamp(24px, 4vw, 80px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .nav-controls {
+      display: flex;
+      gap: 14px;
+      pointer-events: auto;
+    }
+
+    .nav-btn {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--surface-white);
+      border: 2px solid var(--surface-border);
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      font-size: 1.4rem;
+      font-weight: bold;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      transition: all var(--transition-smooth);
+    }
+
+    .nav-btn:hover {
+      border-color: var(--accent-sage);
+      color: var(--accent-sage);
+      transform: translateY(-2px);
+    }
+
+    .nav-btn.is-disabled {
+      opacity: 0.3;
+      pointer-events: none;
+      cursor: not-allowed;
+    }
+
+    .slide-indicator {
+      font-size: 16px;
+      color: var(--text-sub);
+      font-weight: 600;
+      background: var(--surface-white);
+      padding: 10px 22px;
+      border-radius: 30px;
+      border: 2px solid var(--surface-border);
+      pointer-events: auto;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    }
+
+    /* ═══ АДАПТИВ ═══ */
+    @media (max-width: 1024px) {
+      .guide { width: clamp(110px, 11vw, 140px); bottom: 130px; }
+      .guide__figure { max-width: 90px; }
+      .lex-panel { right: clamp(180px, 17vw, 220px); }
+      .slide { padding-right: clamp(150px, 15vw, 190px); }
+    }
+
+    @media (max-width: 768px) {
+      .deck-container { aspect-ratio: auto; height: 100dvh; }
+      .slide { padding: 24px 18px 280px 18px; }
+      .grid-split,
+      .grid-3col,
+      .flow-row,
+      .cups-pair { grid-template-columns: 1fr; gap: 1.2rem; }
+      .guide { display: none; }
+      .lex-panel {
+        position: static;
+        margin-top: 1rem;
+        flex-direction: column;
+        right: auto;
+        left: auto;
+        bottom: auto;
+        max-height: none;
+      }
+      .lex-panel__label {
+        writing-mode: horizontal-tb;
+        border-right: none;
+        border-bottom: 1px dashed var(--surface-border);
+        padding-right: 0;
+        padding-bottom: 8px;
+        padding-left: 0;
+        justify-content: flex-start;
+      }
+      .slide-header::before { font-size: 100px; top: -20px; }
+      .nav-bar { left: 16px; right: 16px; bottom: 16px; }
+      .title-scene svg { max-width: 100%; }
+      .scales { flex-direction: column; }
+      .pipeline { flex-direction: column; }
+      .pipeline__arrow { transform: rotate(90deg); }
+      .timeline { flex-direction: column; gap: 40px; }
+      .timeline__line { display: none; }
+      .compare-table { grid-template-columns: 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        transition: none !important;
+        animation: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<main class="deck-container" id="deck">
+
+  <div class="progress" id="progress"></div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SVG DEFS
+       ═══════════════════════════════════════════════════════════ -->
+  <svg xmlns="http://www.w3.org/2000/svg"
+       style="position: absolute; width: 0; height: 0; overflow: hidden; pointer-events: none;"
+       aria-hidden="true" focusable="false">
+    <defs>
+
+      <!-- ═══ ОН — только голова + плечи (для гида) ═══ -->
+      <g id="boy-base">
+        <rect x="85" y="110" width="30" height="25" fill="#F0C8B0" rx="5"/>
+        <ellipse cx="100" cy="85" rx="32" ry="35" fill="#FCD3B8"/>
+        <ellipse cx="80" cy="90" rx="6" ry="3" fill="#FF9E9E" opacity="0.5"/>
+        <ellipse cx="120" cy="90" rx="6" ry="3" fill="#FF9E9E" opacity="0.5"/>
+        <path d="M 62 75 C 55 60, 65 40, 80 42 C 85 30, 105 28, 115 38 C 128 32, 142 45, 138 60 C 145 72, 135 88, 132 88 C 130 75, 126 65, 120 60 C 110 50, 90 50, 80 62 C 72 65, 68 70, 62 75 Z" fill="#D99B4E"/>
+        <circle cx="70" cy="52" r="13" fill="#D99B4E"/>
+        <circle cx="85" cy="40" r="14" fill="#E2A85C"/>
+        <circle cx="103" cy="38" r="15" fill="#D99B4E"/>
+        <circle cx="122" cy="45" r="13" fill="#E2A85C"/>
+        <circle cx="132" cy="60" r="11" fill="#D99B4E"/>
+        <circle cx="68" cy="66" r="10" fill="#E2A85C"/>
+      </g>
+
+      <!-- ═══ ЭМОЦИИ ═══ -->
+      <g id="face-calm">
+        <circle cx="88" cy="82" r="4.5" fill="#22252A"/>
+        <circle cx="112" cy="82" r="4.5" fill="#22252A"/>
+        <path d="M 92 98 Q 100 105 108 98" stroke="#22252A" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      </g>
+
+      <g id="face-thinking">
+        <path d="M 83 82 Q 88 78 93 82" stroke="#22252A" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M 107 82 Q 112 78 117 82" stroke="#22252A" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M 80 72 Q 88 68 96 72" stroke="#8B6B3D" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <path d="M 104 70 Q 112 68 120 72" stroke="#8B6B3D" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <path d="M 94 99 Q 100 103 106 99" stroke="#22252A" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      </g>
+
+      <g id="face-concerned">
+        <circle cx="88" cy="82" r="4.5" fill="#22252A"/>
+        <circle cx="112" cy="82" r="4.5" fill="#22252A"/>
+        <path d="M 78 70 Q 88 74 96 72" stroke="#8B6B3D" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <path d="M 104 72 Q 112 74 122 70" stroke="#8B6B3D" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <path d="M 92 100 Q 100 99 108 100" stroke="#22252A" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      </g>
+
+      <g id="face-curious">
+        <circle cx="88" cy="82" r="5.5" fill="#22252A"/>
+        <circle cx="112" cy="82" r="5.5" fill="#22252A"/>
+        <circle cx="89.5" cy="80.5" r="1.5" fill="#FFF"/>
+        <circle cx="113.5" cy="80.5" r="1.5" fill="#FFF"/>
+        <ellipse cx="100" cy="100" rx="4" ry="5" fill="#22252A"/>
+      </g>
+
+      <g id="face-warm">
+        <path d="M 83 82 Q 88 78 93 82" stroke="#22252A" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M 107 82 Q 112 78 117 82" stroke="#22252A" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M 90 97 Q 100 108 110 97" stroke="#22252A" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <ellipse cx="78" cy="92" rx="7" ry="4" fill="#FF9E9E" opacity="0.7"/>
+        <ellipse cx="122" cy="92" rx="7" ry="4" fill="#FF9E9E" opacity="0.7"/>
+      </g>
+
+      <!-- ═══ ХУДИ (для гида, короткое тело) ═══ -->
+      <g id="hoodie-sage"><path d="M 45 135 Q 100 120 155 135 L 165 200 L 35 200 Z" fill="#2EB886"/></g>
+      <g id="hoodie-yellow"><path d="M 45 135 Q 100 120 155 135 L 165 200 L 35 200 Z" fill="#FFB800"/></g>
+      <g id="hoodie-grey"><path d="M 45 135 Q 100 120 155 135 L 165 200 L 35 200 Z" fill="#6C727E"/></g>
+      <g id="hoodie-terracotta"><path d="M 45 135 Q 100 120 155 135 L 165 200 L 35 200 Z" fill="#E05A47"/></g>
+
+      <!-- ═══ ОН — ПОЛНАЯ ФИГУРА для титульного слайда (ноги + тело) ═══ -->
+      <g id="boy-full">
+        <!-- Ноги -->
+        <rect x="88" y="165" width="9" height="55" fill="#D4C9AE" rx="2"/>
+        <rect x="103" y="165" width="9" height="55" fill="#D4C9AE" rx="2"/>
+        <!-- Кроссовки -->
+        <path d="M 84 218 L 100 218 Q 102 226 96 226 L 84 226 Z" fill="#22252A"/>
+        <path d="M 100 218 L 116 218 Q 118 226 112 226 L 100 226 Z" fill="#22252A"/>
+        <!-- Худи (тело) -->
+        <path d="M 45 135 Q 100 120 155 135 L 160 185 L 40 185 Z" fill="#2EB886"/>
+        <!-- Карман худи -->
+        <path d="M 75 155 Q 100 148 125 155 L 120 180 L 80 180 Z" fill="#1F9B70" opacity="0.6"/>
+        <!-- Шея -->
+        <rect x="85" y="110" width="30" height="25" fill="#F0C8B0" rx="5"/>
+        <!-- Голова + волосы -->
+        <ellipse cx="100" cy="85" rx="32" ry="35" fill="#FCD3B8"/>
+        <ellipse cx="80" cy="90" rx="6" ry="3" fill="#FF9E9E" opacity="0.5"/>
+        <ellipse cx="120" cy="90" rx="6" ry="3" fill="#FF9E9E" opacity="0.5"/>
+        <path d="M 62 75 C 55 60, 65 40, 80 42 C 85 30, 105 28, 115 38 C 128 32, 142 45, 138 60 C 145 72, 135 88, 132 88 C 130 75, 126 65, 120 60 C 110 50, 90 50, 80 62 C 72 65, 68 70, 62 75 Z" fill="#D99B4E"/>
+        <circle cx="70" cy="52" r="13" fill="#D99B4E"/>
+        <circle cx="85" cy="40" r="14" fill="#E2A85C"/>
+        <circle cx="103" cy="38" r="15" fill="#D99B4E"/>
+        <circle cx="122" cy="45" r="13" fill="#E2A85C"/>
+        <circle cx="132" cy="60" r="11" fill="#D99B4E"/>
+        <circle cx="68" cy="66" r="10" fill="#E2A85C"/>
+        <!-- Глаза / рот (warm) -->
+        <path d="M 83 82 Q 88 78 93 82" stroke="#22252A" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M 107 82 Q 112 78 117 82" stroke="#22252A" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M 90 97 Q 100 108 110 97" stroke="#22252A" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      </g>
+
+      <!-- ═══ ОНА — ПОЛНАЯ ФИГУРА (ноги + юбка + жакет + голова + каре) ═══ -->
+      <g id="woman-full">
+        <!-- Ноги -->
+        <rect x="88" y="180" width="9" height="40" fill="#F5D5C0" rx="2"/>
+        <rect x="103" y="180" width="9" height="40" fill="#F5D5C0" rx="2"/>
+        <!-- Туфли -->
+        <path d="M 82 218 L 100 218 Q 104 226 96 226 L 82 226 Z" fill="#22252A"/>
+        <path d="M 100 218 L 118 218 Q 122 226 114 226 L 100 226 Z" fill="#22252A"/>
+        <!-- Юбка (тёмная, чуть расширяется) -->
+        <path d="M 62 165 L 138 165 L 142 195 L 58 195 Z" fill="#1A1D22"/>
+        <!-- Жакет (тело) -->
+        <path d="M 50 135 Q 100 118 150 135 L 148 168 L 52 168 Z" fill="#22252A"/>
+        <!-- Лацканы -->
+        <path d="M 85 138 L 100 168 L 115 138" stroke="#3A3E45" stroke-width="2.5" fill="none"/>
+        <!-- Белая блузка -->
+        <path d="M 90 138 L 100 175 L 110 138 Z" fill="#FFFFFF" opacity="0.95"/>
+        <!-- Шея -->
+        <rect x="85" y="110" width="30" height="25" fill="#F5D5C0" rx="5"/>
+        <!-- Голова -->
+        <ellipse cx="100" cy="85" rx="30" ry="33" fill="#FCE0CC"/>
+        <!-- Светлое каре -->
+        <path d="M 68 88 C 60 70, 66 48, 82 42 C 92 32, 112 32, 122 42 C 138 48, 144 70, 136 88 C 140 100, 142 112, 138 118 C 132 112, 128 100, 126 92 C 122 82, 118 76, 110 74 C 100 70, 92 72, 86 78 C 82 84, 78 92, 74 100 C 72 108, 70 114, 66 118 C 60 112, 62 100, 68 88 Z" fill="#E8C77A"/>
+        <path d="M 76 60 Q 88 50 100 50 Q 112 50 122 60" stroke="#F4D89A" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.8"/>
+        <!-- Помада -->
+        <path d="M 92 100 Q 100 104 108 100 Q 100 103 92 100 Z" fill="#E05A47"/>
+      </g>
+
+      <!-- ═══ ЭМОЦИЯ «ОНА» — очки + глаза (уверенная улыбка) ═══ -->
+      <g id="woman-face-calm">
+        <!-- Круглые очки -->
+        <circle cx="85" cy="82" r="10" fill="none" stroke="#22252A" stroke-width="2.5"/>
+        <circle cx="115" cy="82" r="10" fill="none" stroke="#22252A" stroke-width="2.5"/>
+        <line x1="95" y1="82" x2="105" y2="82" stroke="#22252A" stroke-width="2.5"/>
+        <!-- Глаза -->
+        <circle cx="85" cy="82" r="3.5" fill="#22252A"/>
+        <circle cx="115" cy="82" r="3.5" fill="#22252A"/>
+        <!-- Улыбка -->
+        <path d="M 93 100 Q 100 105 107 100" stroke="#22252A" stroke-width="2" fill="none" stroke-linecap="round"/>
+      </g>
+
+      <!-- ═══ СОБАЧКА (чихуахуа) ═══ -->
+      <g id="dog-chihuahua">
+        <ellipse cx="145" cy="175" rx="14" ry="10" fill="#E8C77A"/>
+        <circle cx="152" cy="163" r="9" fill="#E8C77A"/>
+        <path d="M 146 157 L 144 149 L 150 155 Z" fill="#D4AF5E"/>
+        <path d="M 158 157 L 160 149 L 154 155 Z" fill="#D4AF5E"/>
+        <circle cx="150" cy="163" r="1.5" fill="#22252A"/>
+        <circle cx="155" cy="163" r="1.5" fill="#22252A"/>
+        <circle cx="153" cy="167" r="1" fill="#22252A"/>
+      </g>
+
+      <!-- ═══ КРУГЛЫЙ СТОЛ ═══ -->
+      <g id="round-table">
+        <ellipse cx="400" cy="320" rx="260" ry="16" fill="#22252A" opacity="0.06"/>
+        <ellipse cx="400" cy="300" rx="280" ry="42" fill="#E8DCC4"/>
+        <ellipse cx="400" cy="294" rx="280" ry="42" fill="#F3EFE6"/>
+        <path d="M 120 294 Q 120 322 400 322 Q 680 322 680 294" fill="none" stroke="#D4C9AE" stroke-width="2"/>
+      </g>
+
+      <g id="table-laptop">
+        <rect x="345" y="262" width="48" height="30" rx="3" fill="#22252A"/>
+        <rect x="348" y="265" width="42" height="24" rx="2" fill="#3A3E45"/>
+        <rect x="342" y="292" width="54" height="3" rx="1" fill="#22252A"/>
+      </g>
+
+      <g id="table-coffee">
+        <ellipse cx="300" cy="288" rx="14" ry="4" fill="#FFFFFF" stroke="#22252A" stroke-width="1.5"/>
+        <path d="M 286 288 Q 286 302 300 302 Q 314 302 314 288" fill="#FFFFFF" stroke="#22252A" stroke-width="1.5"/>
+        <path d="M 314 290 Q 322 290 322 296 Q 322 300 314 300" stroke="#22252A" stroke-width="1.5" fill="none"/>
+      </g>
+
+      <g id="table-notebook">
+        <rect x="440" y="278" width="38" height="24" rx="2" fill="#FFB800" stroke="#22252A" stroke-width="1.5"/>
+        <line x1="445" y1="284" x2="473" y2="284" stroke="#22252A" stroke-width="1"/>
+        <line x1="445" y1="290" x2="473" y2="290" stroke="#22252A" stroke-width="1"/>
+      </g>
+
+      <!-- ═══ АКСЕССУАРЫ ГИДА ═══ -->
+      <g id="acc-coffee">
+        <rect x="120" y="140" width="22" height="28" rx="4" fill="#FFFFFF" stroke="#22252A" stroke-width="2"/>
+        <path d="M 142 146 C 148 146, 148 160, 142 160" stroke="#22252A" stroke-width="2" fill="none"/>
+      </g>
+
+      <g id="acc-phone">
+        <rect x="130" y="110" width="30" height="50" rx="5" fill="#22252A"/>
+        <circle cx="145" cy="125" r="6" fill="#2EB886"/>
+      </g>
+
+      <g id="acc-headphones">
+        <path d="M 60 70 C 60 30, 140 30, 140 70" stroke="#22252A" stroke-width="6" fill="none"/>
+        <rect x="52" y="65" width="16" height="30" rx="6" fill="#FFB800"/>
+        <rect x="132" y="65" width="16" height="30" rx="6" fill="#FFB800"/>
+      </g>
+
+      <g id="acc-book">
+        <rect x="125" y="145" width="30" height="22" rx="2" fill="#E05A47" stroke="#22252A" stroke-width="1.5"/>
+        <line x1="140" y1="145" x2="140" y2="167" stroke="#22252A" stroke-width="1.5"/>
+      </g>
+
+      <g id="acc-toycar">
+        <rect x="130" y="155" width="28" height="12" rx="2" fill="#E05A47"/>
+        <rect x="136" y="148" width="16" height="8" rx="1" fill="#FDF0EE" stroke="#22252A" stroke-width="1"/>
+        <circle cx="137" cy="168" r="3" fill="#22252A"/>
+        <circle cx="151" cy="168" r="3" fill="#22252A"/>
+      </g>
+
+      <g id="acc-box">
+        <rect x="125" y="145" width="32" height="26" fill="#D4A574" stroke="#22252A" stroke-width="1.5"/>
+        <line x1="125" y1="152" x2="157" y2="152" stroke="#22252A" stroke-width="1"/>
+        <rect x="137" y="145" width="8" height="6" fill="#F3EFE6"/>
+      </g>
+
+      <g id="acc-backpack">
+        <path d="M 128 148 Q 128 138 145 138 Q 162 138 162 148 L 164 170 L 126 170 Z" fill="#FFB800" stroke="#22252A" stroke-width="1.5"/>
+        <rect x="138" y="158" width="14" height="8" rx="2" fill="#FFF8E6" stroke="#22252A" stroke-width="1"/>
+      </g>
+
+      <g id="acc-hourglass">
+        <rect x="131" y="138" width="28" height="3" rx="1" fill="#22252A"/>
+        <rect x="131" y="167" width="28" height="3" rx="1" fill="#22252A"/>
+        <path d="M 134 141 L 156 141 L 145 152 L 156 167 L 134 167 L 145 152 Z" fill="#F3EFE6" stroke="#22252A" stroke-width="1.5"/>
+        <path d="M 136 142 L 154 142 L 145 150 Z" fill="#FFB800"/>
+        <path d="M 138 165 L 152 165 L 145 156 Z" fill="#FFB800"/>
+      </g>
+
+      <g id="acc-shield">
+        <path d="M 145 138 L 162 143 L 162 158 Q 162 170 145 175 Q 128 170 128 158 L 128 143 Z" fill="#E8F8F3" stroke="#2EB886" stroke-width="2"/>
+        <path d="M 137 155 L 143 162 L 154 148" stroke="#2EB886" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+
+      <g id="acc-lemonwater">
+        <path d="M 132 142 L 158 142 L 155 168 L 135 168 Z" fill="#E8F8F3" stroke="#22252A" stroke-width="1.5" opacity="0.9"/>
+        <circle cx="145" cy="147" r="5" fill="#FFB800"/>
+        <line x1="141" y1="147" x2="149" y2="147" stroke="#FFF" stroke-width="0.8"/>
+        <line x1="145" y1="143" x2="145" y2="151" stroke="#FFF" stroke-width="0.8"/>
+      </g>
+
+      <g id="acc-hearts">
+        <path d="M 138 152 C 138 148, 142 145, 145 148 C 148 145, 152 148, 152 152 C 152 158, 145 165, 145 165 C 145 165, 138 158, 138 152 Z" fill="#E05A47"/>
+        <path d="M 150 142 C 150 140, 152 138, 154 140 C 156 138, 158 140, 158 142 C 158 145, 154 149, 154 149 C 154 149, 150 145, 150 142 Z" fill="#FDF0EE" stroke="#E05A47" stroke-width="1"/>
+      </g>
+
+      <g id="acc-controller">
+        <rect x="125" y="148" width="40" height="20" rx="8" fill="#6C727E"/>
+        <circle cx="136" cy="156" r="4" fill="#22252A"/>
+        <circle cx="136" cy="163" r="4" fill="#22252A"/>
+        <circle cx="156" cy="156" r="3" fill="#FFB800"/>
+        <circle cx="152" cy="162" r="3" fill="#E05A47"/>
+      </g>
+
+      <!-- ═══ ИКОНКИ ═══ -->
+      <symbol id="icon-target" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="9"/>
+        <circle cx="12" cy="12" r="5"/>
+        <circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/>
+      </symbol>
+
+      <symbol id="icon-scales" viewBox="0 0 24 24">
+        <line x1="12" y1="4" x2="12" y2="20"/>
+        <line x1="6" y1="8" x2="18" y2="8"/>
+        <path d="M 6 8 L 3 14 L 9 14 Z"/>
+        <path d="M 18 8 L 15 14 L 21 14 Z"/>
+      </symbol>
+
+      <symbol id="icon-lock" viewBox="0 0 24 24">
+        <rect x="5" y="11" width="14" height="10" rx="2"/>
+        <path d="M 9 11 V 7 A 3 3 0 0 1 15 7 V 11"/>
+      </symbol>
+
+      <symbol id="icon-unlock" viewBox="0 0 24 24">
+        <rect x="5" y="11" width="14" height="10" rx="2"/>
+        <path d="M 9 11 V 7 A 3 3 0 0 1 15 4"/>
+      </symbol>
+
+      <symbol id="icon-bulb" viewBox="0 0 24 24">
+        <path d="M 12 4 A 6 6 0 0 1 15 15 L 15 18 L 9 18 L 9 15 A 6 6 0 0 1 12 4 Z"/>
+        <line x1="10" y1="20" x2="14" y2="20"/>
+      </symbol>
+
+      <symbol id="icon-door" viewBox="0 0 24 24">
+        <rect x="5" y="4" width="14" height="17" rx="1"/>
+        <circle cx="15" cy="12.5" r="1" fill="currentColor" stroke="none"/>
+      </symbol>
+
+      <symbol id="icon-puzzle" viewBox="0 0 24 24">
+        <path d="M 10 6 A 2 2 0 0 1 14 6 L 14 8 L 16 8 A 2 2 0 0 1 16 12 L 14 12 L 14 14 L 16 14 A 2 2 0 0 1 16 18 L 12 18 L 12 16 A 2 2 0 0 0 8 16 L 8 18 L 5 18 A 2 2 0 0 1 5 14 L 8 14 L 8 12 L 5 12 A 2 2 0 0 1 5 8 L 10 8 Z"/>
+      </symbol>
+
+      <symbol id="icon-chart" viewBox="0 0 24 24">
+        <line x1="4" y1="20" x2="20" y2="20"/>
+        <rect x="6" y="14" width="3" height="6" fill="currentColor" stroke="none"/>
+        <rect x="11" y="10" width="3" height="10" fill="currentColor" stroke="none"/>
+        <rect x="16" y="6" width="3" height="14" fill="currentColor" stroke="none"/>
+      </symbol>
+
+      <symbol id="icon-video" viewBox="0 0 24 24">
+        <rect x="3" y="6" width="12" height="12" rx="2"/>
+        <path d="M 15 10 L 21 7 L 21 17 L 15 14 Z"/>
+      </symbol>
+
+      <symbol id="icon-eye" viewBox="0 0 24 24">
+        <path d="M 2 12 C 6 6, 18 6, 22 12 C 18 18, 6 18, 2 12 Z"/>
+        <circle cx="12" cy="12" r="3"/>
+      </symbol>
+
+      <symbol id="icon-phone" viewBox="0 0 24 24">
+        <rect x="7" y="3" width="10" height="18" rx="2"/>
+        <line x1="11" y1="18" x2="13" y2="18"/>
+      </symbol>
+
+      <symbol id="icon-brain" viewBox="0 0 24 24">
+        <path d="M 9 4 A 3 3 0 0 0 6 7 A 3 3 0 0 0 5 12 A 3 3 0 0 0 7 17 A 3 3 0 0 0 12 19 L 12 5 A 3 3 0 0 0 9 4 Z"/>
+        <path d="M 15 4 A 3 3 0 0 1 18 7 A 3 3 0 0 1 19 12 A 3 3 0 0 1 17 17 A 3 3 0 0 1 12 19"/>
+      </symbol>
+
+      <symbol id="icon-check" viewBox="0 0 24 24">
+        <path d="M 4 12 L 10 18 L 20 6"/>
+      </symbol>
+
+      <symbol id="icon-spark" viewBox="0 0 24 24">
+        <path d="M 12 2 L 13.5 9 L 21 10.5 L 13.5 12 L 12 19 L 10.5 12 L 3 10.5 L 10.5 9 Z"/>
+      </symbol>
+
+      <symbol id="icon-ai" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="9"/>
+        <circle cx="12" cy="12" r="3"/>
+        <line x1="12" y1="3" x2="12" y2="6"/>
+        <line x1="12" y1="18" x2="12" y2="21"/>
+        <line x1="3" y1="12" x2="6" y2="12"/>
+        <line x1="18" y1="12" x2="21" y2="12"/>
+      </symbol>
+
+      <symbol id="icon-question" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="9"/>
+        <path d="M 9 9 A 3 3 0 0 1 15 10 C 15 12 12 12 12 15"/>
+        <circle cx="12" cy="18" r="0.8" fill="currentColor" stroke="none"/>
+      </symbol>
+
+      <symbol id="icon-shield" viewBox="0 0 24 24">
+        <path d="M 12 3 L 20 6 L 20 13 Q 20 19 12 21 Q 4 19 4 13 L 4 6 Z"/>
+        <path d="M 8 12 L 11 15 L 16 9"/>
+      </symbol>
+
+      <!-- ═══ ФЛАГИ ═══ -->
+      <symbol id="flag-jp" viewBox="0 0 21 15">
+        <rect width="21" height="15" rx="2" fill="#FFFFFF" stroke="#E8E3DA" stroke-width="0.5"/>
+        <circle cx="10.5" cy="7.5" r="4" fill="#BC002D"/>
+      </symbol>
+
+      <symbol id="flag-kr" viewBox="0 0 21 15">
+        <rect width="21" height="15" rx="2" fill="#FFFFFF" stroke="#E8E3DA" stroke-width="0.5"/>
+        <circle cx="10.5" cy="7.5" r="4" fill="#CD2E3A"/>
+        <path d="M 6.5 7.5 A 4 4 0 0 0 14.5 7.5 A 2 2 0 0 1 6.5 7.5 Z" fill="#0047A0"/>
+        <g fill="#22252A">
+          <rect x="3.5" y="3" width="3" height="0.7"/>
+          <rect x="3.5" y="4.2" width="3" height="0.7"/>
+          <rect x="14.5" y="3" width="3" height="0.7"/>
+          <rect x="14.5" y="4.2" width="3" height="0.7"/>
+          <rect x="3.5" y="10.5" width="3" height="0.7"/>
+          <rect x="3.5" y="11.7" width="3" height="0.7"/>
+          <rect x="14.5" y="10.5" width="3" height="0.7"/>
+          <rect x="14.5" y="11.7" width="3" height="0.7"/>
+        </g>
+      </symbol>
+
+      <symbol id="flag-th" viewBox="0 0 21 15">
+        <rect width="21" height="15" rx="2" fill="#FFFFFF"/>
+        <rect width="21" height="2.5" y="0" fill="#A51931"/>
+        <rect width="21" height="2.5" y="12.5" fill="#A51931"/>
+        <rect width="21" height="2" y="2.5" fill="#F4F5F8"/>
+        <rect width="21" height="2" y="10.5" fill="#F4F5F8"/>
+        <rect width="21" height="5" y="5" fill="#2D2A4A"/>
+        <rect width="21" height="15" rx="2" fill="none" stroke="#E8E3DA" stroke-width="0.5"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 1 — ОБЛОЖКА
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide active" id="slide-1">
+    <div class="slide-header" style="text-align: center;">
+      <div class="tag-badge tag-sage speakable" onclick="speakZH('文化解析与代际对话')">文化解析｜代际对话</div>
+      <h1 class="slide-title has-emoji speakable" data-emoji="🎭" style="font-size: clamp(44px, 4.6vw, 76px); text-align:center;" onclick="speakZH('时代的决斗：冲突、美学与Z世代哲学')">
+        时代的决斗：冲突、美学与 <span class="highlight-yellow">Z世代哲学</span>
+      </h1>
+      <p class="sub-title" style="text-align:center;">DUEL OF ERAS: CONFLICT, AESTHETICS &amp; GEN Z PHILOSOPHY</p>
+    </div>
+
+    <div class="title-scene">
+            <svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <!-- Стол -->
+        <use href="#round-table"/>
+        <!-- Предметы на столе -->
+        <use href="#table-notebook"/>
+        <use href="#table-laptop"/>
+        <use href="#table-coffee"/>
+
+        <!-- ОН — слева -->
+        <g transform="translate(180, 100) scale(0.95)">
+          <g class="scene-boy">
+            <use href="#boy-full"/>
+          </g>
+        </g>
+
+        <!-- ОНА — справа -->
+        <g transform="translate(430, 100) scale(0.95)">
+          <g class="scene-woman">
+            <use href="#woman-full"/>
+            <use href="#dog-chihuahua"/>
+          </g>
+        </g>
+
+        <!-- Подписи -->
+        <text x="270" y="390" text-anchor="middle" font-size="16" font-weight="800" fill="#6C727E" font-family="sans-serif" letter-spacing="2">GEN Z</text>
+        <text x="520" y="390" text-anchor="middle" font-size="16" font-weight="800" fill="#6C727E" font-family="sans-serif" letter-spacing="2">MILLENNIAL</text>
+      </svg>
+    </div>
+
+    <div style="text-align: center; color: var(--text-muted); font-size: 1rem;">
+      💡 点击任意文字可朗读中文（语音教学辅助）
+    </div>
+
+    <aside class="guide" aria-label="Комментарий гида">
+      <div class="guide__bubble" data-mood="warm">
+        <p class="guide__text speakable" onclick="speakZH('我们一起看看：两代人到底在争什么？')">
+          我们一起看看：两代人到底在争什么？
+        </p>
+      </div>
+      <svg viewBox="0 0 200 200" class="guide__figure" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <use href="#boy-base"/>
+        <use href="#face-warm"/>
+        <use href="#hoodie-sage"/>
+        <use href="#acc-coffee"/>
+      </svg>
+    </aside>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 2 — СРАВНИТЕЛЬНАЯ ТАБЛИЦА
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-2">
+    <div class="slide-header" data-num="01">
+      <div class="tag-badge">对话主角</div>
+      <h2 class="slide-title has-emoji speakable" data-emoji="⚔️" onclick="speakZH('两种立场的交锋')">两种立场的交锋</h2>
+      <p class="sub-title">当“控制与成就”遇上“后讽刺与边界”</p>
+    </div>
+
+    <div class="compare-table">
+      <div class="compare-col">
+        <div class="compare-header">
+          <svg class="card-icon card-icon--terracotta" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#icon-target"/></svg>
+          千禧一代
+        </div>
+        <div class="compare-row">
+          <span class="compare-label">目标</span>
+          <span class="compare-value">掌控 · 成就</span>
+        </div>
+        <div class="compare-row">
+          <span class="compare-label">方法</span>
+          <span class="compare-value">高效 · 议程</span>
+        </div>
+        <div class="compare-row">
+          <span class="compare-label">价值</span>
+          <span class="compare-value">奋斗 = 价值</span>
+        </div>
+      </div>
+
+      <div class="compare-col">
+        <div class="compare-header">
+          <svg class="card-icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#icon-scales"/></svg>
+          Z世代
+        </div>
+        <div class="compare-row">
+          <span class="compare-label">目标</span>
+          <span class="compare-value">边界 · 平衡</span>
+        </div>
+        <div class="compare-row">
+          <span class="compare-label">方法</span>
+          <span class="compare-value">幽默 · 解构</span>
+        </div>
+        <div class="compare-row">
+          <span class="compare-label">价值</span>
+          <span class="compare-value">当下 = 价值</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="lex-panel">
+      <div class="lex-panel__label">关键术语</div>
+
+      <div class="lex-item">
+        <div class="lex-item__head">
+          <span class="lex-item__zh">议程</span>
+          <span class="lex-item__py">yì chéng</span>
+        </div>
+        <div class="lex-item__def">谁决定讨论什么、怎么讨论，谁就在掌控局面。</div>
+        <div class="lex-item__ru">повестка, agenda</div>
+        <div class="lex-item__row">
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-jp"/></svg><span>アジェンダ</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-kr"/></svg><span>의제</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-th"/></svg><span>วาระ</span></span>
+        </div>
+      </div>
+
+      <div class="lex-item">
+        <div class="lex-item__head">
+          <span class="lex-item__zh">心理边界</span>
+          <span class="lex-item__py">xīn lǐ biān jiè</span>
+        </div>
+        <div class="lex-item__def">我的情绪和选择，由我自己负责。</div>
+        <div class="lex-item__ru">психологические границы</div>
+        <div class="lex-item__row">
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-jp"/></svg><span>心理的境界線</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-kr"/></svg><span>심리적 경계</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-th"/></svg><span>ขอบเขตทางจิตใจ</span></span>
+        </div>
+      </div>
+    </div>
+
+    <aside class="guide" aria-label="Комментарий гида">
+      <div class="guide__bubble" data-mood="calm">
+        <p class="guide__text speakable" onclick="speakZH('不是敌人，是两种活法。')">不是敌人，是两种活法。</p>
+      </div>
+      <svg viewBox="0 0 200 200" class="guide__figure" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <use href="#boy-base"/>
+        <use href="#face-calm"/>
+        <use href="#hoodie-sage"/>
+        <use href="#acc-book"/>
+      </svg>
+    </aside>
+  </section>
+    <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 3 — ПОРТРЕТ Z-СПИКЕРА
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-3">
+    <div class="slide-header" data-num="02">
+      <div class="tag-badge tag-sage">人物画像</div>
+      <h2 class="slide-title speakable" onclick="speakZH('Z世代之声：职场生态的镜子')">Z世代之声：职场生态的镜子</h2>
+    </div>
+
+    <div class="grid-split">
+      <div style="text-align: center;">
+        <svg viewBox="0 0 200 200" class="character-avatar" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <use href="#boy-base"/>
+          <use href="#face-curious"/>
+          <use href="#hoodie-yellow"/>
+          <use href="#acc-phone"/>
+        </svg>
+      </div>
+
+      <div class="tile-stack">
+        <div class="tile">
+          <svg class="tile__icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#icon-video"/></svg>
+          <div class="tile__content">
+            <div class="tile__title speakable" onclick="speakZH('短视频表达')">短视频表达</div>
+            <div class="tile__desc speakable" onclick="speakZH('通过短视频剖析办公日常，既有幽默讽刺，又有理性的观察。')">
+              幽默讽刺 <span style="color: var(--text-muted);">·</span> 理性观察
+            </div>
+          </div>
+        </div>
+
+        <div class="tile">
+          <svg class="tile__icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#icon-eye"/></svg>
+          <div class="tile__content">
+            <div class="tile__title speakable" onclick="speakZH('双向视角')">双向视角</div>
+            <div class="tile__desc speakable" onclick="speakZH('既能指出来自年轻人的避世心态，也能揭示前辈们的内卷与焦虑。')">
+              揭示 <span class="term">避世</span> 心态 <span style="color: var(--text-muted);">·</span> 揭示前辈焦虑
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lex-panel">
+      <div class="lex-panel__label">关键术语</div>
+
+      <div class="lex-item">
+        <div class="lex-item__head">
+          <span class="lex-item__zh">避世</span>
+          <span class="lex-item__py">bì shì</span>
+        </div>
+        <div class="lex-item__def">主动减少与外界的接触，不是懒惰，是自保。</div>
+        <div class="lex-item__ru">уход от мира, эскапизм</div>
+        <div class="lex-item__row">
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-jp"/></svg><span>逃避現実</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-kr"/></svg><span>현실 도피</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-th"/></svg><span>การหนีจากโลก</span></span>
+        </div>
+      </div>
+    </div>
+
+    <aside class="guide" aria-label="Комментарий гида">
+      <div class="guide__bubble" data-mood="curious">
+        <p class="guide__text speakable" onclick="speakZH('我拍的不是段子，是生活。')">我拍的不是段子，是生活。</p>
+      </div>
+      <svg viewBox="0 0 200 200" class="guide__figure" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <use href="#boy-base"/>
+        <use href="#face-curious"/>
+        <use href="#hoodie-yellow"/>
+        <use href="#acc-phone"/>
+      </svg>
+    </aside>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 4 — ВИРУСНЫЙ КОНТЕНТ
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-4">
+    <div class="slide-header" data-num="03">
+      <div class="tag-badge">内容观察</div>
+      <h2 class="slide-title speakable" onclick="speakZH('爆款视频背后的真实心理')">爆款视频背后的真实心理</h2>
+    </div>
+
+    <div class="flow-row">
+      <div class="flow-card">
+        <svg class="flow-card__icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#icon-chart"/></svg>
+        <div class="flow-card__title speakable" onclick="speakZH('科学省钱')">《科学省钱》</div>
+        <div class="flow-card__body speakable" onclick="speakZH('用买咖啡的快乐对抗三十年房贷的沉重，选择即时满足。')">
+          用咖啡的快乐对抗
+          <span class="chip chip--terracotta">30 年</span>
+          房贷，选择 <span class="key">即时满足</span>。
+        </div>
+      </div>
+
+      <div class="flow-card">
+        <svg class="flow-card__icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#icon-door"/></svg>
+        <div class="flow-card__title speakable" onclick="speakZH('结束远程')">《结束远程》</div>
+        <div class="flow-card__body speakable" onclick="speakZH('描述重返办公室后的文化休克，习惯自主控制生活节奏。')">
+          重返办公室后的
+          <span class="key">文化休克</span>，习惯自主掌控节奏。
+        </div>
+      </div>
+
+      <div class="flow-card">
+        <svg class="flow-card__icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#icon-bulb"/></svg>
+        <div class="flow-card__title speakable" onclick="speakZH('职场午休')">《职场午休》</div>
+        <div class="flow-card__body speakable" onclick="speakZH('用童趣和幽默解构严肃的职场规则，缓解工作压力。')">
+          用童趣解构严肃规则，<span class="key">缓解工作压力</span>。
+        </div>
+      </div>
+    </div>
+
+    <div class="lex-panel">
+      <div class="lex-panel__label">关键术语</div>
+
+      <div class="lex-item">
+        <div class="lex-item__head">
+          <span class="lex-item__zh">内卷</span>
+          <span class="lex-item__py">nèi juǎn</span>
+        </div>
+        <div class="lex-item__def">在有限的资源下，大家过度竞争，结果谁也没得到更多。</div>
+        <div class="lex-item__ru">внутренняя конкуренция без выхода</div>
+        <div class="lex-item__row">
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-jp"/></svg><span>内巻き化</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-kr"/></svg><span>내권</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-th"/></svg><span>การแข่งขันภายใน</span></span>
+        </div>
+      </div>
+
+      <div class="lex-item">
+        <div class="lex-item__head">
+          <span class="lex-item__zh">即时满足</span>
+          <span class="lex-item__py">jí shí mǎn zú</span>
+        </div>
+        <div class="lex-item__def">不等遥远的回报，现在就想要结果。</div>
+        <div class="lex-item__ru">немедленное удовлетворение</div>
+        <div class="lex-item__row">
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-jp"/></svg><span>即時満足</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-kr"/></svg><span>즉각적 만족</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-th"/></svg><span>ความพึงพอใจทันที</span></span>
+        </div>
+      </div>
+    </div>
+
+    <aside class="guide" aria-label="Комментарий гида">
+      <div class="guide__bubble" data-mood="thinking">
+        <p class="guide__text speakable" onclick="speakZH('为什么火？因为太真实了。')">为什么火？因为太真实了。</p>
+      </div>
+      <svg viewBox="0 0 200 200" class="guide__figure" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <use href="#boy-base"/>
+        <use href="#face-thinking"/>
+        <use href="#hoodie-grey"/>
+        <use href="#acc-phone"/>
+      </svg>
+    </aside>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 5 — ПИРАМИДА «СТАРШИЙ БРАТ»
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-5">
+    <div class="slide-header" data-num="04">
+      <div class="tag-badge tag-terracotta">心理模型</div>
+      <h2 class="slide-title speakable" onclick="speakZH('代际关系：长兄模型')">代际关系：“长兄”模型</h2>
+      <p class="sub-title">两代人不是敌人，而是家庭中的兄长与晚辈</p>
+    </div>
+
+    <div class="pyramid">
+      <div class="pyramid__layer pyramid__layer--top">
+        <svg style="width: 52px; height: 52px; flex-shrink: 0; color: var(--accent-terracotta);" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <use href="#icon-target"/>
+        </svg>
+        <div>
+          <div style="font-size: clamp(22px, 1.7vw, 28px); font-weight: 800; color: var(--accent-terracotta); margin-bottom: 6px;" class="speakable" onclick="speakZH('千禧一代：兄长角色')">千禧一代 · 兄长</div>
+          <div style="font-size: clamp(18px, 1.4vw, 24px); color: var(--text-sub); line-height: 1.6;" class="speakable" onclick="speakZH('开辟了心理边界，承载了过去的牺牲，因此容易产生保护执念与说教欲望。')">
+            开辟心理边界 <span style="color: var(--text-muted);">·</span> 承载过去的牺牲 <span style="color: var(--text-muted);">·</span> 产生 <span class="term">保护执念</span> 与 <span class="term">说教</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pyramid__connector">
+        <div class="pyramid__connector-line"></div>
+        <div class="pyramid__connector-arrow"></div>
+      </div>
+
+      <div class="pyramid__layer pyramid__layer--bottom">
+        <svg style="width: 52px; height: 52px; flex-shrink: 0; color: var(--accent-sage);" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <use href="#icon-spark"/>
+        </svg>
+        <div>
+          <div style="font-size: clamp(22px, 1.7vw, 28px); font-weight: 800; color: var(--accent-sage); margin-bottom: 6px;" class="speakable" onclick="speakZH('Z世代：享受红利者')">Z世代 · 晚辈</div>
+          <div style="font-size: clamp(18px, 1.4vw, 24px); color: var(--text-sub); line-height: 1.6;" class="speakable" onclick="speakZH('享受了前人争取来的边界红利，用幽默解构严肃，寻求更平等的对话。')">
+            享受 <span class="key">边界红利</span> <span style="color: var(--text-muted);">·</span> 幽默解构 <span style="color: var(--text-muted);">·</span> 寻求平等对话
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lex-panel">
+      <div class="lex-panel__label">关键术语</div>
+
+      <div class="lex-item">
+        <div class="lex-item__head">
+          <span class="lex-item__zh">保护执念</span>
+          <span class="lex-item__py">bǎo hù zhí niàn</span>
+        </div>
+        <div class="lex-item__def">因为自己吃过苦，所以想替别人做决定。</div>
+        <div class="lex-item__ru">навязчивое желание опекать</div>
+        <div class="lex-item__row">
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-jp"/></svg><span>保護執念</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-kr"/></svg><span>보호 강박</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-th"/></svg><span>ความหมกมุ่นในการปกป้อง</span></span>
+        </div>
+      </div>
+
+      <div class="lex-item">
+        <div class="lex-item__head">
+          <span class="lex-item__zh">说教</span>
+          <span class="lex-item__py">shuō jiào</span>
+        </div>
+        <div class="lex-item__def">用道理压人，而不是和人商量。</div>
+        <div class="lex-item__ru">нравоучение, морализаторство</div>
+        <div class="lex-item__row">
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-jp"/></svg><span>説教</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-kr"/></svg><span>설교</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-th"/></svg><span>การเทศนา</span></span>
+        </div>
+      </div>
+    </div>
+
+    <aside class="guide" aria-label="Комментарий гида">
+      <div class="guide__bubble" data-mood="warm">
+        <p class="guide__text speakable" onclick="speakZH('哥哥走了很远，弟弟想走自己的路。')">哥哥走了很远，弟弟想走自己的路。</p>
+      </div>
+      <svg viewBox="0 0 200 200" class="guide__figure" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <use href="#boy-base"/>
+        <use href="#face-warm"/>
+        <use href="#hoodie-sage"/>
+        <use href="#acc-toycar"/>
+      </svg>
+    </aside>
+  </section>
+    <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 6 — ВЫБОР ЖИЛЬЯ (часы inline SVG)
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-6">
+    <div class="slide-header" data-num="05">
+      <div class="tag-badge">消费观念</div>
+      <h2 class="slide-title has-emoji speakable" data-emoji="🏠" onclick="speakZH('住房抉择：拒绝房贷枷锁')">住房抉择：拒绝房贷枷锁</h2>
+    </div>
+
+    <div class="grid-split">
+      <div class="card card--terracotta" style="text-align: center;">
+        <!-- Часы — стрелка вращается, точка вращения правильная -->
+        <svg class="clock-face" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="50" cy="50" r="46" fill="#FFFFFF" stroke="#22252A" stroke-width="3"/>
+          <circle cx="50" cy="50" r="2.5" fill="#22252A"/>
+          <!-- Метки часов -->
+          <line x1="50" y1="10" x2="50" y2="16" stroke="#22252A" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="50" y1="84" x2="50" y2="90" stroke="#22252A" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="10" y1="50" x2="16" y2="50" stroke="#22252A" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="84" y1="50" x2="90" y2="50" stroke="#22252A" stroke-width="2.5" stroke-linecap="round"/>
+          <!-- Часовая стрелка (тонкая, статичная) -->
+          <line x1="50" y1="50" x2="68" y2="50" stroke="#22252A" stroke-width="2" stroke-linecap="round" opacity="0.4"/>
+          <!-- Минутная стрелка (вращается как группа) -->
+          <g class="clock-hand-rotor" style="transform-origin: 50px 50px;">
+            <line x1="50" y1="50" x2="50" y2="22" stroke="#E05A47" stroke-width="3.5" stroke-linecap="round"/>
+          </g>
+        </svg>
+
+        <h3 class="card-title speakable" onclick="speakZH('传统的房贷压力')" style="justify-content: center; margin-top: 12px;">
+          <svg class="card-icon card-icon--terracotta" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#icon-lock"/></svg>
+          传统 <span class="chip chip--terracotta">30 年</span> 债务
+        </h3>
+        <p class="card-body speakable" onclick="speakZH('大都市高昂的房价脱离了薪资现实，长期的贷款限制了职业选择自由。')">
+          高昂房价脱离薪资现实，长期的债务剥夺了人生的 <span class="key">流动性</span>。
+        </p>
+      </div>
+
+      <div class="card card--quote" style="text-align: center;">
+        <!-- Дом с ключом -->
+        <svg viewBox="0 0 120 120" style="width: 110px; height: 110px; margin: 0 auto; display: block;" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M 60 15 L 105 55 L 15 55 Z" fill="#2EB886"/>
+          <rect x="30" y="55" width="60" height="50" fill="#E8F8F3" stroke="#2EB886" stroke-width="2.5"/>
+          <rect x="50" y="75" width="20" height="30" fill="#2EB886"/>
+          <circle cx="85" cy="85" r="10" fill="#FFB800" stroke="#22252A" stroke-width="2"/>
+          <circle cx="85" cy="85" r="3" fill="#22252A"/>
+          <line x1="85" y1="95" x2="85" y2="108" stroke="#22252A" stroke-width="3"/>
+          <line x1="85" y1="101" x2="91" y2="101" stroke="#22252A" stroke-width="2"/>
+          <line x1="85" y1="106" x2="91" y2="106" stroke="#22252A" stroke-width="2"/>
+        </svg>
+
+        <h3 class="card-title speakable" onclick="speakZH('灵活的品质租居')" style="justify-content: center; margin-top: 12px;">
+          <svg class="card-icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#icon-unlock"/></svg>
+          品质租居与自由
+        </h3>
+        <p class="card-body speakable" onclick="speakZH('保持生活的流动性，将资金投入到体验、学习与能带来即时快乐的地方。')">
+          保持生活的流动性，将资金投入到 <span class="key">体验与能带来快乐的地方</span>。
+        </p>
+      </div>
+    </div>
+
+    <div class="lex-panel">
+      <div class="lex-panel__label">关键术语</div>
+
+      <div class="lex-item">
+        <div class="lex-item__head">
+          <span class="lex-item__zh">流动性</span>
+          <span class="lex-item__py">liú dòng xìng</span>
+        </div>
+        <div class="lex-item__def">不被房子、城市、职位绑住，随时可以走。</div>
+        <div class="lex-item__ru">мобильность (свобода сменить город)</div>
+        <div class="lex-item__row">
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-jp"/></svg><span>流動性</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-kr"/></svg><span>유동성</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-th"/></svg><span>ความคล่องตัว</span></span>
+        </div>
+      </div>
+
+      <div class="lex-item">
+        <div class="lex-item__head">
+          <span class="lex-item__zh">枷锁</span>
+          <span class="lex-item__py">jiā suǒ</span>
+        </div>
+        <div class="lex-item__def">看似自愿，其实是束缚。</div>
+        <div class="lex-item__ru">кандалы, оковы (метафора ипотеки)</div>
+        <div class="lex-item__row">
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-jp"/></svg><span>枷鎖</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-kr"/></svg><span>족쇄</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-th"/></svg><span>โซ่ตรวน</span></span>
+        </div>
+      </div>
+    </div>
+
+    <aside class="guide" aria-label="Комментарий гида">
+      <div class="guide__bubble" data-mood="concerned">
+        <p class="guide__text speakable" onclick="speakZH('三十年的贷款，换得来自由吗？')">三十年的贷款，换得来自由吗？</p>
+      </div>
+      <svg viewBox="0 0 200 200" class="guide__figure" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <use href="#boy-base"/>
+        <use href="#face-concerned"/>
+        <use href="#hoodie-terracotta"/>
+        <use href="#acc-box"/>
+      </svg>
+    </aside>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 7 — ЭКОНОМИКА ВПЕЧАТЛЕНИЙ (ROE-диаграмма)
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-7">
+    <div class="slide-header" data-num="06">
+      <div class="tag-badge tag-sage">体验经济</div>
+      <h2 class="slide-title speakable" onclick="speakZH('拥抱体验经济：为情绪价值买单')">拥抱体验经济：为情绪价值买单</h2>
+    </div>
+
+    <div class="grid-split">
+      <div>
+        <div style="font-size: clamp(20px, 1.5vw, 26px); font-weight: 700; color: var(--text-main); margin-bottom: 20px; text-align: center;">
+          投资回报对比
+        </div>
+
+        <div class="roe-chart">
+          <div class="roe-bar">
+            <div class="roe-bar__fill"></div>
+            <div class="roe-bar__label">固定资产</div>
+            <div class="roe-bar__value">回报率 <span style="color: var(--accent-blue); font-weight: 700;">2%</span></div>
+          </div>
+
+          <div class="roe-bar">
+            <div class="roe-bar__fill"></div>
+            <div class="roe-bar__label">体验消费</div>
+            <div class="roe-bar__value">回报率 <span style="color: var(--accent-sage); font-weight: 700;">85%</span></div>
+          </div>
+        </div>
+
+        <div style="text-align: center; font-size: clamp(15px, 1.05vw, 18px); color: var(--text-muted); margin-top: 12px;">
+          数值为情绪满意度指数
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 1.2rem;">
+        <div class="card card--blue">
+          <strong class="card-title speakable" onclick="speakZH('购买体验而非资产')">
+            <svg class="card-icon card-icon--blue" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#icon-spark"/></svg>
+            购买体验，而非固定资产
+          </strong>
+          <p class="card-body speakable" onclick="speakZH('旅行、音乐节、数码产品与兴趣爱好，成为年轻人主要的消费方向。')">
+            旅行、音乐节与兴趣爱好，成为年轻人主要的消费方向。
+          </p>
+        </div>
+
+        <div class="card card--quote">
+          <strong class="card-title speakable" onclick="speakZH('关注情绪回报率')">
+            <svg class="card-icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#icon-chart"/></svg>
+            关注情绪回报率（ROE）
+          </strong>
+          <p class="card-body speakable" onclick="speakZH('相比于未知的远期投资，能够即时改善精神状态的消费更受欢迎。')">
+            相比于未知的远期投资，<span class="key">能够即时改善精神状态的消费</span> 更受欢迎。
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="lex-panel">
+      <div class="lex-panel__label">关键术语</div>
+
+      <div class="lex-item">
+        <div class="lex-item__head">
+          <span class="lex-item__zh">情绪价值</span>
+          <span class="lex-item__py">qíng xù jià zhí</span>
+        </div>
+        <div class="lex-item__def">花钱买到好心情，这本身就是回报。</div>
+        <div class="lex-item__ru">эмоциональная ценность</div>
+        <div class="lex-item__row">
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-jp"/></svg><span>感情的価値</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-kr"/></svg><span>정서적 가치</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-th"/></svg><span>คุณค่าทางอารมณ์</span></span>
+        </div>
+      </div>
+
+      <div class="lex-item">
+        <div class="lex-item__head">
+          <span class="lex-item__zh">回报率</span>
+          <span class="lex-item__py">huí bào lǜ</span>
+        </div>
+        <div class="lex-item__def">投入换来的东西，值不值。</div>
+        <div class="lex-item__ru">ROI, отдача (эмоциональная)</div>
+        <div class="lex-item__row">
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-jp"/></svg><span>投資収益率</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-kr"/></svg><span>수익률</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-th"/></svg><span>อัตราผลตอบแทน</span></span>
+        </div>
+      </div>
+    </div>
+
+    <aside class="guide" aria-label="Комментарий гида">
+      <div class="guide__bubble" data-mood="warm">
+        <p class="guide__text speakable" onclick="speakZH('花钱买心情，不亏。')">花钱买心情，不亏。</p>
+      </div>
+      <svg viewBox="0 0 200 200" class="guide__figure" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <use href="#boy-base"/>
+        <use href="#face-warm"/>
+        <use href="#hoodie-yellow"/>
+        <use href="#acc-backpack"/>
+      </svg>
+    </aside>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 8 — ТАЙМЛАЙН 24 МЕСЯЦА
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-8">
+    <div class="slide-header" data-num="07">
+      <div class="tag-badge">职场法则</div>
+      <h2 class="slide-title speakable" onclick="speakZH('为何两年内必然跳槽？')">为何两年内必然跳槽？</h2>
+      <p class="sub-title">打破传统忠诚度观点的背后逻辑</p>
+    </div>
+
+    <div class="timeline">
+      <div class="timeline__line">
+        <div class="timeline__line-fill"></div>
+      </div>
+
+      <div class="timeline__points">
+        <div class="timeline__point">
+          <div class="timeline__dot"></div>
+          <div class="timeline__label speakable" onclick="speakZH('第一年：学习阶段')">第 1 年</div>
+          <div class="timeline__sublabel speakable" onclick="speakZH('学习曲线陡峭')">学习曲线陡峭</div>
+        </div>
+
+        <div class="timeline__point">
+          <div class="timeline__dot"></div>
+          <div class="timeline__label speakable" onclick="speakZH('第二十四个月：天花板')">
+            <span class="chip chip--sage">24个月</span>
+          </div>
+          <div class="timeline__sublabel speakable" onclick="speakZH('学习曲线平缓，缺乏晋升')">曲线平缓 · 缺晋升</div>
+        </div>
+
+        <div class="timeline__point">
+          <div class="timeline__dot"></div>
+          <div class="timeline__label speakable" onclick="speakZH('第3年：离开')">第 3 年</div>
+          <div class="timeline__sublabel speakable" onclick="speakZH('果断寻找新可能')">果断寻找新可能</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="max-width: 1000px; margin: 1rem auto 0; width: 100%;">
+      <div class="card card--quote">
+        <strong class="card-title speakable" onclick="speakZH('主动掌控职业路径')">
+          <svg class="card-icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#icon-target"/></svg>
+          主动掌控路径
+        </strong>
+        <p class="card-body speakable" onclick="speakZH('不再等待企业的安排，而是将自己视为独立的个人品牌来运营。')">
+          不再等待企业的安排，而是将自己视为独立的 <span class="term">个人品牌</span> 来运营。
+        </p>
+      </div>
+    </div>
+
+    <div class="lex-panel">
+      <div class="lex-panel__label">关键术语</div>
+
+      <div class="lex-item">
+        <div class="lex-item__head">
+          <span class="lex-item__zh">天花板</span>
+          <span class="lex-item__py">tiān huā bǎn</span>
+        </div>
+        <div class="lex-item__def">再努力也升不上去的那道线。</div>
+        <div class="lex-item__ru">«потолок» (предел роста)</div>
+        <div class="lex-item__row">
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-jp"/></svg><span>天井</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-kr"/></svg><span>천장</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-th"/></svg><span>เพดาน</span></span>
+        </div>
+      </div>
+
+      <div class="lex-item">
+        <div class="lex-item__head">
+          <span class="lex-item__zh">个人品牌</span>
+          <span class="lex-item__py">gè rén pǐn pái</span>
+        </div>
+        <div class="lex-item__def">把自己当成一家公司来经营。</div>
+        <div class="lex-item__ru">личный бренд</div>
+        <div class="lex-item__row">
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-jp"/></svg><span>パーソナルブランド</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-kr"/></svg><span>개인 브랜드</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-th"/></svg><span>แบรนด์ส่วนตัว</span></span>
+        </div>
+      </div>
+    </div>
+
+    <aside class="guide" aria-label="Комментарий гида">
+      <div class="guide__bubble" data-mood="thinking">
+        <p class="guide__text speakable" onclick="speakZH('两年，是一个合理的期限。')">两年，是一个合理的期限。</p>
+      </div>
+      <svg viewBox="0 0 200 200" class="guide__figure" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <use href="#boy-base"/>
+        <use href="#face-thinking"/>
+        <use href="#hoodie-grey"/>
+        <use href="#acc-hourglass"/>
+      </svg>
+    </aside>
+  </section>
+    <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 9 — ВЕСЫ «ЗАРПЛАТА vs БАЛАНС»
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-9">
+    <div class="slide-header" data-num="08">
+      <div class="tag-badge tag-terracotta">职场边界</div>
+      <h2 class="slide-title has-emoji speakable" data-emoji="🛡️" onclick="speakZH('拒绝毒性高薪：心理安全至上')">拒绝“毒性高薪”：心理安全至上</h2>
+    </div>
+
+    <div class="scales">
+      <div class="scale-side scale-side--heavy">
+        <div class="scale-title speakable" onclick="speakZH('高薪但极致加班')">
+          <svg class="card-icon card-icon--terracotta" style="width:32px;height:32px;" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#icon-lock"/></svg>
+          高薪 + 极致加班
+        </div>
+        <ul class="scale-list">
+          <li>表面光鲜</li>
+          <li>Burnout 风险</li>
+          <li>长期消耗</li>
+        </ul>
+      </div>
+
+      <div class="scales__symbol">&lt;</div>
+
+      <div class="scale-side scale-side--balance">
+        <div class="scale-title speakable" onclick="speakZH('合理薪资加心理安全')">
+          <svg class="card-icon" style="width:32px;height:32px;" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#icon-shield"/></svg>
+          合理薪资 + 心理安全
+        </div>
+        <ul class="scale-list">
+          <li>弹性工时</li>
+          <li>不羞辱错误</li>
+          <li>可持续状态</li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="max-width: 1000px; margin: 1.5rem auto 0; width: 100%; text-align: center;">
+      <p class="card-body speakable" style="font-size: clamp(19px, 1.5vw, 26px);" onclick="speakZH('年轻一代不再愿意为了虚幻的未来承诺而牺牲当下的身心健康。')">
+        年轻一代不再愿意 <span class="key">为了虚幻的未来承诺而牺牲当下的身心健康</span>。
+      </p>
+    </div>
+
+    <div class="lex-panel">
+      <div class="lex-panel__label">关键术语</div>
+
+      <div class="lex-item">
+        <div class="lex-item__head">
+          <span class="lex-item__zh">毒性高薪</span>
+          <span class="lex-item__py">dú xìng gāo xīn</span>
+        </div>
+        <div class="lex-item__def">钱多，但代价是精神和健康。</div>
+        <div class="lex-item__ru">«токсичная» высокая зарплата</div>
+        <div class="lex-item__row">
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-jp"/></svg><span>有毒な高給</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-kr"/></svg><span>독성 고연봉</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-th"/></svg><span>เงินเดือนสูงแบบเป็นพิษ</span></span>
+        </div>
+      </div>
+
+      <div class="lex-item">
+        <div class="lex-item__head">
+          <span class="lex-item__zh">心理安全</span>
+          <span class="lex-item__py">xīn lǐ ān quán</span>
+        </div>
+        <div class="lex-item__def">错了也不会被羞辱，可以放心说话。</div>
+        <div class="lex-item__ru">психологическая безопасность</div>
+        <div class="lex-item__row">
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-jp"/></svg><span>心理的安全性</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-kr"/></svg><span>심리적 안전감</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-th"/></svg><span>ความปลอดภัยทางจิตใจ</span></span>
+        </div>
+      </div>
+    </div>
+
+    <aside class="guide" aria-label="Комментарий гида">
+      <div class="guide__bubble" data-mood="concerned">
+        <p class="guide__text speakable" onclick="speakZH('高薪治不好抑郁。')">高薪治不好抑郁。</p>
+      </div>
+      <svg viewBox="0 0 200 200" class="guide__figure" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <use href="#boy-base"/>
+        <use href="#face-concerned"/>
+        <use href="#hoodie-terracotta"/>
+        <use href="#acc-shield"/>
+      </svg>
+    </aside>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 10 — ДВЕ ЧАШКИ
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-10">
+    <div class="slide-header" data-num="09">
+      <div class="tag-badge tag-sage">生活态度</div>
+      <h2 class="slide-title speakable" onclick="speakZH('控酒文化：清醒是新的成熟')">控酒文化：清醒是新的成熟</h2>
+      <p class="sub-title">Sober Curiosity &amp; 自我掌控崇拜</p>
+    </div>
+
+    <div class="cups-pair">
+      <!-- Старая чашка с пузырьками -->
+      <div class="cup-card">
+        <svg class="cup-card__svg" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <!-- Чашка с ножкой -->
+          <path d="M 30 45 L 90 45 L 84 95 L 36 95 Z" fill="#FFFFFF" stroke="#22252A" stroke-width="2.5" stroke-linejoin="round"/>
+          <line x1="60" y1="95" x2="60" y2="107" stroke="#22252A" stroke-width="2.5"/>
+          <line x1="46" y1="110" x2="74" y2="110" stroke="#22252A" stroke-width="4" stroke-linecap="round"/>
+          <!-- Красная жидкость -->
+          <path d="M 33 52 L 87 52 L 82 92 L 38 92 Z" fill="#E05A47" opacity="0.4"/>
+          <!-- Пузырьки -->
+          <circle class="bubble" cx="50" cy="82" r="3.5" fill="#E05A47" opacity="0.75"/>
+          <circle class="bubble" cx="66" cy="76" r="3" fill="#E05A47" opacity="0.75"/>
+          <circle class="bubble" cx="58" cy="86" r="2.5" fill="#E05A47" opacity="0.75"/>
+        </svg>
+
+        <div class="cup-card__title" style="color: var(--accent-terracotta);">传统饮酒</div>
+        <div class="cup-card__body">
+          <span style="font-weight: 700; color: var(--text-main);">饮酒 = 成年</span><br>
+          社交必备 · 推杯换盏
+        </div>
+      </div>
+
+      <!-- Новая чашка с лимоном -->
+      <div class="cup-card" style="border-color: var(--accent-sage);">
+        <svg class="cup-card__svg" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <!-- Стакан -->
+          <path d="M 30 38 L 90 38 L 84 95 L 36 95 Z" fill="#E8F8F3" stroke="#22252A" stroke-width="2.5" stroke-linejoin="round"/>
+          <!-- Лимон -->
+          <circle cx="60" cy="52" r="10" fill="#FFB800" stroke="#B37E00" stroke-width="1.5"/>
+          <line x1="52" y1="52" x2="68" y2="52" stroke="#FFF" stroke-width="1.2"/>
+          <line x1="60" y1="44" x2="60" y2="60" stroke="#FFF" stroke-width="1.2"/>
+          <!-- Веточка -->
+          <path d="M 72 48 Q 80 40 86 42" stroke="#2EB886" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <ellipse cx="84" cy="41" rx="5" ry="2.5" fill="#2EB886" transform="rotate(-30 84 41)"/>
+          <!-- 2 пузырька -->
+          <circle cx="48" cy="70" r="2" fill="#2EB886" opacity="0.7"/>
+          <circle cx="70" cy="76" r="1.5" fill="#2EB886" opacity="0.7"/>
+        </svg>
+
+        <div class="cup-card__title" style="color: var(--accent-sage);">清醒选择</div>
+        <div class="cup-card__body">
+          <span style="font-weight: 700; color: var(--text-main);">清醒 = 掌控</span><br>
+          自律 · 对身体负责
+        </div>
+      </div>
+    </div>
+
+    <div class="lex-panel">
+      <div class="lex-panel__label">关键术语</div>
+
+      <div class="lex-item">
+        <div class="lex-item__head">
+          <span class="lex-item__zh">清醒</span>
+          <span class="lex-item__py">qīng xǐng</span>
+        </div>
+        <div class="lex-item__def">不靠酒精也能放松和社交。</div>
+        <div class="lex-item__ru">трезвость (новый символ зрелости)</div>
+        <div class="lex-item__row">
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-jp"/></svg><span>しらふ</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-kr"/></svg><span>맑은 정신</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-th"/></svg><span>การมีสติ</span></span>
+        </div>
+      </div>
+
+      <div class="lex-item">
+        <div class="lex-item__head">
+          <span class="lex-item__zh">社交必备</span>
+          <span class="lex-item__py">shè jiāo bì bèi</span>
+        </div>
+        <div class="lex-item__def">大家都默认必须会的事。</div>
+        <div class="lex-item__ru">«обязательный атрибут социализации»</div>
+        <div class="lex-item__row">
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-jp"/></svg><span>社交の必須</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-kr"/></svg><span>사교 필수</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-th"/></svg><span>สิ่งจำเป็นทางสังคม</span></span>
+        </div>
+      </div>
+    </div>
+
+    <aside class="guide" aria-label="Комментарий гида">
+      <div class="guide__bubble" data-mood="calm">
+        <p class="guide__text speakable" onclick="speakZH('清醒，是一种新的酷。')">清醒，是一种新的酷。</p>
+      </div>
+      <svg viewBox="0 0 200 200" class="guide__figure" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <use href="#boy-base"/>
+        <use href="#face-calm"/>
+        <use href="#hoodie-sage"/>
+        <use href="#acc-lemonwater"/>
+      </svg>
+    </aside>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 11 — ВЕНН-ДИАГРАММА
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-11">
+    <div class="slide-header" data-num="10">
+      <div class="tag-badge">情感哲学</div>
+      <h2 class="slide-title speakable" onclick="speakZH('理性关系：高标准与情绪安全')">理性关系：高标准与情绪安全</h2>
+    </div>
+
+    <div class="grid-split">
+      <div class="venn-wrap">
+        <svg viewBox="0 0 400 320" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <!-- Левый круг: 凑合 (маленькое пересечение) -->
+          <circle cx="150" cy="150" r="95" fill="#E05A47" opacity="0.15" stroke="#E05A47" stroke-width="3"/>
+          <text x="115" y="130" text-anchor="middle" font-size="32" font-weight="800" fill="#E05A47" font-family="sans-serif">凑合</text>
+          <text x="115" y="162" text-anchor="middle" font-size="15" fill="#6C727E" font-family="sans-serif">将就</text>
+          <text x="115" y="184" text-anchor="middle" font-size="15" fill="#6C727E" font-family="sans-serif">避免孤独</text>
+
+          <!-- Правый круг: 共情 (большое пересечение) -->
+          <circle cx="250" cy="150" r="95" fill="#2EB886" opacity="0.15" stroke="#2EB886" stroke-width="3"/>
+          <text x="285" y="130" text-anchor="middle" font-size="32" font-weight="800" fill="#2EB886" font-family="sans-serif">共情</text>
+          <text x="285" y="162" text-anchor="middle" font-size="15" fill="#6C727E" font-family="sans-serif">理解</text>
+          <text x="285" y="184" text-anchor="middle" font-size="15" fill="#6C727E" font-family="sans-serif">共同成长</text>
+
+          <!-- Пересечение (пульсирует) -->
+          <ellipse class="venn-overlap" cx="200" cy="150" rx="22" ry="70" fill="#FFB800" opacity="0.4" stroke="#B37E00" stroke-width="2" stroke-dasharray="4 4"/>
+
+          <!-- Подписи под диаграммой -->
+          <text x="200" y="290" text-anchor="middle" font-size="15" fill="#9DA3AF" font-family="sans-serif">重叠区 = 真正的亲密</text>
+        </svg>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 1.2rem;">
+        <div class="card card--terracotta">
+          <h3 class="card-title speakable" onclick="speakZH('拒绝无意义的凑合')">
+            <svg class="card-icon card-icon--terracotta" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#icon-door"/></svg>
+            拒绝无意义的凑合
+          </h3>
+          <p class="card-body speakable" onclick="speakZH('单身不再被视为一种遗憾，而是拥有完整独立生活的体现。')">
+            单身不再被视为一种遗憾，而是 <span class="key">拥有完整独立生活</span> 的体现。
+          </p>
+        </div>
+
+        <div class="card card--quote">
+          <h3 class="card-title speakable" onclick="speakZH('追求高质量的共情')">
+            <svg class="card-icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#icon-bulb"/></svg>
+            追求高质量的共情
+          </h3>
+          <p class="card-body speakable" onclick="speakZH('在亲密关系中，相处舒适与情绪安全远比符合外界眼光更为重要。')">
+            在亲密关系中，<span class="key">相处舒适与情绪安全</span> 远比符合外界眼光更为重要。
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="lex-panel">
+      <div class="lex-panel__label">关键术语</div>
+
+      <div class="lex-item">
+        <div class="lex-item__head">
+          <span class="lex-item__zh">凑合</span>
+          <span class="lex-item__py">còu he</span>
+        </div>
+        <div class="lex-item__def">不合适也先将就，因为怕麻烦。</div>
+        <div class="lex-item__ru">«лишь бы было» — компромисс без любви</div>
+        <div class="lex-item__row">
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-jp"/></svg><span>間に合わせ</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-kr"/></svg><span>대충 맞춤</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-th"/></svg><span>การประนีประนอม</span></span>
+        </div>
+      </div>
+
+      <div class="lex-item">
+        <div class="lex-item__head">
+          <span class="lex-item__zh">共情</span>
+          <span class="lex-item__py">gòng qíng</span>
+        </div>
+        <div class="lex-item__def">站在对方的位置上感受。</div>
+        <div class="lex-item__ru">эмпатия, сопереживание</div>
+        <div class="lex-item__row">
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-jp"/></svg><span>共感</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-kr"/></svg><span>공감</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-th"/></svg><span>ความเห็นอกเห็นใจ</span></span>
+        </div>
+      </div>
+    </div>
+
+    <aside class="guide" aria-label="Комментарий гида">
+      <div class="guide__bubble" data-mood="warm">
+        <p class="guide__text speakable" onclick="speakZH('单身不是缺口，是完整。')">单身不是缺口，是完整。</p>
+      </div>
+      <svg viewBox="0 0 200 200" class="guide__figure" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <use href="#boy-base"/>
+        <use href="#face-warm"/>
+        <use href="#hoodie-yellow"/>
+        <use href="#acc-hearts"/>
+      </svg>
+    </aside>
+  </section>
+    <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 12 — ACG И МЕТА-ИРОНИЯ (конвейер иконок)
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-12">
+    <div class="slide-header" data-num="11">
+      <div class="tag-badge tag-blue">文化基因</div>
+      <h2 class="slide-title speakable" onclick="speakZH('动漫文化与高共情视角')">动漫文化与高共情视角</h2>
+    </div>
+
+    <div class="grid-split">
+      <div>
+        <div class="conveyor" aria-hidden="true">
+          <div class="conveyor__track">
+            <svg class="conveyor__item" xmlns="http://www.w3.org/2000/svg"><use href="#icon-video"/></svg>
+            <svg class="conveyor__item" xmlns="http://www.w3.org/2000/svg"><use href="#icon-spark"/></svg>
+            <svg class="conveyor__item" xmlns="http://www.w3.org/2000/svg"><use href="#icon-bulb"/></svg>
+            <svg class="conveyor__item" xmlns="http://www.w3.org/2000/svg"><use href="#icon-eye"/></svg>
+            <svg class="conveyor__item" xmlns="http://www.w3.org/2000/svg"><use href="#icon-phone"/></svg>
+            <svg class="conveyor__item" xmlns="http://www.w3.org/2000/svg"><use href="#icon-chart"/></svg>
+            <svg class="conveyor__item" xmlns="http://www.w3.org/2000/svg"><use href="#icon-question"/></svg>
+            <svg class="conveyor__item" xmlns="http://www.w3.org/2000/svg"><use href="#icon-brain"/></svg>
+            <svg class="conveyor__item" xmlns="http://www.w3.org/2000/svg"><use href="#icon-bulb"/></svg>
+            <svg class="conveyor__item" xmlns="http://www.w3.org/2000/svg"><use href="#icon-spark"/></svg>
+            <!-- дублируем для непрерывности -->
+            <svg class="conveyor__item" xmlns="http://www.w3.org/2000/svg"><use href="#icon-video"/></svg>
+            <svg class="conveyor__item" xmlns="http://www.w3.org/2000/svg"><use href="#icon-spark"/></svg>
+            <svg class="conveyor__item" xmlns="http://www.w3.org/2000/svg"><use href="#icon-bulb"/></svg>
+            <svg class="conveyor__item" xmlns="http://www.w3.org/2000/svg"><use href="#icon-eye"/></svg>
+            <svg class="conveyor__item" xmlns="http://www.w3.org/2000/svg"><use href="#icon-phone"/></svg>
+            <svg class="conveyor__item" xmlns="http://www.w3.org/2000/svg"><use href="#icon-chart"/></svg>
+            <svg class="conveyor__item" xmlns="http://www.w3.org/2000/svg"><use href="#icon-question"/></svg>
+            <svg class="conveyor__item" xmlns="http://www.w3.org/2000/svg"><use href="#icon-brain"/></svg>
+          </div>
+
+          <!-- Фильтр «✓» справа -->
+          <div class="conveyor__filter">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="50" cy="50" r="44" fill="#FFFFFF" stroke="#5B8DB8" stroke-width="3.5"/>
+              <path d="M 30 52 L 44 66 L 72 34" stroke="#2EB886" stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="conveyor__output">🧠</div>
+        </div>
+
+        <div style="text-align: center; font-size: clamp(15px, 1.05vw, 18px); color: var(--text-muted); margin-top: 14px;">
+          海量信息流 → 秒级筛选 → 留下关键的
+        </div>
+      </div>
+
+      <div class="card card--blue">
+        <h3 class="card-title speakable" onclick="speakZH('信息的快速筛选能力')">
+          <svg class="card-icon card-icon--blue" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#icon-brain"/></svg>
+          极速信息过滤
+        </h3>
+        <p class="card-body speakable" onclick="speakZH('从小接触海量数字内容的年轻一代，拥有极快的信息筛选与元讽刺理解能力。')">
+          从小接触海量数字内容的年轻一代，拥有极快的
+          <span class="term">信息筛选</span> 与 <span class="term">元讽刺</span> 理解能力。
+        </p>
+      </div>
+    </div>
+
+    <div class="lex-panel">
+      <div class="lex-panel__label">关键术语</div>
+
+      <div class="lex-item">
+        <div class="lex-item__head">
+          <span class="lex-item__zh">元讽刺</span>
+          <span class="lex-item__py">yuán fěng cì</span>
+        </div>
+        <div class="lex-item__def">连讽刺本身也一起讽刺。</div>
+        <div class="lex-item__ru">мета-ирония (ирония над самой иронией)</div>
+        <div class="lex-item__row">
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-jp"/></svg><span>メタ・アイロニー</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-kr"/></svg><span>메타 아이러니</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-th"/></svg><span>การเสียดสีเชิงเมตา</span></span>
+        </div>
+      </div>
+
+      <div class="lex-item">
+        <div class="lex-item__head">
+          <span class="lex-item__zh">信息筛选</span>
+          <span class="lex-item__py">xìn xī shāi xuǎn</span>
+        </div>
+        <div class="lex-item__def">一秒钟判断这条内容值不值得看。</div>
+        <div class="lex-item__ru">фильтрация информации</div>
+        <div class="lex-item__row">
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-jp"/></svg><span>情報フィルタリング</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-kr"/></svg><span>정보 필터링</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-th"/></svg><span>การกรองข้อมูล</span></span>
+        </div>
+      </div>
+    </div>
+
+    <aside class="guide" aria-label="Комментарий гида">
+      <div class="guide__bubble" data-mood="curious">
+        <p class="guide__text speakable" onclick="speakZH('我们看得懂梗，也看得懂你。')">我们看得懂梗，也看得懂你。</p>
+      </div>
+      <svg viewBox="0 0 200 200" class="guide__figure" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <use href="#boy-base"/>
+        <use href="#face-curious"/>
+        <use href="#hoodie-grey"/>
+        <use href="#acc-controller"/>
+      </svg>
+    </aside>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 13 — ПАЙПЛАЙН AI
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-13">
+    <div class="slide-header" data-num="12">
+      <div class="tag-badge tag-sage">未来技能</div>
+      <h2 class="slide-title speakable" onclick="speakZH('技能重构：提示词工程与 AI 驾驭力')">技能重构：提示词工程与 AI 驾驭力</h2>
+    </div>
+
+    <div class="pipeline">
+      <div class="pipeline__node">
+        <svg class="pipeline__icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#icon-question"/></svg>
+        <div class="pipeline__title speakable" onclick="speakZH('问题')">问题</div>
+        <div class="pipeline__sub">清晰 · 具体 · 结构化</div>
+      </div>
+
+      <div class="pipeline__arrow">→</div>
+
+      <div class="pipeline__node">
+        <svg class="pipeline__icon card-icon--blue" style="color: var(--accent-blue);" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#icon-ai"/></svg>
+        <div class="pipeline__title speakable" onclick="speakZH('人工智能')">AI</div>
+        <div class="pipeline__sub">智力杠杆 · 秒级响应</div>
+      </div>
+
+      <div class="pipeline__arrow">→</div>
+
+      <div class="pipeline__node">
+        <svg class="pipeline__icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#icon-check"/></svg>
+        <div class="pipeline__title speakable" onclick="speakZH('答案')">答案</div>
+        <div class="pipeline__sub">逻辑解构 · 可执行</div>
+      </div>
+    </div>
+
+    <div class="grid-split" style="margin-top: 1rem;">
+      <div class="card card--terracotta">
+        <strong class="card-title speakable" onclick="speakZH('外界的刻板印象')">
+          <svg class="card-icon card-icon--terracotta" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#icon-lock"/></svg>
+          外界的刻板印象
+        </strong>
+        <p class="card-body speakable" style="font-style: italic;" onclick="speakZH('阅读碎片化，缺乏传统知识体系积累。')">
+          “阅读碎片化，缺乏传统知识体系积累。”
+        </p>
+      </div>
+
+      <div class="card card--quote">
+        <strong class="card-title speakable" onclick="speakZH('真实的新时代技能')">
+          <svg class="card-icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#icon-bulb"/></svg>
+          真实的新时代技能
+        </strong>
+        <p class="card-body speakable" onclick="speakZH('将 AI 作为智力杠杆，秒级构建工作流与解决方案。重点从死记硬背转向精准提问与逻辑解构。')">
+          将 AI 作为 <span class="term">智力杠杆</span>。重点从“死记硬背”转向 <span class="key">精准提问与逻辑解构</span>。
+        </p>
+      </div>
+    </div>
+
+    <div class="lex-panel">
+      <div class="lex-panel__label">关键术语</div>
+
+      <div class="lex-item">
+        <div class="lex-item__head">
+          <span class="lex-item__zh">提示词工程</span>
+          <span class="lex-item__py">tí shì cí gōng chéng</span>
+        </div>
+        <div class="lex-item__def">把问题问清楚，AI 才给得出好答案。</div>
+        <div class="lex-item__ru">prompt engineering</div>
+        <div class="lex-item__row">
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-jp"/></svg><span>プロンプトエンジニアリング</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-kr"/></svg><span>프롬프트 엔지니어링</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-th"/></svg><span>วิศวกรรมพรอมต์</span></span>
+        </div>
+      </div>
+
+      <div class="lex-item">
+        <div class="lex-item__head">
+          <span class="lex-item__zh">智力杠杆</span>
+          <span class="lex-item__py">zhì lì gàng gǎn</span>
+        </div>
+        <div class="lex-item__def">用工具把自己的思考放大十倍。</div>
+        <div class="lex-item__ru">интеллектуальный рычаг</div>
+        <div class="lex-item__row">
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-jp"/></svg><span>知能のレバレッジ</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-kr"/></svg><span>지적 지렛대</span></span>
+          <span class="lex-tr"><svg class="lex-flag" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#flag-th"/></svg><span>คานงัดทางปัญญา</span></span>
+        </div>
+      </div>
+    </div>
+
+    <aside class="guide" aria-label="Комментарий гида">
+      <div class="guide__bubble" data-mood="thinking">
+        <p class="guide__text speakable" onclick="speakZH('问题问得好，答案自然来。')">问题问得好，答案自然来。</p>
+      </div>
+      <svg viewBox="0 0 200 200" class="guide__figure" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <use href="#boy-base"/>
+        <use href="#face-thinking"/>
+        <use href="#hoodie-sage"/>
+        <use href="#acc-phone"/>
+      </svg>
+    </aside>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 14 — ЗАКЛЮЧЕНИЕ
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-14">
+    <div class="slide-header" data-num="13" style="text-align: center;">
+      <div class="tag-badge tag-sage">结语</div>
+      <h2 class="slide-title has-emoji speakable" data-emoji="🕊️" onclick="speakZH('代际对话：经验与自由的交融')" style="text-align: center;">代际对话：经验与自由的交融</h2>
+    </div>
+
+    <div style="max-width: 1100px; margin: 1rem auto 0 auto;">
+      <div class="card" style="padding: 3rem; background: var(--surface-white); border: 2px dashed var(--accent-sage); text-align: center;">
+        <p class="speakable" style="font-size: clamp(22px, 1.8vw, 30px); line-height: 1.7; font-weight: 600; color: var(--text-main);" onclick="speakZH('代际对话不是谁战胜谁，而是经验与自由的交融。千禧一代争取了做自己的权利；Z世代则教会了前辈止步、呼吸与放手。')">
+          “代际对话不是谁战胜谁，而是
+          <span class="key">经验与自由的交融</span>。
+          千禧一代争取了做自己的权利；
+          Z世代则教会了前辈止步、呼吸与放手。”
+        </p>
+      </div>
+
+      <div class="final-cups">
+        <div class="final-cup">
+          <svg viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <!-- Чашка кофе -->
+            <rect x="20" y="38" width="55" height="52" rx="8" fill="#FFFFFF" stroke="#22252A" stroke-width="2.5"/>
+            <path d="M 75 52 Q 88 52 88 62 Q 88 72 75 72" stroke="#22252A" stroke-width="2.5" fill="none"/>
+            <!-- Пар -->
+            <path d="M 36 28 Q 38 20 36 12" stroke="#9DA3AF" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <path d="M 50 28 Q 52 20 50 12" stroke="#9DA3AF" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <path d="M 64 28 Q 66 20 64 12" stroke="#9DA3AF" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <!-- Блюдце -->
+            <ellipse cx="47" cy="96" rx="38" ry="5" fill="#F3EFE6" stroke="#22252A" stroke-width="2"/>
+          </svg>
+          <div class="final-cup__label">经验 · 千禧</div>
+        </div>
+
+        <div class="final-cup">
+          <svg viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <!-- Чашка чая -->
+            <path d="M 20 38 L 75 38 L 70 92 L 25 92 Z" fill="#E8F8F3" stroke="#22252A" stroke-width="2.5"/>
+            <path d="M 75 52 Q 88 52 88 62 Q 88 72 75 72" stroke="#22252A" stroke-width="2.5" fill="none"/>
+            <!-- Лимон -->
+            <circle cx="47" cy="56" r="9" fill="#FFB800"/>
+            <line x1="40" y1="56" x2="54" y2="56" stroke="#FFF" stroke-width="1"/>
+            <line x1="47" y1="49" x2="47" y2="63" stroke="#FFF" stroke-width="1"/>
+            <!-- Веточка -->
+            <path d="M 60 50 Q 68 44 74 47" stroke="#2EB886" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <!-- Блюдце -->
+            <ellipse cx="47" cy="96" rx="38" ry="5" fill="#F3F0E6" stroke="#22252A" stroke-width="2"/>
+          </svg>
+          <div class="final-cup__label">自由 · Z世代</div>
+        </div>
+      </div>
+    </div>
+
+    <aside class="guide" aria-label="Комментарий гида">
+      <div class="guide__bubble" data-mood="warm">
+        <p class="guide__text speakable" onclick="speakZH('经验与自由，缺一不可。')">经验与自由，缺一不可。</p>
+      </div>
+      <svg viewBox="0 0 200 200" class="guide__figure" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <use href="#boy-base"/>
+        <use href="#face-warm"/>
+        <use href="#hoodie-sage"/>
+        <use href="#acc-coffee"/>
+      </svg>
+    </aside>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       НАВИГАЦИЯ
+       ═══════════════════════════════════════════════════════════ -->
+  <footer class="nav-bar">
+    <div class="slide-indicator" id="slide-indicator">第 1 页 / 共 14 页</div>
+    <div class="nav-controls">
+      <button class="nav-btn" id="prev-btn" aria-label="Previous Slide">←</button>
+      <button class="nav-btn" id="next-btn" aria-label="Next Slide">→</button>
+    </div>
+  </footer>
+
+</main>
+
+<script>
+  class SlideDeck {
+    constructor() {
+      this.slides = Array.from(document.querySelectorAll('.slide'));
+      this.indicator = document.getElementById('slide-indicator');
+      this.prevBtn = document.getElementById('prev-btn');
+      this.nextBtn = document.getElementById('next-btn');
+      this.progressBar = document.getElementById('progress');
+
+      const savedSlide = parseInt(localStorage.getItem('active_slide_v8'), 10);
+      this.currentIdx = (!isNaN(savedSlide) && savedSlide >= 0 && savedSlide < this.slides.length)
+        ? savedSlide
+        : 0;
+
+      this.init();
+    }
+
+    init() {
+      this.updateSlides();
+
+      this.prevBtn.addEventListener('click', () => this.prev());
+      this.nextBtn.addEventListener('click', () => this.next());
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === ' ') {
+          e.preventDefault();
+          this.next();
+        }
+        if (e.key === 'ArrowLeft') this.prev();
+      });
+
+      let touchStartX = 0;
+      let touchEndX = 0;
+
+      document.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+      }, { passive: true });
+
+      document.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        if (touchStartX - touchEndX > 50) this.next();
+        if (touchEndX - touchStartX > 50) this.prev();
+      }, { passive: true });
+    }
+
+    goTo(index) {
+      if (index < 0 || index >= this.slides.length) return;
+      this.currentIdx = index;
+      this.updateSlides();
+      localStorage.setItem('active_slide_v8', this.currentIdx);
+    }
+
+    next() {
+      if (this.currentIdx < this.slides.length - 1) this.goTo(this.currentIdx + 1);
+    }
+
+    prev() {
+      if (this.currentIdx > 0) this.goTo(this.currentIdx - 1);
+    }
+
+    updateSlides() {
+      this.slides.forEach((slide, idx) => {
+        slide.classList.toggle('active', idx === this.currentIdx);
+      });
+
+      this.indicator.textContent = `第 ${this.currentIdx + 1} 页 / 共 ${this.slides.length} 页`;
+      this.prevBtn.classList.toggle('is-disabled', this.currentIdx === 0);
+      this.nextBtn.classList.toggle('is-disabled', this.currentIdx === this.slides.length - 1);
+
+      if (this.progressBar) {
+        const percent = ((this.currentIdx + 1) / this.slides.length) * 100;
+        this.progressBar.style.width = percent + '%';
+      }
+    }
+  }
+
+  function speakZH(text) {
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'zh-CN';
+      utterance.rate = 0.9;
+      window.speechSynthesis.speak(utterance);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    window.deck = new SlideDeck();
+  });
+</script>
+</body>
+</html>
