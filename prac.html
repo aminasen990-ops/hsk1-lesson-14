@@ -1,0 +1,2247 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+<title>HSK 2 · Повторение 1-9 + Задания</title>
+<style>
+:root{--bg:#faf8f5;--surface:#fff;--border:#e8e2d8;--text:#2d2a22;--muted:#8a7a64;--gold:#b8914a;--gold-soft:#fdf9f0;--green:#2e7d32;--green-soft:#e8f5e9;--blue:#4a5b8c;--blue-soft:#eef1f7;--purple:#6a4c9c;--purple-soft:#f3e5f5;--cinnabar:#b5443c;--cinnabar-soft:#fdf2f0;--radius:20px;--shadow:0 4px 12px rgba(0,0,0,.04);--cjk:'Noto Sans SC','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Roboto,system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.65;padding:16px;font-size:15px}
+.app{max-width:1100px;margin:0 auto}
+h1{color:var(--green);font-size:1.7rem;margin-bottom:.3rem;line-height:1.25}
+h2{font-size:1.25rem;margin:1.2rem 0 .8rem;color:#4a3f2f;border-bottom:2px solid var(--border);padding-bottom:.3rem}
+.subtitle{color:var(--muted);margin-bottom:1rem;font-size:.9rem}
+.panel{background:var(--surface);border-radius:var(--radius);padding:1.4rem;box-shadow:var(--shadow);margin-bottom:1.4rem;border:1px solid var(--border)}
+.author-note{background:#fdf2f0;border-left:6px solid var(--cinnabar);border-radius:16px;padding:18px 22px;margin-bottom:20px;font-size:.92rem;line-height:1.75}
+.author-note strong{color:var(--cinnabar)}
+.author-note .subsection{margin-top:16px;padding-top:16px;border-top:1px dashed #f0c8c0}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:1.4rem;position:sticky;top:0;background:var(--bg);z-index:10;padding:8px 0}
+.tab-btn{background:var(--surface);border:1px solid var(--border);padding:8px 14px;border-radius:24px;font-weight:600;font-size:.78rem;cursor:pointer;transition:.2s;color:var(--text)}
+.tab-btn:hover{background:var(--gold-soft)}
+.tab-btn.active{background:var(--green);color:#fff;border-color:var(--green)}
+.tab-content{display:none;animation:fade .3s}
+.tab-content.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+.global-search-wrap{background:var(--surface);border-radius:var(--radius);padding:12px 16px;margin-bottom:16px;border:2px solid var(--gold);box-shadow:var(--shadow);position:relative}
+.global-search-wrap input{width:100%;border:none;outline:none;font-size:1.05rem;font-family:var(--cjk);background:transparent;color:var(--text);padding:6px 0}
+.global-search-wrap input::placeholder{color:var(--muted);font-family:'Segoe UI',sans-serif;font-size:.9rem}
+.global-search-label{font-size:.72rem;font-weight:700;color:var(--gold);letter-spacing:.5px;margin-bottom:4px}
+.search-results{position:absolute;top:100%;left:0;right:0;background:var(--surface);border:2px solid var(--gold);border-radius:14px;margin-top:6px;max-height:340px;overflow-y:auto;z-index:100;box-shadow:0 12px 32px rgba(0,0,0,.15);display:none}
+.search-results.show{display:block}
+.search-item{padding:10px 16px;cursor:pointer;border-bottom:1px solid var(--border);font-size:.9rem;display:flex;align-items:baseline;gap:12px}
+.search-item:last-child{border-bottom:none}
+.search-item:hover{background:var(--gold-soft)}
+.search-item .si-cn{font-family:var(--cjk);font-weight:700;font-size:1.1rem;color:#1a3d1a;min-width:80px}
+.search-item .si-pinyin{color:var(--muted);font-size:.8rem}
+.search-item .si-trans{color:var(--muted);font-size:.85rem;font-style:italic;margin-left:auto}
+
+.laziness-block{background:#fff8e6;border-left:5px solid var(--gold);border-radius:14px;padding:16px 20px;margin-bottom:16px;font-size:.92rem;line-height:1.75}
+.laziness-block strong{color:#7a5c2e}
+
+.warmup{background:#f0f7f0;border-radius:16px;padding:14px 18px;margin-bottom:18px;border-left:5px solid var(--green);font-size:.9rem}
+.warmup-title{font-weight:700;color:var(--green);margin-bottom:8px;font-size:.95rem}
+.warmup-q{margin:8px 0;padding-left:14px;border-left:2px solid var(--green);font-family:var(--cjk);font-size:1rem;line-height:1.75}
+.warmup-q .ru{display:block;color:var(--muted);font-size:.8rem;font-style:italic;margin-top:2px;font-family:'Segoe UI',sans-serif}
+
+.word-card{background:var(--surface);border-radius:var(--radius);padding:20px;margin-bottom:18px;box-shadow:var(--shadow);border-left:5px solid var(--gold)}
+.word-card.search-highlight{animation:highlightPulse 1.5s ease}
+@keyframes highlightPulse{0%{box-shadow:0 0 0 0 rgba(184,145,74,.8)}70%{box-shadow:0 0 0 14px rgba(184,145,74,0)}100%{box-shadow:var(--shadow)}}
+.word-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:14px;margin-bottom:10px}
+.word-chinese{font-family:var(--cjk);font-size:2.1rem;font-weight:700;color:#1a3d1a}
+.word-pinyin{font-size:1rem;color:var(--muted);font-weight:600}
+.word-toggle{background:var(--gold-soft);border:1px solid var(--gold);padding:5px 12px;border-radius:20px;font-size:.75rem;font-weight:600;cursor:pointer;color:#7a5c2e;font-family:inherit}
+.word-toggle:hover{background:#f5ead0}
+.word-translation{display:none;margin:10px 0;padding:10px 14px;background:var(--gold-soft);border-radius:12px;font-size:1rem;font-weight:600;color:#5a4a30}
+.word-translation.show{display:block}
+
+.canvas-wrap{background:#fffefc;border-radius:14px;padding:10px;margin:14px 0;border:1px dashed var(--border)}
+.canvas-label{font-size:.78rem;font-weight:700;color:var(--muted);margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px}
+.canvas-label .hint{font-weight:400;font-style:italic;font-size:.72rem}
+.canvas-wrap canvas{width:100%;height:120px;border-radius:8px;border:1px solid var(--border);background:#fffefc;display:block;cursor:crosshair;touch-action:none}
+.canvas-actions{display:flex;gap:8px;margin-top:8px;justify-content:center;flex-wrap:wrap}
+.canvas-actions button{border:1px solid var(--border);background:var(--surface);padding:6px 14px;border-radius:18px;font-size:.75rem;cursor:pointer;font-family:inherit;font-weight:600}
+.canvas-actions button:hover{background:var(--gold-soft)}
+
+.persona{background:#f8f6f0;border-radius:14px;padding:14px 18px;margin:12px 0;font-size:.92rem;line-height:1.75;border-left:4px solid var(--purple)}
+.persona::before{content:"🎭 "}
+.russian-hint{background:#f3e5f5;border-radius:14px;padding:12px 16px;margin:12px 0;font-size:.9rem;line-height:1.7;border-left:4px solid var(--purple)}
+.russian-hint .cn{font-family:var(--cjk);color:var(--purple);font-weight:700}
+.mnemonic{background:var(--green-soft);border-radius:14px;padding:14px 18px;margin:12px 0;border-left:4px solid var(--green);font-size:.9rem;line-height:1.75}
+.mnemonic .part{margin:8px 0;padding-left:10px;border-left:2px solid var(--green)}
+.mnemonic .part strong{color:#1b5e20}
+.mnemonic .part .trap{color:var(--cinnabar);font-weight:600}
+.mnemonic .together{margin-top:10px;padding-top:10px;border-top:1px dashed var(--green);font-weight:700;color:#1b5e20}
+
+.collocations{margin:14px 0}
+.colloc-title{font-weight:700;color:#4a3f2f;margin-bottom:8px;font-size:.9rem}
+.colloc-cloud{display:flex;flex-wrap:wrap;gap:10px}
+.colloc-item{border-radius:14px;padding:10px 14px;flex:1 1 240px;font-size:.88rem}
+.colloc-item.lvl1{background:var(--gold-soft);border:1px solid var(--gold)}
+.colloc-item.lvl2{background:var(--blue-soft);border:1px solid var(--blue)}
+.colloc-item.lvl3{background:var(--purple-soft);border:1px solid var(--purple)}
+.colloc-level{font-weight:700;font-size:.72rem;display:block;margin-bottom:3px}
+.colloc-item.lvl1 .colloc-level{color:var(--gold)}
+.colloc-item.lvl2 .colloc-level{color:var(--blue)}
+.colloc-item.lvl3 .colloc-level{color:var(--purple)}
+.colloc-word{font-weight:700;font-family:var(--cjk);font-size:1rem}
+.colloc-trans{font-size:.78rem;color:var(--muted);display:block;margin-top:2px;font-style:italic}
+.colloc-example{display:block;font-size:.85rem;color:var(--muted);margin-top:6px;font-family:var(--cjk)}
+
+.practice-input{width:100%;min-height:90px;padding:12px;border-radius:14px;border:2px solid var(--border);font-family:inherit;font-size:.9rem;resize:vertical;outline:none;background:#fffefc;line-height:1.7;margin-top:10px}
+.practice-input:focus{border-color:var(--gold)}
+.practice-label{font-weight:700;color:#4a3f2f;margin-top:16px;display:block;font-size:.88rem}
+.practice-label span{font-weight:400;color:var(--muted);font-size:.78rem}
+.save-indicator{font-size:.7rem;color:var(--green);margin-left:6px;opacity:0;transition:.3s}
+.save-indicator.show{opacity:1}
+
+.qa{margin:14px 0;padding:14px;background:#f8f1e4;border-radius:14px}
+.qa-q{font-weight:600;margin-bottom:8px;font-size:.9rem;color:#5a4a30}
+.qa-input{width:100%;padding:9px 14px;border-radius:24px;border:2px solid var(--border);font-family:inherit;font-size:.9rem;outline:none;margin-bottom:8px}
+.qa-input:focus{border-color:var(--gold)}
+.qa-btns{display:flex;gap:8px;flex-wrap:wrap}
+.qa-btn{padding:7px 16px;border-radius:24px;border:none;font-weight:600;font-size:.78rem;cursor:pointer;font-family:inherit}
+.qa-check{background:var(--purple);color:#fff}
+.qa-show{background:var(--surface);color:var(--text);border:1px solid var(--border)}
+.qa-answer{margin-top:8px;padding:10px 14px;background:var(--green-soft);border-left:4px solid var(--green);border-radius:10px;font-size:.88rem;display:none;font-family:var(--cjk)}
+.qa-answer.show{display:block}
+
+.grammar-card{background:var(--surface);border-radius:var(--radius);padding:20px;margin-bottom:18px;box-shadow:var(--shadow);border-left:5px solid var(--purple)}
+.grammar-title{font-family:var(--cjk);font-size:1.6rem;font-weight:700;color:var(--purple);margin-bottom:8px}
+.grammar-subtitle{font-size:.95rem;color:var(--muted);margin-bottom:12px;font-weight:600}
+.grammar-formula{background:var(--purple-soft);padding:14px 16px;border-radius:12px;margin:12px 0;font-family:var(--cjk);font-size:1.05rem;font-weight:700;color:#311b92;text-align:center;border:1px dashed var(--purple)}
+.grammar-body{font-size:.92rem;line-height:1.75}
+.grammar-body .cn{font-family:var(--cjk);color:var(--purple);font-weight:700}
+.grammar-persona{background:#f8f6f0;border-left:4px solid var(--purple);border-radius:12px;padding:12px 16px;margin:12px 0;font-size:.9rem;line-height:1.7}
+.grammar-example{margin:10px 0;padding:10px 14px;border-left:3px solid var(--purple);background:#fbf8ff;border-radius:8px;font-size:.92rem}
+.grammar-example .cn{font-family:var(--cjk);font-weight:600;color:#311b92;font-size:1.02rem}
+.grammar-example .ru{display:block;color:var(--muted);font-size:.85rem;font-style:italic;margin-top:3px}
+
+.export-bar{background:var(--surface);border-radius:var(--radius);padding:14px 18px;margin-bottom:16px;border:2px solid var(--green);display:flex;flex-wrap:wrap;gap:10px;align-items:center;box-shadow:var(--shadow)}
+.export-bar .label{font-weight:700;color:var(--green);font-size:.9rem;margin-right:auto}
+.export-btn{background:var(--green);color:#fff;border:none;padding:9px 18px;border-radius:24px;font-weight:700;font-size:.8rem;cursor:pointer;font-family:inherit}
+.export-btn:hover{background:#1b5e20}
+
+.toast{position:fixed;bottom:20px;right:20px;background:#2d2a22;color:#f5f0e8;padding:12px 20px;border-radius:12px;font-size:.85rem;box-shadow:0 6px 18px rgba(0,0,0,.3);z-index:999;opacity:0;transform:translateY(20px);transition:.3s;pointer-events:none}
+.toast.show{opacity:1;transform:translateY(0)}
+
+/* ===== НОВЫЕ СТИЛИ ДЛЯ ЗАДАНИЙ ===== */
+.task-block{background:#fffefc;border:2px solid var(--gold);border-radius:20px;padding:22px;margin-bottom:22px;box-shadow:var(--shadow)}
+.task-title{font-weight:700;color:#7a5c2e;font-size:1.15rem;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.task-title .num{background:var(--gold);color:#fff;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:.95rem;font-weight:800}
+.task-sentence{background:#fdf9f0;border-radius:12px;padding:14px 16px;margin:12px 0;font-family:var(--cjk);font-size:1.15rem;line-height:1.9;border-left:4px solid var(--gold)}
+.task-sentence .blank{display:inline-block;min-width:80px;border-bottom:2px dashed var(--gold);color:var(--gold);font-weight:700;text-align:center;padding:0 6px}
+.task-options{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.task-opt{background:#fff;border:2px solid var(--border);border-radius:22px;padding:6px 16px;font-family:var(--cjk);font-size:.95rem;cursor:pointer;font-weight:600;transition:.2s}
+.task-opt:hover{border-color:var(--gold);background:var(--gold-soft)}
+.task-opt.correct{background:var(--green-soft);border-color:var(--green);color:#1b5e20}
+.task-opt.wrong{background:var(--cinnabar-soft);border-color:var(--cinnabar);color:#8b1e1e}
+.task-opt.disabled{cursor:default;opacity:.85}
+.task-translation{color:var(--muted);font-size:.88rem;font-style:italic;margin-top:6px;display:block;font-family:'Segoe UI',sans-serif}
+
+.text-block{background:#fffefc;border-radius:20px;padding:22px;margin-bottom:22px;border:2px solid var(--green);box-shadow:var(--shadow)}
+.text-header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:14px}
+.text-header .who{font-weight:800;color:var(--green);font-size:1.1rem}
+.text-header .who::before{content:"👤 "}
+.text-controls{display:flex;gap:8px;flex-wrap:wrap}
+.text-ctrl-btn{background:var(--green-soft);border:1px solid var(--green);color:#1b5e20;padding:6px 14px;border-radius:20px;font-size:.75rem;font-weight:700;cursor:pointer;font-family:inherit}
+.text-ctrl-btn:hover{background:#d0e8d2}
+.text-cn{font-family:var(--cjk);font-size:1.15rem;line-height:2.1;margin:10px 0;padding:12px 16px;background:#f9fdf9;border-radius:12px}
+.text-pinyin{font-size:.95rem;color:var(--muted);line-height:1.9;padding:10px 16px;background:#fff9;border-radius:12px;display:none}
+.text-pinyin.show{display:block}
+.text-pinyin .tone{color:var(--green);font-weight:700}
+.text-ru{font-size:.9rem;color:#5c503e;line-height:1.8;padding:10px 16px;background:var(--gold-soft);border-radius:12px;display:none;margin-top:8px;border-left:3px solid var(--gold)}
+.text-ru.show{display:block}
+
+.build-block{background:#fffefc;border:2px solid var(--purple);border-radius:20px;padding:20px;margin-bottom:18px;box-shadow:var(--shadow)}
+.build-sentence{margin:14px 0;padding:12px 14px;background:#fbf8ff;border-radius:12px;border-left:4px solid var(--purple)}
+.build-words{font-family:var(--cjk);font-size:1.1rem;font-weight:600;color:#311b92;letter-spacing:.1em}
+.build-words span{display:inline-block;background:#fff;border:1px solid var(--purple);border-radius:12px;padding:3px 12px;margin:3px;font-size:1rem}
+.build-hint{color:var(--muted);font-size:.8rem;margin-top:6px;font-style:italic}
+
+.speaking-card{background:#fffefc;border:2px solid var(--blue);border-radius:20px;padding:20px;margin-bottom:18px;box-shadow:var(--shadow)}
+.speaking-title{font-weight:700;color:var(--blue);margin-bottom:12px;font-size:1.05rem}
+.speaking-topic{background:var(--blue-soft);border-radius:12px;padding:14px 16px;margin:10px 0;border-left:4px solid var(--blue)}
+.speaking-topic .t{font-weight:700;color:#2a3a5c;margin-bottom:6px}
+.speaking-topic .q-list{list-style:none;padding-left:0}
+.speaking-topic .q-list li{padding:4px 0 4px 20px;position:relative;font-size:.92rem;font-family:var(--cjk);line-height:1.8}
+.speaking-topic .q-list li::before{content:"💬";position:absolute;left:0;font-size:.85rem}
+.speaking-topic .q-list li .ru{display:block;font-family:'Segoe UI',sans-serif;font-size:.8rem;color:var(--muted);font-style:italic;margin-top:2px}
+
+@media(max-width:640px){body{padding:10px}.word-chinese{font-size:1.7rem}h1{font-size:1.3rem}.colloc-item{flex:1 1 100%}.task-sentence{font-size:1rem}}
+</style>
+</head>
+<body>
+<div class="app">
+
+<h1>🌱 HSK 2 · Повторение 1-9 + Задания</h1>
+<div class="subtitle">Персонажи: 斯拉瓦 (горный инженер) · 卡荚 (экономист) · 仁杰 (директор отдела)</div>
+
+<div class="author-note">
+<strong>📢 ОБРАЩЕНИЕ ОТ КУРАТОРА:</strong><br><br>
+Я объясняю материал как обычно — но прошу вас внимательно слушать и следовать порядку, а не перебивать вопросами «а можно проще».<br><br>
+
+<div class="subsection">
+<strong>Как вести конспект</strong><br>
+• <strong>Сначала иероглифы.</strong> Когда я даю новое слово — записываем <strong>полный иероглифический вид</strong>. Не пиньинь, не перевод. Только иероглифы. Потом разбираем произношение.<br>
+• <strong>Объясняю с повторением.</strong> Даю слово → образ → коллокации → отсылаю к пройденному. Китайская речь звучит постоянно.<br>
+• <strong>Отвечаю на вопросы заранее</strong> — прямо в объяснении. Читайте внимательно, 90% вопросов отпадают.
+</div>
+
+<div class="subsection">
+<strong>⚠️ Про новые блоки заданий</strong><br>
+Теперь у нас появились <strong>четыре новых блока</strong>: задания на 5 предложений со вставкой коллокаций, три текста под трёх учеников, конструирование предложений из слов, и разговорная практика. Всё это — тренировка <strong>коллокаций</strong>, а не голых слов. Мысль должна работать не на «я помню перевод», а на «я знаю, с чем это слово сочетается».
+</div>
+
+<div class="subsection">
+<strong>Почему важно слушать сейчас</strong><br>
+Время урока уходит не на новую тему, а на отработку того, что должно было быть сделано раньше. Вы просили записи — они были даны. Вы просили практику — она была в ДЗ. Если материалы не использовались — цепочка рвётся.<br><br>
+<strong>Что делать:</strong> выписывайте проблемные темы на отдельный лист, сидите с <strong>ИИ</strong>, разбирайте отдельно. На будущее — смотрите записи и делайте ДЗ вовремя.
+</div>
+</div>
+
+<!-- ОБЩИЙ ПОИСКОВИК -->
+<div class="global-search-wrap">
+<div class="global-search-label">🔍 Быстрый поиск по всем темам — введите иероглиф</div>
+<input type="text" id="globalSearch" placeholder="например: 旅游 / 出租车 / 飞..." autocomplete="off">
+<div class="search-results" id="searchResults"></div>
+</div>
+
+<!-- ЭКСПОРТ -->
+<div class="export-bar">
+<span class="label">💾 Скачать все заметки одним файлом:</span>
+<button class="export-btn" onclick="exportNotes()">📄 Скачать .txt</button>
+</div>
+
+<!-- ТАБЫ -->
+<div class="tabs">
+<button class="tab-btn active" data-tab="t1">🚗 Тема 1: Транспорт</button>
+<button class="tab-btn" data-tab="t2">⏰ Тема 2: Время</button>
+<button class="tab-btn" data-tab="t3">💊 Тема 3: Здоровье</button>
+<button class="tab-btn" data-tab="t4">💼 Тема 4: Работа</button>
+<button class="tab-btn" data-tab="t5">🍜 Тема 5: Еда</button>
+<button class="tab-btn" data-tab="t6">👨‍👩‍👧 Тема 6: Семья</button>
+<button class="tab-btn" data-tab="t7">🏠 Тема 7: Дом</button>
+<button class="tab-btn" data-tab="t8">⚽ Тема 8: Спорт</button>
+<button class="tab-btn" data-tab="t9">🔢 Тема 9: Числа</button>
+<button class="tab-btn" data-tab="tasks">🎯 Задания</button>
+<button class="tab-btn" data-tab="texts">📖 Три текста</button>
+<button class="tab-btn" data-tab="build">🏗️ Конструирование</button>
+<button class="tab-btn" data-tab="speaking">🗣️ Разговорная практика</button>
+<button class="tab-btn" data-tab="dict">📚 Справочник</button>
+</div>
+
+<!-- ================= ТЕМА 1 ================= -->
+<div class="tab-content active" id="t1">
+<h2>🚗 Тема 1: Транспорт и путешествия</h2>
+
+<div class="warmup">
+<div class="warmup-title">🔥 Разогрев — отвечаем вслух, смотрим в иероглифы</div>
+<div class="warmup-q">斯拉瓦，您每天怎么去上班？是坐公共汽车还是开车？<span class="ru">Слава, как вы каждый день добираетесь до работы?</span></div>
+<div class="warmup-q">卡荚，您一年去几次旅游？您坐飞机去过哪儿？<span class="ru">Катя, сколько раз в год вы ездите в путешествия?</span></div>
+<div class="warmup-q">仁杰，您什么时候去旅游？<span class="ru">Жэньцзе, когда вы едете в отпуск?</span></div>
+</div>
+
+<div class="word-card" data-word="旅游" data-pinyin="lǚyóu" data-trans="путешествовать">
+<div class="word-head">
+<span class="word-chinese">旅游</span>
+<span class="word-pinyin">lǚyóu</span>
+<button class="word-toggle" onclick="toggleTranslation(this)">👁️ Показать перевод</button>
+</div>
+<div class="word-translation">путешествовать, туризм</div>
+
+<div class="canvas-wrap">
+<div class="canvas-label"><span>✏️ Прописи</span><span class="hint">пишите иероглифы по памяти</span></div>
+<canvas class="trace-canvas" data-char="旅游"></canvas>
+<div class="canvas-actions">
+<button type="button" onclick="undoCanvas(this)">↩️ Отменить</button>
+<button type="button" onclick="redoCanvas(this)">↪️ Вернуть</button>
+<button type="button" onclick="clearCanvas(this)">🗑️ Очистить</button>
+</div>
+</div>
+
+<div class="persona">Это тот самый знакомый, который уехал в ноябре и постит сторис из аэропорта.</div>
+
+<div class="mnemonic">
+<div class="part"><strong>Иероглиф 1 (旅):</strong> знамя (方) + люди. Отряд с флагом в походе.<br><span class="trap">⚠️ Ловушка:</span> не путайте с 族 (клан) — у 族 внутри 矢.<br><strong>Значение:</strong> путешествие, отряд.</div>
+<div class="part"><strong>Иероглиф 2 (游):</strong> вода (氵) + дитя (子) + движение (方). Плыть по воде.<br><span class="trap">⚠️ Ловушка:</span> не путайте с 遊 — старый вариант.<br><strong>Значение:</strong> плавать, двигаться.</div>
+<div class="together">Отряд в походе + движение по воде = путешествие.</div>
+</div>
+
+<div class="collocations">
+<div class="colloc-title">🔗 Коллокации</div>
+<div class="colloc-cloud">
+<div class="colloc-item lvl1"><span class="colloc-level">🎯 HSK</span><span class="colloc-word">去旅游 — поехать в путешествие</span><span class="colloc-example">我们明年一起去旅游。</span></div>
+<div class="colloc-item lvl2"><span class="colloc-level">🗣️ Быт</span><span class="colloc-word">一个人旅游 — путешествовать одному</span><span class="colloc-example">我喜欢一个人旅游。</span></div>
+<div class="colloc-item lvl3"><span class="colloc-level">📰 Медиа</span><span class="colloc-word">国内旅游 — внутренний туризм</span><span class="colloc-example">国内旅游的人越来越多。</span></div>
+</div>
+</div>
+
+<label class="practice-label">✏️ Напишите своё предложение с 旅游 <span>(автосохранение)</span><span class="save-indicator" data-for="t1_旅游_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t1_旅游_practice" placeholder="用「旅游」写一句话..."></textarea>
+</div>
+
+<div class="word-card" data-word="飞机" data-pinyin="fēijī" data-trans="самолёт">
+<div class="word-head">
+<span class="word-chinese">飞机</span>
+<span class="word-pinyin">fēijī</span>
+<button class="word-toggle" onclick="toggleTranslation(this)">👁️ Показать перевод</button>
+</div>
+<div class="word-translation">самолёт</div>
+<div class="canvas-wrap">
+<div class="canvas-label"><span>✏️ Прописи</span><span class="hint">пишите иероглифы по памяти</span></div>
+<canvas class="trace-canvas" data-char="飞机"></canvas>
+<div class="canvas-actions">
+<button type="button" onclick="undoCanvas(this)">↩️ Отменить</button>
+<button type="button" onclick="redoCanvas(this)">↪️ Вернуть</button>
+<button type="button" onclick="clearCanvas(this)">🗑️ Очистить</button>
+</div>
+</div>
+<div class="persona">Тот самый друг, который пишет «уже на борту» и ставит сторис с крылом.</div>
+<div class="mnemonic">
+<div class="part"><strong>Иероглиф 1 (飞):</strong> птица расправила крылья.<br><span class="trap">⚠️ Ловушка:</span> не путайте с 风 (ветер).<br><strong>Значение:</strong> летать.</div>
+<div class="part"><strong>Иероглиф 2 (机):</strong> дерево (木) + подставка (几). Механизм.<br><strong>Значение:</strong> механизм, машина.</div>
+<div class="together">Летающий механизм = самолёт.</div>
+</div>
+<div class="collocations">
+<div class="colloc-title">🔗 Коллокации</div>
+<div class="colloc-cloud">
+<div class="colloc-item lvl1"><span class="colloc-level">🎯 HSK</span><span class="colloc-word">坐飞机 — лететь на самолёте</span><span class="colloc-example">我坐飞机去北京。</span></div>
+<div class="colloc-item lvl2"><span class="colloc-level">🗣️ Быт</span><span class="colloc-word">飞机票 — билет на самолёт</span><span class="colloc-example">您买飞机票了吗？</span></div>
+<div class="colloc-item lvl3"><span class="colloc-level">📰 Медиа</span><span class="colloc-word">飞机场 — аэропорт</span><span class="colloc-example">他昨天去飞机场接朋友。</span></div>
+</div>
+</div>
+<label class="practice-label">✏️ Своё предложение с 飞机 <span>(автосохранение)</span><span class="save-indicator" data-for="t1_飞机_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t1_飞机_practice" placeholder="用「飞机」写一句话..."></textarea>
+</div>
+
+<div class="word-card" data-word="出租车" data-pinyin="chūzūchē" data-trans="такси">
+<div class="word-head">
+<span class="word-chinese">出租车</span>
+<span class="word-pinyin">chūzūchē</span>
+<button class="word-toggle" onclick="toggleTranslation(this)">👁️ Показать перевод</button>
+</div>
+<div class="word-translation">такси</div>
+<div class="canvas-wrap">
+<div class="canvas-label"><span>✏️ Прописи</span></div>
+<canvas class="trace-canvas" data-char="出租车"></canvas>
+<div class="canvas-actions">
+<button type="button" onclick="undoCanvas(this)">↩️ Отменить</button>
+<button type="button" onclick="redoCanvas(this)">↪️ Вернуть</button>
+<button type="button" onclick="clearCanvas(this)">🗑️ Очистить</button>
+</div>
+</div>
+<div class="persona">Спасение в два часа ночи после корпоратива.</div>
+<div class="mnemonic">
+<div class="part"><strong>出:</strong> выход из гор.<strong>租:</strong> аренда.<strong>车:</strong> машина.<br><strong>Значение:</strong> машина напрокат = такси.</div>
+</div>
+<div class="collocations">
+<div class="colloc-cloud">
+<div class="colloc-item lvl1"><span class="colloc-level">🎯 HSK</span><span class="colloc-word">坐出租车 — ехать на такси</span><span class="colloc-example">我坐出租车去公司。</span></div>
+<div class="colloc-item lvl2"><span class="colloc-level">🗣️ Быт</span><span class="colloc-word">打车 — взять такси</span><span class="colloc-example">我们打车去吧。</span></div>
+</div>
+</div>
+<label class="practice-label">✏️ Своё предложение с 出租车 <span>(автосохранение)</span><span class="save-indicator" data-for="t1_出租车_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t1_出租车_practice" placeholder="用「出租车」写一句话..."></textarea>
+</div>
+
+<div class="word-card" data-word="公共汽车" data-pinyin="gōnggòng qìchē" data-trans="автобус">
+<div class="word-head">
+<span class="word-chinese">公共汽车</span>
+<span class="word-pinyin">gōnggòng qìchē</span>
+<button class="word-toggle" onclick="toggleTranslation(this)">👁️ Показать перевод</button>
+</div>
+<div class="word-translation">автобус</div>
+<div class="canvas-wrap">
+<div class="canvas-label"><span>✏️ Прописи</span></div>
+<canvas class="trace-canvas" data-char="公共汽车"></canvas>
+<div class="canvas-actions">
+<button type="button" onclick="undoCanvas(this)">↩️ Отменить</button>
+<button type="button" onclick="redoCanvas(this)">↪️ Вернуть</button>
+<button type="button" onclick="clearCanvas(this)">🗑️ Очистить</button>
+</div>
+</div>
+<div class="persona">Это выбор экономиста. 卡荚 всегда говорит: «А зачем такси, если автобус едет туда же».</div>
+<div class="mnemonic">
+<div class="part"><strong>公:</strong> общий.<strong>共:</strong> вместе.<strong>汽:</strong> пар.<strong>车:</strong> машина.<br><strong>Значение:</strong> общая паровая машина = автобус.</div>
+</div>
+<div class="collocations">
+<div class="colloc-cloud">
+<div class="colloc-item lvl1"><span class="colloc-level">🎯 HSK</span><span class="colloc-word">坐公共汽车 — ехать на автобусе</span><span class="colloc-example">我每天坐公共汽车上班。</span></div>
+<div class="colloc-item lvl2"><span class="colloc-level">🗣️ Быт</span><span class="colloc-word">公共汽车站 — остановка</span><span class="colloc-example">公共汽车站在哪儿？</span></div>
+</div>
+</div>
+<label class="practice-label">✏️ Своё предложение с 公共汽车 <span>(автосохранение)</span><span class="save-indicator" data-for="t1_公共汽车_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t1_公共汽车_practice" placeholder="用「公共汽车」写一句话..."></textarea>
+</div>
+
+<!-- ГРАММАТИКА 离 -->
+<div class="grammar-card">
+<div class="grammar-title">离 lí</div>
+<div class="grammar-subtitle">Предлог «от, расстояние от»</div>
+<div class="grammar-formula">A + 离 + B + 远 / 近</div>
+<div class="grammar-persona">Это встроенный GPS в голове — без 离 невозможно сказать «далеко или близко».</div>
+<div class="grammar-body">
+<div class="grammar-example"><span class="cn">您家离公司远吗？</span><span class="ru">Ваш дом далеко от компании?</span></div>
+<div class="grammar-example"><span class="cn">我家离公司很近。</span><span class="ru">Мой дом близко к компании.</span></div>
+<div class="grammar-example"><span class="cn">斯拉瓦的矿离城市很远。</span><span class="ru">Шахта Славы далеко от города.</span></div>
+</div>
+<label class="practice-label">✏️ Свои примеры <span>(автосохранение)</span><span class="save-indicator" data-for="t1_离_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t1_离_practice" placeholder="用「离」写 2-3 примера..."></textarea>
+</div>
+
+<!-- ГРАММАТИКА 就 -->
+<div class="grammar-card">
+<div class="grammar-title">就 jiù</div>
+<div class="grammar-subtitle">Наречие быстроты — «всего, быстро, сразу»</div>
+<div class="grammar-formula">[время / способ] + 就 + глагол</div>
+<div class="grammar-persona">Это когда 斯拉瓦 говорит: «От дома до шахты — десять минут, и всё».</div>
+<div class="grammar-body">
+<div class="grammar-example"><span class="cn">坐车十分钟就到。</span><span class="ru">На машине доедете всего за 10 минут.</span></div>
+<div class="grammar-example"><span class="cn">他八点就上班了。</span><span class="ru">Он уже в восемь был на работе.</span></div>
+<div class="grammar-example"><span class="cn">我马上就到。</span><span class="ru">Я сейчас приду.</span></div>
+</div>
+<label class="practice-label">✏️ Свои примеры <span>(автосохранение)</span><span class="save-indicator" data-for="t1_就_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t1_就_practice" placeholder="用「就」写 2-3 примера..."></textarea>
+</div>
+
+<!-- ГРАММАТИКА 呢 -->
+<div class="grammar-card">
+<div class="grammar-title">呢 ne</div>
+<div class="grammar-subtitle">Модальная частица «а как же / же» в конце</div>
+<div class="grammar-formula">[ситуация / субъект] + 呢</div>
+<div class="grammar-persona">Мягкое «а что насчёт…».</div>
+<div class="grammar-body">
+<div class="grammar-example"><span class="cn">我坐公交去的，您呢？</span><span class="ru">Я на автобусе, а вы?</span></div>
+<div class="grammar-example"><span class="cn">还早呢。</span><span class="ru">Ещё рано же.</span></div>
+<div class="grammar-example"><span class="cn">斯拉瓦呢？他在哪儿？</span><span class="ru">А Слава? Где он?</span></div>
+</div>
+<label class="practice-label">✏️ Свои примеры <span>(автосохранение)</span><span class="save-indicator" data-for="t1_呢_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t1_呢_practice" placeholder="用「呢」写 2-3 примера..."></textarea>
+</div>
+
+</div>
+
+<!-- ================= ТЕМА 2 ================= -->
+<div class="tab-content" id="t2">
+<h2>⏰ Тема 2: Время и распорядок</h2>
+
+<div class="warmup">
+<div class="warmup-title">🔥 Разогрев</div>
+<div class="warmup-q">斯拉瓦，您每天几点起床？<span class="ru">Слава, во сколько вы встаёте каждый день?</span></div>
+<div class="warmup-q">卡荚，您周末喜欢做什么？<span class="ru">Катя, что вы любите делать по выходным?</span></div>
+<div class="warmup-q">仁杰，您每天休息几个小时？<span class="ru">Жэньцзе, сколько часов в день вы отдыхаете?</span></div>
+</div>
+
+<div class="word-card" data-word="每" data-pinyin="měi" data-trans="каждый">
+<div class="word-head"><span class="word-chinese">每</span><span class="word-pinyin">měi</span><button class="word-toggle" onclick="toggleTranslation(this)">👁️ Показать перевод</button></div>
+<div class="word-translation">каждый</div>
+<div class="canvas-wrap"><div class="canvas-label">✏️ Прописи</div><canvas class="trace-canvas" data-char="每"></canvas><div class="canvas-actions"><button type="button" onclick="undoCanvas(this)">↩️</button><button type="button" onclick="redoCanvas(this)">↪️</button><button type="button" onclick="clearCanvas(this)">🗑️</button></div></div>
+<div class="persona">Это про режим. У 斯拉瓦 есть режим: каждый день шесть утра.</div>
+<div class="mnemonic"><div class="part"><strong>每:</strong> человек (𠂉) + мать (母). «Каждая мать» — постоянно, всегда.<br><span class="trap">⚠️ Ловушка:</span> не путайте с 母 (мать).<br><strong>Значение:</strong> каждый.</div><div class="together">Постоянное повторение = каждый.</div></div>
+<div class="collocations"><div class="colloc-cloud">
+<div class="colloc-item lvl1"><span class="colloc-level">🎯 HSK</span><span class="colloc-word">每天 — каждый день</span><span class="colloc-example">我每天六点起床。</span></div>
+<div class="colloc-item lvl2"><span class="colloc-level">🗣️ Быт</span><span class="colloc-word">每个人 — каждый человек</span><span class="colloc-example">每个人都有自己的时间。</span></div>
+</div></div>
+<label class="practice-label">✏️ Своё предложение <span>(автосохранение)</span><span class="save-indicator" data-for="t2_每_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t2_每_practice" placeholder="用「每」写一句话..."></textarea>
+</div>
+
+<div class="word-card" data-word="起床" data-pinyin="qǐchuáng" data-trans="вставать с постели">
+<div class="word-head"><span class="word-chinese">起床</span><span class="word-pinyin">qǐchuáng</span><button class="word-toggle" onclick="toggleTranslation(this)">👁️ Показать перевод</button></div>
+<div class="word-translation">вставать с постели</div>
+<div class="canvas-wrap"><div class="canvas-label">✏️ Прописи</div><canvas class="trace-canvas" data-char="起床"></canvas><div class="canvas-actions"><button type="button" onclick="undoCanvas(this)">↩️</button><button type="button" onclick="redoCanvas(this)">↪️</button><button type="button" onclick="clearCanvas(this)">🗑️</button></div></div>
+<div class="persona">Самое сложное действие в мире.</div>
+<div class="mnemonic"><div class="part"><strong>起:</strong> вставать. <strong>床:</strong> кровать.<br><strong>Значение:</strong> встать с кровати.</div></div>
+<div class="collocations"><div class="colloc-cloud">
+<div class="colloc-item lvl1"><span class="colloc-level">🎯 HSK</span><span class="colloc-word">几点起床 — во сколько вставать</span><span class="colloc-example">您每天几点起床？</span></div>
+<div class="colloc-item lvl2"><span class="colloc-level">🗣️ Быт</span><span class="colloc-word">不想起床 — не хотеть вставать</span><span class="colloc-example">今天太冷了，我不想起床。</span></div>
+</div></div>
+<label class="practice-label">✏️ Своё предложение <span>(автосохранение)</span><span class="save-indicator" data-for="t2_起床_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t2_起床_practice" placeholder="用「起床」写一句话..."></textarea>
+</div>
+
+<div class="word-card" data-word="跑步" data-pinyin="pǎobù" data-trans="бегать">
+<div class="word-head"><span class="word-chinese">跑步</span><span class="word-pinyin">pǎobù</span><button class="word-toggle" onclick="toggleTranslation(this)">👁️ Показать перевод</button></div>
+<div class="word-translation">бегать, бег</div>
+<div class="canvas-wrap"><div class="canvas-label">✏️ Прописи</div><canvas class="trace-canvas" data-char="跑步"></canvas><div class="canvas-actions"><button type="button" onclick="undoCanvas(this)">↩️</button><button type="button" onclick="redoCanvas(this)">↪️</button><button type="button" onclick="clearCanvas(this)">🗑️</button></div></div>
+<div class="persona">Спорт тех, кто «начал новую жизнь с понедельника».</div>
+<div class="mnemonic"><div class="part"><strong>跑:</strong> бежать. <strong>步:</strong> шаг.<br><strong>Значение:</strong> бегать.</div></div>
+<div class="collocations"><div class="colloc-cloud">
+<div class="colloc-item lvl1"><span class="colloc-level">🎯 HSK</span><span class="colloc-word">去跑步 — пойти на пробежку</span><span class="colloc-example">早上我去跑步。</span></div>
+<div class="colloc-item lvl2"><span class="colloc-level">🗣️ Быт</span><span class="colloc-word">每天跑步 — бегать каждый день</span><span class="colloc-example">我每天跑二十分钟步。</span></div>
+</div></div>
+<label class="practice-label">✏️ Своё предложение <span>(автосохранение)</span><span class="save-indicator" data-for="t2_跑步_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t2_跑步_practice" placeholder="用「跑步」写一句话..."></textarea>
+</div>
+
+<div class="word-card" data-word="休息" data-pinyin="xiūxi" data-trans="отдыхать">
+<div class="word-head"><span class="word-chinese">休息</span><span class="word-pinyin">xiūxi</span><button class="word-toggle" onclick="toggleTranslation(this)">👁️ Показать перевод</button></div>
+<div class="word-translation">отдыхать</div>
+<div class="canvas-wrap"><div class="canvas-label">✏️ Прописи</div><canvas class="trace-canvas" data-char="休息"></canvas><div class="canvas-actions"><button type="button" onclick="undoCanvas(this)">↩️</button><button type="button" onclick="redoCanvas(this)">↪️</button><button type="button" onclick="clearCanvas(this)">🗑️</button></div></div>
+<div class="persona">То, о чём мечтает 仁杰 на планёрке.</div>
+<div class="mnemonic"><div class="part"><strong>休:</strong> человек у дерева. <strong>息:</strong> дыхание.<br><strong>Значение:</strong> отдыхать.</div></div>
+<div class="collocations"><div class="colloc-cloud">
+<div class="colloc-item lvl1"><span class="colloc-level">🎯 HSK</span><span class="colloc-word">休息一下 — отдохнуть</span><span class="colloc-example">我们休息一下吧。</span></div>
+<div class="colloc-item lvl2"><span class="colloc-level">🗣️ Быт</span><span class="colloc-word">好好休息 — хорошо отдохнуть</span><span class="colloc-example">周末好好休息。</span></div>
+</div></div>
+<label class="practice-label">✏️ Своё предложение <span>(автосохранение)</span><span class="save-indicator" data-for="t2_休息_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t2_休息_practice" placeholder="用「休息」写一句话..."></textarea>
+</div>
+
+<!-- ГРАММАТИКА 已经 -->
+<div class="grammar-card">
+<div class="grammar-title">已经 yǐjīng</div>
+<div class="grammar-subtitle">«Уже» — завершённость</div>
+<div class="grammar-formula">[субъект] + 已经 + глагол + (了)</div>
+<div class="grammar-persona">Это когда вы приходите, а 仁杰 уже пил кофе.</div>
+<div class="grammar-body">
+<div class="grammar-example"><span class="cn">我已经工作了。</span><span class="ru">Я уже работаю.</span></div>
+<div class="grammar-example"><span class="cn">他已经是部门经理了。</span><span class="ru">Он уже директор отдела.</span></div>
+<div class="grammar-example"><span class="cn">我们已经到公司了。</span><span class="ru">Мы уже пришли в компанию.</span></div>
+</div>
+<label class="practice-label">✏️ Свои примеры <span>(автосохранение)</span><span class="save-indicator" data-for="t2_已经_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t2_已经_practice" placeholder="用「已经」写 2-3 примера..."></textarea>
+</div>
+
+<!-- ГРАММАТИКА ……的时候 -->
+<div class="grammar-card">
+<div class="grammar-title">……的时候</div>
+<div class="grammar-subtitle">«Когда... / во время...»</div>
+<div class="grammar-formula">[действие / время] + 的时候, [основное действие]</div>
+<div class="grammar-persona">Это когда вы вспоминаете: «когда я звонил, он спал».</div>
+<div class="grammar-body">
+<div class="grammar-example"><span class="cn">打电话的时候，他在跑步。</span><span class="ru">Когда я позвонил, он бегал.</span></div>
+<div class="grammar-example"><span class="cn">小的时候，我每天六点起床。</span><span class="ru">В детстве я каждый день вставал в шесть.</span></div>
+<div class="grammar-example"><span class="cn">休息的时候，我喜欢听音乐。</span><span class="ru">Во время отдыха я люблю слушать музыку.</span></div>
+</div>
+<label class="practice-label">✏️ Свои примеры <span>(автосохранение)</span><span class="save-indicator" data-for="t2_的时候_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t2_的时候_practice" placeholder="用「……的时候」写 2-3 примера..."></textarea>
+</div>
+
+<!-- ГРАММАТИКА 小时 vs 点 -->
+<div class="grammar-card">
+<div class="grammar-title">小时 vs 点</div>
+<div class="grammar-subtitle">Длительность vs точка на часах</div>
+<div class="grammar-formula">小时 = 时长 | 点 = 时刻</div>
+<div class="grammar-persona">Это гигантская ловушка. Китайцы чувствуют разницу мгновенно.</div>
+<div class="grammar-body">
+<div class="grammar-example"><span class="cn">我每天工作八个小时。</span><span class="ru">Я работаю 8 часов в день.</span></div>
+<div class="grammar-example"><span class="cn">我八点上班。</span><span class="ru">Я начинаю работу в 8 часов.</span></div>
+<div class="grammar-example"><span class="cn">会议开了两个小时。</span><span class="ru">Совещание длилось два часа.</span></div>
+</div>
+<label class="practice-label">✏️ Свои примеры <span>(автосохранение)</span><span class="save-indicator" data-for="t2_小时点_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t2_小时点_practice" placeholder="Напишите 2-3 примера..."></textarea>
+</div>
+
+</div>
+
+<!-- ================= ТЕМА 3 ================= -->
+<div class="tab-content" id="t3">
+<h2>💊 Тема 3: Здоровье</h2>
+
+<div class="warmup">
+<div class="warmup-title">🔥 Разогрев</div>
+<div class="warmup-q">卡荚，您最近身体怎么样？<span class="ru">Катя, как ваше здоровье?</span></div>
+<div class="warmup-q">斯拉瓦，生病的时候，您吃什么药？<span class="ru">Слава, какие лекарства вы принимаете?</span></div>
+<div class="warmup-q">仁杰，您工作忙的时候，会不会有点儿累？<span class="ru">Жэньцзе, не устаёте ли вы?</span></div>
+</div>
+
+<div class="word-card" data-word="生病" data-pinyin="shēngbìng" data-trans="заболеть">
+<div class="word-head"><span class="word-chinese">生病</span><span class="word-pinyin">shēngbìng</span><button class="word-toggle" onclick="toggleTranslation(this)">👁️ Показать перевод</button></div>
+<div class="word-translation">заболеть, болеть</div>
+<div class="canvas-wrap"><div class="canvas-label">✏️ Прописи</div><canvas class="trace-canvas" data-char="生病"></canvas><div class="canvas-actions"><button type="button" onclick="undoCanvas(this)">↩️</button><button type="button" onclick="redoCanvas(this)">↪️</button><button type="button" onclick="clearCanvas(this)">🗑️</button></div></div>
+<div class="persona">Состояние, когда все планы рушатся.</div>
+<div class="mnemonic"><div class="part"><strong>生:</strong> рождаться. <strong>病:</strong> болезнь.<br><strong>Значение:</strong> болезнь «родилась» = заболел.</div></div>
+<div class="collocations"><div class="colloc-cloud">
+<div class="colloc-item lvl1"><span class="colloc-level">🎯 HSK</span><span class="colloc-word">生病了 — заболел</span><span class="colloc-example">您是不是生病了？</span></div>
+<div class="colloc-item lvl2"><span class="colloc-level">🗣️ Быт</span><span class="colloc-word">经常生病 — часто болеть</span><span class="colloc-example">他冬天经常生病。</span></div>
+</div></div>
+<label class="practice-label">✏️ Своё предложение <span>(автосохранение)</span><span class="save-indicator" data-for="t3_生病_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t3_生病_practice" placeholder="用「生病」写一句话..."></textarea>
+</div>
+
+<div class="word-card" data-word="药" data-pinyin="yào" data-trans="лекарство">
+<div class="word-head"><span class="word-chinese">药</span><span class="word-pinyin">yào</span><button class="word-toggle" onclick="toggleTranslation(this)">👁️ Показать перевод</button></div>
+<div class="word-translation">лекарство</div>
+<div class="canvas-wrap"><div class="canvas-label">✏️ Прописи</div><canvas class="trace-canvas" data-char="药"></canvas><div class="canvas-actions"><button type="button" onclick="undoCanvas(this)">↩️</button><button type="button" onclick="redoCanvas(this)">↪️</button><button type="button" onclick="clearCanvas(this)">🗑️</button></div></div>
+<div class="persona">То, что «горько, но надо».</div>
+<div class="mnemonic"><div class="part"><strong>药:</strong> трава (艹) + договор (约). Травы по рецепту.<br><strong>Значение:</strong> лекарство.</div></div>
+<div class="collocations"><div class="colloc-cloud">
+<div class="colloc-item lvl1"><span class="colloc-level">🎯 HSK</span><span class="colloc-word">吃药 — принимать лекарство</span><span class="colloc-example">您吃药了吗？</span></div>
+<div class="colloc-item lvl2"><span class="colloc-level">🗣️ Быт</span><span class="colloc-word">买药 — купить лекарство</span><span class="colloc-example">我去买点儿药。</span></div>
+<div class="colloc-item lvl3"><span class="colloc-level">📰 Медиа</span><span class="colloc-word">药店 — аптека</span><span class="colloc-example">这个药店二十四小时营业。</span></div>
+</div></div>
+<label class="practice-label">✏️ Своё предложение <span>(автосохранение)</span><span class="save-indicator" data-for="t3_药_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t3_药_practice" placeholder="用「药」写一句话..."></textarea>
+</div>
+
+<div class="word-card" data-word="身体" data-pinyin="shēntǐ" data-trans="тело, здоровье">
+<div class="word-head"><span class="word-chinese">身体</span><span class="word-pinyin">shēntǐ</span><button class="word-toggle" onclick="toggleTranslation(this)">👁️ Показать перевод</button></div>
+<div class="word-translation">тело, здоровье</div>
+<div class="canvas-wrap"><div class="canvas-label">✏️ Прописи</div><canvas class="trace-canvas" data-char="身体"></canvas><div class="canvas-actions"><button type="button" onclick="undoCanvas(this)">↩️</button><button type="button" onclick="redoCanvas(this)">↪️</button><button type="button" onclick="clearCanvas(this)">🗑️</button></div></div>
+<div class="persona">То, о чём мама спрашивает в каждом сообщении.</div>
+<div class="mnemonic"><div class="part"><strong>身:</strong> тело. <strong>体:</strong> тело, организм.<br><strong>Значение:</strong> тело, здоровье.</div></div>
+<div class="collocations"><div class="colloc-cloud">
+<div class="colloc-item lvl1"><span class="colloc-level">🎯 HSK</span><span class="colloc-word">身体好 — хорошее здоровье</span><span class="colloc-example">您身体好吗？</span></div>
+<div class="colloc-item lvl2"><span class="colloc-level">🗣️ Быт</span><span class="colloc-word">身体健康 — телесное здоровье</span><span class="colloc-example">祝您身体健康。</span></div>
+<div class="colloc-item lvl3"><span class="colloc-level">📰 Медиа</span><span class="colloc-word">对身体好 — полезно для здоровья</span><span class="colloc-example">早睡早起对身体好。</span></div>
+</div></div>
+<label class="practice-label">✏️ Своё предложение <span>(автосохранение)</span><span class="save-indicator" data-for="t3_身体_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t3_身体_practice" placeholder="用「身体」写一句话..."></textarea>
+</div>
+
+<div class="grammar-card">
+<div class="grammar-title">有点儿 yǒudiǎnr</div>
+<div class="grammar-subtitle">«Немного» — обычно о негативном</div>
+<div class="grammar-formula">有点儿 + прилагательное</div>
+<div class="grammar-persona">Это когда вы не хотите жаловаться прямо, но признаёте: «有点儿累».</div>
+<div class="grammar-body">
+<div class="grammar-example"><span class="cn">我今天有点儿累。</span><span class="ru">Я сегодня немного устал.</span></div>
+<div class="grammar-example"><span class="cn">这个药有点儿苦。</span><span class="ru">Это лекарство немного горькое.</span></div>
+<div class="grammar-example"><span class="cn">这件衣服有点儿贵。</span><span class="ru">Эта одежда немного дорогая.</span></div>
+</div>
+<label class="practice-label">✏️ Свои примеры <span>(автосохранение)</span><span class="save-indicator" data-for="t3_有点儿_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t3_有点儿_practice" placeholder="用「有点儿」写 2-3 примера..."></textarea>
+</div>
+
+</div>
+
+<!-- ================= ТЕМА 4 ================= -->
+<div class="tab-content" id="t4">
+<h2>💼 Тема 4: Работа и учёба</h2>
+
+<div class="warmup">
+<div class="warmup-title">🔥 Разогрев</div>
+<div class="warmup-q">仁杰，您每天几点上班？工作忙不忙？<span class="ru">Жэньцзе, во сколько вы начинаете работу?</span></div>
+<div class="warmup-q">斯拉瓦，您现在的工作是什么？<span class="ru">Слава, какая у вас сейчас работа?</span></div>
+<div class="warmup-q">卡荚，您在哪个大学学习？<span class="ru">Катя, в каком университете вы учитесь?</span></div>
+</div>
+
+<div class="word-card" data-word="公司" data-pinyin="gōngsī" data-trans="компания">
+<div class="word-head"><span class="word-chinese">公司</span><span class="word-pinyin">gōngsī</span><button class="word-toggle" onclick="toggleTranslation(this)">👁️ Показать перевод</button></div>
+<div class="word-translation">компания, фирма</div>
+<div class="canvas-wrap"><div class="canvas-label">✏️ Прописи</div><canvas class="trace-canvas" data-char="公司"></canvas><div class="canvas-actions"><button type="button" onclick="undoCanvas(this)">↩️</button><button type="button" onclick="redoCanvas(this)">↪️</button><button type="button" onclick="clearCanvas(this)">🗑️</button></div></div>
+<div class="persona">Место, где 卡荚 считает, 斯拉瓦 строит, а 仁杰 решает.</div>
+<div class="mnemonic"><div class="part"><strong>公:</strong> общий. <strong>司:</strong> управлять.<br><strong>Значение:</strong> место общего управления.</div></div>
+<div class="collocations"><div class="colloc-cloud">
+<div class="colloc-item lvl1"><span class="colloc-level">🎯 HSK</span><span class="colloc-word">在公司 — в компании</span><span class="colloc-example">我每天八点在公司在。</span></div>
+<div class="colloc-item lvl2"><span class="colloc-level">🗣️ Быт</span><span class="colloc-word">去公司 — пойти в компанию</span><span class="colloc-example">您什么时候去公司？</span></div>
+<div class="colloc-item lvl3"><span class="colloc-level">📰 Медиа</span><span class="colloc-word">公司上班 — работать в компании</span><span class="colloc-example">他在公司上班。</span></div>
+</div></div>
+<label class="practice-label">✏️ Своё предложение <span>(автосохранение)</span><span class="save-indicator" data-for="t4_公司_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t4_公司_practice" placeholder="用「公司」写一句话..."></textarea>
+</div>
+
+<div class="word-card" data-word="介绍" data-pinyin="jièshào" data-trans="представлять">
+<div class="word-head"><span class="word-chinese">介绍</span><span class="word-pinyin">jièshào</span><button class="word-toggle" onclick="toggleTranslation(this)">👁️ Показать перевод</button></div>
+<div class="word-translation">представлять, знакомить, рекомендовать</div>
+<div class="canvas-wrap"><div class="canvas-label">✏️ Прописи</div><canvas class="trace-canvas" data-char="介绍"></canvas><div class="canvas-actions"><button type="button" onclick="undoCanvas(this)">↩️</button><button type="button" onclick="redoCanvas(this)">↪️</button><button type="button" onclick="clearCanvas(this)">🗑️</button></div></div>
+<div class="persona">Это 仁杰 — он всех знает и всех может соединить.</div>
+<div class="mnemonic"><div class="part"><strong>介:</strong> между. <strong>绍:</strong> соединять.<br><strong>Значение:</strong> соединять людей = знакомить.</div></div>
+<div class="collocations"><div class="colloc-cloud">
+<div class="colloc-item lvl1"><span class="colloc-level">🎯 HSK</span><span class="colloc-word">介绍我 — рекомендовать меня</span><span class="colloc-example">是他介绍我的。</span></div>
+<div class="colloc-item lvl2"><span class="colloc-level">🗣️ Быт</span><span class="colloc-word">介绍一下 — представить немного</span><span class="colloc-example">请介绍一下您自己。</span></div>
+</div></div>
+<label class="practice-label">✏️ Своё предложение <span>(автосохранение)</span><span class="save-indicator" data-for="t4_介绍_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t4_介绍_practice" placeholder="用「介绍」写一句话..."></textarea>
+</div>
+
+<div class="word-card" data-word="考试" data-pinyin="kǎoshì" data-trans="экзамен">
+<div class="word-head"><span class="word-chinese">考试</span><span class="word-pinyin">kǎoshì</span><button class="word-toggle" onclick="toggleTranslation(this)">👁️ Показать перевод</button></div>
+<div class="word-translation">экзамен</div>
+<div class="canvas-wrap"><div class="canvas-label">✏️ Прописи</div><canvas class="trace-canvas" data-char="考试"></canvas><div class="canvas-actions"><button type="button" onclick="undoCanvas(this)">↩️</button><button type="button" onclick="redoCanvas(this)">↪️</button><button type="button" onclick="clearCanvas(this)">🗑️</button></div></div>
+<div class="persona">То, из-за чего вы ночами не спите.</div>
+<div class="mnemonic"><div class="part"><strong>考:</strong> проверять. <strong>试:</strong> пробовать.<br><strong>Значение:</strong> проверка знаний = экзамен.</div></div>
+<div class="collocations"><div class="colloc-cloud">
+<div class="colloc-item lvl1"><span class="colloc-level">🎯 HSK</span><span class="colloc-word">考试 — сдавать экзамен</span><span class="colloc-example">明天我要考试。</span></div>
+<div class="colloc-item lvl2"><span class="colloc-level">🗣️ Быт</span><span class="colloc-word">考试完了 — экзамен закончился</span><span class="colloc-example">考试完了，我们去吃饭吧。</span></div>
+</div></div>
+<label class="practice-label">✏️ Своё предложение <span>(автосохранение)</span><span class="save-indicator" data-for="t4_考试_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t4_考试_practice" placeholder="用「考试」写一句话..."></textarea>
+</div>
+
+<div class="word-card" data-word="题" data-pinyin="tí" data-trans="задача, вопрос">
+<div class="word-head"><span class="word-chinese">题</span><span class="word-pinyin">tí</span><button class="word-toggle" onclick="toggleTranslation(this)">👁️ Показать перевод</button></div>
+<div class="word-translation">задача, вопрос (в тесте)</div>
+<div class="canvas-wrap"><div class="canvas-label">✏️ Прописи</div><canvas class="trace-canvas" data-char="题"></canvas><div class="canvas-actions"><button type="button" onclick="undoCanvas(this)">↩️</button><button type="button" onclick="redoCanvas(this)">↪️</button><button type="button" onclick="clearCanvas(this)">🗑️</button></div></div>
+<div class="persona">Конкретный вопрос в тесте.</div>
+<div class="mnemonic"><div class="part"><strong>题:</strong> правильный (是) + страница (页).<br><strong>Значение:</strong> задача, вопрос.</div></div>
+<div class="collocations"><div class="colloc-cloud">
+<div class="colloc-item lvl1"><span class="colloc-level">🎯 HSK</span><span class="colloc-word">问题 — вопрос</span><span class="colloc-example">我有一个问题。</span></div>
+<div class="colloc-item lvl2"><span class="colloc-level">🗣️ Быт</span><span class="colloc-word">做题 — решать задачи</span><span class="colloc-example">他每天做题到很晚。</span></div>
+<div class="colloc-item lvl3"><span class="colloc-level">📰 Медиа</span><span class="colloc-word">这道题 — эта задача</span><span class="colloc-example">这道题太难了。</span></div>
+</div></div>
+<label class="practice-label">✏️ Своё предложение <span>(автосохранение)</span><span class="save-indicator" data-for="t4_题_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t4_题_practice" placeholder="用「题」写一句话..."></textarea>
+</div>
+
+<div class="word-card" data-word="完" data-pinyin="wán" data-trans="заканчивать">
+<div class="word-head"><span class="word-chinese">完</span><span class="word-pinyin">wán</span><button class="word-toggle" onclick="toggleTranslation(this)">👁️ Показать перевод</button></div>
+<div class="word-translation">заканчивать, завершать</div>
+<div class="canvas-wrap"><div class="canvas-label">✏️ Прописи</div><canvas class="trace-canvas" data-char="完"></canvas><div class="canvas-actions"><button type="button" onclick="undoCanvas(this)">↩️</button><button type="button" onclick="redoCanvas(this)">↪️</button><button type="button" onclick="clearCanvas(this)">🗑️</button></div></div>
+<div class="persona">Маленькое слово, которое ставится ПОСЛЕ глагола.</div>
+<div class="mnemonic"><div class="part"><strong>完:</strong> крыша (宀) + начало (元). Дом достроен.<br><strong>Значение:</strong> заканчивать.</div></div>
+<div class="collocations"><div class="colloc-cloud">
+<div class="colloc-item lvl1"><span class="colloc-level">🎯 HSK</span><span class="colloc-word">做完 — доделать</span><span class="colloc-example">作业做完了。</span></div>
+<div class="colloc-item lvl2"><span class="colloc-level">🗣️ Быт</span><span class="colloc-word">吃完 — доесть</span><span class="colloc-example">吃完饭我们去散步。</span></div>
+<div class="colloc-item lvl3"><span class="colloc-level">📰 Медиа</span><span class="colloc-word">看完 — досмотреть</span><span class="colloc-example">这部电影我看完了。</span></div>
+</div></div>
+<label class="practice-label">✏️ Своё предложение <span>(автосохранение)</span><span class="save-indicator" data-for="t4_完_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t4_完_practice" placeholder="用「完」写一句话..."></textarea>
+</div>
+
+<div class="word-card" data-word="懂" data-pinyin="dǒng" data-trans="понимать">
+<div class="word-head"><span class="word-chinese">懂</span><span class="word-pinyin">dǒng</span><button class="word-toggle" onclick="toggleTranslation(this)">👁️ Показать перевод</button></div>
+<div class="word-translation">понимать</div>
+<div class="canvas-wrap"><div class="canvas-label">✏️ Прописи</div><canvas class="trace-canvas" data-char="懂"></canvas><div class="canvas-actions"><button type="button" onclick="undoCanvas(this)">↩️</button><button type="button" onclick="redoCanvas(this)">↪️</button><button type="button" onclick="clearCanvas(this)">🗑️</button></div></div>
+<div class="persona">«Понял» по-настоящему, а не «услышал и покивал».</div>
+<div class="mnemonic"><div class="part"><strong>懂:</strong> сердце (忄) + 董. Понимать сердцем.<br><strong>Значение:</strong> понимать.</div></div>
+<div class="collocations"><div class="colloc-cloud">
+<div class="colloc-item lvl1"><span class="colloc-level">🎯 HSK</span><span class="colloc-word">听懂 — понять на слух</span><span class="colloc-example">老师的话您听懂了吗？</span></div>
+<div class="colloc-item lvl2"><span class="colloc-level">🗣️ Быт</span><span class="colloc-word">看懂 — понять, читая</span><span class="colloc-example">这本书我看懂了。</span></div>
+<div class="colloc-item lvl3"><span class="colloc-level">📰 Медиа</span><span class="colloc-word">不懂 — не понимать</span><span class="colloc-example">我不懂这个问题。</span></div>
+</div></div>
+<label class="practice-label">✏️ Своё предложение <span>(автосохранение)</span><span class="save-indicator" data-for="t4_懂_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t4_懂_practice" placeholder="用「懂」写一句话..."></textarea>
+</div>
+
+<div class="word-card" data-word="上班" data-pinyin="shàngbān" data-trans="идти на работу">
+<div class="word-head"><span class="word-chinese">上班</span><span class="word-pinyin">shàngbān</span><button class="word-toggle" onclick="toggleTranslation(this)">👁️ Показать перевод</button></div>
+<div class="word-translation">идти на работу, работать</div>
+<div class="canvas-wrap"><div class="canvas-label">✏️ Прописи</div><canvas class="trace-canvas" data-char="上班"></canvas><div class="canvas-actions"><button type="button" onclick="undoCanvas(this)">↩️</button><button type="button" onclick="redoCanvas(this)">↪️</button><button type="button" onclick="clearCanvas(this)">🗑️</button></div></div>
+<div class="persona">Глагол, описывающий процесс ходить на работу.</div>
+<div class="mnemonic"><div class="part"><strong>上:</strong> подниматься. <strong>班:</strong> смена.<br><strong>Значение:</strong> идти на работу.</div></div>
+<div class="collocations"><div class="colloc-cloud">
+<div class="colloc-item lvl1"><span class="colloc-level">🎯 HSK</span><span class="colloc-word">去上班 — пойти на работу</span><span class="colloc-example">我七点半去上班。</span></div>
+<div class="colloc-item lvl2"><span class="colloc-level">🗣️ Быт</span><span class="colloc-word">上班时间 — рабочее время</span><span class="colloc-example">上班时间是九点到六点。</span></div>
+<div class="colloc-item lvl3"><span class="colloc-level">📰 Медиа</span><span class="colloc-word">上班族 — офисные работники</span><span class="colloc-example">上班族每天都很忙。</span></div>
+</div></div>
+<label class="practice-label">✏️ Своё предложение <span>(автосохранение)</span><span class="save-indicator" data-for="t4_上班_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t4_上班_practice" placeholder="用「上班」写一句话..."></textarea>
+</div>
+
+<div class="grammar-card">
+<div class="grammar-title">是……的</div>
+<div class="grammar-subtitle">Выделение факта, времени, места или способа</div>
+<div class="grammar-formula">[субъект] + 是 + обст. + глагол + 的</div>
+<div class="grammar-persona">Это когда 仁杰 вас спрашивает: «Кто тебя рекомендовал?» — а вы отвечаете: «Именно он».</div>
+<div class="grammar-body">
+<p><strong>Уровень 1 — факт:</strong></p>
+<div class="grammar-example"><span class="cn">我是坐飞机来的。</span><span class="ru">Я приехал на самолёте.</span></div>
+<p><strong>Уровень 2 — уточнение «именно»:</strong></p>
+<div class="grammar-example"><span class="cn">不，我是坐飞机来的。</span><span class="ru">Нет, я приехал именно на самолёте.</span></div>
+<p><strong>Уровень 3 — краткий ответ без 是:</strong></p>
+<div class="grammar-example"><span class="cn">坐飞机来的。</span><span class="ru">Да, на самолёте.</span></div>
+</div>
+<label class="practice-label">✏️ Свои примеры <span>(автосохранение)</span><span class="save-indicator" data-for="t4_是的_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t4_是的_practice" placeholder="用「是……的」写 2-3 примера..."></textarea>
+</div>
+
+<div class="grammar-card">
+<div class="grammar-title">完 и 懂 — результативные глаголы</div>
+<div class="grammar-subtitle">Ставятся сразу после основного глагола</div>
+<div class="grammar-formula">V + 完 (завершить) | V + 懂 (понять)</div>
+<div class="grammar-persona">Два «довеска», которые меняют смысл глагола.</div>
+<div class="grammar-body">
+<div class="grammar-example"><span class="cn">作业做完了。</span><span class="ru">Домашнее задание доделано.</span></div>
+<div class="grammar-example"><span class="cn">老师的话您听懂了吗？</span><span class="ru">Вы поняли, что сказал учитель?</span></div>
+<div class="grammar-example"><span class="cn">这本书我看懂了。</span><span class="ru">Я понял эту книгу.</span></div>
+</div>
+<label class="practice-label">✏️ Свои примеры <span>(автосохранение)</span><span class="save-indicator" data-for="t4_完懂_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t4_完懂_practice" placeholder="Напишите 3 примера..."></textarea>
+</div>
+
+<div class="grammar-card">
+<div class="grammar-title">从 cóng</div>
+<div class="grammar-subtitle">Предлог «из, с, от»</div>
+<div class="grammar-formula">从 + [место / время] + 到 + [место / время]</div>
+<div class="grammar-persona">Это «откуда» и «откогда».</div>
+<div class="grammar-body">
+<div class="grammar-example"><span class="cn">从北京到上海。</span><span class="ru">Из Пекина в Шанхай.</span></div>
+<div class="grammar-example"><span class="cn">从早上八点到晚上六点。</span><span class="ru">С восьми утра до шести вечера.</span></div>
+<div class="grammar-example"><span class="cn">我从俄罗斯来。</span><span class="ru">Я из России.</span></div>
+</div>
+<label class="practice-label">✏️ Свои примеры <span>(автосохранение)</span><span class="save-indicator" data-for="t4_从_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t4_从_practice" placeholder="用「从」写 2-3 примера..."></textarea>
+</div>
+
+</div>
+
+<!-- ================= ТЕМА 5 ================= -->
+<div class="tab-content" id="t5">
+<h2>🍜 Тема 5: Еда и рестораны</h2>
+
+<div class="warmup">
+<div class="warmup-title">🔥 Разогрев</div>
+<div class="warmup-q">仁杰，您中午吃什么？<span class="ru">Жэньцзе, что вы едите на обед?</span></div>
+<div class="warmup-q">卡荚，您喜欢喝咖啡还是喝茶？<span class="ru">Катя, кофе или чай?</span></div>
+<div class="warmup-q">斯拉瓦，您会做饭吗？<span class="ru">Слава, вы умеете готовить?</span></div>
+</div>
+
+<div class="word-card" data-word="饭店" data-pinyin="fàndiàn" data-trans="ресторан">
+<div class="word-head"><span class="word-chinese">饭店</span><span class="word-pinyin">fàndiàn</span><button class="word-toggle" onclick="toggleTranslation(this)">👁️ Показать перевод</button></div>
+<div class="word-translation">ресторан</div>
+<div class="canvas-wrap"><div class="canvas-label">✏️ Прописи</div><canvas class="trace-canvas" data-char="饭店"></canvas><div class="canvas-actions"><button type="button" onclick="undoCanvas(this)">↩️</button><button type="button" onclick="redoCanvas(this)">↪️</button><button type="button" onclick="clearCanvas(this)">🗑️</button></div></div>
+<div class="persona">Место, куда 仁杰 ведёт деловых партнёров.</div>
+<div class="mnemonic"><div class="part"><strong>饭:</strong> еда. <strong>店:</strong> заведение.<br><strong>Значение:</strong> место с едой = ресторан.</div></div>
+<div class="collocations"><div class="colloc-cloud">
+<div class="colloc-item lvl1"><span class="colloc-level">🎯 HSK</span><span class="colloc-word">去饭店 — пойти в ресторан</span><span class="colloc-example">我们去饭店吃饭吧！</span></div>
+<div class="colloc-item lvl2"><span class="colloc-level">🗣️ Быт</span><span class="colloc-word">这家饭店 — этот ресторан</span><span class="colloc-example">这家饭店很不错。</span></div>
+</div></div>
+<label class="practice-label">✏️ Своё предложение <span>(автосохранение)</span><span class="save-indicator" data-for="t5_饭店_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t5_饭店_practice" placeholder="用「饭店」写一句话..."></textarea>
+</div>
+
+<div class="word-card" data-word="服务员" data-pinyin="fúwùyuán" data-trans="официант">
+<div class="word-head"><span class="word-chinese">服务员</span><span class="word-pinyin">fúwùyuán</span><button class="word-toggle" onclick="toggleTranslation(this)">👁️ Показать перевод</button></div>
+<div class="word-translation">официант</div>
+<div class="canvas-wrap"><div class="canvas-label">✏️ Прописи</div><canvas class="trace-canvas" data-char="服务员"></canvas><div class="canvas-actions"><button type="button" onclick="undoCanvas(this)">↩️</button><button type="button" onclick="redoCanvas(this)">↪️</button><button type="button" onclick="clearCanvas(this)">🗑️</button></div></div>
+<div class="persona">Тот, к которому вы обращаетесь через весь зал.</div>
+<div class="mnemonic"><div class="part"><strong>服:</strong> служить. <strong>务:</strong> дело. <strong>员:</strong> работник.<br><strong>Значение:</strong> официант.</div></div>
+<div class="collocations"><div class="colloc-cloud">
+<div class="colloc-item lvl1"><span class="colloc-level">🎯 HSK</span><span class="colloc-word">叫服务员 — позвать официанта</span><span class="colloc-example">我们叫服务员点菜吧。</span></div>
+<div class="colloc-item lvl2"><span class="colloc-level">🗣️ Быт</span><span class="colloc-word">服务员，点菜 — официант, примите заказ</span><span class="colloc-example">服务员，我们要点菜。</span></div>
+</div></div>
+<label class="practice-label">✏️ Своё предложение <span>(автосохранение)</span><span class="save-indicator" data-for="t5_服务员_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t5_服务员_practice" placeholder="用「服务员」写一句话..."></textarea>
+</div>
+
+<div class="word-card" data-word="面条" data-pinyin="miàntiáo" data-trans="лапша">
+<div class="word-head"><span class="word-chinese">面条</span><span class="word-pinyin">miàntiáo</span><button class="word-toggle" onclick="toggleTranslation(this)">👁️ Показать перевод</button></div>
+<div class="word-translation">лапша</div>
+<div class="canvas-wrap"><div class="canvas-label">✏️ Прописи</div><canvas class="trace-canvas" data-char="面条"></canvas><div class="canvas-actions"><button type="button" onclick="undoCanvas(this)">↩️</button><button type="button" onclick="redoCanvas(this)">↪️</button><button type="button" onclick="clearCanvas(this)">🗑️</button></div></div>
+<div class="persona">То, что вы едите, когда не знаете, что есть.</div>
+<div class="mnemonic"><div class="part"><strong>面:</strong> мука. <strong>条:</strong> полоса.<br><strong>Значение:</strong> длинные полосы муки = лапша.</div></div>
+<div class="collocations"><div class="colloc-cloud">
+<div class="colloc-item lvl1"><span class="colloc-level">🎯 HSK</span><span class="colloc-word">吃面条 — есть лапшу</span><span class="colloc-example">今天我想吃面条。</span></div>
+<div class="colloc-item lvl2"><span class="colloc-level">🗣️ Быт</span><span class="colloc-word">一碗面条 — одна миска лапши</span><span class="colloc-example">给我一碗面条。</span></div>
+</div></div>
+<label class="practice-label">✏️ Своё предложение <span>(автосохранение)</span><span class="save-indicator" data-for="t5_面条_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t5_面条_practice" placeholder="用「面条」写一句话..."></textarea>
+</div>
+
+<div class="word-card" data-word="羊肉" data-pinyin="yángròu" data-trans="баранина">
+<div class="word-head"><span class="word-chinese">羊肉</span><span class="word-pinyin">yángròu</span><button class="word-toggle" onclick="toggleTranslation(this)">👁️ Показать перевод</button></div>
+<div class="word-translation">баранина</div>
+<div class="canvas-wrap"><div class="canvas-label">✏️ Прописи</div><canvas class="trace-canvas" data-char="羊肉"></canvas><div class="canvas-actions"><button type="button" onclick="undoCanvas(this)">↩️</button><button type="button" onclick="redoCanvas(this)">↪️</button><button type="button" onclick="clearCanvas(this)">🗑️</button></div></div>
+<div class="persona">То, что 斯拉瓦 готовит зимой.</div>
+<div class="mnemonic"><div class="part"><strong>羊:</strong> баран. <strong>肉:</strong> мясо.<br><strong>Значение:</strong> баранина.</div></div>
+<div class="collocations"><div class="colloc-cloud">
+<div class="colloc-item lvl1"><span class="colloc-level">🎯 HSK</span><span class="colloc-word">羊肉 — баранина</span><span class="colloc-example">我很喜欢吃羊肉。</span></div>
+<div class="colloc-item lvl2"><span class="colloc-level">🗣️ Быт</span><span class="colloc-word">烤羊肉 — жареная баранина</span><span class="colloc-example">我们去吃烤羊肉吧。</span></div>
+</div></div>
+<label class="practice-label">✏️ Своё предложение <span>(автосохранение)</span><span class="save-indicator" data-for="t5_羊肉_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t5_羊肉_practice" placeholder="用「羊肉」写一句话..."></textarea>
+</div>
+
+<div class="word-card" data-word="好吃" data-pinyin="hǎochī" data-trans="вкусный">
+<div class="word-head"><span class="word-chinese">好吃</span><span class="word-pinyin">hǎochī</span><button class="word-toggle" onclick="toggleTranslation(this)">👁️ Показать перевод</button></div>
+<div class="word-translation">вкусный</div>
+<div class="canvas-wrap"><div class="canvas-label">✏️ Прописи</div><canvas class="trace-canvas" data-char="好吃"></canvas><div class="canvas-actions"><button type="button" onclick="undoCanvas(this)">↩️</button><button type="button" onclick="redoCanvas(this)">↪️</button><button type="button" onclick="clearCanvas(this)">🗑️</button></div></div>
+<div class="persona">Высшая похвала еде в Китае.</div>
+<div class="mnemonic"><div class="part"><strong>好:</strong> хороший. <strong>吃:</strong> есть.<br><strong>Значение:</strong> вкусный.</div></div>
+<div class="collocations"><div class="colloc-cloud">
+<div class="colloc-item lvl1"><span class="colloc-level">🎯 HSK</span><span class="colloc-word">很好吃 — очень вкусно</span><span class="colloc-example">这个菜很好吃。</span></div>
+<div class="colloc-item lvl2"><span class="colloc-level">🗣️ Быт</span><span class="colloc-word">不好吃 — не вкусно</span><span class="colloc-example">这个菜不好吃。</span></div>
+</div></div>
+<label class="practice-label">✏️ Своё предложение <span>(автосохранение)</span><span class="save-indicator" data-for="t5_好吃_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t5_好吃_practice" placeholder="用「好吃」写一句话..."></textarea>
+</div>
+
+<div class="word-card" data-word="咖啡" data-pinyin="kāfēi" data-trans="кофе">
+<div class="word-head"><span class="word-chinese">咖啡</span><span class="word-pinyin">kāfēi</span><button class="word-toggle" onclick="toggleTranslation(this)">👁️ Показать перевод</button></div>
+<div class="word-translation">кофе</div>
+<div class="canvas-wrap"><div class="canvas-label">✏️ Прописи</div><canvas class="trace-canvas" data-char="咖啡"></canvas><div class="canvas-actions"><button type="button" onclick="undoCanvas(this)">↩️</button><button type="button" onclick="redoCanvas(this)">↪️</button><button type="button" onclick="clearCanvas(this)">🗑️</button></div></div>
+<div class="persona">Утро без 咖啡 — утро, которое не считается начавшимся.</div>
+<div class="mnemonic"><div class="part"><strong>咖啡:</strong> звукоподражание «ka-fēi».<br><strong>Значение:</strong> кофе.</div></div>
+<div class="collocations"><div class="colloc-cloud">
+<div class="colloc-item lvl1"><span class="colloc-level">🎯 HSK</span><span class="colloc-word">喝咖啡 — пить кофе</span><span class="colloc-example">我们去喝咖啡吧。</span></div>
+<div class="colloc-item lvl2"><span class="colloc-level">🗣️ Быт</span><span class="colloc-word">一杯咖啡 — одна чашка кофе</span><span class="colloc-example">给我一杯咖啡。</span></div>
+</div></div>
+<label class="practice-label">✏️ Своё предложение <span>(автосохранение)</span><span class="save-indicator" data-for="t5_咖啡_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t5_咖啡_practice" placeholder="用「咖啡」写一句话..."></textarea>
+</div>
+
+<div class="word-card" data-word="鱼" data-pinyin="yú" data-trans="рыба">
+<div class="word-head"><span class="word-chinese">鱼</span><span class="word-pinyin">yú</span><button class="word-toggle" onclick="toggleTranslation(this)">👁️ Показать перевод</button></div>
+<div class="word-translation">рыба</div>
+<div class="canvas-wrap"><div class="canvas-label">✏️ Прописи</div><canvas class="trace-canvas" data-char="鱼"></canvas><div class="canvas-actions"><button type="button" onclick="undoCanvas(this)">↩️</button><button type="button" onclick="redoCanvas(this)">↪️</button><button type="button" onclick="clearCanvas(this)">🗑️</button></div></div>
+<div class="persona">Символ достатка в Китае.</div>
+<div class="mnemonic"><div class="part"><strong>鱼:</strong> рыба — голова, тело, хвост.<br><strong>Значение:</strong> рыба.</div></div>
+<div class="collocations"><div class="colloc-cloud">
+<div class="colloc-item lvl1"><span class="colloc-level">🎯 HSK</span><span class="colloc-word">吃鱼 — есть рыбу</span><span class="colloc-example">我很喜欢吃鱼。</span></div>
+<div class="colloc-item lvl2"><span class="colloc-level">🗣️ Быт</span><span class="colloc-word">买鱼 — купить рыбу</span><span class="colloc-example">我去买一条鱼。</span></div>
+</div></div>
+<label class="practice-label">✏️ Своё предложение <span>(автосохранение)</span><span class="save-indicator" data-for="t5_鱼_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t5_鱼_practice" placeholder="用「鱼」写一句话..."></textarea>
+</div>
+
+</div>
+
+<!-- ================= ТЕМА 6 ================= -->
+<div class="tab-content" id="t6">
+<h2>👨‍👩‍👧 Тема 6: Семья и отношения</h2>
+
+<div class="warmup">
+<div class="warmup-title">🔥 Разогрев</div>
+<div class="warmup-q">卡荚，您有姐姐吗？<span class="ru">Катя, у вас есть старшая сестра?</span></div>
+<div class="warmup-q">斯拉瓦，您丈夫/妻子做什么工作？<span class="ru">Слава, кем работает ваш супруг(а)?</span></div>
+<div class="warmup-q">仁杰，您怎么庆祝生日？<span class="ru">Жэньцзе, как вы празднуете день рождения?</span></div>
+</div>
+
+<div class="word-card" data-word="丈夫" data-pinyin="zhàngfu" data-trans="муж">
+<div class="word-head"><span class="word-chinese">丈夫</span><span class="word-pinyin">zhàngfu</span><button class="word-toggle" onclick="toggleTranslation(this)">👁️ Показать перевод</button></div>
+<div class="word-translation">муж</div>
+<div class="canvas-wrap"><div class="canvas-label">✏️ Прописи</div><canvas class="trace-canvas" data-char="丈夫"></canvas><div class="canvas-actions"><button type="button" onclick="undoCanvas(this)">↩️</button><button type="button" onclick="redoCanvas(this)">↪️</button><button type="button" onclick="clearCanvas(this)">🗑️</button></div></div>
+<div class="persona">Тот, о ком 卡荚 говорит с уважением.</div>
+<div class="mnemonic"><div class="part"><strong>丈:</strong> мужчина. <strong>夫:</strong> муж.<br><strong>Значение:</strong> муж.</div></div>
+<div class="collocations"><div class="colloc-cloud">
+<div class="colloc-item lvl1"><span class="colloc-level">🎯 HSK</span><span class="colloc-word">我的丈夫 — мой муж</span><span class="colloc-example">我的丈夫是工程师。</span></div>
+<div class="colloc-item lvl2"><span class="colloc-level">🗣️ Быт</span><span class="colloc-word">她丈夫 — её муж</span><span class="colloc-example">她丈夫很忙。</span></div>
+</div></div>
+<label class="practice-label">✏️ Своё предложение <span>(автосохранение)</span><span class="save-indicator" data-for="t6_丈夫_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t6_丈夫_practice" placeholder="用「丈夫」写一句话..."></textarea>
+</div>
+
+<div class="word-card" data-word="姐姐" data-pinyin="jiějie" data-trans="старшая сестра">
+<div class="word-head"><span class="word-chinese">姐姐</span><span class="word-pinyin">jiějie</span><button class="word-toggle" onclick="toggleTranslation(this)">👁️ Показать перевод</button></div>
+<div class="word-translation">старшая сестра</div>
+<div class="canvas-wrap"><div class="canvas-label">✏️ Прописи</div><canvas class="trace-canvas" data-char="姐姐"></canvas><div class="canvas-actions"><button type="button" onclick="undoCanvas(this)">↩️</button><button type="button" onclick="redoCanvas(this)">↪️</button><button type="button" onclick="clearCanvas(this)">🗑️</button></div></div>
+<div class="persona">Та, кто всегда даёт мудрые советы.</div>
+<div class="mnemonic"><div class="part"><strong>姐:</strong> женщина (女) + 且. Удвоение — ласковое обращение.<br><strong>Значение:</strong> старшая сестра.</div></div>
+<div class="collocations"><div class="colloc-cloud">
+<div class="colloc-item lvl1"><span class="colloc-level">🎯 HSK</span><span class="colloc-word">我姐姐 — моя старшая сестра</span><span class="colloc-example">我姐姐很聪明。</span></div>
+<div class="colloc-item lvl2"><span class="colloc-level">🗣️ Быт</span><span class="colloc-word">姐姐的家 — дом сестры</span><span class="colloc-example">我常去姐姐的家。</span></div>
+</div></div>
+<label class="practice-label">✏️ Своё предложение <span>(автосохранение)</span><span class="save-indicator" data-for="t6_姐姐_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t6_姐姐_practice" placeholder="用「姐姐」写一句话..."></textarea>
+</div>
+
+<div class="word-card" data-word="生日" data-pinyin="shēngrì" data-trans="день рождения">
+<div class="word-head"><span class="word-chinese">生日</span><span class="word-pinyin">shēngrì</span><button class="word-toggle" onclick="toggleTranslation(this)">👁️ Показать перевод</button></div>
+<div class="word-translation">день рождения</div>
+<div class="canvas-wrap"><div class="canvas-label">✏️ Прописи</div><canvas class="trace-canvas" data-char="生日"></canvas><div class="canvas-actions"><button type="button" onclick="undoCanvas(this)">↩️</button><button type="button" onclick="redoCanvas(this)">↪️</button><button type="button" onclick="clearCanvas(this)">🗑️</button></div></div>
+<div class="persona">Тот день, когда 仁杰 получает сотни сообщений.</div>
+<div class="mnemonic"><div class="part"><strong>生:</strong> рождаться. <strong>日:</strong> день.<br><strong>Значение:</strong> день рождения.</div></div>
+<div class="collocations"><div class="colloc-cloud">
+<div class="colloc-item lvl1"><span class="colloc-level">🎯 HSK</span><span class="colloc-word">生日快乐 — с днём рождения</span><span class="colloc-example">祝您生日快乐！</span></div>
+<div class="colloc-item lvl2"><span class="colloc-level">🗣️ Быт</span><span class="colloc-word">我的生日 — мой день рождения</span><span class="colloc-example">我的生日是九月六号。</span></div>
+<div class="colloc-item lvl3"><span class="colloc-level">📰 Медиа</span><span class="colloc-word">过生日 — отмечать день рождения</span><span class="colloc-example">我们明天过生日。</span></div>
+</div></div>
+<label class="practice-label">✏️ Своё предложение <span>(автосохранение)</span><span class="save-indicator" data-for="t6_生日_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t6_生日_practice" placeholder="用「生日」写一句话..."></textarea>
+</div>
+
+<div class="word-card" data-word="快乐" data-pinyin="kuàilè" data-trans="счастливый">
+<div class="word-head"><span class="word-chinese">快乐</span><span class="word-pinyin">kuàilè</span><button class="word-toggle" onclick="toggleTranslation(this)">👁️ Показать перевод</button></div>
+<div class="word-translation">счастливый (долгое состояние)</div>
+<div class="canvas-wrap"><div class="canvas-label">✏️ Прописи</div><canvas class="trace-canvas" data-char="快乐"></canvas><div class="canvas-actions"><button type="button" onclick="undoCanvas(this)">↩️</button><button type="button" onclick="redoCanvas(this)">↪️</button><button type="button" onclick="clearCanvas(this)">🗑️</button></div></div>
+<div class="persona">Слово для больших дат.</div>
+<div class="mnemonic"><div class="part"><strong>快:</strong> весёлый. <strong>乐:</strong> радость.<br><strong>Значение:</strong> счастье.</div></div>
+<div class="collocations"><div class="colloc-cloud">
+<div class="colloc-item lvl1"><span class="colloc-level">🎯 HSK</span><span class="colloc-word">生日快乐 — с днём рождения</span><span class="colloc-example">祝您生日快乐！</span></div>
+<div class="colloc-item lvl2"><span class="colloc-level">🗣️ Быт</span><span class="colloc-word">新年快乐 — с Новым годом</span><span class="colloc-example">新年快乐！</span></div>
+<div class="colloc-item lvl3"><span class="colloc-level">📰 Медиа</span><span class="colloc-word">节日快乐 — с праздником</span><span class="colloc-example">节日快乐！</span></div>
+</div></div>
+<label class="practice-label">✏️ Своё предложение <span>(автосохранение)</span><span class="save-indicator" data-for="t6_快乐_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t6_快乐_practice" placeholder="用「快乐」写一句话..."></textarea>
+</div>
+
+<div class="word-card" data-word="高兴" data-pinyin="gāoxìng" data-trans="рад">
+<div class="word-head"><span class="word-chinese">高兴</span><span class="word-pinyin">gāoxìng</span><button class="word-toggle" onclick="toggleTranslation(this)">👁️ Показать перевод</button></div>
+<div class="word-translation">рад, доволен</div>
+<div class="canvas-wrap"><div class="canvas-label">✏️ Прописи</div><canvas class="trace-canvas" data-char="高兴"></canvas><div class="canvas-actions"><button type="button" onclick="undoCanvas(this)">↩️</button><button type="button" onclick="redoCanvas(this)">↪️</button><button type="button" onclick="clearCanvas(this)">🗑️</button></div></div>
+<div class="persona">Короткая радость. Встретил друга — 很高兴.</div>
+<div class="mnemonic"><div class="part"><strong>高:</strong> высокий. <strong>兴:</strong> радость.<br><strong>Значение:</strong> рад.</div></div>
+<div class="collocations"><div class="colloc-cloud">
+<div class="colloc-item lvl1"><span class="colloc-level">🎯 HSK</span><span class="colloc-word">很高兴 — очень рад</span><span class="colloc-example">很高兴认识您。</span></div>
+<div class="colloc-item lvl2"><span class="colloc-level">🗣️ Быт</span><span class="colloc-word">太高兴了 — так рад</span><span class="colloc-example">今天见到您，太高兴了！</span></div>
+<div class="colloc-item lvl3"><span class="colloc-level">📰 Медиа</span><span class="colloc-word">不高兴 — не рад</span><span class="colloc-example">今天我不高兴。</span></div>
+</div></div>
+<label class="practice-label">✏️ Своё предложение <span>(автосохранение)</span><span class="save-indicator" data-for="t6_高兴_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t6_高兴_practice" placeholder="用「高兴」写一句话..."></textarea>
+</div>
+
+<div class="grammar-card">
+<div class="grammar-title">让 и 请</div>
+<div class="grammar-subtitle">Каузативные предложения</div>
+<div class="grammar-formula">A + 让/请 + B + глагол</div>
+<div class="grammar-persona">让 — «пусть / заставить». 请 — «попросить вежливо».</div>
+<div class="grammar-body">
+<div class="grammar-example"><span class="cn">他让我告诉您。</span><span class="ru">Он попросил меня вам сказать.</span></div>
+<div class="grammar-example"><span class="cn">妈妈不让我晚睡。</span><span class="ru">Мама не разрешает мне поздно ложиться.</span></div>
+<div class="grammar-example"><span class="cn">我请服务员帮个忙。</span><span class="ru">Я попросил официанта помочь.</span></div>
+<div class="grammar-example"><span class="cn">他请我去他家吃饭。</span><span class="ru">Он пригласил меня к себе домой поесть.</span></div>
+</div>
+<label class="practice-label">✏️ Свои примеры <span>(автосохранение)</span><span class="save-indicator" data-for="t6_让请_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t6_让请_practice" placeholder="Напишите 3 примера..."></textarea>
+</div>
+
+</div>
+
+<!-- ================= ТЕМА 7 ================= -->
+<div class="tab-content" id="t7">
+<h2>🏠 Тема 7: Дом и вещи</h2>
+
+<div class="warmup">
+<div class="warmup-title">🔥 Разогрев</div>
+<div class="warmup-q">卡荚，您的房间怎么样？大不大？<span class="ru">Катя, какая у вас комната?</span></div>
+<div class="warmup-q">斯拉瓦，您的手表是什么颜色的？<span class="ru">Слава, какого цвета ваши часы?</span></div>
+<div class="warmup-q">仁杰，您骑自行车上班吗？<span class="ru">Жэньцзе, вы ездите на велосипеде?</span></div>
+</div>
+
+<div class="word-card" data-word="房间" data-pinyin="fángjiān" data-trans="комната">
+<div class="word-head"><span class="word-chinese">房间</span><span class="word-pinyin">fángjiān</span><button class="word-toggle" onclick="toggleTranslation(this)">👁️ Показать перевод</button></div>
+<div class="word-translation">комната</div>
+<div class="canvas-wrap"><div class="canvas-label">✏️ Прописи</div><canvas class="trace-canvas" data-char="房间"></canvas><div class="canvas-actions"><button type="button" onclick="undoCanvas(this)">↩️</button><button type="button" onclick="redoCanvas(this)">↪️</button><button type="button" onclick="clearCanvas(this)">🗑️</button></div></div>
+<div class="persona">Ваше личное пространство.</div>
+<div class="mnemonic"><div class="part"><strong>房:</strong> дом. <strong>间:</strong> пространство.<br><strong>Значение:</strong> комната.</div></div>
+<div class="collocations"><div class="colloc-cloud">
+<div class="colloc-item lvl1"><span class="colloc-level">🎯 HSK</span><span class="colloc-word">一个房间 — одна комната</span><span class="colloc-example">我家有三个房间。</span></div>
+<div class="colloc-item lvl2"><span class="colloc-level">🗣️ Быт</span><span class="colloc-word">房间号 — номер комнаты</span><span class="colloc-example">请问您的房间号是多少？</span></div>
+</div></div>
+<label class="practice-label">✏️ Своё предложение <span>(автосохранение)</span><span class="save-indicator" data-for="t7_房间_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t7_房间_practice" placeholder="用「房间」写一句话..."></textarea>
+</div>
+
+<div class="word-card" data-word="手表" data-pinyin="shǒubiǎo" data-trans="наручные часы">
+<div class="word-head"><span class="word-chinese">手表</span><span class="word-pinyin">shǒubiǎo</span><button class="word-toggle" onclick="toggleTranslation(this)">👁️ Показать перевод</button></div>
+<div class="word-translation">наручные часы</div>
+<div class="canvas-wrap"><div class="canvas-label">✏️ Прописи</div><canvas class="trace-canvas" data-char="手表"></canvas><div class="canvas-actions"><button type="button" onclick="undoCanvas(this)">↩️</button><button type="button" onclick="redoCanvas(this)">↪️</button><button type="button" onclick="clearCanvas(this)">🗑️</button></div></div>
+<div class="persona">Аксессуар, который носят или те, кто следит за временем, или те, кому подарили.</div>
+<div class="mnemonic"><div class="part"><strong>手:</strong> рука. <strong>表:</strong> часы.<br><strong>Значение:</strong> наручные часы.</div></div>
+<div class="collocations"><div class="colloc-cloud">
+<div class="colloc-item lvl1"><span class="colloc-level">🎯 HSK</span><span class="colloc-word">一块手表 — одни часы</span><span class="colloc-example">我买了一块手表。</span></div>
+<div class="colloc-item lvl2"><span class="colloc-level">🗣️ Быт</span><span class="colloc-word">看手表 — посмотреть на часы</span><span class="colloc-example">他看了看手表。</span></div>
+</div></div>
+<label class="practice-label">✏️ Своё предложение <span>(автосохранение)</span><span class="save-indicator" data-for="t7_手表_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t7_手表_practice" placeholder="用「手表」写一句话..."></textarea>
+</div>
+
+<div class="word-card" data-word="报纸" data-pinyin="bàozhǐ" data-trans="газета">
+<div class="word-head"><span class="word-chinese">报纸</span><span class="word-pinyin">bàozhǐ</span><button class="word-toggle" onclick="toggleTranslation(this)">👁️ Показать перевод</button></div>
+<div class="word-translation">газета</div>
+<div class="canvas-wrap"><div class="canvas-label">✏️ Прописи</div><canvas class="trace-canvas" data-char="报纸"></canvas><div class="canvas-actions"><button type="button" onclick="undoCanvas(this)">↩️</button><button type="button" onclick="redoCanvas(this)">↪️</button><button type="button" onclick="clearCanvas(this)">🗑️</button></div></div>
+<div class="persona">Почти музейный экспонат. Но 仁杰 покупает каждый выходной.</div>
+<div class="mnemonic"><div class="part"><strong>报:</strong> сообщать. <strong>纸:</strong> бумага.<br><strong>Значение:</strong> газета.</div></div>
+<div class="collocations"><div class="colloc-cloud">
+<div class="colloc-item lvl1"><span class="colloc-level">🎯 HSK</span><span class="colloc-word">看报纸 — читать газету</span><span class="colloc-example">他每天早上看报纸。</span></div>
+<div class="colloc-item lvl2"><span class="colloc-level">🗣️ Быт</span><span class="colloc-word">买报纸 — купить газету</span><span class="colloc-example">我去买一份报纸。</span></div>
+</div></div>
+<label class="practice-label">✏️ Своё предложение <span>(автосохранение)</span><span class="save-indicator" data-for="t7_报纸_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t7_报纸_practice" placeholder="用「报纸」写一句话..."></textarea>
+</div>
+
+<div class="word-card" data-word="自行车" data-pinyin="zìxíngchē" data-trans="велосипед">
+<div class="word-head"><span class="word-chinese">自行车</span><span class="word-pinyin">zìxíngchē</span><button class="word-toggle" onclick="toggleTranslation(this)">👁️ Показать перевод</button></div>
+<div class="word-translation">велосипед</div>
+<div class="canvas-wrap"><div class="canvas-label">✏️ Прописи</div><canvas class="trace-canvas" data-char="自行车"></canvas><div class="canvas-actions"><button type="button" onclick="undoCanvas(this)">↩️</button><button type="button" onclick="redoCanvas(this)">↪️</button><button type="button" onclick="clearCanvas(this)">🗑️</button></div></div>
+<div class="persona">В Китае — король города.</div>
+<div class="mnemonic"><div class="part"><strong>自:</strong> сам. <strong>行:</strong> двигаться. <strong>车:</strong> машина.<br><strong>Значение:</strong> сам двигает = велосипед.</div></div>
+<div class="collocations"><div class="colloc-cloud">
+<div class="colloc-item lvl1"><span class="colloc-level">🎯 HSK</span><span class="colloc-word">骑自行车 — ехать на велосипеде</span><span class="colloc-example">我每天骑自行车上班。</span></div>
+<div class="colloc-item lvl2"><span class="colloc-level">🗣️ Быт</span><span class="colloc-word">一辆自行车 — один велосипед</span><span class="colloc-example">我买了一辆自行车。</span></div>
+</div></div>
+<label class="practice-label">✏️ Своё предложение <span>(автосохранение)</span><span class="save-indicator" data-for="t7_自行车_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t7_自行车_practice" placeholder="用「自行车」写一句话..."></textarea>
+</div>
+
+<div class="word-card" data-word="颜色" data-pinyin="yánsè" data-trans="цвет">
+<div class="word-head"><span class="word-chinese">颜色</span><span class="word-pinyin">yánsè</span><button class="word-toggle" onclick="toggleTranslation(this)">👁️ Показать перевод</button></div>
+<div class="word-translation">цвет</div>
+<div class="canvas-wrap"><div class="canvas-label">✏️ Прописи</div><canvas class="trace-canvas" data-char="颜色"></canvas><div class="canvas-actions"><button type="button" onclick="undoCanvas(this)">↩️</button><button type="button" onclick="redoCanvas(this)">↪️</button><button type="button" onclick="clearCanvas(this)">🗑️</button></div></div>
+<div class="persona">То, о чём мы говорим, когда не находим слов.</div>
+<div class="mnemonic"><div class="part"><strong>颜:</strong> облик. <strong>色:</strong> цвет.<br><strong>Значение:</strong> цвет.</div></div>
+<div class="collocations"><div class="colloc-cloud">
+<div class="colloc-item lvl1"><span class="colloc-level">🎯 HSK</span><span class="colloc-word">什么颜色 — какой цвет</span><span class="colloc-example">您喜欢什么颜色？</span></div>
+<div class="colloc-item lvl2"><span class="colloc-level">🗣️ Быт</span><span class="colloc-word">红色 / 粉色 — красный / розовый</span><span class="colloc-example">我喜欢红色。</span></div>
+</div></div>
+<label class="practice-label">✏️ Своё предложение <span>(автосохранение)</span><span class="save-indicator" data-for="t7_颜色_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t7_颜色_practice" placeholder="用「颜色」写一句话..."></textarea>
+</div>
+
+<div class="grammar-card">
+<div class="grammar-title">的-фраза</div>
+<div class="grammar-subtitle">Превращает слово в существительное</div>
+<div class="grammar-formula">[определение] + 的 = существительное</div>
+<div class="grammar-persona">Это когда 仁杰 говорит: «Эта не та, которая красная».</div>
+<div class="grammar-body">
+<div class="grammar-example"><span class="cn">红色的是我的。</span><span class="ru">Красная (вещь) — моя.</span></div>
+<div class="grammar-example"><span class="cn">左边那个新的是她买的。</span><span class="ru">Тот новый слева — она купила.</span></div>
+<div class="grammar-example"><span class="cn">我买的是这块手表。</span><span class="ru">Я купил именно эти часы.</span></div>
+</div>
+<label class="practice-label">✏️ Свои примеры <span>(автосохранение)</span><span class="save-indicator" data-for="t7_的фраза_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t7_的фраза_practice" placeholder="Напишите 3 примера..."></textarea>
+</div>
+
+<div class="grammar-card">
+<div class="grammar-title">真 zhēn</div>
+<div class="grammar-subtitle">Модальное наречие «действительно»</div>
+<div class="grammar-formula">真 + прилагательное / глагол</div>
+<div class="grammar-persona">Это восклицание.</div>
+<div class="grammar-body">
+<div class="grammar-example"><span class="cn">真好看！</span><span class="ru">Как красиво!</span></div>
+<div class="grammar-example"><span class="cn">您的房间真干净！</span><span class="ru">У вас в комнате действительно чисто!</span></div>
+<div class="grammar-example"><span class="cn">这只手表真贵！</span><span class="ru">Эти часы действительно дорогие!</span></div>
+</div>
+<label class="practice-label">✏️ Свои примеры <span>(автосохранение)</span><span class="save-indicator" data-for="t7_真_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t7_真_practice" placeholder="Напишите 3 примера..."></textarea>
+</div>
+
+</div>
+
+<!-- ================= ТЕМА 8 ================= -->
+<div class="tab-content" id="t8">
+<h2>⚽ Тема 8: Спорт и хобби</h2>
+
+<div class="warmup">
+<div class="warmup-title">🔥 Разогрев</div>
+<div class="warmup-q">斯拉瓦，您喜欢什么运动？<span class="ru">Слава, какой спорт вам нравится?</span></div>
+<div class="warmup-q">卡荚，您会游泳吗？<span class="ru">Катя, вы умеете плавать?</span></div>
+<div class="warmup-q">仁杰，您喜欢踢足球还是打篮球？<span class="ru">Жэньцзе, футбол или баскетбол?</span></div>
+</div>
+
+<div class="word-card" data-word="运动" data-pinyin="yùndòng" data-trans="спорт">
+<div class="word-head"><span class="word-chinese">运动</span><span class="word-pinyin">yùndòng</span><button class="word-toggle" onclick="toggleTranslation(this)">👁️ Показать перевод</button></div>
+<div class="word-translation">спорт, заниматься спортом</div>
+<div class="canvas-wrap"><div class="canvas-label">✏️ Прописи</div><canvas class="trace-canvas" data-char="运动"></canvas><div class="canvas-actions"><button type="button" onclick="undoCanvas(this)">↩️</button><button type="button" onclick="redoCanvas(this)">↪️</button><button type="button" onclick="clearCanvas(this)">🗑️</button></div></div>
+<div class="persona">То, о чём говорят на каждом медосмотре.</div>
+<div class="mnemonic"><div class="part"><strong>运:</strong> двигать. <strong>动:</strong> движение.<br><strong>Значение:</strong> спорт.</div></div>
+<div class="collocations"><div class="colloc-cloud">
+<div class="colloc-item lvl1"><span class="colloc-level">🎯 HSK</span><span class="colloc-word">运动 — заниматься спортом</span><span class="colloc-example">我每天都运动。</span></div>
+<div class="colloc-item lvl2"><span class="colloc-level">🗣️ Быт</span><span class="colloc-word">运动鞋 — спортивная обувь</span><span class="colloc-example">我买了一双运动鞋。</span></div>
+<div class="colloc-item lvl3"><span class="colloc-level">📰 Медиа</span><span class="colloc-word">运动场 — стадион</span><span class="colloc-example">学校的运动场很大。</span></div>
+</div></div>
+<label class="practice-label">✏️ Своё предложение <span>(автосохранение)</span><span class="save-indicator" data-for="t8_运动_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t8_运动_practice" placeholder="用「运动」写一句话..."></textarea>
+</div>
+
+<div class="word-card" data-word="踢足球" data-pinyin="tī zúqiú" data-trans="играть в футбол">
+<div class="word-head"><span class="word-chinese">踢足球</span><span class="word-pinyin">tī zúqiú</span><button class="word-toggle" onclick="toggleTranslation(this)">👁️ Показать перевод</button></div>
+<div class="word-translation">играть в футбол</div>
+<div class="canvas-wrap"><div class="canvas-label">✏️ Прописи</div><canvas class="trace-canvas" data-char="踢足球"></canvas><div class="canvas-actions"><button type="button" onclick="undoCanvas(this)">↩️</button><button type="button" onclick="redoCanvas(this)">↪️</button><button type="button" onclick="clearCanvas(this)">🗑️</button></div></div>
+<div class="persona">То, что 斯拉瓦 делает по субботам.</div>
+<div class="mnemonic"><div class="part"><strong>踢:</strong> пинать. <strong>足:</strong> нога. <strong>球:</strong> мяч.<br><strong>Значение:</strong> пинать мяч = футбол.</div></div>
+<div class="collocations"><div class="colloc-cloud">
+<div class="colloc-item lvl1"><span class="colloc-level">🎯 HSK</span><span class="colloc-word">踢足球 — играть в футбол</span><span class="colloc-example">我们下午踢足球。</span></div>
+<div class="colloc-item lvl2"><span class="colloc-level">🗣️ Быт</span><span class="colloc-word">踢球 — играть в мяч</span><span class="colloc-example">他喜欢跟朋友踢球。</span></div>
+</div></div>
+<label class="practice-label">✏️ Своё предложение <span>(автосохранение)</span><span class="save-indicator" data-for="t8_踢足球_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t8_踢足球_practice" placeholder="用「踢足球」写一句话..."></textarea>
+</div>
+
+<div class="word-card" data-word="打篮球" data-pinyin="dǎ lánqiú" data-trans="играть в баскетбол">
+<div class="word-head"><span class="word-chinese">打篮球</span><span class="word-pinyin">dǎ lánqiú</span><button class="word-toggle" onclick="toggleTranslation(this)">👁️ Показать перевод</button></div>
+<div class="word-translation">играть в баскетбол</div>
+<div class="canvas-wrap"><div class="canvas-label">✏️ Прописи</div><canvas class="trace-canvas" data-char="打篮球"></canvas><div class="canvas-actions"><button type="button" onclick="undoCanvas(this)">↩️</button><button type="button" onclick="redoCanvas(this)">↪️</button><button type="button" onclick="clearCanvas(this)">🗑️</button></div></div>
+<div class="persona">Это спорт тех, у кого есть рост.</div>
+<div class="mnemonic"><div class="part"><strong>打:</strong> бить рукой. <strong>篮:</strong> корзина. <strong>球:</strong> мяч.<br><strong>Значение:</strong> баскетбол.</div></div>
+<div class="collocations"><div class="colloc-cloud">
+<div class="colloc-item lvl1"><span class="colloc-level">🎯 HSK</span><span class="colloc-word">打篮球 — играть в баскетбол</span><span class="colloc-example">我周末和朋友打篮球。</span></div>
+<div class="colloc-item lvl2"><span class="colloc-level">🗣️ Быт</span><span class="colloc-word">打篮球打得很好 — хорошо играть</span><span class="colloc-example">他打篮球打得很好。</span></div>
+</div></div>
+<label class="practice-label">✏️ Своё предложение <span>(автосохранение)</span><span class="save-indicator" data-for="t8_打篮球_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t8_打篮球_practice" placeholder="用「打篮球」写一句话..."></textarea>
+</div>
+
+<div class="word-card" data-word="游泳" data-pinyin="yóuyǒng" data-trans="плавать">
+<div class="word-head"><span class="word-chinese">游泳</span><span class="word-pinyin">yóuyǒng</span><button class="word-toggle" onclick="toggleTranslation(this)">👁️ Показать перевод</button></div>
+<div class="word-translation">плавать, плавание</div>
+<div class="canvas-wrap"><div class="canvas-label">✏️ Прописи</div><canvas class="trace-canvas" data-char="游泳"></canvas><div class="canvas-actions"><button type="button" onclick="undoCanvas(this)">↩️</button><button type="button" onclick="redoCanvas(this)">↪️</button><button type="button" onclick="clearCanvas(this)">🗑️</button></div></div>
+<div class="persona">Единственный вид спорта, который не «по понедельникам».</div>
+<div class="mnemonic"><div class="part"><strong>游:</strong> плавать. <strong>泳:</strong> плавать в воде.<br><strong>Значение:</strong> плавание.</div></div>
+<div class="collocations"><div class="colloc-cloud">
+<div class="colloc-item lvl1"><span class="colloc-level">🎯 HSK</span><span class="colloc-word">去游泳 — пойти поплавать</span><span class="colloc-example">周末我们去游泳吧。</span></div>
+<div class="colloc-item lvl2"><span class="colloc-level">🗣️ Быт</span><span class="colloc-word">会游泳 — уметь плавать</span><span class="colloc-example">您会游泳吗？</span></div>
+<div class="colloc-item lvl3"><span class="colloc-level">📰 Медиа</span><span class="colloc-word">游泳馆 — бассейн</span><span class="colloc-example">附近的游泳馆很干净。</span></div>
+</div></div>
+<label class="practice-label">✏️ Своё предложение <span>(автосохранение)</span><span class="save-indicator" data-for="t8_游泳_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t8_游泳_practice" placeholder="用「游泳」写一句话..."></textarea>
+</div>
+
+<div class="word-card" data-word="跳舞" data-pinyin="tiàowǔ" data-trans="танцевать">
+<div class="word-head"><span class="word-chinese">跳舞</span><span class="word-pinyin">tiàowǔ</span><button class="word-toggle" onclick="toggleTranslation(this)">👁️ Показать перевод</button></div>
+<div class="word-translation">танцевать</div>
+<div class="canvas-wrap"><div class="canvas-label">✏️ Прописи</div><canvas class="trace-canvas" data-char="跳舞"></canvas><div class="canvas-actions"><button type="button" onclick="undoCanvas(this)">↩️</button><button type="button" onclick="redoCanvas(this)">↪️</button><button type="button" onclick="clearCanvas(this)">🗑️</button></div></div>
+<div class="persona">То, что вы вспоминаете на свадьбах друзей.</div>
+<div class="mnemonic"><div class="part"><strong>跳:</strong> прыгать. <strong>舞:</strong> танец.<br><strong>Значение:</strong> танцевать.</div></div>
+<div class="collocations"><div class="colloc-cloud">
+<div class="colloc-item lvl1"><span class="colloc-level">🎯 HSK</span><span class="colloc-word">跳舞 — танцевать</span><span class="colloc-example">她很会跳舞。</span></div>
+<div class="colloc-item lvl2"><span class="colloc-level">🗣️ Быт</span><span class="colloc-word">跳一支舞 — станцевать один танец</span><span class="colloc-example">我们跳一支舞好吗？</span></div>
+<div class="colloc-item lvl3"><span class="colloc-level">📰 Медиа</span><span class="colloc-word">舞蹈 — танец (искусство)</span><span class="colloc-example">她学舞蹈很多年了。</span></div>
+</div></div>
+<label class="practice-label">✏️ Своё предложение <span>(автосохранение)</span><span class="save-indicator" data-for="t8_跳舞_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t8_跳舞_practice" placeholder="用「跳舞」写一句话..."></textarea>
+</div>
+
+<div class="word-card" data-word="经常" data-pinyin="jīngcháng" data-trans="часто">
+<div class="word-head"><span class="word-chinese">经常</span><span class="word-pinyin">jīngcháng</span><button class="word-toggle" onclick="toggleTranslation(this)">👁️ Показать перевод</button></div>
+<div class="word-translation">часто, регулярно</div>
+<div class="canvas-wrap"><div class="canvas-label">✏️ Прописи</div><canvas class="trace-canvas" data-char="经常"></canvas><div class="canvas-actions"><button type="button" onclick="undoCanvas(this)">↩️</button><button type="button" onclick="redoCanvas(this)">↪️</button><button type="button" onclick="clearCanvas(this)">🗑️</button></div></div>
+<div class="persona">Наречие-обманщик. Люди говорят «我经常运动», но по факту это два раза в год.</div>
+<div class="mnemonic"><div class="part"><strong>经:</strong> проходить. <strong>常:</strong> постоянный.<br><strong>Значение:</strong> часто.</div></div>
+<div class="collocations"><div class="colloc-cloud">
+<div class="colloc-item lvl1"><span class="colloc-level">🎯 HSK</span><span class="colloc-word">经常运动 — часто заниматься спортом</span><span class="colloc-example">他经常运动，身体很好。</span></div>
+<div class="colloc-item lvl2"><span class="colloc-level">🗣️ Быт</span><span class="colloc-word">经常去 — часто ходить</span><span class="colloc-example">我经常去那个咖啡店。</span></div>
+</div></div>
+<label class="practice-label">✏️ Своё предложение <span>(автосохранение)</span><span class="save-indicator" data-for="t8_经常_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t8_经常_practice" placeholder="用「经常」写一句话..."></textarea>
+</div>
+
+<div class="grammar-card">
+<div class="grammar-title">要 yào</div>
+<div class="grammar-subtitle">«Хотеть, намереваться»</div>
+<div class="grammar-formula">[субъект] + 要 + глагол</div>
+<div class="grammar-persona">Решительное намерение.</div>
+<div class="grammar-body">
+<div class="grammar-example"><span class="cn">我要买新的运动鞋。</span><span class="ru">Я хочу купить новые кроссовки.</span></div>
+<div class="grammar-example"><span class="cn">明天我要去游泳。</span><span class="ru">Завтра я собираюсь пойти поплавать.</span></div>
+<div class="grammar-example"><span class="cn">您要不要一起踢足球？</span><span class="ru">Хотите вместе поиграть в футбол?</span></div>
+</div>
+<label class="practice-label">✏️ Свои примеры <span>(автосохранение)</span><span class="save-indicator" data-for="t8_要_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t8_要_practice" placeholder="Напишите 3 примера..."></textarea>
+</div>
+
+<div class="grammar-card">
+<div class="grammar-title">最 zuì</div>
+<div class="grammar-subtitle">«Самый»</div>
+<div class="grammar-formula">最 + прилагательное / глагол</div>
+<div class="grammar-persona">«Самый-самый».</div>
+<div class="grammar-body">
+<div class="grammar-example"><span class="cn">我最喜欢的运动是游泳。</span><span class="ru">Мой любимый спорт — плавание.</span></div>
+<div class="grammar-example"><span class="cn">他跑得最快。</span><span class="ru">Он бегает быстрее всех.</span></div>
+<div class="grammar-example"><span class="cn">九月去北京旅游最好。</span><span class="ru">В сентябре лучше всего ехать в Пекин.</span></div>
+</div>
+<label class="practice-label">✏️ Свои примеры <span>(автосохранение)</span><span class="save-indicator" data-for="t8_最_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t8_最_practice" placeholder="Напишите 3 примера..."></textarea>
+</div>
+
+</div>
+
+<!-- ================= ТЕМА 9 ================= -->
+<div class="tab-content" id="t9">
+<h2>🔢 Тема 9: Числа и количество</h2>
+
+<div class="warmup">
+<div class="warmup-title">🔥 Разогрев</div>
+<div class="warmup-q">仁杰，您有几个姐姐？<span class="ru">Жэньцзе, сколько у вас старших сестёр?</span></div>
+<div class="warmup-q">卡荚，您每天花几个小时工作？<span class="ru">Катя, сколько часов в день вы работаете?</span></div>
+<div class="warmup-q">斯拉瓦，您的自行车多少钱？<span class="ru">Слава, сколько стоит ваш велосипед?</span></div>
+</div>
+
+<div class="word-card" data-word="几" data-pinyin="jǐ" data-trans="несколько (до 10)">
+<div class="word-head"><span class="word-chinese">几</span><span class="word-pinyin">jǐ</span><button class="word-toggle" onclick="toggleTranslation(this)">👁️ Показать перевод</button></div>
+<div class="word-translation">несколько (до 10); сколько?</div>
+<div class="canvas-wrap"><div class="canvas-label">✏️ Прописи</div><canvas class="trace-canvas" data-char="几"></canvas><div class="canvas-actions"><button type="button" onclick="undoCanvas(this)">↩️</button><button type="button" onclick="redoCanvas(this)">↪️</button><button type="button" onclick="clearCanvas(this)">🗑️</button></div></div>
+<div class="persona">Маленькое число до десяти.</div>
+<div class="mnemonic"><div class="part"><strong>几:</strong> столик, подставка.<br><strong>Значение:</strong> сколько (до 10).</div></div>
+<div class="collocations"><div class="colloc-cloud">
+<div class="colloc-item lvl1"><span class="colloc-level">🎯 HSK</span><span class="colloc-word">几个人 — сколько человек</span><span class="colloc-example">您们有几个人？</span></div>
+<div class="colloc-item lvl2"><span class="colloc-level">🗣️ Быт</span><span class="colloc-word">几点 — во сколько</span><span class="colloc-example">您几点上班？</span></div>
+<div class="colloc-item lvl3"><span class="colloc-level">📰 Медиа</span><span class="colloc-word">几天 — сколько дней</span><span class="colloc-example">他去北京几天了？</span></div>
+</div></div>
+<label class="practice-label">✏️ Своё предложение <span>(автосохранение)</span><span class="save-indicator" data-for="t9_几_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t9_几_practice" placeholder="用「几」写一句话..."></textarea>
+</div>
+
+<div class="word-card" data-word="多" data-pinyin="duō" data-trans="много">
+<div class="word-head"><span class="word-chinese">多</span><span class="word-pinyin">duō</span><button class="word-toggle" onclick="toggleTranslation(this)">👁️ Показать перевод</button></div>
+<div class="word-translation">много; более, с лишним</div>
+<div class="canvas-wrap"><div class="canvas-label">✏️ Прописи</div><canvas class="trace-canvas" data-char="多"></canvas><div class="canvas-actions"><button type="button" onclick="undoCanvas(this)">↩️</button><button type="button" onclick="redoCanvas(this)">↪️</button><button type="button" onclick="clearCanvas(this)">🗑️</button></div></div>
+<div class="persona">Универсальный «плюс».</div>
+<div class="mnemonic"><div class="part"><strong>多:</strong> два 夕 (вечер). Много вечеров.<br><strong>Значение:</strong> много, более.</div></div>
+<div class="collocations"><div class="colloc-cloud">
+<div class="colloc-item lvl1"><span class="colloc-level">🎯 HSK</span><span class="colloc-word">多少钱 — сколько стоит</span><span class="colloc-example">这个多少钱？</span></div>
+<div class="colloc-item lvl2"><span class="colloc-level">🗣️ Быт</span><span class="colloc-word">多大 — сколько лет</span><span class="colloc-example">您今年多大？</span></div>
+<div class="colloc-item lvl3"><span class="colloc-level">📰 Медиа</span><span class="colloc-word">十多个人 — больше десяти человек</span><span class="colloc-example">昨天来了十多个人。</span></div>
+</div></div>
+<label class="practice-label">✏️ Своё предложение <span>(автосохранение)</span><span class="save-indicator" data-for="t9_多_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t9_多_practice" placeholder="用「多」写一句话..."></textarea>
+</div>
+
+<div class="word-card" data-word="百" data-pinyin="bǎi" data-trans="сто">
+<div class="word-head"><span class="word-chinese">百</span><span class="word-pinyin">bǎi</span><button class="word-toggle" onclick="toggleTranslation(this)">👁️ Показать перевод</button></div>
+<div class="word-translation">сто</div>
+<div class="canvas-wrap"><div class="canvas-label">✏️ Прописи</div><canvas class="trace-canvas" data-char="百"></canvas><div class="canvas-actions"><button type="button" onclick="undoCanvas(this)">↩️</button><button type="button" onclick="redoCanvas(this)">↪️</button><button type="button" onclick="clearCanvas(this)">🗑️</button></div></div>
+<div class="persona">Сто — базовое число.</div>
+<div class="mnemonic"><div class="part"><strong>百:</strong> горизонталь + 白.<br><strong>Значение:</strong> сто.</div></div>
+<div class="collocations"><div class="colloc-cloud">
+<div class="colloc-item lvl1"><span class="colloc-level">🎯 HSK</span><span class="colloc-word">一百 — сто</span><span class="colloc-example">这个手表一百块。</span></div>
+<div class="colloc-item lvl2"><span class="colloc-level">🗣️ Быт</span><span class="colloc-word">几百 — несколько сотен</span><span class="colloc-example">他花了几百块钱。</span></div>
+<div class="colloc-item lvl3"><span class="colloc-level">📰 Медиа</span><span class="colloc-word">百分之 — процент</span><span class="colloc-example">百分之八十的人同意。</span></div>
+</div></div>
+<label class="practice-label">✏️ Своё предложение <span>(автосохранение)</span><span class="save-indicator" data-for="t9_百_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t9_百_practice" placeholder="用「百」写一句话..."></textarea>
+</div>
+
+<div class="word-card" data-word="千" data-pinyin="qiān" data-trans="тысяча">
+<div class="word-head"><span class="word-chinese">千</span><span class="word-pinyin">qiān</span><button class="word-toggle" onclick="toggleTranslation(this)">👁️ Показать перевод</button></div>
+<div class="word-translation">тысяча</div>
+<div class="canvas-wrap"><div class="canvas-label">✏️ Прописи</div><canvas class="trace-canvas" data-char="千"></canvas><div class="canvas-actions"><button type="button" onclick="undoCanvas(this)">↩️</button><button type="button" onclick="redoCanvas(this)">↪️</button><button type="button" onclick="clearCanvas(this)">🗑️</button></div></div>
+<div class="persona">Тысяча — это уже серьёзно.</div>
+<div class="mnemonic"><div class="part"><strong>千:</strong> горизонталь + вертикаль.<br><strong>Значение:</strong> тысяча.</div></div>
+<div class="collocations"><div class="colloc-cloud">
+<div class="colloc-item lvl1"><span class="colloc-level">🎯 HSK</span><span class="colloc-word">一千 — тысяча</span><span class="colloc-example">这个电脑一千块。</span></div>
+<div class="colloc-item lvl2"><span class="colloc-level">🗣️ Быт</span><span class="colloc-word">几千 — несколько тысяч</span><span class="colloc-example">工资几千块一个月。</span></div>
+<div class="colloc-item lvl3"><span class="colloc-level">📰 Медиа</span><span class="colloc-word">成千上万 — тысячи и десятки тысяч</span><span class="colloc-example">成千上万的人来参加。</span></div>
+</div></div>
+<label class="practice-label">✏️ Своё предложение <span>(автосохранение)</span><span class="save-indicator" data-for="t9_千_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t9_千_practice" placeholder="用「千」写一句话..."></textarea>
+</div>
+
+<div class="word-card" data-word="两" data-pinyin="liǎng" data-trans="два (перед счётным)">
+<div class="word-head"><span class="word-chinese">两</span><span class="word-pinyin">liǎng</span><button class="word-toggle" onclick="toggleTranslation(this)">👁️ Показать перевод</button></div>
+<div class="word-translation">два (перед счётным словом)</div>
+<div class="canvas-wrap"><div class="canvas-label">✏️ Прописи</div><canvas class="trace-canvas" data-char="两"></canvas><div class="canvas-actions"><button type="button" onclick="undoCanvas(this)">↩️</button><button type="button" onclick="redoCanvas(this)">↪️</button><button type="button" onclick="clearCanvas(this)">🗑️</button></div></div>
+<div class="persona">Ловушка, в которую попадают все.</div>
+<div class="mnemonic"><div class="part"><strong>两:</strong> рама с двумя отверстиями.<br><strong>Значение:</strong> два (со счётным словом).</div></div>
+<div class="collocations"><div class="colloc-cloud">
+<div class="colloc-item lvl1"><span class="colloc-level">🎯 HSK</span><span class="colloc-word">两个人 — два человека</span><span class="colloc-example">我们两个人一起去。</span></div>
+<div class="colloc-item lvl2"><span class="colloc-level">🗣️ Быт</span><span class="colloc-word">两个小时 — два часа</span><span class="colloc-example">我们走了两个小时。</span></div>
+<div class="colloc-item lvl3"><span class="colloc-level">📰 Медиа</span><span class="colloc-word">两件衣服 — две вещи</span><span class="colloc-example">她买了两件衣服。</span></div>
+</div></div>
+<label class="practice-label">✏️ Своё предложение <span>(автосохранение)</span><span class="save-indicator" data-for="t9_两_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t9_两_practice" placeholder="用「两」写一句话..."></textarea>
+</div>
+
+<div class="word-card" data-word="公斤" data-pinyin="gōngjīn" data-trans="килограмм">
+<div class="word-head"><span class="word-chinese">公斤</span><span class="word-pinyin">gōngjīn</span><button class="word-toggle" onclick="toggleTranslation(this)">👁️ Показать перевод</button></div>
+<div class="word-translation">килограмм</div>
+<div class="canvas-wrap"><div class="canvas-label">✏️ Прописи</div><canvas class="trace-canvas" data-char="公斤"></canvas><div class="canvas-actions"><button type="button" onclick="undoCanvas(this)">↩️</button><button type="button" onclick="redoCanvas(this)">↪️</button><button type="button" onclick="clearCanvas(this)">🗑️</button></div></div>
+<div class="persona">То, что вы видите на весах у кассы.</div>
+<div class="mnemonic"><div class="part"><strong>公:</strong> стандартный. <strong>斤:</strong> мера веса.<br><strong>Значение:</strong> килограмм.</div></div>
+<div class="collocations"><div class="colloc-cloud">
+<div class="colloc-item lvl1"><span class="colloc-level">🎯 HSK</span><span class="colloc-word">一公斤 — один килограмм</span><span class="colloc-example">我买了一公斤羊肉。</span></div>
+<div class="colloc-item lvl2"><span class="colloc-level">🗣️ Быт</span><span class="colloc-word">几公斤 — сколько килограммов</span><span class="colloc-example">这个包几公斤？</span></div>
+<div class="colloc-item lvl3"><span class="colloc-level">📰 Медиа</span><span class="colloc-word">公斤 — килограмм</span><span class="colloc-example">他减了十公斤。</span></div>
+</div></div>
+<label class="practice-label">✏️ Своё предложение <span>(автосохранение)</span><span class="save-indicator" data-for="t9_公斤_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t9_公斤_practice" placeholder="用「公斤」写一句话..."></textarea>
+</div>
+
+<div class="word-card" data-word="米" data-pinyin="mǐ" data-trans="метр; рис">
+<div class="word-head"><span class="word-chinese">米</span><span class="word-pinyin">mǐ</span><button class="word-toggle" onclick="toggleTranslation(this)">👁️ Показать перевод</button></div>
+<div class="word-translation">метр; сырой рис</div>
+<div class="canvas-wrap"><div class="canvas-label">✏️ Прописи</div><canvas class="trace-canvas" data-char="米"></canvas><div class="canvas-actions"><button type="button" onclick="undoCanvas(this)">↩️</button><button type="button" onclick="redoCanvas(this)">↪️</button><button type="button" onclick="clearCanvas(this)">🗑️</button></div></div>
+<div class="persona">Одно слово — два значения.</div>
+<div class="mnemonic"><div class="part"><strong>米:</strong> рассыпанные зёрна риса.<br><strong>Значение:</strong> метр, рис.</div></div>
+<div class="collocations"><div class="colloc-cloud">
+<div class="colloc-item lvl1"><span class="colloc-level">🎯 HSK</span><span class="colloc-word">一米七 — метр семьдесят</span><span class="colloc-example">他一米七十。</span></div>
+<div class="colloc-item lvl2"><span class="colloc-level">🗣️ Быт</span><span class="colloc-word">几米 — сколько метров</span><span class="colloc-example">这个房间几米？</span></div>
+<div class="colloc-item lvl3"><span class="colloc-level">📰 Медиа</span><span class="colloc-word">米饭 — варёный рис</span><span class="colloc-example">今天想吃米饭。</span></div>
+</div></div>
+<label class="practice-label">✏️ Своё предложение <span>(автосохранение)</span><span class="save-indicator" data-for="t9_米_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t9_米_practice" placeholder="用「米」写一句话..."></textarea>
+</div>
+
+<div class="grammar-card">
+<div class="grammar-title">几 и 多 — приблизительные числа</div>
+<div class="grammar-subtitle">«Несколько» и «больше, с лишним»</div>
+<div class="grammar-formula">几 + счётное слово (до 10) | число + 多</div>
+<div class="grammar-persona">几 спрашивает «сколько?», но только до десяти. 多 прибавляет «с хвостиком».</div>
+<div class="grammar-body">
+<div class="grammar-example"><span class="cn">您们有几个人？</span><span class="ru">Сколько у вас человек?</span></div>
+<div class="grammar-example"><span class="cn">十多个</span><span class="ru">Больше десяти.</span></div>
+<div class="grammar-example"><span class="cn">三个多月</span><span class="ru">Больше трёх месяцев.</span></div>
+<div class="grammar-example"><span class="cn">一百多块</span><span class="ru">Больше ста юаней.</span></div>
+</div>
+<label class="practice-label">✏️ Свои примеры <span>(автосохранение)</span><span class="save-indicator" data-for="t9_几多_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t9_几多_practice" placeholder="Напишите 3 примера..."></textarea>
+</div>
+
+<div class="grammar-card">
+<div class="grammar-title">是不是</div>
+<div class="grammar-subtitle">Вопрос-уточнение</div>
+<div class="grammar-formula">[субъект] + 是不是 + [сказуемое]？</div>
+<div class="grammar-persona">Мягкая проверка.</div>
+<div class="grammar-body">
+<div class="grammar-example"><span class="cn">您是不是生病了？</span><span class="ru">Вы не заболели?</span></div>
+<div class="grammar-example"><span class="cn">他是不是您的朋友？</span><span class="ru">Он ведь ваш друг?</span></div>
+<div class="grammar-example"><span class="cn">这个是不是太贵了？</span><span class="ru">Это не слишком дорого?</span></div>
+</div>
+<label class="practice-label">✏️ Свои примеры <span>(автосохранение)</span><span class="save-indicator" data-for="t9_是不是_practice">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="t9_是不是_practice" placeholder="Напишите 3 примера..."></textarea>
+</div>
+
+</div>
+
+<!-- ================= ЗАДАНИЯ ================= -->
+<div class="tab-content" id="tasks">
+<h2>🎯 Задания: вставка коллокаций</h2>
+
+<div class="laziness-block">
+<strong>⏳ Как делать.</strong> В каждом предложении пропущена <strong>коллокация</strong> — устойчивое сочетание, которое мы учили. Не просто слово, а именно то, что естественно используется носителями. Выберите правильный вариант из трёх предложенных. Если не уверены — сначала перечитайте карточку по теме.
+</div>
+
+<!-- ЗАДАНИЕ 1 -->
+<div class="task-block">
+<div class="task-title"><span class="num">1</span> Задание 1: Выберите правильную коллокацию (5 предложений)</div>
+
+<div class="task-sentence" data-task="1_1" data-correct="坐公共汽车">
+我每天早上七点起床，然后_______去公司。<br>
+<span class="blank">_______</span>
+<span class="task-translation">Я каждое утро встаю в семь, потом на автобусе еду в компанию.</span>
+<div class="task-options">
+<button class="task-opt" onclick="checkTask(this,'1_1','坐公共汽车')">坐公共汽车</button>
+<button class="task-opt" onclick="checkTask(this,'1_1','坐公共汽车')">吃药</button>
+<button class="task-opt" onclick="checkTask(this,'1_1','坐公共汽车')">看报纸</button>
+</div>
+</div>
+
+<div class="task-sentence" data-task="1_2" data-correct="有点儿累">
+今天工作太多了，我_______，想早点儿回家。<br>
+<span class="blank">_______</span>
+<span class="task-translation">Сегодня слишком много работы, я немного устал, хочу пораньше домой.</span>
+<div class="task-options">
+<button class="task-opt" onclick="checkTask(this,'1_2','有点儿累')">有点儿累</button>
+<button class="task-opt" onclick="checkTask(this,'1_2','有点儿累')">很高兴</button>
+<button class="task-opt" onclick="checkTask(this,'1_2','有点儿累')">经常运动</button>
+</div>
+</div>
+
+<div class="task-sentence" data-task="1_3" data-correct="这家饭店很不错">
+_______，菜比别的饭店好吃，我们一起去吧。<br>
+<span class="blank">_______</span>
+<span class="task-translation">Этот ресторан очень хороший, еда вкуснее, чем в других — пойдём вместе.</span>
+<div class="task-options">
+<button class="task-opt" onclick="checkTask(this,'1_3','这家饭店很不错')">这家饭店很不错</button>
+<button class="task-opt" onclick="checkTask(this,'1_3','这家饭店很不错')">这个房间很贵</button>
+<button class="task-opt" onclick="checkTask(this,'1_3','这家饭店很不错')">这只手表很新</button>
+</div>
+</div>
+
+<div class="task-sentence" data-task="1_4" data-correct="介绍我">
+是他_______的，没有他我进不了这个公司。<br>
+<span class="blank">_______</span>
+<span class="task-translation">Это он меня рекомендовал, без него я бы не попал в эту компанию.</span>
+<div class="task-options">
+<button class="task-opt" onclick="checkTask(this,'1_4','介绍我')">介绍我</button>
+<button class="task-opt" onclick="checkTask(this,'1_4','介绍我')">告诉我</button>
+<button class="task-opt" onclick="checkTask(this,'1_4','介绍我')">让我</button>
+</div>
+</div>
+
+<div class="task-sentence" data-task="1_5" data-correct="会游泳">
+您_______吗？我们周末一起去游泳馆吧。<br>
+<span class="blank">_______</span>
+<span class="task-translation">Вы умеете плавать? Пойдём вместе в бассейн на выходных.</span>
+<div class="task-options">
+<button class="task-opt" onclick="checkTask(this,'1_5','会游泳')">会游泳</button>
+<button class="task-opt" onclick="checkTask(this,'1_5','会游泳')">会跳舞</button>
+<button class="task-opt" onclick="checkTask(this,'1_5','会游泳')">会做饭</button>
+</div>
+</div>
+
+<label class="practice-label">✏️ Запишите свои варианты или объясните ошибки <span>(автосохранение)</span><span class="save-indicator" data-for="task1_notes">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="task1_notes" placeholder="Ваши заметки по заданию 1..."></textarea>
+</div>
+
+<!-- ЗАДАНИЕ 2 -->
+<div class="task-block">
+<div class="task-title"><span class="num">2</span> Задание 2: Выберите правильную коллокацию (5 предложений)</div>
+
+<div class="task-sentence" data-task="2_1" data-correct="是不是生病了">
+您脸色不太好，_______？要不要去医院？<br>
+<span class="blank">_______</span>
+<span class="task-translation">Вы плохо выглядите — не заболели? Может, в больницу?</span>
+<div class="task-options">
+<button class="task-opt" onclick="checkTask(this,'2_1','是不是生病了')">是不是生病了</button>
+<button class="task-opt" onclick="checkTask(this,'2_1','是不是生病了')">是不是很高兴</button>
+<button class="task-opt" onclick="checkTask(this,'2_1','是不是生病了')">是不是有点儿贵</button>
+</div>
+</div>
+
+<div class="task-sentence" data-task="2_2" data-correct="多长时间">
+从北京到上海坐飞机_______？<br>
+<span class="blank">_______</span>
+<span class="task-translation">Сколько времени занимает полёт из Пекина в Шанхай?</span>
+<div class="task-options">
+<button class="task-opt" onclick="checkTask(this,'2_2','多长时间')">多长时间</button>
+<button class="task-opt" onclick="checkTask(this,'2_2','多长时间')">多少人</button>
+<button class="task-opt" onclick="checkTask(this,'2_2','多长时间')">多少钱</button>
+</div>
+</div>
+
+<div class="task-sentence" data-task="2_3" data-correct="踢足球">
+我周末经常跟朋友一起_______，运动对身体好。<br>
+<span class="blank">_______</span>
+<span class="task-translation">На выходных я часто с друзьями играю в футбол, спорт полезен.</span>
+<div class="task-options">
+<button class="task-opt" onclick="checkTask(this,'2_3','踢足球')">踢足球</button>
+<button class="task-opt" onclick="checkTask(this,'2_3','踢足球')">打篮球</button>
+<button class="task-opt" onclick="checkTask(this,'2_3','踢足球')">吃药</button>
+</div>
+</div>
+
+<div class="task-sentence" data-task="2_4" data-correct="生日快乐">
+今天是您的生日，祝您_______！<br>
+<span class="blank">_______</span>
+<span class="task-translation">Сегодня ваш день рождения, с днём рождения!</span>
+<div class="task-options">
+<button class="task-opt" onclick="checkTask(this,'2_4','生日快乐')">生日快乐</button>
+<button class="task-opt" onclick="checkTask(this,'2_4','生日快乐')">生日高兴</button>
+<button class="task-opt" onclick="checkTask(this,'2_4','生日快乐')">生日快乐</button>
+</div>
+</div>
+
+<div class="task-sentence" data-task="2_5" data-correct="会让我">
+妈妈说了，_______明天早一点儿起床。<br>
+<span class="blank">_______</span>
+<span class="task-translation">Мама сказала, что заставит меня встать завтра пораньше.</span>
+<div class="task-options">
+<button class="task-opt" onclick="checkTask(this,'2_5','会让我')">会让我</button>
+<button class="task-opt" onclick="checkTask(this,'2_5','会让我')">会请我</button>
+<button class="task-opt" onclick="checkTask(this,'2_5','会让我')">会给我</button>
+</div>
+</div>
+
+<label class="practice-label">✏️ Запишите свои варианты или объясните ошибки <span>(автосохранение)</span><span class="save-indicator" data-for="task2_notes">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="task2_notes" placeholder="Ваши заметки по заданию 2..."></textarea>
+</div>
+
+</div>
+
+<!-- ================= ТРИ ТЕКСТА ================= -->
+<div class="tab-content" id="texts">
+<h2>📖 Три текста для трёх учеников</h2>
+
+<div class="laziness-block">
+<strong>⏳ Как читать.</strong> Каждый текст — про одного из трёх учеников. Каждый текст использует <strong>свою тему лексики</strong>. Сначала прочитайте вслух по иероглифам, не открывая пиньинь. Потом — проверьте себя: откройте пиньинь и перевод. Потом — ответьте на вопросы письменно.
+</div>
+
+<!-- ТЕКСТ 1: СЛАВА -->
+<div class="text-block">
+<div class="text-header">
+<div class="who">Текст 1 · 斯拉瓦 (горный инженер)</div>
+<div class="text-controls">
+<button class="text-ctrl-btn" onclick="togglePinyin('text1')">🔤 Показать пиньинь</button>
+<button class="text-ctrl-btn" onclick="toggleRu('text1')">🌐 Показать перевод</button>
+</div>
+</div>
+
+<div class="text-cn">早上六点，斯拉瓦起床。他家离公司很远，所以他每天坐公共汽车上班。从家到公司要一个小时。他的工作很忙，要工作八个小时。下午五点，他休息一下，然后回家。他觉得有点儿累，但是很高兴。晚上他经常跑步。他喜欢运动，因为对身体很好。他不喜欢吃药，也不喜欢去医院。周末他喜欢去旅游，有时候坐飞机去别的地方。他有一个自行车，但是他不骑，因为公司太远了。</div>
+
+<div class="text-pinyin" id="text1_pinyin">Zǎoshang liù diǎn, Sīlāwǎ qǐchuáng. Tā jiā lí gōngsī hěn yuǎn, suǒyǐ tā měitiān zuò gōnggòng qìchē shàngbān. Cóng jiā dào gōngsī yào yī gè xiǎoshí. Tā de gōngzuò hěn máng, yào gōngzuò bā gè xiǎoshí. Xiàwǔ wǔ diǎn, tā xiūxi yīxià, ránhòu huí jiā. Tā juéde yǒudiǎnr lèi, dànshì hěn gāoxìng. Wǎnshang tā jīngcháng pǎobù. Tā xǐhuan yùndòng, yīnwèi duì shēntǐ hěn hǎo. Tā bù xǐhuan chī yào, yě bù xǐhuan qù yīyuàn. Zhōumò tā xǐhuan qù lǚyóu, yǒu shíhou zuò fēijī qù bié de dìfang. Tā yǒu yī gè zìxíngchē, dànshì tā bù qí, yīnwèi gōngsī tài yuǎn le.</div>
+
+<div class="text-ru" id="text1_ru">В шесть утра Слава встаёт. Его дом далеко от компании, поэтому он каждый день ездит на работу на автобусе. От дома до компании — час. У него много работы, работает восемь часов. В пять вечера он немного отдыхает, потом идёт домой. Он чувствует, что немного устал, но очень рад. Вечером он часто бегает. Он любит спорт, потому что это полезно для здоровья. Он не любит принимать лекарства и не любит ходить в больницу. На выходных он любит путешествовать, иногда летает в другие места. У него есть велосипед, но он на нём не ездит — компания слишком далеко.</div>
+
+<label class="practice-label">❓ Вопросы к тексту 1 <span>(напишите ответы по-китайски)</span><span class="save-indicator" data-for="text1_answers">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="text1_answers" placeholder="1. 斯拉瓦几点起床？
+2. 他怎么去上班？
+3. 从家到公司要几个小时？
+4. 他为什么不喜欢去医院？
+5. 他周末喜欢做什么？"></textarea>
+</div>
+
+<!-- ТЕКСТ 2: КАТЯ -->
+<div class="text-block">
+<div class="text-header">
+<div class="who">Текст 2 · 卡荚 (экономист)</div>
+<div class="text-controls">
+<button class="text-ctrl-btn" onclick="togglePinyin('text2')">🔤 Показать пиньинь</button>
+<button class="text-ctrl-btn" onclick="toggleRu('text2')">🌐 Показать перевод</button>
+</div>
+</div>
+
+<div class="text-cn">卡荚是一个经济学家。她每天早上喝一杯咖啡，然后去公司。她的公司在城市中间，离她家很近。她每天九点上班，晚上六点下班。她经常和同事一起吃饭，喜欢去饭店，但是那家饭店的服务员太忙了。上周她考试了，题有点儿难，但是她考试完了，觉得身体还行，心情挺好。她有一个姐姐，姐姐住在别的城市。下个月是姐姐的生日，她想给姐姐买一个手表。她的丈夫说：“不要买太贵的，我们两个人一起过生日就好。”她同意了。</div>
+
+<div class="text-pinyin" id="text2_pinyin">Kǎjiá shì yī gè jīngjìxuéjiā. Tā měitiān zǎoshang hē yī bēi kāfēi, ránhòu qù gōngsī. Tā de gōngsī zài chéngshì zhōngjiān, lí tā jiā hěn jìn. Tā měitiān jiǔ diǎn shàngbān, wǎnshang liù diǎn xiàbān. Tā jīngcháng hé tóngshì yīqǐ chīfàn, xǐhuan qù fàndiàn, dànshì nà jiā fàndiàn de fúwùyuán tài máng le. Shàng zhōu tā kǎoshì le, tí yǒudiǎnr nán, dànshì tā kǎoshì wán le, juéde shēntǐ hái xíng, xīnqíng tǐng hǎo. Tā yǒu yī gè jiějie, jiějie zhù zài bié de chéngshì. Xià gè yuè shì jiějie de shēngrì, tā xiǎng gěi jiějie mǎi yī gè shǒubiǎo. Tā de zhàngfu shuō: "Bùyào mǎi tài guì de, wǒmen liǎng gè rén yīqǐ guò shēngrì jiù hǎo." Tā tóngyì le.</div>
+
+<div class="text-ru" id="text2_ru">Катя — экономист. Каждое утро она пьёт чашку кофе, потом идёт в компанию. Её компания в центре города, близко к дому. Она каждый день в 9 уходит на работу, в 6 вечера возвращается. Она часто с коллегами ест вместе, любит ходить в ресторан, но в том ресторане официанты слишком заняты. На прошлой неделе она сдавала экзамен — задача была немного сложная, но после экзамена она чувствует себя нормально, настроение хорошее. У неё есть старшая сестра, сестра живёт в другом городе. В следующем месяце день рождения сестры, Катя хочет купить ей часы. Муж сказал: «Не покупай слишком дорогие, лучше мы вдвоём отметим день рождения». Она согласилась.</div>
+
+<label class="practice-label">❓ Вопросы к тексту 2 <span>(напишите ответы по-китайски)</span><span class="save-indicator" data-for="text2_answers">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="text2_answers" placeholder="1. 卡荚每天早上喝什么？
+2. 她的公司离她家远吗？
+3. 她经常和谁一起吃饭？
+4. 她觉得考试怎么样？
+5. 她想给姐姐买什么？"></textarea>
+</div>
+
+<!-- ТЕКСТ 3: ЖЭНЬЦЗЕ -->
+<div class="text-block">
+<div class="text-header">
+<div class="who">Текст 3 · 仁杰 (директор отдела)</div>
+<div class="text-controls">
+<button class="text-ctrl-btn" onclick="togglePinyin('text3')">🔤 Показать пиньинь</button>
+<button class="text-ctrl-btn" onclick="toggleRu('text3')">🌐 Показать перевод</button>
+</div>
+</div>
+
+<div class="text-cn">仁杰是公司经理。他每天很忙，经常开会。他喜欢介绍新的朋友给大家认识，也喜欢和同事一起吃饭。他觉得工作是很有意思的事。中午他经常和同事去饭店吃饭，他很喜欢点鱼和羊肉。下午他喜欢游泳，因为运动对身体很好。晚上他回家，看看报纸，喝一杯咖啡，听音乐。他觉得这是最放松的时候。他有三个房间的家，每个房间都很干净。他有一个爱好：跳舞。虽然他跳得不太好，但是很高兴。明天是他妈妈的生日，他想给妈妈打电话，说：“生日快乐，身体健康！”</div>
+
+<div class="text-pinyin" id="text3_pinyin">Rénjié shì gōngsī jīnglǐ. Tā měitiān hěn máng, jīngcháng kāihuì. Tā xǐhuan jièshào xīn de péngyou gěi dàjiā rènshi, yě xǐhuan hé tóngshì yīqǐ chīfàn. Tā juéde gōngzuò shì hěn yǒuyìsi de shì. Zhōngwǔ tā jīngcháng hé tóngshì qù fàndiàn chīfàn, tā hěn xǐhuan diǎn yú hé yángròu. Xiàwǔ tā xǐhuan yóuyǒng, yīnwèi yùndòng duì shēntǐ hěn hǎo. Wǎnshang tā huí jiā, kànkan bàozhǐ, hē yī bēi kāfēi, tīng yīnyuè. Tā juéde zhè shì zuì fàngsōng de shíhou. Tā yǒu sān gè fángjiān de jiā, měi gè fángjiān dōu hěn gānjìng. Tā yǒu yī gè àihào: tiàowǔ. Suīrán tā tiào de bù tài hǎo, dànshì hěn gāoxìng. Míngtiān shì tā māma de shēngrì, tā xiǎng gěi māma dǎ diànhuà, shuō: "Shēngrì kuàilè, shēntǐ jiànkāng!"</div>
+
+<div class="text-ru" id="text3_ru">Жэньцзе — директор компании. Каждый день он очень занят, часто проводит совещания. Он любит знакомить новых людей со всеми и любит есть вместе с коллегами. Он считает, что работа — очень интересное дело. В обед он часто с коллегами ходит в ресторан поесть, очень любит заказывать рыбу и баранину. Днём он любит плавать, потому что спорт полезен для здоровья. Вечером он идёт домой, читает газету, пьёт кофе, слушает музыку. Он считает, что это самое расслабляющее время. У него дом с тремя комнатами, каждая комната очень чистая. У него есть хобби: танцы. Хотя танцует он не очень хорошо, ему очень весело. Завтра день рождения его мамы — он хочет позвонить ей и сказать: «С днём рождения, здоровья!»</div>
+
+<label class="practice-label">❓ Вопросы к тексту 3 <span>(напишите ответы по-китайски)</span><span class="save-indicator" data-for="text3_answers">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="text3_answers" placeholder="1. 仁杰是谁？
+2. 他中午经常吃什么？
+3. 他为什么喜欢游泳？
+4. 他晚上做什么？
+5. 明天他为什么要给妈妈打电话？"></textarea>
+</div>
+
+</div>
+
+<!-- ================= КОНСТРУИРОВАНИЕ ================= -->
+<div class="tab-content" id="build">
+<h2>🏗️ Конструирование предложений</h2>
+
+<div class="laziness-block">
+<strong>⏳ Как делать.</strong> Даны слова — нужно <strong>составить из них правильное предложение</strong>. Обратите внимание на порядок слов в китайском (подлежащее → время → место → глагол → дополнение), на счётные слова, на использование служебных слов. Пишите свой вариант в поле, потом сверяйтесь с ответом.
+</div>
+
+<div class="build-block">
+<div class="task-title">Задание 1: составьте предложение из данных слов</div>
+
+<div class="build-sentence">
+<div class="build-words"><span>我</span><span>每天</span><span>坐</span><span>公共汽车</span><span>上班</span></div>
+<div class="build-hint">Подсказка: подлежащее + время + способ + глагол + место</div>
+<input class="qa-input" placeholder="Напишите своё предложение...">
+<button class="qa-btn qa-check" onclick="checkBuild(this,'我每天坐公共汽车上班')">Проверить</button>
+<button class="qa-btn qa-show" onclick="revealBuild(this,'我每天坐公共汽车上班')">Показать ответ</button>
+<div class="qa-answer"><strong>✅</strong> 我每天坐公共汽车上班。</div>
+</div>
+
+<div class="build-sentence">
+<div class="build-words"><span>这家</span><span>饭店</span><span>的</span><span>菜</span><span>比</span><span>别的</span><span>饭店</span><span>好吃</span></div>
+<div class="build-hint">Подсказка: сравнительная конструкция A + 比 + B + прил.</div>
+<input class="qa-input" placeholder="Напишите своё предложение...">
+<button class="qa-btn qa-check" onclick="checkBuild(this,'这家饭店的菜比别的饭店好吃')">Проверить</button>
+<button class="qa-btn qa-show" onclick="revealBuild(this,'这家饭店的菜比别的饭店好吃')">Показать ответ</button>
+<div class="qa-answer"><strong>✅</strong> 这家饭店的菜比别的饭店好吃。</div>
+</div>
+
+<div class="build-sentence">
+<div class="build-words"><span>我</span><span>有点儿</span><span>累</span><span>想</span><span>休息</span></div>
+<div class="build-hint">Подсказка: 有点儿 перед прилагательным, два простых предложения</div>
+<input class="qa-input" placeholder="Напишите своё предложение...">
+<button class="qa-btn qa-check" onclick="checkBuild(this,'我有点儿累，想休息')">Проверить</button>
+<button class="qa-btn qa-show" onclick="revealBuild(this,'我有点儿累，想休息')">Показать ответ</button>
+<div class="qa-answer"><strong>✅</strong> 我有点儿累，想休息。</div>
+</div>
+
+<div class="build-sentence">
+<div class="build-words"><span>姐姐</span><span>的</span><span>生日</span><span>是</span><span>几月几号</span></div>
+<div class="build-hint">Подсказка: вопросительное предложение с 是</div>
+<input class="qa-input" placeholder="Напишите своё предложение...">
+<button class="qa-btn qa-check" onclick="checkBuild(this,'姐姐的生日是几月几号')">Проверить</button>
+<button class="qa-btn qa-show" onclick="revealBuild(this,'姐姐的生日是几月几号')">Показать ответ</button>
+<div class="qa-answer"><strong>✅</strong> 姐姐的生日是几月几号？</div>
+</div>
+
+<div class="build-sentence">
+<div class="build-words"><span>他</span><span>每天</span><span>跑步</span><span>身体</span><span>很好</span></div>
+<div class="build-hint">Подсказка: причинно-следственная связь</div>
+<input class="qa-input" placeholder="Напишите своё предложение...">
+<button class="qa-btn qa-check" onclick="checkBuild(this,'他每天跑步，身体很好')">Проверить</button>
+<button class="qa-btn qa-show" onclick="revealBuild(this,'他每天跑步，身体很好')">Показать ответ</button>
+<div class="qa-answer"><strong>✅</strong> 他每天跑步，身体很好。</div>
+</div>
+
+<label class="practice-label">✏️ Ваши варианты <span>(автосохранение)</span><span class="save-indicator" data-for="build_notes">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="build_notes" placeholder="Ваши варианты и заметки..."></textarea>
+</div>
+
+<div class="build-block">
+<div class="task-title">Задание 2: посложнее (с грамматикой)</div>
+
+<div class="build-sentence">
+<div class="build-words"><span>我</span><span>是</span><span>坐飞机</span><span>来</span><span>的</span></div>
+<div class="build-hint">Подсказка: конструкция 是……的 (факт способа)</div>
+<input class="qa-input" placeholder="Напишите своё предложение...">
+<button class="qa-btn qa-check" onclick="checkBuild(this,'我是坐飞机来的')">Проверить</button>
+<button class="qa-btn qa-show" onclick="revealBuild(this,'我是坐飞机来的')">Показать ответ</button>
+<div class="qa-answer"><strong>✅</strong> 我是坐飞机来的。</div>
+</div>
+
+<div class="build-sentence">
+<div class="build-words"><span>您</span><span>是不是</span><span>生病</span><span>了</span></div>
+<div class="build-hint">Подсказка: мягкий уточняющий вопрос</div>
+<input class="qa-input" placeholder="Напишите своё предложение...">
+<button class="qa-btn qa-check" onclick="checkBuild(this,'您是不是生病了')">Проверить</button>
+<button class="qa-btn qa-show" onclick="revealBuild(this,'您是不是生病了')">Показать ответ</button>
+<div class="qa-answer"><strong>✅</strong> 您是不是生病了？</div>
+</div>
+
+<div class="build-sentence">
+<div class="build-words"><span>作业</span><span>做</span><span>完</span><span>了</span></div>
+<div class="build-hint">Подсказка: результативный глагол 完</div>
+<input class="qa-input" placeholder="Напишите своё предложение...">
+<button class="qa-btn qa-check" onclick="checkBuild(this,'作业做完了')">Проверить</button>
+<button class="qa-btn qa-show" onclick="revealBuild(this,'作业做完了')">Показать ответ</button>
+<div class="qa-answer"><strong>✅</strong> 作业做完了。</div>
+</div>
+
+<div class="build-sentence">
+<div class="build-words"><span>他</span><span>让</span><span>我</span><span>告诉</span><span>您</span></div>
+<div class="build-hint">Подсказка: каузативная конструкция с 让</div>
+<input class="qa-input" placeholder="Напишите своё предложение...">
+<button class="qa-btn qa-check" onclick="checkBuild(this,'他让我告诉您')">Проверить</button>
+<button class="qa-btn qa-show" onclick="revealBuild(this,'他让我告诉您')">Показать ответ</button>
+<div class="qa-answer"><strong>✅</strong> 他让我告诉您。</div>
+</div>
+
+<div class="build-sentence">
+<div class="build-words"><span>您</span><span>家</span><span>离</span><span>公司</span><span>远</span><span>吗</span></div>
+<div class="build-hint">Подсказка: конструкция 离</div>
+<input class="qa-input" placeholder="Напишите своё предложение...">
+<button class="qa-btn qa-check" onclick="checkBuild(this,'您家离公司远吗')">Проверить</button>
+<button class="qa-btn qa-show" onclick="revealBuild(this,'您家离公司远吗')">Показать ответ</button>
+<div class="qa-answer"><strong>✅</strong> 您家离公司远吗？</div>
+</div>
+
+</div>
+
+</div>
+
+<!-- ================= РАЗГОВОРНАЯ ПРАКТИКА ================= -->
+<div class="tab-content" id="speaking">
+<h2>🗣️ Разговорная практика</h2>
+
+<div class="laziness-block">
+<strong>⏳ Правила.</strong> Отвечаем вслух, глядя в иероглифы (не в пиньинь). Используем <strong>коллокации</strong> из карточек, а не голые слова. При необходимости — сворачиваем в блокнот и проговариваем медленно, потом — в темпе разговора.
+</div>
+
+<div class="speaking-card">
+<div class="speaking-title">🎭 Диалог 1: Слава и Катя — утро и транспорт</div>
+<div class="speaking-topic">
+<div class="t">Часть 1: транспорт</div>
+<ul class="q-list">
+<li>斯拉瓦，您每天几点起床？您怎么去上班？<span class="ru">Слава, во сколько вы встаёте? Как добираетесь на работу?</span></li>
+<li>卡荚，您家离公司远吗？您坐公共汽车还是坐出租车？<span class="ru">Катя, ваш дом далеко от компании? На автобусе или на такси?</span></li>
+<li>你们两个人谁上班更早？<span class="ru">Кто из вас двоих встаёт раньше?</span></li>
+</ul>
+</div>
+<div class="speaking-topic">
+<div class="t">Часть 2: воздух и отдых</div>
+<ul class="q-list">
+<li>你们周末喜欢做什么？<span class="ru">Что вы любите делать на выходных?</span></li>
+<li>你们喜欢运动吗？喜欢什么运动？<span class="ru">Любите спорт? Какой?</span></li>
+<li>如果有一点儿累，你们会做什么？<span class="ru">Если немного устали, что делаете?</span></li>
+</ul>
+</div>
+<label class="practice-label">✏️ Ваш диалог <span>(автосохранение)</span><span class="save-indicator" data-for="speaking_1">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="speaking_1" placeholder="Ваш диалог..."></textarea>
+</div>
+
+<div class="speaking-card">
+<div class="speaking-title">🎭 Диалог 2: Жэньцзе и Катя — еда и работа</div>
+<div class="speaking-topic">
+<div class="t">Часть 1: обед</div>
+<ul class="q-list">
+<li>仁杰，您中午经常吃什么？<span class="ru">Жэньцзе, что вы едите на обед?</span></li>
+<li>卡荚，您喜欢去饭店还是自己做饭？为什么？<span class="ru">Катя, ресторан или дома? Почему?</span></li>
+<li>你们有没有一起去过什么饭店？<span class="ru">Вы ходили вместе в какой-нибудь ресторан?</span></li>
+</ul>
+</div>
+<div class="speaking-topic">
+<div class="t">Часть 2: работа и свободное время</div>
+<ul class="q-list">
+<li>你们每天上班几个小时？<span class="ru">Сколько часов в день работаете?</span></li>
+<li>下班以后喜欢做什么？<span class="ru">Что делаете после работы?</span></li>
+<li>仁杰，您怎么放松？<span class="ru">Жэньцзе, как вы расслабляетесь?</span></li>
+</ul>
+</div>
+<label class="practice-label">✏️ Ваш диалог <span>(автосохранение)</span><span class="save-indicator" data-for="speaking_2">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="speaking_2" placeholder="Ваш диалог..."></textarea>
+</div>
+
+<div class="speaking-card">
+<div class="speaking-title">🎭 Диалог 3: все трое — выходные и хобби</div>
+<div class="speaking-topic">
+<div class="t">Часть 1: спорт и хобби</div>
+<ul class="q-list">
+<li>你们会游泳吗？会跳舞吗？<span class="ru">Вы умеете плавать? Танцевать?</span></li>
+<li>你们觉得什么运动最好？为什么？<span class="ru">Какой спорт самый хороший? Почему?</span></li>
+<li>你们经常运动吗？还是偶尔？<span class="ru">Часто занимаетесь спортом или иногда?</span></li>
+</ul>
+</div>
+<div class="speaking-topic">
+<div class="t">Часть 2: семья и планы</div>
+<ul class="q-list">
+<li>你们的生日是几月几号？<span class="ru">Когда у вас день рождения?</span></li>
+<li>你们会怎么庆祝生日？<span class="ru">Как отмечаете день рождения?</span></li>
+<li>下个月你们有什么计划？<span class="ru">Какие планы на следующий месяц?</span></li>
+</ul>
+</div>
+<label class="practice-label">✏️ Ваш диалог <span>(автосохранение)</span><span class="save-indicator" data-for="speaking_3">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="speaking_3" placeholder="Ваш диалог..."></textarea>
+</div>
+
+<div class="speaking-card">
+<div class="speaking-title">🎭 Задание на монолог: расскажите о себе</div>
+<div class="speaking-topic">
+<div class="t">Темы для рассказа (по 3-4 предложения каждая):</div>
+<ul class="q-list">
+<li>Расскажите о своём рабочем дне: когда встаёте, как добираетесь, сколько работаете.</li>
+<li>Расскажите о своих выходных: что делаете, любите ли спорт, где бываете.</li>
+<li>Расскажите о своём хобби: что любите делать, почему это интересно.</li>
+<li>Расскажите о последнем путешествии: куда ездили, как, с кем, что запомнилось.</li>
+</ul>
+</div>
+<label class="practice-label">✏️ Ваш монолог <span>(автосохранение)</span><span class="save-indicator" data-for="speaking_monolog">✓ сохранено</span></label>
+<textarea class="practice-input auto-save" data-key="speaking_monolog" placeholder="Ваш монолог (по-китайски)..."></textarea>
+</div>
+
+</div>
+
+<!-- ================= СПРАВОЧНИК ================= -->
+<div class="tab-content" id="dict">
+<h2>📚 Справочник по всем темам</h2>
+<div class="laziness-block">
+<strong>⏳ Как пользоваться.</strong> Кликните по иероглифу — откроется карточка в нужной теме, с подсветкой. Кликните по грамматике — перейдёте к её разбору.
+</div>
+
+<div class="dict-section">
+<div class="dict-title">🚗 Тема 1: Транспорт</div>
+<div class="dict-list">
+<div class="dict-word" onclick="goToCard('旅游')">旅游</div>
+<div class="dict-word" onclick="goToCard('飞机')">飞机</div>
+<div class="dict-word" onclick="goToCard('出租车')">出租车</div>
+<div class="dict-word" onclick="goToCard('公共汽车')">公共汽车</div>
+<div class="dict-grammar" onclick="goToTab('t1')">离 / 就 / 呢</div>
+</div>
+</div>
+
+<div class="dict-section">
+<div class="dict-title">⏰ Тема 2: Время</div>
+<div class="dict-list">
+<div class="dict-word" onclick="goToCard('每')">每</div>
+<div class="dict-word" onclick="goToCard('起床')">起床</div>
+<div class="dict-word" onclick="goToCard('跑步')">跑步</div>
+<div class="dict-word" onclick="goToCard('休息')">休息</div>
+<div class="dict-grammar" onclick="goToTab('t2')">已经 / ……的时候 / 小时 vs 点</div>
+</div>
+</div>
+
+<div class="dict-section">
+<div class="dict-title">💊 Тема 3: Здоровье</div>
+<div class="dict-list">
+<div class="dict-word" onclick="goToCard('生病')">生病</div>
+<div class="dict-word" onclick="goToCard('药')">药</div>
+<div class="dict-word" onclick="goToCard('身体')">身体</div>
+<div class="dict-grammar" onclick="goToTab('t3')">有点儿</div>
+</div>
+</div>
+
+<div class="dict-section">
+<div class="dict-title">💼 Тема 4: Работа и учёба</div>
+<div class="dict-list">
+<div class="dict-word" onclick="goToCard('公司')">公司</div>
+<div class="dict-word" onclick="goToCard('介绍')">介绍</div>
+<div class="dict-word" onclick="goToCard('考试')">考试</div>
+<div class="dict-word" onclick="goToCard('题')">题</div>
+<div class="dict-word" onclick="goToCard('完')">完</div>
+<div class="dict-word" onclick="goToCard('懂')">懂</div>
+<div class="dict-word" onclick="goToCard('上班')">上班</div>
+<div class="dict-grammar" onclick="goToTab('t4')">是……的 / 完 и 懂 / 从</div>
+</div>
+</div>
+
+<div class="dict-section">
+<div class="dict-title">🍜 Тема 5: Еда</div>
+<div class="dict-list">
+<div class="dict-word" onclick="goToCard('饭店')">饭店</div>
+<div class="dict-word" onclick="goToCard('服务员')">服务员</div>
+<div class="dict-word" onclick="goToCard('面条')">面条</div>
+<div class="dict-word" onclick="goToCard('羊肉')">羊肉</div>
+<div class="dict-word" onclick="goToCard('好吃')">好吃</div>
+<div class="dict-word" onclick="goToCard('咖啡')">咖啡</div>
+<div class="dict-word" onclick="goToCard('鱼')">鱼</div>
+</div>
+</div>
+
+<div class="dict-section">
+<div class="dict-title">👨‍👩‍👧 Тема 6: Семья</div>
+<div class="dict-list">
+<div class="dict-word" onclick="goToCard('丈夫')">丈夫</div>
+<div class="dict-word" onclick="goToCard('姐姐')">姐姐</div>
+<div class="dict-word" onclick="goToCard('生日')">生日</div>
+<div class="dict-word" onclick="goToCard('快乐')">快乐</div>
+<div class="dict-word" onclick="goToCard('高兴')">高兴</div>
+<div class="dict-grammar" onclick="goToTab('t6')">让 / 请</div>
+</div>
+</div>
+
+<div class="dict-section">
+<div class="dict-title">🏠 Тема 7: Дом</div>
+<div class="dict-list">
+<div class="dict-word" onclick="goToCard('房间')">房间</div>
+<div class="dict-word" onclick="goToCard('手表')">手表</div>
+<div class="dict-word" onclick="goToCard('报纸')">报纸</div>
+<div class="dict-word" onclick="goToCard('自行车')">自行车</div>
+<div class="dict-word" onclick="goToCard('颜色')">颜色</div>
+<div class="dict-grammar" onclick="goToTab('t7')">的-фраза / 真</div>
+</div>
+</div>
+
+<div class="dict-section">
+<div class="dict-title">⚽ Тема 8: Спорт</div>
+<div class="dict-list">
+<div class="dict-word" onclick="goToCard('运动')">运动</div>
+<div class="dict-word" onclick="goToCard('踢足球')">踢足球</div>
+<div class="dict-word" onclick="goToCard('打篮球')">打篮球</div>
+<div class="dict-word" onclick="goToCard('游泳')">游泳</div>
+<div class="dict-word" onclick="goToCard('跳舞')">跳舞</div>
+<div class="dict-word" onclick="goToCard('经常')">经常</div>
+<div class="dict-grammar" onclick="goToTab('t8')">要 / 最</div>
+</div>
+</div>
+
+<div class="dict-section">
+<div class="dict-title">🔢 Тема 9: Числа</div>
+<div class="dict-list">
+<div class="dict-word" onclick="goToCard('几')">几</div>
+<div class="dict-word" onclick="goToCard('多')">多</div>
+<div class="dict-word" onclick="goToCard('百')">百</div>
+<div class="dict-word" onclick="goToCard('千')">千</div>
+<div class="dict-word" onclick="goToCard('两')">两</div>
+<div class="dict-word" onclick="goToCard('公斤')">公斤</div>
+<div class="dict-word" onclick="goToCard('米')">米</div>
+<div class="dict-grammar" onclick="goToTab('t9')">几 и 多 / 是不是</div>
+</div>
+</div>
+
+</div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ============ ТАБЫ ============
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+        document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById(btn.dataset.tab).classList.add('active');
+        window.scrollTo({top:0, behavior:'smooth'});
+        setTimeout(resizeAllCanvases, 50);
+    });
+});
+
+// ============ ПОКАЗ ПЕРЕВОДА ============
+function toggleTranslation(btn){
+    const card = btn.closest('.word-card');
+    const tr = card.querySelector('.word-translation');
+    tr.classList.toggle('show');
+    btn.textContent = tr.classList.contains('show') ? '🙈 Скрыть перевод' : '👁️ Показать перевод';
+}
+
+// ============ АВТОСОХРАНЕНИЕ ============
+const STORAGE_PREFIX = 'hsk2_review_';
+function initAutoSave(){
+    document.querySelectorAll('.auto-save').forEach(el=>{
+        const key = STORAGE_PREFIX + el.dataset.key;
+        const saved = localStorage.getItem(key);
+        if(saved !== null) el.value = saved;
+        el.addEventListener('input',()=>{
+            localStorage.setItem(key, el.value);
+            const ind = document.querySelector(`.save-indicator[data-for="${el.dataset.key}"]`);
+            if(ind){ ind.classList.add('show'); clearTimeout(ind._t); ind._t = setTimeout(()=>ind.classList.remove('show'), 1200); }
+        });
+    });
+}
+initAutoSave();
+
+// ============ Q&A ============
+function checkQA(btn, correct){
+    const qa = btn.closest('.qa');
+    const input = qa.querySelector('.qa-input');
+    const ans = qa.querySelector('.qa-answer');
+    const user = (input.value||'').trim();
+    if(!user){ input.focus(); return; }
+    if(user === correct || user.replace(/\s+/g,'') === correct.replace(/\s+/g,'')){
+        input.style.borderColor = '#2e7d32';
+        input.style.background = '#f0faf0';
+        ans.classList.add('show');
+        ans.innerHTML = '<strong>✅ Верно!</strong> ' + correct;
+    } else {
+        input.style.borderColor = '#b5443c';
+        input.style.background = '#fdf2f0';
+        ans.classList.add('show');
+        ans.innerHTML = '<strong>❌ Не совсем.</strong> Попробуйте иначе или нажмите «Показать ответ».';
+    }
+}
+function showQA(btn, correct){
+    const qa = btn.closest('.qa');
+    const input = qa.querySelector('.qa-input');
+    const ans = qa.querySelector('.qa-answer');
+    input.value = correct;
+    input.style.borderColor = '#2e7d32';
+    input.style.background = '#f0faf0';
+    ans.classList.add('show');
+    ans.innerHTML = '<strong>✅</strong> ' + correct;
+}
+
+// ============ ЗАДАНИЯ (вставка) ============
+function checkTask(btn, taskId, correct){
+    const sentence = btn.closest('.task-sentence');
+    const options = sentence.querySelectorAll('.task-opt');
+    options.forEach(o=>{
+        o.classList.add('disabled');
+        o.onclick = null;
+        if(o.textContent.trim() === correct){
+            o.classList.add('correct');
+        } else if(o === btn && o.textContent.trim() !== correct){
+            o.classList.add('wrong');
+        }
+    });
+    if(btn.textContent.trim() === correct){
+        showToast('✅ Правильно!');
+    } else {
+        showToast('❌ Правильный вариант: ' + correct);
+    }
+}
+
+// ============ КОНСТРУИРОВАНИЕ ============
+function checkBuild(btn, correct){
+    const block = btn.closest('.build-sentence');
+    const input = block.querySelector('.qa-input');
+    const ans = block.querySelector('.qa-answer');
+    const user = (input.value||'').trim();
+    if(!user){ input.focus(); return; }
+    const cleanUser = user.replace(/[，。？！,.\?!\s]/g,'');
+    const cleanCorrect = correct.replace(/[，。？！,.\?!\s]/g,'');
+    if(cleanUser === cleanCorrect || user === correct){
+        input.style.borderColor = '#2e7d32';
+        input.style.background = '#f0faf0';
+        ans.classList.add('show');
+        ans.innerHTML = '<strong>✅ Верно!</strong> ' + correct;
+    } else {
+        input.style.borderColor = '#b5443c';
+        input.style.background = '#fdf2f0';
+        ans.classList.add('show');
+        ans.innerHTML = '<strong>❌ Не совсем.</strong> Сравните порядок слов или служебные слова.';
+    }
+}
+function revealBuild(btn, correct){
+    const block = btn.closest('.build-sentence');
+    const input = block.querySelector('.qa-input');
+    const ans = block.querySelector('.qa-answer');
+    input.value = correct;
+    input.style.borderColor = '#2e7d32';
+    input.style.background = '#f0faf0';
+    ans.classList.add('show');
+    ans.innerHTML = '<strong>✅</strong> ' + correct;
+}
+
+// ============ ПИНЬИНЬ И ПЕРЕВОД ДЛЯ ТЕКСТОВ ============
+function togglePinyin(textId){
+    const el = document.getElementById(textId + '_pinyin');
+    if(!el) return;
+    el.classList.toggle('show');
+    event.target.textContent = el.classList.contains('show') ? '🔤 Скрыть пиньинь' : '🔤 Показать пиньинь';
+}
+function toggleRu(textId){
+    const el = document.getElementById(textId + '_ru');
+    if(!el) return;
+    el.classList.toggle('show');
+    event.target.textContent = el.classList.contains('show') ? '🌐 Скрыть перевод' : '🌐 Показать перевод';
+}
+
+// ============ CANVAS ============
+function initCanvas(canvas){
+    const ctx = canvas.getContext('2d');
+    let drawing = false;
+    let strokes = [];
+    let redoStack = [];
+    canvas._strokes = strokes;
+
+    function resize(){
+        const r = canvas.getBoundingClientRect();
+        const w = Math.max(r.width, 200);
+        if(canvas.width !== w || canvas.height !== 120){
+            canvas.width = w;
+            canvas.height = 120;
+            ctx.lineWidth = 3;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            ctx.strokeStyle = '#2d2a22';
+            redraw();
+        }
+    }
+    function redraw(){
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        strokes.forEach(stroke=>{
+            if(stroke.length<2) return;
+            ctx.beginPath();
+            ctx.moveTo(stroke[0].x,stroke[0].y);
+            for(let i=1;i<stroke.length;i++) ctx.lineTo(stroke[i].x,stroke[i].y);
+            ctx.stroke();
+        });
+    }
+    function pos(e){
+        const r = canvas.getBoundingClientRect();
+        const x = e.touches ? e.touches[0].clientX : e.clientX;
+        const y = e.touches ? e.touches[0].clientY : e.clientY;
+        return {x: (x - r.left) * (canvas.width / r.width), y: (y - r.top) * (canvas.height / r.height)};
+    }
+    function start(e){
+        e.preventDefault();
+        drawing = true;
+        const p = pos(e);
+        ctx.beginPath();
+        ctx.moveTo(p.x,p.y);
+        strokes.push([{x:p.x,y:p.y}]);
+        redoStack = [];
+    }
+    function move(e){
+        if(!drawing) return;
+        e.preventDefault();
+        const p = pos(e);
+        ctx.lineTo(p.x,p.y);
+        ctx.stroke();
+        strokes[strokes.length-1].push({x:p.x,y:p.y});
+    }
+    function end(){ drawing = false; }
+    canvas.addEventListener('mousedown', start);
+    canvas.addEventListener('mousemove', move);
+    canvas.addEventListener('mouseup', end);
+    canvas.addEventListener('mouseleave', end);
+    canvas.addEventListener('touchstart', start, {passive:false});
+    canvas.addEventListener('touchmove', move, {passive:false});
+    canvas.addEventListener('touchend', end);
+
+    canvas._undo = function(){ if(strokes.length){ redoStack.push(strokes.pop()); redraw(); } };
+    canvas._redo = function(){ if(redoStack.length){ strokes.push(redoStack.pop()); redraw(); } };
+    canvas._clear = function(){ strokes.length = 0; redoStack.length = 0; redraw(); };
+    canvas._resize = resize;
+
+    requestAnimationFrame(()=>{ resize(); });
+}
+document.querySelectorAll('.trace-canvas').forEach(initCanvas);
+
+function resizeAllCanvases(){
+    document.querySelectorAll('.trace-canvas').forEach(c=>{ if(c._resize) c._resize(); });
+}
+window.addEventListener('resize', resizeAllCanvases);
+setTimeout(resizeAllCanvases, 300);
+
+function undoCanvas(btn){
+    const c = btn.closest('.canvas-wrap').querySelector('canvas');
+    if(c._undo) c._undo();
+}
+function redoCanvas(btn){
+    const c = btn.closest('.canvas-wrap').querySelector('canvas');
+    if(c._redo) c._redo();
+}
+function clearCanvas(btn){
+    const c = btn.closest('.canvas-wrap').querySelector('canvas');
+    if(c._clear) c._clear();
+}
+
+// ============ TOAST ============
+function showToast(msg){
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._t);
+    t._t = setTimeout(()=>t.classList.remove('show'), 2500);
+}
+
+// ============ ПОИСК ============
+const searchIndex = [];
+function buildSearchIndex(){
+    document.querySelectorAll('.word-card').forEach(card=>{
+        searchIndex.push({
+            word: card.dataset.word || '',
+            pinyin: card.dataset.pinyin || '',
+            trans: card.dataset.trans || '',
+            id: card.dataset.word,
+        });
+    });
+}
+buildSearchIndex();
+
+const searchInput = document.getElementById('globalSearch');
+const searchResults = document.getElementById('searchResults');
+
+searchInput.addEventListener('input', ()=>{
+    const q = searchInput.value.trim();
+    if(!q){ searchResults.classList.remove('show'); searchResults.innerHTML=''; return; }
+    const matches = searchIndex.filter(item =>
+        item.word.includes(q) || item.pinyin.toLowerCase().includes(q.toLowerCase())
+    );
+    if(matches.length === 0){
+        searchResults.innerHTML = '<div class="search-item"><span class="si-cn">∅</span><span class="si-pinyin">Ничего не найдено</span></div>';
+        searchResults.classList.add('show');
+        return;
+    }
+    searchResults.innerHTML = matches.map(m => `
+        <div class="search-item" onclick="goToCard('${m.id}')">
+            <span class="si-cn">${m.word}</span>
+            <span class="si-pinyin">${m.pinyin}</span>
+            <span class="si-trans">${m.trans}</span>
+        </div>
+    `).join('');
+    searchResults.classList.add('show');
+});
+searchInput.addEventListener('blur', ()=>{ setTimeout(()=>searchResults.classList.remove('show'), 200); });
+
+function goToCard(wordId){
+    searchResults.classList.remove('show');
+    searchInput.value = '';
+    const card = document.querySelector(`.word-card[data-word="${wordId}"]`);
+    if(!card) return;
+    const tabContent = card.closest('.tab-content');
+    if(tabContent){
+        const tabId = tabContent.id;
+        document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+        document.querySelector(`.tab-btn[data-tab="${tabId}"]`)?.classList.add('active');
+        tabContent.classList.add('active');
+        setTimeout(resizeAllCanvases, 50);
+    }
+    setTimeout(()=>{
+        card.scrollIntoView({behavior:'smooth', block:'center'});
+        card.classList.add('search-highlight');
+        setTimeout(()=>card.classList.remove('search-highlight'), 1600);
+    }, 200);
+}
+function goToTab(tabId){
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+    document.querySelector(`.tab-btn[data-tab="${tabId}"]`)?.classList.add('active');
+    document.getElementById(tabId)?.classList.add('active');
+    window.scrollTo({top:0, behavior:'smooth'});
+    setTimeout(resizeAllCanvases, 50);
+}
+
+// ============ ЭКСПОРТ ============
+function exportNotes(){
+    const data = {};
+    for(let i=0; i<localStorage.length; i++){
+        const key = localStorage.key(i);
+        if(key && key.startsWith(STORAGE_PREFIX)){
+            data[key] = localStorage.getItem(key);
+        }
+    }
+    if(Object.keys(data).length === 0){
+        showToast('Пока нет сохранённых заметок');
+        return;
+    }
+    let out = 'HSK 2 · Повторение 1-9 + Задания · Мои заметки\n';
+    out += '='.repeat(50) + '\n\n';
+    Object.keys(data).forEach(key=>{
+        const clean = key.replace(STORAGE_PREFIX,'');
+        out += `[${clean}]\n${data[key]}\n\n`;
+    });
+    const blob = new Blob(['\ufeff' + out], {type:'text/plain;charset=utf-8'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'hsk2_review_notes.txt';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(()=>URL.revokeObjectURL(url), 1000);
+    showToast('✅ Файл скачан');
+}
+</script>
+</body>
+</html>
